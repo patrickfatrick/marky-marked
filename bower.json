@@ -1,0 +1,27 @@
+{
+	"name": "gregorian",
+	"main": "index.js",
+	"version": "0.0.1",
+	"authors": [
+		"patrickfatrick <patrick.fricano@icloud.com>"
+	],
+	"description": "A browser editor combining the power of markdown with the ease of WYSIWYG",
+	"moduleType": [
+		"globals",
+		"node"
+	],
+	"keywords": [
+		"Javascript",
+		"dates"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/patrickfatrick/marky-mark",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"client/bower_components",
+		"test",
+		"tests"
+	]
+}
