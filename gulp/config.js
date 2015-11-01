@@ -25,5 +25,12 @@ module.exports = {
 	},
 	lint: {
 		src: src + '/src/**/*.js'
+	},
+	sass: {
+		src: src + '/styles/marky-mark.scss',
+		dest: dest,
+		settings: {
+			outputStyle: 'compressed'
+		}
 	}
 };

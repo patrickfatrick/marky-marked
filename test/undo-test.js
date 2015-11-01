@@ -8,9 +8,13 @@ describe('undo', () => {
 	it('returns a previous state', () => {
 		const initialState = [
 			Map({markdown: '', html: ''}),
-			Map({markdown: 'Some text', html: '<p>Some text</p>'})
+			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
+			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
+			Map({markdown: 'Some really funny text', html: '<p>Some really funny text</p>'}),
+			Map({markdown: 'Some really funny awesome text', html: '<p>Some really funny awesome text</p>'}),
+			Map({markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'})
 		];
-		const stateIndex = 1;
+		const stateIndex = 5;
 		let newState = dispatcher.undo(initialState, stateIndex);
 
 		newState.get('markdown').should.be.empty;
@@ -22,23 +26,26 @@ describe('undo', () => {
 			Map({markdown: '', html: ''}),
 			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
 			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
-			Map({markdown: 'Some super funny text', html: '<p>Some super funny text</p>'})
+			Map({markdown: 'Some really funny text', html: '<p>Some really funny text</p>'}),
+			Map({markdown: 'Some really funny awesome text', html: '<p>Some really funny awesome text</p>'}),
+			Map({markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'}),
+			Map({markdown: 'Some really super funny awesome crazy text', html: '<p>Some super really funny awesome crazy text</p>'})
 		];
-		const stateIndex = 2;
+		const stateIndex = 5;
 		let newState = dispatcher.undo(initialState, stateIndex);
 
-		newState.get('markdown').should.equal('Some text');
-		newState.get('html').should.equal('<p>Some text</p>');
+		newState.get('markdown').should.be.empty;
+		newState.get('html').should.be.empty;
 	});
 
-	it('returns the same state if it is the first in the stack', () => {
+	it('returns oldest state if it is less than 5', () => {
 		const initialState = [
 			Map({markdown: '', html: ''}),
 			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
 			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
 			Map({markdown: 'Some super funny text', html: '<p>Some super funny text</p>'})
 		];
-		const stateIndex = 0;
+		const stateIndex = 3;
 		let newState = dispatcher.undo(initialState, stateIndex);
 
 		newState.get('markdown').should.be.empty;

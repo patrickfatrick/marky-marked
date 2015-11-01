@@ -6322,20 +6322,20 @@ var Marky = (function () {
 	}, {
 		key: 'undo',
 		value: function undo(state, index) {
-			if (this.index === 0) return this.state;
+			if (this.index < 5) return this.state;
 
 			var action = dispatcher.undo(state, index);
 			this.state = action.state;
-			this.index = this.index - 1;
+			this.index = this.index - 5;
 		}
 	}, {
 		key: 'redo',
 		value: function redo(state, index) {
-			if (this.index === this.state.length - 1) return this.state;
+			if (this.index > this.state.length - 6) return this.state;
 
 			var action = dispatcher.undo(state, index);
 			this.state = action.state;
-			this.index = this.index + 1;
+			this.index = this.index + 5;
 		}
 	}]);
 
@@ -6344,7 +6344,476 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/dispatcher":5,"./modules/mark":6,"./modules/polyfills":8,"./modules/prototypes":9,"immutable":2}],5:[function(require,module,exports){
+},{"./modules/dispatcher":9,"./modules/mark":10,"./modules/polyfills":12,"./modules/prototypes":13,"immutable":2}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _get = function get(_x23, _x24, _x25) { var _again = true; _function: while (_again) { var object = _x23, property = _x24, receiver = _x25; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x23 = parent; _x24 = property; _x25 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _Element12 = require('./Element');
+
+var BoldButton = (function (_Element) {
+	_inherits(BoldButton, _Element);
+
+	function BoldButton() {
+		var _this = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Bold' : arguments[1];
+
+		_classCallCheck(this, BoldButton);
+
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-bold');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this.title);
+		});
+	}
+
+	return BoldButton;
+})(_Element12.Element);
+
+exports.BoldButton = BoldButton;
+
+var ItalicButton = (function (_Element2) {
+	_inherits(ItalicButton, _Element2);
+
+	function ItalicButton() {
+		var _this2 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Italic' : arguments[1];
+
+		_classCallCheck(this, ItalicButton);
+
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-italic');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this2.title);
+		});
+	}
+
+	return ItalicButton;
+})(_Element12.Element);
+
+exports.ItalicButton = ItalicButton;
+
+var StrikethroughButton = (function (_Element3) {
+	_inherits(StrikethroughButton, _Element3);
+
+	function StrikethroughButton() {
+		var _this3 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Strikethrough' : arguments[1];
+
+		_classCallCheck(this, StrikethroughButton);
+
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-strikethrough');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this3.title);
+		});
+	}
+
+	return StrikethroughButton;
+})(_Element12.Element);
+
+exports.StrikethroughButton = StrikethroughButton;
+
+var CodeButton = (function (_Element4) {
+	_inherits(CodeButton, _Element4);
+
+	function CodeButton() {
+		var _this4 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Code' : arguments[1];
+
+		_classCallCheck(this, CodeButton);
+
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-code');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this4.title);
+		});
+	}
+
+	return CodeButton;
+})(_Element12.Element);
+
+exports.CodeButton = CodeButton;
+
+var BlockquoteButton = (function (_Element5) {
+	_inherits(BlockquoteButton, _Element5);
+
+	function BlockquoteButton() {
+		var _this5 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Blockquote' : arguments[1];
+
+		_classCallCheck(this, BlockquoteButton);
+
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-quote-right');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this5.title);
+		});
+	}
+
+	return BlockquoteButton;
+})(_Element12.Element);
+
+exports.BlockquoteButton = BlockquoteButton;
+
+var LinkButton = (function (_Element6) {
+	_inherits(LinkButton, _Element6);
+
+	function LinkButton() {
+		var _this6 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Link' : arguments[1];
+
+		_classCallCheck(this, LinkButton);
+
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-link');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this6.title);
+		});
+	}
+
+	return LinkButton;
+})(_Element12.Element);
+
+exports.LinkButton = LinkButton;
+
+var ImageButton = (function (_Element7) {
+	_inherits(ImageButton, _Element7);
+
+	function ImageButton() {
+		var _this7 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Image' : arguments[1];
+
+		_classCallCheck(this, ImageButton);
+
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-file-image-o');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this7.title);
+		});
+	}
+
+	return ImageButton;
+})(_Element12.Element);
+
+exports.ImageButton = ImageButton;
+
+var UnorderedListButton = (function (_Element8) {
+	_inherits(UnorderedListButton, _Element8);
+
+	function UnorderedListButton() {
+		var _this8 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Unordered-List' : arguments[1];
+
+		_classCallCheck(this, UnorderedListButton);
+
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-list-ul');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this8.title);
+		});
+	}
+
+	return UnorderedListButton;
+})(_Element12.Element);
+
+exports.UnorderedListButton = UnorderedListButton;
+
+var OrderedListButton = (function (_Element9) {
+	_inherits(OrderedListButton, _Element9);
+
+	function OrderedListButton() {
+		var _this9 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Ordered-List' : arguments[1];
+
+		_classCallCheck(this, OrderedListButton);
+
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-list-ol');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this9.title);
+		});
+	}
+
+	return OrderedListButton;
+})(_Element12.Element);
+
+exports.OrderedListButton = OrderedListButton;
+
+var UndoButton = (function (_Element10) {
+	_inherits(UndoButton, _Element10);
+
+	function UndoButton() {
+		var _this10 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Undo' : arguments[1];
+
+		_classCallCheck(this, UndoButton);
+
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-step-backward');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this10.title);
+		});
+	}
+
+	return UndoButton;
+})(_Element12.Element);
+
+exports.UndoButton = UndoButton;
+
+var RedoButton = (function (_Element11) {
+	_inherits(RedoButton, _Element11);
+
+	function RedoButton() {
+		var _this11 = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Redo' : arguments[1];
+
+		_classCallCheck(this, RedoButton);
+
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', this).call(this, this.title);
+		var icon = new _Element12.Element('i');
+		icon.addClass('fa');
+		icon.addClass('fa-step-forward');
+		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			console.log('click on ' + _this11.title);
+		});
+	}
+
+	return RedoButton;
+})(_Element12.Element);
+
+exports.RedoButton = RedoButton;
+
+},{"./Element":6}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Element = (function () {
+	function Element(type) {
+		var title = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+		_classCallCheck(this, Element);
+
+		this.title = title;
+		this.type = type;
+		this.element = this.register();
+	}
+
+	_createClass(Element, [{
+		key: "register",
+		value: function register() {
+			return document.createElement(this.type);
+		}
+	}, {
+		key: "assign",
+		value: function assign(prop, value) {
+			return this.element[prop] = value;
+		}
+	}, {
+		key: "appendTo",
+		value: function appendTo(container) {
+			return container.appendChild(this.element);
+		}
+	}, {
+		key: "addClass",
+		value: function addClass(className) {
+			return this.element.classList.add(className.toLowerCase());
+		}
+	}, {
+		key: "listen",
+		value: function listen(evt, cb) {
+			return this.element.addEventListener(evt, cb);
+		}
+	}]);
+
+	return Element;
+})();
+
+exports.Element = Element;
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _Element2 = require('./Element');
+
+var HeadingOption = (function (_Element) {
+	_inherits(HeadingOption, _Element);
+
+	function HeadingOption(type, title) {
+		if (type === undefined) type = 'option';
+
+		_classCallCheck(this, HeadingOption);
+
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, this.title.replace(' ', '-'));
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', this.title.replace(' ', '-').toLowerCase());
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
+	}
+
+	return HeadingOption;
+})(_Element2.Element);
+
+exports.HeadingOption = HeadingOption;
+
+},{"./Element":6}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _Element2 = require('./Element');
+
+var _Options = require('./Options');
+
+var HeadingSelect = (function (_Element) {
+	_inherits(HeadingSelect, _Element);
+
+	function HeadingSelect() {
+		var _this = this;
+
+		var type = arguments.length <= 0 || arguments[0] === undefined ? 'select' : arguments[0];
+		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Heading' : arguments[1];
+
+		_classCallCheck(this, HeadingSelect);
+
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function (e) {
+			e.preventDefault();
+			console.log('select on ' + _this.title);
+		});
+
+		var optionPlaceholder = new _Options.HeadingOption('option', 'Normal');
+		optionPlaceholder.assign('value', '');
+		var option1 = new _Options.HeadingOption('option', 'Heading 1');
+		var option2 = new _Options.HeadingOption('option', 'Heading 2');
+		var option3 = new _Options.HeadingOption('option', 'Heading 3');
+		var option4 = new _Options.HeadingOption('option', 'Heading 4');
+		var option5 = new _Options.HeadingOption('option', 'Heading 5');
+		var option6 = new _Options.HeadingOption('option', 'Heading 6');
+
+		optionPlaceholder.appendTo(this.element);
+		option1.appendTo(this.element);
+		option2.appendTo(this.element);
+		option3.appendTo(this.element);
+		option4.appendTo(this.element);
+		option5.appendTo(this.element);
+		option6.appendTo(this.element);
+	}
+
+	return HeadingSelect;
+})(_Element2.Element);
+
+exports.HeadingSelect = HeadingSelect;
+
+},{"./Element":6,"./Options":7}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6373,16 +6842,16 @@ function update(markdown, state, stateIndex) {
 }
 
 function undo(state, stateIndex) {
-	if (stateIndex > 0) stateIndex--;
+	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
 	return state[stateIndex];
 }
 
 function redo(state, stateIndex) {
-	if (stateIndex < state.length - 1) stateIndex++;
+	stateIndex = stateIndex < state.length - 5 ? stateIndex + 5 : state.length - 1;
 	return state[stateIndex];
 }
 
-},{"./operation":7,"marked":3}],6:[function(require,module,exports){
+},{"./operation":11,"marked":3}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6391,8 +6860,14 @@ Object.defineProperty(exports, '__esModule', {
 
 var _marky = require('../marky');
 
+var _Element = require('./Element');
+
+var _Buttons = require('./Buttons');
+
+var _Selects = require('./Selects');
+
 /**
- * Create the DOM elements needed and set the event listeners
+ * Register and append the DOM elements needed and set the event listeners
  * @param 	{String}	tag name to be used for initialization
  * @returns {Object} a Marky Mark instance
  */
@@ -6404,37 +6879,65 @@ exports['default'] = function () {
 	var containers = document.getElementsByTagName(tag);
 
 	Array.prototype.forEach.call(containers, function (container) {
-		var toolbar = document.createElement('div');
-		toolbar.classList.add('marky-toolbar');
+		var toolbar = new _Element.Element('div', 'Toolbar');
+		toolbar.addClass('marky-toolbar');
 
-		var boldButton = document.createElement('button');
-		boldButton.type = 'button';
-		boldButton.classList.add('bold');
-		boldButton.title = 'Bold';
+		var headingSelect = new _Selects.HeadingSelect();
+		var boldButton = new _Buttons.BoldButton();
+		var italicButton = new _Buttons.ItalicButton();
+		var strikethroughButton = new _Buttons.StrikethroughButton();
+		var codeButton = new _Buttons.CodeButton();
+		var blockquoteButton = new _Buttons.BlockquoteButton();
+		var linkButton = new _Buttons.LinkButton();
+		var imageButton = new _Buttons.ImageButton();
+		var unorderedListButton = new _Buttons.UnorderedListButton();
+		var orderedListButton = new _Buttons.OrderedListButton();
+		var undoButton = new _Buttons.UndoButton();
+		var redoButton = new _Buttons.RedoButton();
 
-		var italicButton = document.createElement('button');
-		italicButton.type = 'button';
-		italicButton.classList.add('italic');
-		italicButton.title = 'Italic';
+		var separatorA = new _Element.Element('span');
+		separatorA.assign('textContent', '|');
+		separatorA.addClass('separator');
 
-		var strikeButton = document.createElement('button');
-		strikeButton.type = 'button';
-		strikeButton.classList.add('strike');
-		strikeButton.title = 'Strike';
+		var separatorB = new _Element.Element('span');
+		separatorB.assign('textContent', '|');
+		separatorB.addClass('separator');
 
-		var textarea = document.createElement('textarea');
-		textarea.contentEditable = true;
-		textarea.classList.add('marky-editor');
+		var separatorC = new _Element.Element('span');
+		separatorC.assign('textContent', '|');
+		separatorC.addClass('separator');
 
-		var input = document.createElement('input');
-		input.type = 'hidden';
-		input.classList.add('marky-output');
+		var separatorD = new _Element.Element('span');
+		separatorD.assign('textContent', '|');
+		separatorD.addClass('separator');
 
-		container.appendChild(toolbar);
-		container.appendChild(textarea);
-		container.appendChild(input);
-		toolbar.appendChild(boldButton);
-		toolbar.appendChild(italicButton);
+		var textarea = new _Element.Element('textarea', 'Editor');
+		textarea.assign('contentEditable', true);
+		textarea.addClass('marky-editor');
+
+		var input = new _Element.Element('input', 'Output');
+		input.assign('type', 'hidden');
+		input.addClass('marky-output');
+
+		toolbar.appendTo(container);
+		textarea.appendTo(container);
+		input.appendTo(container);
+		headingSelect.appendTo(toolbar.element);
+		separatorA.appendTo(toolbar.element);
+		boldButton.appendTo(toolbar.element);
+		italicButton.appendTo(toolbar.element);
+		strikethroughButton.appendTo(toolbar.element);
+		codeButton.appendTo(toolbar.element);
+		blockquoteButton.appendTo(toolbar.element);
+		separatorB.appendTo(toolbar.element);
+		linkButton.appendTo(toolbar.element);
+		imageButton.appendTo(toolbar.element);
+		separatorC.appendTo(toolbar.element);
+		unorderedListButton.appendTo(toolbar.element);
+		orderedListButton.appendTo(toolbar.element);
+		separatorD.appendTo(toolbar.element);
+		undoButton.appendTo(toolbar.element);
+		redoButton.appendTo(toolbar.element);
 	});
 
 	var editors = document.querySelectorAll('.marky-editor');
@@ -6445,7 +6948,6 @@ exports['default'] = function () {
 		editor.addEventListener('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
 			var html = this._marky.state[this._marky.index].get('html');
-			console.log(this._marky.state);
 			return e.target.nextSibling.value = html;
 		}, false);
 
@@ -6457,7 +6959,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../marky":4}],7:[function(require,module,exports){
+},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6479,7 +6981,7 @@ exports['default'] = function (state, stateIndex, fn) {
 
 module.exports = exports['default'];
 
-},{"immutable":2}],8:[function(require,module,exports){
+},{"immutable":2}],12:[function(require,module,exports){
 // Custom Event Polyfill for IE9+
 'use strict';
 
@@ -6506,7 +7008,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

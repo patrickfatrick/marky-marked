@@ -1,0 +1,68 @@
+@import 'imports';
+@import 'variables';
+@import 'mixins';
+marky-mark {
+	.marky-toolbar {
+		min-width: 100%;
+		text-align: left;
+		margin-bottom: 0.3rem;
+		button {
+			@include no-outline;
+			@include side-margins(2px, 2px);
+			cursor: pointer;
+			border: 1px solid gray;
+			padding: 3px;
+			border-radius: 4px;
+			box-shadow: 1px 1px 2px gray;
+			min-width: 1.5rem;
+			min-height: 1.5rem;
+			text-align: center;
+			background-color: white;
+			color: black;
+			&.disabled, &:active {
+				color: $gray;
+				background: -webkit-linear-gradient($white * 0.7, $white);
+				background: -moz-linear-gradient($white * 0.7, $white);
+				background: -ms-linear-gradient($white * 0.7, $white);
+				background: -o-linear-gradient($white * 0.7, $white);
+				background: linear-gradient($white * 0.7, $white);
+			}
+		}
+		select {
+			@include no-outline;
+			@include side-margins(2px, 2px);
+			-webkit-appearance: none;
+			outline: none;
+			border: 1px solid gray;
+			padding-left: 0.3rem;
+			border-radius: 4px;
+			box-shadow: 1px 1px 2px gray;
+			min-width: 5.2rem;
+			min-height: 1.5rem;
+			text-align: center;
+			background-color: white;
+			color: black;
+			@media all and (min-width: 1200px) {
+				min-width: 6rem;
+				padding-left: 0.7rem;
+			}
+		}
+		.separator {
+			@include side-padding(5px, 5px);
+			color: $gray;
+			@media all and (min-width: 1200px) {
+				@include side-padding(10px, 10px);
+			}
+		}
+	}
+	.marky-editor {
+		@include no-outline;
+		border: 2px solid $gray;
+		transition: border-color 200ms ease-out;
+		padding: 8px 12px;
+		border-radius: 6px;
+		&:focus {
+			border-color: $deepBlue;
+		}
+	}
+}

@@ -1,2 +1,3 @@
 import {Marky} from './src/marky';
-export default Marky;
+let marky = new Marky;
+export default marky;

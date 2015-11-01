@@ -10,11 +10,11 @@ export function update (markdown, state, stateIndex) {
 }
 
 export function undo (state, stateIndex) {
-	if (stateIndex > 4) stateIndex - 5;
+	stateIndex = (stateIndex > 4) ? stateIndex - 5 : 0;
 	return state[stateIndex];
 }
 
 export function redo (state, stateIndex) {
-	if (stateIndex < state.length - 6) stateIndex + 5;
+	stateIndex = (stateIndex < state.length - 5) ? stateIndex + 5 : state.length - 1;
 	return state[stateIndex];
 }
