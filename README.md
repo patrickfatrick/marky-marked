@@ -1,4 +1,4 @@
-#Gregorian
+# Marky Mark
 _A browser editor combining the power of markdown with the ease of WYSIWYG._
 
 More to come here. Just wanted to get it hosted.
