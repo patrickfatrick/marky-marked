@@ -29,18 +29,18 @@ export class Marky {
 	}
 
 	undo(state, index) {
-		if (this.index < 5) return this.state;
+		if (index === 0) return state;
 
 		const action = dispatcher.undo(state, index);
-		this.state = action.state;
-		this.index = this.index - 5;
+		this.index = action.index;
+		return action.state;
 	}
 
 	redo(state, index) {
-		if (this.index > this.state.length - 6) return this.state;
+		if (index === state.length - 1) return state;
 
-		const action = dispatcher.undo(state, index);
-		this.state = action.state;
-		this.index = this.index + 5;
+		const action = dispatcher.redo(state, index);
+		this.index = action.index;
+		return action.state;
 	}
 }

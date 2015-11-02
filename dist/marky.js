@@ -6322,20 +6322,20 @@ var Marky = (function () {
 	}, {
 		key: 'undo',
 		value: function undo(state, index) {
-			if (this.index < 5) return this.state;
+			if (index === 0) return state;
 
 			var action = dispatcher.undo(state, index);
-			this.state = action.state;
-			this.index = this.index - 5;
+			this.index = action.index;
+			return action.state;
 		}
 	}, {
 		key: 'redo',
 		value: function redo(state, index) {
-			if (this.index > this.state.length - 6) return this.state;
+			if (index === state.length - 1) return state;
 
-			var action = dispatcher.undo(state, index);
-			this.state = action.state;
-			this.index = this.index + 5;
+			var action = dispatcher.redo(state, index);
+			this.index = action.index;
+			return action.state;
 		}
 	}]);
 
@@ -6344,14 +6344,14 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/dispatcher":9,"./modules/mark":10,"./modules/polyfills":12,"./modules/prototypes":13,"immutable":2}],5:[function(require,module,exports){
+},{"./modules/dispatcher":9,"./modules/mark":11,"./modules/polyfills":13,"./modules/prototypes":14,"immutable":2}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
 
-var _get = function get(_x23, _x24, _x25) { var _again = true; _function: while (_again) { var object = _x23, property = _x24, receiver = _x25; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x23 = parent; _x24 = property; _x25 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -6359,26 +6359,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var _Element12 = require('./Element');
 
+var _handlers = require('./handlers');
+
 var BoldButton = (function (_Element) {
 	_inherits(BoldButton, _Element);
 
-	function BoldButton() {
-		var _this = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Bold' : arguments[1];
+	function BoldButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Bold';
 
 		_classCallCheck(this, BoldButton);
 
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-bold');
+		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
+			editor.value = boldify.value;
+			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this.title);
 		});
 	}
 
@@ -6390,23 +6400,31 @@ exports.BoldButton = BoldButton;
 var ItalicButton = (function (_Element2) {
 	_inherits(ItalicButton, _Element2);
 
-	function ItalicButton() {
-		var _this2 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Italic' : arguments[1];
+	function ItalicButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Italic';
 
 		_classCallCheck(this, ItalicButton);
 
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-italic');
+		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
+			editor.value = italicize.value;
+			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this2.title);
 		});
 	}
 
@@ -6418,23 +6436,31 @@ exports.ItalicButton = ItalicButton;
 var StrikethroughButton = (function (_Element3) {
 	_inherits(StrikethroughButton, _Element3);
 
-	function StrikethroughButton() {
-		var _this3 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Strikethrough' : arguments[1];
+	function StrikethroughButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Strikethrough';
 
 		_classCallCheck(this, StrikethroughButton);
 
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-strikethrough');
+		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
+			editor.value = strikitize.value;
+			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this3.title);
 		});
 	}
 
@@ -6446,23 +6472,31 @@ exports.StrikethroughButton = StrikethroughButton;
 var CodeButton = (function (_Element4) {
 	_inherits(CodeButton, _Element4);
 
-	function CodeButton() {
-		var _this4 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Code' : arguments[1];
+	function CodeButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Code';
 
 		_classCallCheck(this, CodeButton);
 
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-code');
+		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
+			editor.value = codify.value;
+			editor.setSelectionRange(codify.range[0], codify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this4.title);
 		});
 	}
 
@@ -6474,23 +6508,31 @@ exports.CodeButton = CodeButton;
 var BlockquoteButton = (function (_Element5) {
 	_inherits(BlockquoteButton, _Element5);
 
-	function BlockquoteButton() {
-		var _this5 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Blockquote' : arguments[1];
+	function BlockquoteButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Blockquote';
 
 		_classCallCheck(this, BlockquoteButton);
 
-		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-quote-right');
+		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+		});
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this5.title);
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '>');
+			editor.value = quotify.value;
+			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
 		});
 	}
 
@@ -6502,23 +6544,32 @@ exports.BlockquoteButton = BlockquoteButton;
 var LinkButton = (function (_Element6) {
 	_inherits(LinkButton, _Element6);
 
-	function LinkButton() {
-		var _this6 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Link' : arguments[1];
+	function LinkButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Link';
 
 		_classCallCheck(this, LinkButton);
 
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-link');
+		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var mark = '[DISPLAY TEXT](http://url.com)';
+			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
+			editor.value = linkify.value;
+			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this6.title);
 		});
 	}
 
@@ -6530,23 +6581,32 @@ exports.LinkButton = LinkButton;
 var ImageButton = (function (_Element7) {
 	_inherits(ImageButton, _Element7);
 
-	function ImageButton() {
-		var _this7 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Image' : arguments[1];
+	function ImageButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Image';
 
 		_classCallCheck(this, ImageButton);
 
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-file-image-o');
+		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var mark = '![ALT TEXT](http://imagesource.com)';
+			var imagify = (0, _handlers.insertHandler)(editor.value, indices, mark);
+			editor.value = imagify.value;
+			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this7.title);
 		});
 	}
 
@@ -6558,23 +6618,22 @@ exports.ImageButton = ImageButton;
 var UnorderedListButton = (function (_Element8) {
 	_inherits(UnorderedListButton, _Element8);
 
-	function UnorderedListButton() {
-		var _this8 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Unordered-List' : arguments[1];
+	function UnorderedListButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Unordered-List';
 
 		_classCallCheck(this, UnorderedListButton);
 
-		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-list-ul');
+		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+		});
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this8.title);
 		});
 	}
 
@@ -6586,23 +6645,22 @@ exports.UnorderedListButton = UnorderedListButton;
 var OrderedListButton = (function (_Element9) {
 	_inherits(OrderedListButton, _Element9);
 
-	function OrderedListButton() {
-		var _this9 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Ordered-List' : arguments[1];
+	function OrderedListButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Ordered-List';
 
 		_classCallCheck(this, OrderedListButton);
 
-		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-list-ol');
+		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+		});
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this9.title);
 		});
 	}
 
@@ -6614,23 +6672,29 @@ exports.OrderedListButton = OrderedListButton;
 var UndoButton = (function (_Element10) {
 	_inherits(UndoButton, _Element10);
 
-	function UndoButton() {
-		var _this10 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Undo' : arguments[1];
+	function UndoButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Undo';
 
 		_classCallCheck(this, UndoButton);
 
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-step-backward');
+		icon.addClass(['fa', 'fa-step-backward']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
+			var markdown = activeState.get('markdown');
+			var html = activeState.get('html');
+			editor.value = markdown;
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this10.title);
 		});
 	}
 
@@ -6642,23 +6706,29 @@ exports.UndoButton = UndoButton;
 var RedoButton = (function (_Element11) {
 	_inherits(RedoButton, _Element11);
 
-	function RedoButton() {
-		var _this11 = this;
-
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'button' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Redo' : arguments[1];
+	function RedoButton(type, title, id) {
+		if (type === undefined) type = 'button';
+		if (title === undefined) title = 'Redo';
 
 		_classCallCheck(this, RedoButton);
 
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', this).call(this, this.title);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var icon = new _Element12.Element('i');
-		icon.addClass('fa');
-		icon.addClass('fa-step-forward');
+		icon.addClass(['fa', 'fa-step-forward']);
 		icon.appendTo(this.element);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
+			var markdown = activeState.get('markdown');
+			var html = activeState.get('html');
+			editor.value = markdown;
+			return editor.nextSibling.value = html;
+		});
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
-			console.log('click on ' + _this11.title);
 		});
 	}
 
@@ -6667,7 +6737,7 @@ var RedoButton = (function (_Element11) {
 
 exports.RedoButton = RedoButton;
 
-},{"./Element":6}],6:[function(require,module,exports){
+},{"./Element":6,"./handlers":10}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6681,11 +6751,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Element = (function () {
 	function Element(type) {
 		var title = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+		var id = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
 		_classCallCheck(this, Element);
 
 		this.title = title;
 		this.type = type;
+		this.id = id;
 		this.element = this.register();
 	}
 
@@ -6706,13 +6778,43 @@ var Element = (function () {
 		}
 	}, {
 		key: "addClass",
-		value: function addClass(className) {
-			return this.element.classList.add(className.toLowerCase());
+		value: function addClass(classNames) {
+			var _iteratorNormalCompletion = true;
+			var _didIteratorError = false;
+			var _iteratorError = undefined;
+
+			try {
+				for (var _iterator = classNames[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					var className = _step.value;
+
+					this.element.classList.add(className.toLowerCase());
+				}
+			} catch (err) {
+				_didIteratorError = true;
+				_iteratorError = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion && _iterator["return"]) {
+						_iterator["return"]();
+					}
+				} finally {
+					if (_didIteratorError) {
+						throw _iteratorError;
+					}
+				}
+			}
+
+			return;
 		}
 	}, {
 		key: "listen",
 		value: function listen(evt, cb) {
 			return this.element.addEventListener(evt, cb);
+		}
+	}, {
+		key: "parent",
+		value: function parent() {
+			return this.element.parentNode;
 		}
 	}]);
 
@@ -6739,14 +6841,14 @@ var _Element2 = require('./Element');
 var HeadingOption = (function (_Element) {
 	_inherits(HeadingOption, _Element);
 
-	function HeadingOption(type, title) {
+	function HeadingOption(type, title, value) {
 		if (type === undefined) type = 'option';
 
 		_classCallCheck(this, HeadingOption);
 
 		_get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, this.title.replace(' ', '-'));
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', this.title.replace(' ', '-').toLowerCase());
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, [this.title.replace(' ', '-')]);
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', value);
 		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
 	}
 
@@ -6762,7 +6864,7 @@ Object.defineProperty(exports, '__esModule', {
 	value: true
 });
 
-var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -6772,32 +6874,45 @@ var _Element2 = require('./Element');
 
 var _Options = require('./Options');
 
+var _handlers = require('./handlers');
+
 var HeadingSelect = (function (_Element) {
 	_inherits(HeadingSelect, _Element);
 
-	function HeadingSelect() {
+	function HeadingSelect(type, title, id) {
+		if (type === undefined) type = 'select';
+
 		var _this = this;
 
-		var type = arguments.length <= 0 || arguments[0] === undefined ? 'select' : arguments[0];
-		var title = arguments.length <= 1 || arguments[1] === undefined ? 'Heading' : arguments[1];
+		if (title === undefined) title = 'Heading';
 
 		_classCallCheck(this, HeadingSelect);
 
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', this).call(this, this.title);
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function (e) {
-			e.preventDefault();
-			console.log('select on ' + _this.title);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'constructor', this).call(this, type, title, id);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', this).call(this, [this.title, id]);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function () {
+			var selected = _this.element.selectedIndex;
+			var value = _this.element.options[selected].value;
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var headingify = (0, _handlers.blockHandler)(editor.value, indices, value + ' ');
+			editor.value = headingify.value;
+			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].get('html');
+			_this.element.selectedIndex = 0;
+			return editor.nextSibling.value = html;
 		});
 
 		var optionPlaceholder = new _Options.HeadingOption('option', 'Normal');
 		optionPlaceholder.assign('value', '');
-		var option1 = new _Options.HeadingOption('option', 'Heading 1');
-		var option2 = new _Options.HeadingOption('option', 'Heading 2');
-		var option3 = new _Options.HeadingOption('option', 'Heading 3');
-		var option4 = new _Options.HeadingOption('option', 'Heading 4');
-		var option5 = new _Options.HeadingOption('option', 'Heading 5');
-		var option6 = new _Options.HeadingOption('option', 'Heading 6');
+		var option1 = new _Options.HeadingOption('option', 'Heading 1', '#');
+		var option2 = new _Options.HeadingOption('option', 'Heading 2', '##');
+		var option3 = new _Options.HeadingOption('option', 'Heading 3', '###');
+		var option4 = new _Options.HeadingOption('option', 'Heading 4', '####');
+		var option5 = new _Options.HeadingOption('option', 'Heading 5', '#####');
+		var option6 = new _Options.HeadingOption('option', 'Heading 6', '######');
 
 		optionPlaceholder.appendTo(this.element);
 		option1.appendTo(this.element);
@@ -6813,7 +6928,7 @@ var HeadingSelect = (function (_Element) {
 
 exports.HeadingSelect = HeadingSelect;
 
-},{"./Element":6,"./Options":7}],9:[function(require,module,exports){
+},{"./Element":6,"./Options":7,"./handlers":10}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6843,15 +6958,76 @@ function update(markdown, state, stateIndex) {
 
 function undo(state, stateIndex) {
 	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
-	return state[stateIndex];
+	return { state: state[stateIndex], index: stateIndex };
 }
 
 function redo(state, stateIndex) {
 	stateIndex = stateIndex < state.length - 5 ? stateIndex + 5 : state.length - 1;
-	return state[stateIndex];
+	return { state: state[stateIndex], index: stateIndex };
 }
 
-},{"./operation":11,"marked":3}],10:[function(require,module,exports){
+},{"./operation":12,"marked":3}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+exports.inlineHandler = inlineHandler;
+exports.blockHandler = blockHandler;
+exports.insertHandler = insertHandler;
+
+function inlineHandler(string, indices, mark) {
+	var value = undefined;
+	var useMark = [mark, mark];
+	if (string.indexOf(mark) !== -1) {
+		for (var index in indices) {
+			if (string.lastIndexOf(mark, indices[index]) === indices[index] - mark.length) {
+				string = string.substring(0, indices[index] - mark.length) + string.substring(indices[index], string.length);
+				if (index == 0) {
+					indices[0] = indices[0] - mark.length;
+					indices[1] = indices[1] - mark.length;
+				} else {
+					indices[1] = indices[1] - mark.length;
+				}
+				useMark[index] = '';
+			}
+			if (string.indexOf(mark, indices[index]) === indices[index]) {
+				string = string.substring(0, indices[index]) + string.substring(indices[index] + mark.length, string.length);
+				if (index == 0 && indices[0] != indices[1]) {
+					indices[1] = indices[1] - mark.length;
+				}
+				useMark[index] = '';
+			}
+		}
+	}
+	value = string.substring(0, indices[0]) + useMark[0] + string.substring(indices[0], indices[1]) + useMark[1] + string.substring(indices[1], string.length);
+	return { value: value, range: [indices[0] + useMark[0].length, indices[1] + useMark[1].length] };
+}
+
+function blockHandler(string, indices, mark) {
+	var start = indices[0];
+	var end = indices[1];
+	var value = undefined;
+	var lineStart = string.lineStart(start);
+	var lineEnd = string.lineEnd(end);
+	if (string.indexOf(mark.trim(), lineStart) === lineStart) {
+		value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/\b|\n/g), string.length);
+
+		return { value: value, range: [lineStart, lineEnd - mark.length] };
+	}
+	value = string.substring(0, lineStart) + mark + string.substring(lineStart, string.length);
+	return { value: value, range: [start + mark.length, end + mark.length] };
+}
+
+function insertHandler(string, indices, mark) {
+	var end = indices[1];
+	var value = undefined;
+	value = string.substring(0, end) + mark + string.substring(end, string.length);
+
+	return { value: value, range: [end, end + mark.length] };
+}
+
+},{}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6877,47 +7053,47 @@ exports['default'] = function () {
 
 	var update = new CustomEvent('update');
 	var containers = document.getElementsByTagName(tag);
-
-	Array.prototype.forEach.call(containers, function (container) {
+	Array.prototype.forEach.call(containers, function (container, i) {
 		var toolbar = new _Element.Element('div', 'Toolbar');
-		toolbar.addClass('marky-toolbar');
+		var id = 'editor-' + i;
+		toolbar.addClass(['marky-toolbar', id]);
 
-		var headingSelect = new _Selects.HeadingSelect();
-		var boldButton = new _Buttons.BoldButton();
-		var italicButton = new _Buttons.ItalicButton();
-		var strikethroughButton = new _Buttons.StrikethroughButton();
-		var codeButton = new _Buttons.CodeButton();
-		var blockquoteButton = new _Buttons.BlockquoteButton();
-		var linkButton = new _Buttons.LinkButton();
-		var imageButton = new _Buttons.ImageButton();
-		var unorderedListButton = new _Buttons.UnorderedListButton();
-		var orderedListButton = new _Buttons.OrderedListButton();
-		var undoButton = new _Buttons.UndoButton();
-		var redoButton = new _Buttons.RedoButton();
+		var headingSelect = new _Selects.HeadingSelect('select', 'Heading', id);
+		var boldButton = new _Buttons.BoldButton('button', 'Bold', id);
+		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id);
+		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id);
+		var codeButton = new _Buttons.CodeButton('button', 'Code', id);
+		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id);
+		var linkButton = new _Buttons.LinkButton('button', 'Link', id);
+		var imageButton = new _Buttons.ImageButton('button', 'Image', id);
+		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered-List', id);
+		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered-List', id);
+		var undoButton = new _Buttons.UndoButton('button', 'Undo', id);
+		var redoButton = new _Buttons.RedoButton('button', 'Redo', id);
 
 		var separatorA = new _Element.Element('span');
 		separatorA.assign('textContent', '|');
-		separatorA.addClass('separator');
+		separatorA.addClass(['separator']);
 
 		var separatorB = new _Element.Element('span');
 		separatorB.assign('textContent', '|');
-		separatorB.addClass('separator');
+		separatorB.addClass(['separator']);
 
 		var separatorC = new _Element.Element('span');
 		separatorC.assign('textContent', '|');
-		separatorC.addClass('separator');
+		separatorC.addClass(['separator']);
 
 		var separatorD = new _Element.Element('span');
 		separatorD.assign('textContent', '|');
-		separatorD.addClass('separator');
+		separatorD.addClass(['separator']);
 
 		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.assign('contentEditable', true);
-		textarea.addClass('marky-editor');
+		textarea.addClass(['marky-editor', id]);
 
 		var input = new _Element.Element('input', 'Output');
 		input.assign('type', 'hidden');
-		input.addClass('marky-output');
+		input.addClass(['marky-output', id]);
 
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
@@ -6959,7 +7135,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8}],11:[function(require,module,exports){
+},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6981,7 +7157,7 @@ exports['default'] = function (state, stateIndex, fn) {
 
 module.exports = exports['default'];
 
-},{"immutable":2}],12:[function(require,module,exports){
+},{"immutable":2}],13:[function(require,module,exports){
 // Custom Event Polyfill for IE9+
 'use strict';
 
@@ -7008,7 +7184,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7016,35 +7192,43 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports["default"] = function () {
-	String.prototype.indexOfMatch = function (regex, fromIndex) {
-		var str = fromIndex !== null ? this.substring(fromIndex) : this;
+	String.prototype.indexOfMatch = function (regex, index) {
+		var str = index !== null ? this.substring(index) : this;
 		var matches = str.match(regex);
-		return matches ? str.indexOf(matches[0]) + fromIndex : -1;
+		return matches ? str.indexOf(matches[0]) + index : -1;
 	};
 
-	String.prototype.indicesOfMatches = function (regex, fromIndex) {
-		var str = fromIndex !== null ? this.substring(fromIndex) : this;
+	String.prototype.indicesOfMatches = function (regex, index) {
+		var str = index !== null ? this.substring(index) : this;
 		var matches = str.match(regex);
 		matches.map(function (match) {
-			return str.indexOf(match) + fromIndex;
+			return str.indexOf(match) + index;
 		});
 		return matches ? matches : -1;
 	};
 
-	String.prototype.lastIndexOfMatch = function (regex, fromIndex) {
-		var str = fromIndex !== null ? this.substring(0, fromIndex) : this;
+	String.prototype.lastIndexOfMatch = function (regex, index) {
+		var str = index !== null ? this.substring(0, index) : this;
 		var matches = str.match(regex);
 		return matches ? str.lastIndexOf(matches[matches.length - 1]) : -1;
 	};
 
-	String.prototype.splitLinesBackward = function (fromIndex) {
-		var str = fromIndex ? this.substring(0, fromIndex) : this;
+	String.prototype.splitLinesBackward = function (index) {
+		var str = index ? this.substring(0, index) : this;
 		return str.split(/\r\n|\r|\n/);
 	};
 
-	String.prototype.splitLines = function (fromIndex) {
-		var str = fromIndex ? this.substring(fromIndex) : this;
+	String.prototype.splitLines = function (index) {
+		var str = index ? this.substring(index) : this;
 		return str.split(/\r\n|\r|\n/);
+	};
+
+	String.prototype.lineStart = function (index) {
+		return this.lastIndexOfMatch(/^.*/gm, index);
+	};
+
+	String.prototype.lineEnd = function (index) {
+		return this.indexOfMatch(/.*$/gm, index);
 	};
 };
 

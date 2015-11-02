@@ -12,47 +12,47 @@ export default function (tag = 'marky-mark') {
 
 	const update = new CustomEvent('update');
 	let containers = document.getElementsByTagName(tag);
-
-	Array.prototype.forEach.call(containers, container => {
+	Array.prototype.forEach.call(containers, (container, i) => {
 		let toolbar = new Element('div', 'Toolbar');
-		toolbar.addClass('marky-toolbar');
+		let id = 'editor-' + i;
+		toolbar.addClass(['marky-toolbar', id]);
 
-		let headingSelect = new HeadingSelect;
-		let boldButton = new BoldButton;
-		let italicButton = new ItalicButton;
-		let strikethroughButton = new StrikethroughButton;
-		let codeButton = new CodeButton;
-		let blockquoteButton = new BlockquoteButton;
-		let linkButton = new LinkButton;
-		let imageButton = new ImageButton;
-		let unorderedListButton = new UnorderedListButton;
-		let orderedListButton = new OrderedListButton;
-		let undoButton = new UndoButton;
-		let redoButton = new RedoButton;
+		let headingSelect = new HeadingSelect('select', 'Heading', id);
+		let boldButton = new BoldButton('button', 'Bold', id);
+		let italicButton = new ItalicButton('button', 'Italic', id);
+		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id);
+		let codeButton = new CodeButton('button', 'Code', id);
+		let blockquoteButton = new BlockquoteButton('button', 'Blockquote', id);
+		let linkButton = new LinkButton('button', 'Link', id);
+		let imageButton = new ImageButton('button', 'Image', id);
+		let unorderedListButton = new UnorderedListButton('button', 'Unordered-List', id);
+		let orderedListButton = new OrderedListButton('button', 'Ordered-List', id);
+		let undoButton = new UndoButton('button', 'Undo', id);
+		let redoButton = new RedoButton('button', 'Redo', id);
 
 		let separatorA = new Element('span');
 		separatorA.assign('textContent', '|');
-		separatorA.addClass('separator');
+		separatorA.addClass(['separator']);
 
 		let separatorB = new Element('span');
 		separatorB.assign('textContent', '|');
-		separatorB.addClass('separator');
+		separatorB.addClass(['separator']);
 
 		let separatorC = new Element('span');
 		separatorC.assign('textContent', '|');
-		separatorC.addClass('separator');
+		separatorC.addClass(['separator']);
 
 		let separatorD = new Element('span');
 		separatorD.assign('textContent', '|');
-		separatorD.addClass('separator');
+		separatorD.addClass(['separator']);
 
 		let textarea = new Element('textarea', 'Editor');
 		textarea.assign('contentEditable', true);
-		textarea.addClass('marky-editor');
+		textarea.addClass(['marky-editor', id]);
 
 		let input = new Element('input', 'Output');
 		input.assign('type', 'hidden');
-		input.addClass('marky-output');
+		input.addClass(['marky-output', id]);
 
 		toolbar.appendTo(container);
 		textarea.appendTo(container);

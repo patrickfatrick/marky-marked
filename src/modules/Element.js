@@ -1,7 +1,8 @@
 export class Element {
-	constructor(type, title = null) {
+	constructor(type, title = null, id = null) {
 		this.title = title;
 		this.type = type;
+		this.id = id;
 		this.element = this.register();
 	}
 
@@ -17,11 +18,18 @@ export class Element {
 		return container.appendChild(this.element);
 	}
 
-	addClass(className) {
-		return this.element.classList.add(className.toLowerCase());
+	addClass(classNames) {
+		for (let className of classNames) {
+			this.element.classList.add(className.toLowerCase());
+		}
+		return;
 	}
 
 	listen(evt, cb) {
 		return this.element.addEventListener(evt, cb);
+	}
+
+	parent() {
+		return this.element.parentNode;
 	}
 }
