@@ -25,7 +25,7 @@ Marky Mark has two dependencies to run, both of which are included in the /dist 
 - [Immutable.js](https://facebook.github.io/immutable-js/)
 - [Marked](https://github.com/chjj/marked)
 
-- Optional dependency: Font Awesome, only if you use the included stylesheet.
+- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.
 
 Immutable.js handles the immutable state powering the undo/redo functionality. Meanwhile Marked is doing the heavylifting for the Markdown processing.
 
