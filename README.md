@@ -8,7 +8,7 @@ _An in-browser editor so sweet you'll feel good vibrations._
 [![Coverage Status](https://coveralls.io/repos/patrickfatrick/marky-mark/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/marky-mark?branch=master)
 [![MIT License][license-image]][license-url]
 
-![Marky Mark](./images/marky-mark.jpg)
+![Marky Mark](./images/marky-mark.png)
 
 ## What is it?
 
