@@ -28,6 +28,7 @@
 		"chai-immutable": "^1.5.0",
 		"coveralls": "^2.11.4",
 		"estraverse": "^4.1.0",
+		"font-awesome": "^4.4.0",
 		"gulp": "^3.9.0",
 		"gulp-eslint": "^1.0.0",
 		"gulp-sourcemaps": "^1.6.0",
@@ -42,7 +43,6 @@
 		"vinyl-source-stream": "^1.1.0"
 	},
 	"dependencies": {
-		"font-awesome": "^4.4.0",
 		"immutable": "^3.7.5",
 		"marked": "^0.3.5"
 	}
