@@ -1,5 +1,5 @@
 import chai from 'chai';
-import jsdom from 'mocha-jsdom';
+import jsdom from 'jsdom';
 import mark from '../src/modules/mark';
 
 chai.should();
