@@ -1,4 +1,4 @@
-# Marky Mark
+# Marky Marked
 
 _An in-browser editor so sweet you'll feel good vibrations._
 
@@ -8,19 +8,19 @@ _An in-browser editor so sweet you'll feel good vibrations._
 [![Coverage Status](https://coveralls.io/repos/patrickfatrick/marky-mark/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/marky-mark?branch=master)
 [![MIT License][license-image]][license-url]
 
-![Marky Mark](./images/marky-mark.png)
+![Marky Marked](./images/marky-marked.png)
 
 ## What is it?
 
-Marky Mark is an in-browser editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's excellent [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor.
+Marky Marked is an in-browser editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's excellent [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor.
 
-Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Mark outputs is markup.
+Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
 
-On top of all of that because it's built with immutable states Marky Mark comes with undo and redo.
+On top of all of that because it's built with immutable states Marky Marked comes with undo and redo.
 
 ## Dependencies
 
-Marky Mark has two dependencies to run, both of which are included in the /dist files:
+Marky Marked has two dependencies to run, both of which are included in the /dist files:
 
 - [Immutable.js](https://facebook.github.io/immutable-js/)
 - [Marked](https://github.com/chjj/marked)
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 ```
 
-From there Marky Mark should handle the rest.
+From there Marky Marked should handle the rest.
 
 ## Styling
 
@@ -85,7 +85,7 @@ editor.addEventListener('markychange', function (e) {
 ```
 ## Undo/Redo
 
-Think of state as a snapshot of the data inside Marky Mark at any given time. Marky Mark stores up to 500 states, after which it starts clearing out the oldest states as states are created. So it's not infinite.
+Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 500 states, after which it starts clearing out the oldest states as states are created. So it's not infinite.
 
 The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 100 user-facing states at any given time that reflect 500 changes (keep in mind that typing a single character counts as a change).
 
@@ -101,10 +101,10 @@ But if you undo to a previous state and then create a new state by typing or add
 
 ## License
 
-Marky Mark is freely distributable under the terms of the [MIT license](./LICENSE).
+Marky Marked is freely distributable under the terms of the [MIT license](./LICENSE).
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 
 
-_Each Marky Mark release is linted with ESLint and tested with Mocha Chai._
+_Each Marky Marked release is linted with ESLint and tested with Mocha Chai._
