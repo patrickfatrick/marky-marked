@@ -16,7 +16,7 @@ Marky Mark is an in-browser editor combining Markdown with the typical WYSIWYG t
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Mark outputs is markup.
 
-On top of all of that because it's built with immutable states Marky Mark comes with undo and redo..
+On top of all of that because it's built with immutable states Marky Mark comes with undo and redo.
 
 ## Dependencies
 
