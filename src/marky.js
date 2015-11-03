@@ -8,12 +8,10 @@
 
 import {Map} from 'immutable';
 import prototypes from './modules/prototypes';
-import polyfills from './modules/polyfills';
 import mark from './modules/mark';
 import * as dispatcher from './modules/dispatcher';
 
 prototypes();
-polyfills();
 
 export class Marky {
 	constructor () {
@@ -29,7 +27,7 @@ export class Marky {
 	}
 
 	undo(state, index) {
-		if (index === 0) return state;
+		if (index === 0) return state[0];
 
 		const action = dispatcher.undo(state, index);
 		this.index = action.index;
@@ -37,7 +35,7 @@ export class Marky {
 	}
 
 	redo(state, index) {
-		if (index === state.length - 1) return state;
+		if (index === state.length - 1) return state[state.length - 1];
 
 		const action = dispatcher.redo(state, index);
 		this.index = action.index;

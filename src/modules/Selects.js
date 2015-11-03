@@ -1,6 +1,7 @@
 import {Element} from './Element';
 import {HeadingOption} from './Options';
 import {blockHandler} from './handlers';
+import {update} from './custom-events';
 
 export class HeadingSelect extends Element {
 	constructor (type = 'select', title = 'Heading', id) {
@@ -18,11 +19,13 @@ export class HeadingSelect extends Element {
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
 			this.element.selectedIndex = 0;
-			return editor.nextSibling.value = html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(update);
 		});
 
-		let optionPlaceholder = new HeadingOption('option', 'Normal');
+		let optionPlaceholder = new HeadingOption('option', 'Headings', '');
 		optionPlaceholder.assign('value', '');
+		let remove = new HeadingOption('option', 'Remove', '');
 		let option1 = new HeadingOption('option', 'Heading 1', '#');
 		let option2 = new HeadingOption('option', 'Heading 2', '##');
 		let option3 = new HeadingOption('option', 'Heading 3', '###');
@@ -31,6 +34,7 @@ export class HeadingSelect extends Element {
 		let option6 = new HeadingOption('option', 'Heading 6', '######');
 
 		optionPlaceholder.appendTo(this.element);
+		remove.appendTo(this.element);
 		option1.appendTo(this.element);
 		option2.appendTo(this.element);
 		option3.appendTo(this.element);

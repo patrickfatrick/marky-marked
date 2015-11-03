@@ -56,6 +56,26 @@ describe('inline handling', () => {
 		boldify.range.should.contain.members([2, 11]);
 	});
 
+	it('can be used in the middle of ranges already marked', () => {
+		let string = '**Some text**';
+		let indices = [6, 13];
+
+		let boldify = inlineHandler(string, indices, '**');
+
+		boldify.value.should.equal('**Some** text');
+		boldify.range.should.contain.members([8, 13]);
+	});
+
+	it('sets selection range intuitively', () => {
+		let string = '**Some text**';
+		let indices = [6, 11];
+
+		let boldify = inlineHandler(string, indices, '**');
+
+		boldify.value.should.equal('**Some** text');
+		boldify.range.should.contain.members([8, 13]);
+	});
+
 	it('converts to HTML', () => {
 		var container = document.createElement('marky-mark');
 		document.body.appendChild(container);

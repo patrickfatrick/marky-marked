@@ -4,6 +4,7 @@ export class Element {
 		this.type = type;
 		this.id = id;
 		this.element = this.register();
+		if (this.title) this.element.title = this.title;
 	}
 
 	register () {

@@ -8,10 +8,12 @@ export default function () {
 	String.prototype.indicesOfMatches = function (regex, index) {
 		var str = (index !== null) ? this.substring(index) : this;
 		var matches = str.match(regex);
-		matches.map(function (match) {
-			return str.indexOf(match) + index;
+		var indices = [];
+		matches.forEach(function (match, i) {
+			let prevIndex = indices ? indices[i - 1] : null;
+			indices.push(str.indexOf(match, prevIndex + 1) + index);
 		});
-		return matches ? matches : -1;
+		return indices ? indices : -1;
 	};
 
 	String.prototype.lastIndexOfMatch = function (regex, index) {
@@ -35,6 +37,6 @@ export default function () {
 	};
 
 	String.prototype.lineEnd = function (index) {
-		return this.indexOfMatch(/.*$/gm, index);
+		return this.indexOfMatch(/(\r|\n|$)/gm, index);
 	};
 }

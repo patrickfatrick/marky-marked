@@ -6289,10 +6289,6 @@ var _modulesPrototypes = require('./modules/prototypes');
 
 var _modulesPrototypes2 = _interopRequireDefault(_modulesPrototypes);
 
-var _modulesPolyfills = require('./modules/polyfills');
-
-var _modulesPolyfills2 = _interopRequireDefault(_modulesPolyfills);
-
 var _modulesMark = require('./modules/mark');
 
 var _modulesMark2 = _interopRequireDefault(_modulesMark);
@@ -6302,7 +6298,6 @@ var _modulesDispatcher = require('./modules/dispatcher');
 var dispatcher = _interopRequireWildcard(_modulesDispatcher);
 
 (0, _modulesPrototypes2['default'])();
-(0, _modulesPolyfills2['default'])();
 
 var Marky = (function () {
 	function Marky() {
@@ -6322,7 +6317,7 @@ var Marky = (function () {
 	}, {
 		key: 'undo',
 		value: function undo(state, index) {
-			if (index === 0) return state;
+			if (index === 0) return state[0];
 
 			var action = dispatcher.undo(state, index);
 			this.index = action.index;
@@ -6331,7 +6326,7 @@ var Marky = (function () {
 	}, {
 		key: 'redo',
 		value: function redo(state, index) {
-			if (index === state.length - 1) return state;
+			if (index === state.length - 1) return state[state.length - 1];
 
 			var action = dispatcher.redo(state, index);
 			this.index = action.index;
@@ -6344,7 +6339,7 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/dispatcher":9,"./modules/mark":11,"./modules/polyfills":13,"./modules/prototypes":14,"immutable":2}],5:[function(require,module,exports){
+},{"./modules/dispatcher":10,"./modules/mark":12,"./modules/prototypes":14,"immutable":2}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6360,6 +6355,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _Element12 = require('./Element');
 
 var _handlers = require('./handlers');
+
+var _customEvents = require('./custom-events');
 
 var BoldButton = (function (_Element) {
 	_inherits(BoldButton, _Element);
@@ -6379,16 +6376,19 @@ var BoldButton = (function (_Element) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6415,16 +6415,19 @@ var ItalicButton = (function (_Element2) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6451,16 +6454,19 @@ var StrikethroughButton = (function (_Element3) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6487,16 +6493,19 @@ var CodeButton = (function (_Element4) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6521,18 +6530,21 @@ var BlockquoteButton = (function (_Element5) {
 		icon.appendTo(this.element);
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
 			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
-			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '>');
+			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '> ');
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6559,6 +6571,11 @@ var LinkButton = (function (_Element6) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var mark = '[DISPLAY TEXT](http://url.com)';
 			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
@@ -6566,10 +6583,8 @@ var LinkButton = (function (_Element6) {
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6596,6 +6611,11 @@ var ImageButton = (function (_Element7) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
 			var mark = '![ALT TEXT](http://imagesource.com)';
 			var imagify = (0, _handlers.insertHandler)(editor.value, indices, mark);
@@ -6603,10 +6623,8 @@ var ImageButton = (function (_Element7) {
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6674,6 +6692,9 @@ var UndoButton = (function (_Element10) {
 
 	function UndoButton(type, title, id) {
 		if (type === undefined) type = 'button';
+
+		var _this = this;
+
 		if (title === undefined) title = 'Undo';
 
 		_classCallCheck(this, UndoButton);
@@ -6687,14 +6708,18 @@ var UndoButton = (function (_Element10) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			if (_this.element.classList.contains('disabled')) return;
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
 			var markdown = activeState.get('markdown');
 			var html = activeState.get('html');
 			editor.value = markdown;
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.markychange);
 		});
 	}
 
@@ -6708,6 +6733,9 @@ var RedoButton = (function (_Element11) {
 
 	function RedoButton(type, title, id) {
 		if (type === undefined) type = 'button';
+
+		var _this2 = this;
+
 		if (title === undefined) title = 'Redo';
 
 		_classCallCheck(this, RedoButton);
@@ -6721,14 +6749,18 @@ var RedoButton = (function (_Element11) {
 			e.preventDefault();
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', this).call(this, 'click', function (e) {
+			e.preventDefault();
+			if (_this2.element.classList.contains('disabled')) return;
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			var activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
 			var markdown = activeState.get('markdown');
 			var html = activeState.get('html');
 			editor.value = markdown;
-			return editor.nextSibling.value = html;
-		});
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', this).call(this, 'click', function (e) {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.markychange);
 		});
 	}
 
@@ -6737,7 +6769,7 @@ var RedoButton = (function (_Element11) {
 
 exports.RedoButton = RedoButton;
 
-},{"./Element":6,"./handlers":10}],6:[function(require,module,exports){
+},{"./Element":6,"./custom-events":9,"./handlers":11}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6759,6 +6791,7 @@ var Element = (function () {
 		this.type = type;
 		this.id = id;
 		this.element = this.register();
+		if (this.title) this.element.title = this.title;
 	}
 
 	_createClass(Element, [{
@@ -6876,6 +6909,8 @@ var _Options = require('./Options');
 
 var _handlers = require('./handlers');
 
+var _customEvents = require('./custom-events');
+
 var HeadingSelect = (function (_Element) {
 	_inherits(HeadingSelect, _Element);
 
@@ -6902,11 +6937,13 @@ var HeadingSelect = (function (_Element) {
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].get('html');
 			_this.element.selectedIndex = 0;
-			return editor.nextSibling.value = html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
 		});
 
-		var optionPlaceholder = new _Options.HeadingOption('option', 'Normal');
+		var optionPlaceholder = new _Options.HeadingOption('option', 'Headings', '');
 		optionPlaceholder.assign('value', '');
+		var remove = new _Options.HeadingOption('option', 'Remove', '');
 		var option1 = new _Options.HeadingOption('option', 'Heading 1', '#');
 		var option2 = new _Options.HeadingOption('option', 'Heading 2', '##');
 		var option3 = new _Options.HeadingOption('option', 'Heading 3', '###');
@@ -6915,6 +6952,7 @@ var HeadingSelect = (function (_Element) {
 		var option6 = new _Options.HeadingOption('option', 'Heading 6', '######');
 
 		optionPlaceholder.appendTo(this.element);
+		remove.appendTo(this.element);
 		option1.appendTo(this.element);
 		option2.appendTo(this.element);
 		option3.appendTo(this.element);
@@ -6928,7 +6966,36 @@ var HeadingSelect = (function (_Element) {
 
 exports.HeadingSelect = HeadingSelect;
 
-},{"./Element":6,"./Options":7,"./handlers":10}],9:[function(require,module,exports){
+},{"./Element":6,"./Options":7,"./custom-events":9,"./handlers":11}],9:[function(require,module,exports){
+// Custom Event Polyfill for IE9+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+(function () {
+	function CustomEvent(event, params) {
+		params = params || {
+			bubbles: false,
+			cancelable: false,
+			detail: undefined
+		};
+		var evt = document.createEvent('CustomEvent');
+		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+		return evt;
+	}
+
+	CustomEvent.prototype = window.Event.prototype;
+
+	window.CustomEvent = CustomEvent;
+})();
+
+var update = new CustomEvent('update');
+exports.update = update;
+var markychange = new CustomEvent('markychange');
+exports.markychange = markychange;
+
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6966,7 +7033,7 @@ function redo(state, stateIndex) {
 	return { state: state[stateIndex], index: stateIndex };
 }
 
-},{"./operation":12,"marked":3}],10:[function(require,module,exports){
+},{"./operation":13,"marked":3}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6989,6 +7056,7 @@ function inlineHandler(string, indices, mark) {
 				} else {
 					indices[1] = indices[1] - mark.length;
 				}
+				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';
 			}
 			if (string.indexOf(mark, indices[index]) === indices[index]) {
@@ -6996,6 +7064,7 @@ function inlineHandler(string, indices, mark) {
 				if (index == 0 && indices[0] != indices[1]) {
 					indices[1] = indices[1] - mark.length;
 				}
+				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';
 			}
 		}
@@ -7010,10 +7079,16 @@ function blockHandler(string, indices, mark) {
 	var value = undefined;
 	var lineStart = string.lineStart(start);
 	var lineEnd = string.lineEnd(end);
-	if (string.indexOf(mark.trim(), lineStart) === lineStart) {
-		value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/\b|\n/g), string.length);
-
-		return { value: value, range: [lineStart, lineEnd - mark.length] };
+	if (string.indexOfMatch(/^[#>]/m, lineStart) === lineStart) {
+		var currentFormat = string.substring(lineStart, lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm));
+		value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm), string.length);
+		lineEnd = lineEnd - currentFormat.length;
+		if (currentFormat.trim() !== mark.trim()) {
+			value = string.substring(0, lineStart) + mark + string.substring(lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm), string.length);
+			lineStart = lineStart + mark.length;
+			lineEnd = lineEnd + mark.length;
+		}
+		return { value: value, range: [lineStart, lineEnd] };
 	}
 	value = string.substring(0, lineStart) + mark + string.substring(lineStart, string.length);
 	return { value: value, range: [start + mark.length, end + mark.length] };
@@ -7027,7 +7102,7 @@ function insertHandler(string, indices, mark) {
 	return { value: value, range: [end, end + mark.length] };
 }
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7042,6 +7117,8 @@ var _Buttons = require('./Buttons');
 
 var _Selects = require('./Selects');
 
+var _customEvents = require('./custom-events');
+
 /**
  * Register and append the DOM elements needed and set the event listeners
  * @param 	{String}	tag name to be used for initialization
@@ -7051,11 +7128,11 @@ var _Selects = require('./Selects');
 exports['default'] = function () {
 	var tag = arguments.length <= 0 || arguments[0] === undefined ? 'marky-mark' : arguments[0];
 
-	var update = new CustomEvent('update');
 	var containers = document.getElementsByTagName(tag);
 	Array.prototype.forEach.call(containers, function (container, i) {
 		var toolbar = new _Element.Element('div', 'Toolbar');
 		var id = 'editor-' + i;
+		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
 
 		var headingSelect = new _Selects.HeadingSelect('select', 'Heading', id);
@@ -7123,19 +7200,33 @@ exports['default'] = function () {
 
 		editor.addEventListener('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
+			return e.target.dispatchEvent(_customEvents.markychange);
+		}, false);
+
+		editor.addEventListener('markychange', function (e) {
 			var html = this._marky.state[this._marky.index].get('html');
+			if (this._marky.index === 0) {
+				document.querySelector(this.id + ' .undo').classList.add('disabled');
+			} else {
+				document.querySelector(this.id + ' .undo').classList.remove('disabled');
+			}
+			if (this._marky.index === this._marky.state.length - 1) {
+				document.querySelector(this.id + ' .redo').classList.add('disabled');
+			} else {
+				document.querySelector(this.id + ' .redo').classList.remove('disabled');
+			}
 			return e.target.nextSibling.value = html;
 		}, false);
 
 		editor.addEventListener('input', function (e) {
-			return e.target.dispatchEvent(update);
+			return e.target.dispatchEvent(_customEvents.update);
 		}, false);
 	});
 };
 
 module.exports = exports['default'];
 
-},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8}],12:[function(require,module,exports){
+},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8,"./custom-events":9}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7152,39 +7243,16 @@ exports['default'] = function (state, stateIndex, fn) {
 	var newVersion = fn(state[stateIndex]);
 	state.push(newVersion);
 	stateIndex++;
+	if (stateIndex > 499) {
+		state.shift();
+		stateIndex--;
+	}
 	return { state: state, index: stateIndex };
 };
 
 module.exports = exports['default'];
 
-},{"immutable":2}],13:[function(require,module,exports){
-// Custom Event Polyfill for IE9+
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-exports['default'] = function () {
-	function CustomEvent(event, params) {
-		params = params || {
-			bubbles: false,
-			cancelable: false,
-			detail: undefined
-		};
-		var evt = document.createEvent('CustomEvent');
-		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-		return evt;
-	}
-
-	CustomEvent.prototype = window.Event.prototype;
-
-	window.CustomEvent = CustomEvent;
-};
-
-module.exports = exports['default'];
-
-},{}],14:[function(require,module,exports){
+},{"immutable":2}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7201,10 +7269,12 @@ exports["default"] = function () {
 	String.prototype.indicesOfMatches = function (regex, index) {
 		var str = index !== null ? this.substring(index) : this;
 		var matches = str.match(regex);
-		matches.map(function (match) {
-			return str.indexOf(match) + index;
+		var indices = [];
+		matches.forEach(function (match, i) {
+			var prevIndex = indices ? indices[i - 1] : null;
+			indices.push(str.indexOf(match, prevIndex + 1) + index);
 		});
-		return matches ? matches : -1;
+		return indices ? indices : -1;
 	};
 
 	String.prototype.lastIndexOfMatch = function (regex, index) {
@@ -7228,7 +7298,7 @@ exports["default"] = function () {
 	};
 
 	String.prototype.lineEnd = function (index) {
-		return this.indexOfMatch(/.*$/gm, index);
+		return this.indexOfMatch(/(\r|\n|$)/gm, index);
 	};
 };
 

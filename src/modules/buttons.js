@@ -1,5 +1,6 @@
 import {Element} from './Element';
 import {inlineHandler, blockHandler, insertHandler} from './handlers';
+import {update, markychange} from './custom-events';
 
 export class BoldButton extends Element {
 	constructor (type = 'button', title = 'Bold', id) {
@@ -12,16 +13,19 @@ export class BoldButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let boldify = inlineHandler(editor.value, indices, '**');
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -37,16 +41,20 @@ export class ItalicButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let italicize = inlineHandler(editor.value, indices, '_');
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -62,16 +70,19 @@ export class StrikethroughButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let strikitize = inlineHandler(editor.value, indices, '~~');
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -87,16 +98,19 @@ export class CodeButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let codify = inlineHandler(editor.value, indices, '`');
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -110,18 +124,21 @@ export class BlockquoteButton extends Element {
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
-			let quotify = blockHandler(editor.value, indices, '>');
+			let quotify = blockHandler(editor.value, indices, '> ');
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -137,6 +154,11 @@ export class LinkButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			const mark = '[DISPLAY TEXT](http://url.com)';
 			let linkify = insertHandler(editor.value, indices, mark);
@@ -144,10 +166,8 @@ export class LinkButton extends Element {
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -163,6 +183,12 @@ export class ImageButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			const mark = '![ALT TEXT](http://imagesource.com)';
 			let imagify = insertHandler(editor.value, indices, mark);
@@ -170,10 +196,8 @@ export class ImageButton extends Element {
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
 			let html = editor._marky.state[editor._marky.index].get('html');
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -221,14 +245,18 @@ export class UndoButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			if (this.element.classList.contains('disabled')) return;
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			let activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
 			let markdown = activeState.get('markdown');
 			let html = activeState.get('html');
 			editor.value = markdown;
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(markychange);
 		});
 	}
 }
@@ -244,14 +272,18 @@ export class RedoButton extends Element {
 			e.preventDefault();
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			if (this.element.classList.contains('disabled')) return;
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 			let activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
 			let markdown = activeState.get('markdown');
 			let html = activeState.get('html');
 			editor.value = markdown;
-			return editor.nextSibling.value = html;
-		});
-		super.listen('click', e => {
-			e.preventDefault();
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(markychange);
 		});
 	}
 }

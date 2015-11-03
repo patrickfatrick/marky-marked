@@ -1,5 +1,5 @@
 // Custom Event Polyfill for IE9+
-export default function () {
+(function () {
 	function CustomEvent(event, params) {
 		params = params || {
 			bubbles: false,
@@ -14,4 +14,7 @@ export default function () {
 	CustomEvent.prototype = window.Event.prototype;
 
 	window.CustomEvent = CustomEvent;
-}
+})();
+
+export var update = new CustomEvent('update');
+export var markychange = new CustomEvent('markychange');

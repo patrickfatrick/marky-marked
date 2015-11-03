@@ -5,5 +5,9 @@ export default function (state = [Map({markdown: '', html: ''})], stateIndex = 0
 	var newVersion = fn(state[stateIndex]);
 	state.push(newVersion);
 	stateIndex++;
+	if (stateIndex > 499) {
+		state.shift();
+		stateIndex--;
+	}
 	return {state: state, index: stateIndex};
 }

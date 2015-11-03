@@ -10,10 +10,10 @@ marky-mark {
 			@include no-outline;
 			@include side-margins(2px, 2px);
 			cursor: pointer;
-			border: 1px solid gray;
+			border: 1px solid $gray;
 			padding: 3px;
 			border-radius: 4px;
-			box-shadow: 1px 1px 2px gray;
+			box-shadow: 1px 1px 2px $gray;
 			min-width: 1.5rem;
 			min-height: 1.5rem;
 			text-align: center;
@@ -26,6 +26,9 @@ marky-mark {
 				background: -ms-linear-gradient($white * 0.7, $white);
 				background: -o-linear-gradient($white * 0.7, $white);
 				background: linear-gradient($white * 0.7, $white);
+			}
+			&:focus {
+				border-color: $deepBlue;
 			}
 		}
 		select {
@@ -42,6 +45,9 @@ marky-mark {
 			text-align: center;
 			background-color: white;
 			color: black;
+			&:focus {
+				border-color: $deepBlue;
+			}
 			@media all and (min-width: 1200px) {
 				min-width: 6rem;
 				padding-left: 0.7rem;

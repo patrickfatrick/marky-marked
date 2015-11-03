@@ -2,6 +2,7 @@ import {Marky} from '../marky';
 import {Element} from './Element';
 import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
 import {HeadingSelect} from './Selects';
+import {update, markychange} from './custom-events';
 
 /**
  * Register and append the DOM elements needed and set the event listeners
@@ -10,11 +11,11 @@ import {HeadingSelect} from './Selects';
  */
 export default function (tag = 'marky-mark') {
 
-	const update = new CustomEvent('update');
 	let containers = document.getElementsByTagName(tag);
 	Array.prototype.forEach.call(containers, (container, i) => {
 		let toolbar = new Element('div', 'Toolbar');
 		let id = 'editor-' + i;
+		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
 
 		let headingSelect = new HeadingSelect('select', 'Heading', id);
@@ -82,7 +83,21 @@ export default function (tag = 'marky-mark') {
 
 		editor.addEventListener('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
+			return e.target.dispatchEvent(markychange);
+		}, false);
+
+		editor.addEventListener('markychange', function (e) {
 			let html = this._marky.state[this._marky.index].get('html');
+			if (this._marky.index === 0)  {
+				document.querySelector(this.id + ' .undo').classList.add('disabled');
+			} else {
+				document.querySelector(this.id + ' .undo').classList.remove('disabled');
+			}
+			if (this._marky.index === this._marky.state.length - 1) {
+				document.querySelector(this.id + ' .redo').classList.add('disabled');
+			} else {
+				document.querySelector(this.id + ' .redo').classList.remove('disabled');
+			}
 			return e.target.nextSibling.value = html;
 		}, false);
 
