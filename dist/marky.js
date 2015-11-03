@@ -6617,7 +6617,7 @@ var ImageButton = (function (_Element7) {
 			var editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			var indices = [editor.selectionStart, editor.selectionEnd];
-			var mark = '![ALT TEXT](http://imagesource.com)';
+			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
 			var imagify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = imagify.value;
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);

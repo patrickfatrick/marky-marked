@@ -1,5 +1,5 @@
 import {Element} from './Element';
-import {inlineHandler, blockHandler, insertHandler} from './handlers';
+import {inlineHandler, blockHandler, insertHandler, listHandler} from './handlers';
 import {update, markychange} from './custom-events';
 
 export class BoldButton extends Element {
@@ -190,7 +190,7 @@ export class ImageButton extends Element {
 			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
-			const mark = '![ALT TEXT](http://imagesource.com)';
+			const mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
 			let imagify = insertHandler(editor.value, indices, mark);
 			editor.value = imagify.value;
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
@@ -211,9 +211,21 @@ export class UnorderedListButton extends Element {
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			const indices = [editor.selectionStart, editor.selectionEnd];
+			let listify = listHandler(editor.value, indices, 'ul');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			let html = editor._marky.state.get(editor._marky.index).get('html');
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
@@ -227,9 +239,21 @@ export class OrderedListButton extends Element {
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
+			const editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			const indices = [editor.selectionStart, editor.selectionEnd];
+			let listify = listHandler(editor.value, indices, 'ol');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			let html = editor._marky.state.get(editor._marky.index).get('html');
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(update);
 		});
 	}
 }
