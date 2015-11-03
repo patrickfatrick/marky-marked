@@ -14,4 +14,18 @@ describe('insert handling', () => {
 		boldify.value.should.equal('Some text [DISPLAY TEXT](https://url.com)');
 		boldify.range.should.contain.members([10, 41]);
 	});
+
+	it('converts to HTML', () => {
+		var container = document.createElement('marky-mark');
+		document.body.appendChild(container);
+		mark('marky-mark');
+		container.children[1].value = 'Some text ![Image](http://imagesource.com/image.jpg)';
+
+		const evt = document.createEvent('HTMLEvents');
+		evt.initEvent('update', false, true);
+		container.children[1].dispatchEvent(evt);
+
+		container.children[2].value.should.contain('<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>');
+	});
+
 });

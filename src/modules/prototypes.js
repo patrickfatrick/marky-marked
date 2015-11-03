@@ -32,11 +32,11 @@ export default function () {
 		return str.split(/\r\n|\r|\n/);
 	};
 
-	String.prototype.lineStart = function (index) {
+	String.prototype.lineStart = function (index = 0) {
 		return this.lastIndexOfMatch(/^.*/gm, index);
 	};
 
-	String.prototype.lineEnd = function (index) {
+	String.prototype.lineEnd = function (index = 0) {
 		return this.indexOfMatch(/(\r|\n|$)/gm, index);
 	};
 }

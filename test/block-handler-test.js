@@ -85,6 +85,36 @@ describe('block handling', () => {
 		headingify.range.should.contain.members([3, 16]);
 	});
 
+	it('also considers list formats to be text when removing other block formats', () => {
+		let string = '> 1. Some text';
+		let indices = [0, 14];
+
+		let headingify = blockHandler(string, indices, '>' + ' ');
+
+		headingify.value.should.equal('1. Some text');
+		headingify.range.should.contain.members([0, 12]);
+	});
+
+	it('also considers list formats to be text when exchanging block formats', () => {
+		let string = '> 1. Some text';
+		let indices = [0, 14];
+
+		let headingify = blockHandler(string, indices, '#' + ' ');
+
+		headingify.value.should.equal('# 1. Some text');
+		headingify.range.should.contain.members([2, 14]);
+	});
+
+	it('can deal with a blank mark', () => {
+		let string = '# Some text';
+		let indices = [0, 11];
+
+		let headingify = blockHandler(string, indices, '');
+
+		headingify.value.should.equal('Some text');
+		headingify.range.should.contain.members([0, 9]);
+	});
+
 	it('works on a blank line', () => {
 		let string = '';
 		let indices = [0, 0];
@@ -103,6 +133,19 @@ describe('block handling', () => {
 
 		headingify.value.should.equal('# ');
 		headingify.range.should.contain.members([2, 2]);
+	});
+
+	it('converts to HTML', () => {
+		var container = document.createElement('marky-mark');
+		document.body.appendChild(container);
+		mark('marky-mark');
+		container.children[1].value = '## Some text';
+
+		const evt = document.createEvent('HTMLEvents');
+		evt.initEvent('update', false, true);
+		container.children[1].dispatchEvent(evt);
+
+		container.children[2].value.should.contain('<h2 id="some-text">Some text</h2>');
 	});
 
 });

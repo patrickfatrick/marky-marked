@@ -6649,9 +6649,21 @@ var UnorderedListButton = (function (_Element8) {
 		icon.appendTo(this.element);
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
 			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ul');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state.get(editor._marky.index).get('html');
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -6676,9 +6688,21 @@ var OrderedListButton = (function (_Element9) {
 		icon.appendTo(this.element);
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
 			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
 		});
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
+			var editor = document.querySelector('textarea.' + id);
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ol');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state.get(editor._marky.index).get('html');
+			editor.nextSibling.value = html;
+			return editor.dispatchEvent(_customEvents.update);
 		});
 	}
 
@@ -7071,6 +7095,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.inlineHandler = inlineHandler;
 exports.blockHandler = blockHandler;
+exports.listHandler = listHandler;
 exports.insertHandler = insertHandler;
 
 function inlineHandler(string, indices, mark) {
@@ -7110,11 +7135,11 @@ function blockHandler(string, indices, mark) {
 	var lineStart = string.lineStart(start);
 	var lineEnd = string.lineEnd(end);
 	if (string.indexOfMatch(/^[#>]/m, lineStart) === lineStart) {
-		var currentFormat = string.substring(lineStart, lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm));
-		value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm), string.length);
+		var currentFormat = string.substring(lineStart, lineStart + string.substring(lineStart).search(/[0-9~*`_-]|\b|\n|$/gm));
+		value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/[0-9~*`_-]|\b|\n|$/gm), string.length);
 		lineEnd = lineEnd - currentFormat.length;
-		if (currentFormat.trim() !== mark.trim()) {
-			value = string.substring(0, lineStart) + mark + string.substring(lineStart + string.substring(lineStart).search(/[~*`_]|\b|\n|$/gm), string.length);
+		if (currentFormat.trim() !== mark.trim() && mark.trim().length) {
+			value = string.substring(0, lineStart) + mark + string.substring(lineStart + string.substring(lineStart).search(/[0-9~*`_-]|\b|\n|$/gm), string.length);
 			lineStart = lineStart + mark.length;
 			lineEnd = lineEnd + mark.length;
 		}
@@ -7122,6 +7147,31 @@ function blockHandler(string, indices, mark) {
 	}
 	value = string.substring(0, lineStart) + mark + string.substring(lineStart, string.length);
 	return { value: value, range: [start + mark.length, end + mark.length] };
+}
+
+function listHandler(string, indices, type) {
+	var start = string.lineStart(indices[0]);
+	var end = string.lineEnd(indices[1]);
+	var lines = string.substring(start, end).splitLines();
+	var newLines = [];
+	var value = undefined;
+	lines.forEach(function (line, i) {
+		var mark = type === 'ul' ? '-' + ' ' : i + 1 + '.' + ' ';
+		var newLine = undefined;
+		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
+			var currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_]|[a-zA-Z]|\n|$/gm));
+			newLine = line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+			if (currentFormat.trim() !== mark.trim()) {
+				newLine = mark + line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+			}
+			return newLines.push(newLine);
+		}
+		newLine = mark + line.substring(0, line.length);
+		return newLines.push(newLine);
+	});
+	var joined = newLines.join('\r\n');
+	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
+	return { value: value, range: [start, start + joined.length] };
 }
 
 function insertHandler(string, indices, mark) {
@@ -7318,11 +7368,15 @@ exports["default"] = function () {
 		return str.split(/\r\n|\r|\n/);
 	};
 
-	String.prototype.lineStart = function (index) {
+	String.prototype.lineStart = function () {
+		var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
 		return this.lastIndexOfMatch(/^.*/gm, index);
 	};
 
-	String.prototype.lineEnd = function (index) {
+	String.prototype.lineEnd = function () {
+		var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+
 		return this.indexOfMatch(/(\r|\n|$)/gm, index);
 	};
 };
