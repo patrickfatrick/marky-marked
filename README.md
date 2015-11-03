@@ -2,10 +2,10 @@
 
 _An in-browser editor so sweet you'll feel good vibrations._
 
-[![Build Status](https://travis-ci.org/patrickfatrick/marky-mark.svg)](https://travis-ci.org/patrickfatrick/marky-mark)
-[![Dependency Status](https://david-dm.org/patrickfatrick/marky-mark.svg)](https://david-dm.org/patrickfatrick/marky-mark)
-[![devDependency Status](https://david-dm.org/patrickfatrick/marky-mark/dev-status.svg)](https://david-dm.org/patrickfatrick/marky-mark#info=devDependencies)
-[![Coverage Status](https://coveralls.io/repos/patrickfatrick/marky-mark/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/marky-mark?branch=master)
+[![Build Status](https://travis-ci.org/patrickfatrick/marky-marked.svg)](https://travis-ci.org/patrickfatrick/marky-marked)
+[![Dependency Status](https://david-dm.org/patrickfatrick/marky-marked.svg)](https://david-dm.org/patrickfatrick/marky-marked)
+[![devDependency Status](https://david-dm.org/patrickfatrick/marky-marked/dev-status.svg)](https://david-dm.org/patrickfatrick/marky-marked#info=devDependencies)
+[![Coverage Status](https://coveralls.io/repos/patrickfatrick/marky-marked/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/marky-marked?branch=master)
 [![MIT License][license-image]][license-url]
 
 ![Marky Marked](./images/marky-marked.png)
