@@ -20,7 +20,7 @@ On top of all of that because it's built with immutable states Marky Mark comes 
 
 ## Dependencies
 
-Marky Mark has two dependencies to run:
+Marky Mark has two dependencies to run, both of which are included in the /dist files:
 
 - [Immutable.js](https://facebook.github.io/immutable-js/)
 - [Marked](https://github.com/chjj/marked)
@@ -84,6 +84,7 @@ But if you undo to a previous state and then create a new state by typing or add
 
 ## What's the plan?
 
+- More annotations.
 - Make a github page to host a demo.
 - Add more JSDOM and/or browser-based testing.
 - Explore a nicer modal-based link and url entry.
