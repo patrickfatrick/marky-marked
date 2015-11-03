@@ -23,7 +23,7 @@ export class BoldButton extends Element {
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -52,7 +52,7 @@ export class ItalicButton extends Element {
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -80,7 +80,7 @@ export class StrikethroughButton extends Element {
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -108,7 +108,7 @@ export class CodeButton extends Element {
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -136,7 +136,7 @@ export class BlockquoteButton extends Element {
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -165,7 +165,7 @@ export class LinkButton extends Element {
 			editor.value = linkify.value;
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});
@@ -195,7 +195,7 @@ export class ImageButton extends Element {
 			editor.value = imagify.value;
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].get('html');
+			let html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(update);
 		});

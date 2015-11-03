@@ -4,7 +4,7 @@ import mark from '../src/modules/mark';
 import {insertHandler} from '../src/modules/handlers';
 
 chai.should();
-describe('block handling', () => {
+describe('insert handling', () => {
 	it('inserts and selects the inserted markdown', () => {
 		let string = 'Some text ';
 		let indices = [10, 10];

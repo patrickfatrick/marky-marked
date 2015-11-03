@@ -6304,7 +6304,7 @@ var Marky = (function () {
 		_classCallCheck(this, Marky);
 
 		this.mark = _modulesMark2['default'];
-		this.state = [(0, _immutable.Map)({ markdown: '', html: '' })], this.index = 0;
+		this.state = (0, _immutable.List)([(0, _immutable.Map)({ markdown: '', html: '' })]), this.index = 0;
 	}
 
 	_createClass(Marky, [{
@@ -6326,7 +6326,7 @@ var Marky = (function () {
 	}, {
 		key: 'redo',
 		value: function redo(state, index) {
-			if (index === state.length - 1) return state[state.length - 1];
+			if (index === state.size - 1) return state.get(state.size - 1);
 
 			var action = dispatcher.redo(state, index);
 			this.index = action.index;
@@ -6386,7 +6386,7 @@ var BoldButton = (function (_Element) {
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6425,7 +6425,7 @@ var ItalicButton = (function (_Element2) {
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6464,7 +6464,7 @@ var StrikethroughButton = (function (_Element3) {
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6503,7 +6503,7 @@ var CodeButton = (function (_Element4) {
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6542,7 +6542,7 @@ var BlockquoteButton = (function (_Element5) {
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6582,7 +6582,7 @@ var LinkButton = (function (_Element6) {
 			editor.value = linkify.value;
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6622,7 +6622,7 @@ var ImageButton = (function (_Element7) {
 			editor.value = imagify.value;
 			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			editor.nextSibling.value = html;
 			return editor.dispatchEvent(_customEvents.update);
 		});
@@ -6840,6 +6840,36 @@ var Element = (function () {
 			return;
 		}
 	}, {
+		key: "removeClass",
+		value: function removeClass(classNames) {
+			var _iteratorNormalCompletion2 = true;
+			var _didIteratorError2 = false;
+			var _iteratorError2 = undefined;
+
+			try {
+				for (var _iterator2 = classNames[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+					var className = _step2.value;
+
+					this.element.classList.remove(className.toLowerCase());
+				}
+			} catch (err) {
+				_didIteratorError2 = true;
+				_iteratorError2 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+						_iterator2["return"]();
+					}
+				} finally {
+					if (_didIteratorError2) {
+						throw _iteratorError2;
+					}
+				}
+			}
+
+			return;
+		}
+	}, {
 		key: "listen",
 		value: function listen(evt, cb) {
 			return this.element.addEventListener(evt, cb);
@@ -6935,7 +6965,7 @@ var HeadingSelect = (function (_Element) {
 			editor.value = headingify.value;
 			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].get('html');
+			var html = editor._marky.state.get(editor._marky.index).get('html');
 			_this.element.selectedIndex = 0;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -7025,12 +7055,12 @@ function update(markdown, state, stateIndex) {
 
 function undo(state, stateIndex) {
 	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
-	return { state: state[stateIndex], index: stateIndex };
+	return { state: state.get(stateIndex), index: stateIndex };
 }
 
 function redo(state, stateIndex) {
-	stateIndex = stateIndex < state.length - 5 ? stateIndex + 5 : state.length - 1;
-	return { state: state[stateIndex], index: stateIndex };
+	stateIndex = stateIndex < state.size - 5 ? stateIndex + 5 : state.size - 1;
+	return { state: state.get(stateIndex), index: stateIndex };
 }
 
 },{"./operation":13,"marked":3}],11:[function(require,module,exports){
@@ -7167,6 +7197,7 @@ exports['default'] = function () {
 		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.assign('contentEditable', true);
 		textarea.addClass(['marky-editor', id]);
+		textarea.assign('_marky', new _marky.Marky());
 
 		var input = new _Element.Element('input', 'Output');
 		input.assign('type', 'hidden');
@@ -7191,34 +7222,28 @@ exports['default'] = function () {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
-	});
 
-	var editors = document.querySelectorAll('.marky-editor');
-
-	Array.prototype.forEach.call(editors, function (editor) {
-		editor._marky = new _marky.Marky();
-
-		editor.addEventListener('update', function (e) {
+		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(_customEvents.markychange);
 		}, false);
 
-		editor.addEventListener('markychange', function (e) {
-			var html = this._marky.state[this._marky.index].get('html');
+		textarea.listen('markychange', function (e) {
+			var html = this._marky.state.get(this._marky.index).get('html');
 			if (this._marky.index === 0) {
-				document.querySelector(this.id + ' .undo').classList.add('disabled');
+				undoButton.addClass(['disabled']);
 			} else {
-				document.querySelector(this.id + ' .undo').classList.remove('disabled');
+				undoButton.removeClass(['disabled']);
 			}
-			if (this._marky.index === this._marky.state.length - 1) {
-				document.querySelector(this.id + ' .redo').classList.add('disabled');
+			if (this._marky.index === this._marky.state.size - 1) {
+				redoButton.addClass(['disabled']);
 			} else {
-				document.querySelector(this.id + ' .redo').classList.remove('disabled');
+				redoButton.removeClass(['disabled']);
 			}
 			return e.target.nextSibling.value = html;
 		}, false);
 
-		editor.addEventListener('input', function (e) {
+		textarea.listen('input', function (e) {
 			return e.target.dispatchEvent(_customEvents.update);
 		}, false);
 	});
@@ -7236,12 +7261,12 @@ Object.defineProperty(exports, '__esModule', {
 var _immutable = require('immutable');
 
 exports['default'] = function (state, stateIndex, fn) {
-	if (state === undefined) state = [(0, _immutable.Map)({ markdown: '', html: '' })];
+	if (state === undefined) state = (0, _immutable.List)([(0, _immutable.Map)({ markdown: '', html: '' })]);
 	if (stateIndex === undefined) stateIndex = 0;
 
 	state = state.slice(0, stateIndex + 1);
-	var newVersion = fn(state[stateIndex]);
-	state.push(newVersion);
+	var newVersion = fn(state.get(stateIndex));
+	state = state.push(newVersion);
 	stateIndex++;
 	if (stateIndex > 499) {
 		state.shift();

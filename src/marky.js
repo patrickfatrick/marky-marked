@@ -6,7 +6,7 @@
  * https://www.github.com/patrickfatrick/marky-mark
  */
 
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 import prototypes from './modules/prototypes';
 import mark from './modules/mark';
 import * as dispatcher from './modules/dispatcher';
@@ -16,7 +16,7 @@ prototypes();
 export class Marky {
 	constructor () {
 		this.mark = mark;
-		this.state = [Map({markdown: '', html: ''})],
+		this.state = List([Map({markdown: '', html: ''})]),
 		this.index = 0;
 	}
 
@@ -35,7 +35,7 @@ export class Marky {
 	}
 
 	redo(state, index) {
-		if (index === state.length - 1) return state[state.length - 1];
+		if (index === state.size - 1) return state.get(state.size - 1);
 
 		const action = dispatcher.redo(state, index);
 		this.index = action.index;

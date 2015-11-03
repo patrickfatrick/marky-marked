@@ -26,6 +26,13 @@ export class Element {
 		return;
 	}
 
+	removeClass(classNames) {
+		for (let className of classNames) {
+			this.element.classList.remove(className.toLowerCase());
+		}
+		return;
+	}
+
 	listen(evt, cb) {
 		return this.element.addEventListener(evt, cb);
 	}

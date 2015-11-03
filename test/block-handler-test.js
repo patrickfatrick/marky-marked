@@ -82,7 +82,7 @@ describe('block handling', () => {
 		let headingify = blockHandler(string, indices, '##' + ' ');
 
 		headingify.value.should.equal('## **Some text**');
-		headingify.range.should.contain.members([2, 15]);
+		headingify.range.should.contain.members([3, 16]);
 	});
 
 	it('works on a blank line', () => {

@@ -1,19 +1,19 @@
 import chai from 'chai';
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 import * as dispatcher from '../src/modules/dispatcher';
 
 chai.should();
 describe('redo', () => {
 
 	it('returns a future state', () => {
-		const initialState = [
+		const initialState = List([
 			Map({markdown: '', html: ''}),
 			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
 			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
 			Map({markdown: 'Some really funny text', html: '<p>Some really funny text</p>'}),
 			Map({markdown: 'Some really funny awesome text', html: '<p>Some really funny awesome text</p>'}),
 			Map({markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'})
-		];
+		]);
 		const stateIndex = 0;
 		let newState = dispatcher.redo(initialState, stateIndex).state;
 
@@ -22,7 +22,7 @@ describe('redo', () => {
 	});
 
 	it('returns a future state from the middle of the stack', () => {
-		const initialState = [
+		const initialState = List([
 			Map({markdown: '', html: ''}),
 			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
 			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
@@ -30,7 +30,7 @@ describe('redo', () => {
 			Map({markdown: 'Some really funny awesome text', html: '<p>Some really funny awesome text</p>'}),
 			Map({markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'}),
 			Map({markdown: 'Some really super funny awesome crazy text', html: '<p>Some super really funny awesome crazy text</p>'})
-		];
+		]);
 		const stateIndex = 1;
 		let newState = dispatcher.redo(initialState, stateIndex).state;
 
@@ -39,12 +39,12 @@ describe('redo', () => {
 	});
 
 	it('returns the newest if it is less than 5 from the end in the stack', () => {
-		const initialState = [
+		const initialState = List([
 			Map({markdown: '', html: ''}),
 			Map({markdown: 'Some text', html: '<p>Some text</p>'}),
 			Map({markdown: 'Some funny text', html: '<p>Some funny text</p>'}),
 			Map({markdown: 'Some super funny text', html: '<p>Some super funny text</p>'})
-		];
+		]);
 		const stateIndex = 1;
 		let newState = dispatcher.redo(initialState, stateIndex).state;
 

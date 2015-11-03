@@ -50,6 +50,7 @@ export default function (tag = 'marky-mark') {
 		let textarea = new Element('textarea', 'Editor');
 		textarea.assign('contentEditable', true);
 		textarea.addClass(['marky-editor', id]);
+		textarea.assign('_marky', new Marky);
 
 		let input = new Element('input', 'Output');
 		input.assign('type', 'hidden');
@@ -74,34 +75,28 @@ export default function (tag = 'marky-mark') {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
-	});
 
-	let editors = document.querySelectorAll('.marky-editor');
-
-	Array.prototype.forEach.call(editors, editor => {
-		editor._marky = new Marky;
-
-		editor.addEventListener('update', function (e) {
+		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(markychange);
 		}, false);
 
-		editor.addEventListener('markychange', function (e) {
-			let html = this._marky.state[this._marky.index].get('html');
+		textarea.listen('markychange', function (e) {
+			let html = this._marky.state.get(this._marky.index).get('html');
 			if (this._marky.index === 0)  {
-				document.querySelector(this.id + ' .undo').classList.add('disabled');
+				undoButton.addClass(['disabled']);
 			} else {
-				document.querySelector(this.id + ' .undo').classList.remove('disabled');
+				undoButton.removeClass(['disabled']);
 			}
-			if (this._marky.index === this._marky.state.length - 1) {
-				document.querySelector(this.id + ' .redo').classList.add('disabled');
+			if (this._marky.index === this._marky.state.size - 1) {
+				redoButton.addClass(['disabled']);
 			} else {
-				document.querySelector(this.id + ' .redo').classList.remove('disabled');
+				redoButton.removeClass(['disabled']);
 			}
 			return e.target.nextSibling.value = html;
 		}, false);
 
-		editor.addEventListener('input', function (e) {
+		textarea.listen('input', function (e) {
 			return e.target.dispatchEvent(update);
 		}, false);
 
