@@ -27,7 +27,7 @@ export class Marky {
 	}
 
 	undo(state, index) {
-		if (index === 0) return state[0];
+		if (index === 0) return state.get(0);
 
 		const action = dispatcher.undo(state, index);
 		this.index = action.index;

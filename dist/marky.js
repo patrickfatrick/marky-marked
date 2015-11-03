@@ -6317,7 +6317,7 @@ var Marky = (function () {
 	}, {
 		key: 'undo',
 		value: function undo(state, index) {
-			if (index === 0) return state[0];
+			if (index === 0) return state.get(0);
 
 			var action = dispatcher.undo(state, index);
 			this.index = action.index;
@@ -7269,7 +7269,7 @@ exports['default'] = function (state, stateIndex, fn) {
 	state = state.push(newVersion);
 	stateIndex++;
 	if (stateIndex > 499) {
-		state.shift();
+		state = state.shift();
 		stateIndex--;
 	}
 	return { state: state, index: stateIndex };
