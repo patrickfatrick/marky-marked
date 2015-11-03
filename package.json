@@ -1,6 +1,6 @@
 {
 	"name": "marky-mark",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "A browser editor combining the power of markdown with the ease of WYSIWYG",
 	"main": "index.js",
 	"format": "es6",
