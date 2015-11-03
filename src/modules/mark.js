@@ -1,7 +1,7 @@
 import {Marky} from '../marky';
-import {Element} from './element';
-import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './buttons';
-import {HeadingSelect} from './selects';
+import {Element} from './Element';
+import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
+import {HeadingSelect} from './Selects';
 import {update, markychange} from './custom-events';
 
 /**

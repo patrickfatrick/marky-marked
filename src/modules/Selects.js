@@ -1,5 +1,5 @@
-import {Element} from './element';
-import {HeadingOption} from './options';
+import {Element} from './Element';
+import {HeadingOption} from './Options';
 import {blockHandler} from './handlers';
 import {update} from './custom-events';
 

@@ -1,4 +1,4 @@
-import {Element} from './element';
+import {Element} from './Element';
 
 export class HeadingOption extends Element {
 	constructor (type = 'option', title, value) {

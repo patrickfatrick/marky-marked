@@ -6339,7 +6339,7 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/dispatcher":7,"./modules/mark":10,"./modules/prototypes":13,"immutable":2}],5:[function(require,module,exports){
+},{"./modules/dispatcher":10,"./modules/mark":12,"./modules/prototypes":14,"immutable":2}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -6352,7 +6352,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _element = require('./element');
+var _Element12 = require('./Element');
 
 var _handlers = require('./handlers');
 
@@ -6370,7 +6370,7 @@ var BoldButton = (function (_Element) {
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var editor = this.parent.element;
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(this.element);
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
@@ -6392,7 +6392,7 @@ var BoldButton = (function (_Element) {
 	}
 
 	return BoldButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.BoldButton = BoldButton;
 
@@ -6408,7 +6408,7 @@ var ItalicButton = (function (_Element2) {
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', this).call(this, [this.title, id]);
 		var editor = this.parent.element;
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(this.element);
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'mousedown', function (e) {
@@ -6430,7 +6430,7 @@ var ItalicButton = (function (_Element2) {
 	}
 
 	return ItalicButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.ItalicButton = ItalicButton;
 
@@ -6445,7 +6445,7 @@ var StrikethroughButton = (function (_Element3) {
 
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(this.element);
@@ -6468,7 +6468,7 @@ var StrikethroughButton = (function (_Element3) {
 	}
 
 	return StrikethroughButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.StrikethroughButton = StrikethroughButton;
 
@@ -6483,7 +6483,7 @@ var CodeButton = (function (_Element4) {
 
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(this.element);
@@ -6506,7 +6506,7 @@ var CodeButton = (function (_Element4) {
 	}
 
 	return CodeButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.CodeButton = CodeButton;
 
@@ -6521,7 +6521,7 @@ var BlockquoteButton = (function (_Element5) {
 
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(this.element);
@@ -6544,7 +6544,7 @@ var BlockquoteButton = (function (_Element5) {
 	}
 
 	return BlockquoteButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.BlockquoteButton = BlockquoteButton;
 
@@ -6559,7 +6559,7 @@ var LinkButton = (function (_Element6) {
 
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
@@ -6583,7 +6583,7 @@ var LinkButton = (function (_Element6) {
 	}
 
 	return LinkButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.LinkButton = LinkButton;
 
@@ -6598,7 +6598,7 @@ var ImageButton = (function (_Element7) {
 
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
@@ -6622,7 +6622,7 @@ var ImageButton = (function (_Element7) {
 	}
 
 	return ImageButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.ImageButton = ImageButton;
 
@@ -6637,7 +6637,7 @@ var UnorderedListButton = (function (_Element8) {
 
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(this.element);
@@ -6660,7 +6660,7 @@ var UnorderedListButton = (function (_Element8) {
 	}
 
 	return UnorderedListButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.UnorderedListButton = UnorderedListButton;
 
@@ -6675,7 +6675,7 @@ var OrderedListButton = (function (_Element9) {
 
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(this.element);
@@ -6698,7 +6698,7 @@ var OrderedListButton = (function (_Element9) {
 	}
 
 	return OrderedListButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.OrderedListButton = OrderedListButton;
 
@@ -6715,7 +6715,7 @@ var UndoButton = (function (_Element10) {
 
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-backward']);
 		icon.appendTo(this.element);
@@ -6737,7 +6737,7 @@ var UndoButton = (function (_Element10) {
 	}
 
 	return UndoButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.UndoButton = UndoButton;
 
@@ -6754,7 +6754,7 @@ var RedoButton = (function (_Element11) {
 
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'constructor', this).call(this, type, title, id, parent);
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', this).call(this, [this.title, id]);
-		var icon = new _element.Element('i');
+		var icon = new _Element12.Element('i');
 		var editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-forward']);
 		icon.appendTo(this.element);
@@ -6776,78 +6776,11 @@ var RedoButton = (function (_Element11) {
 	}
 
 	return RedoButton;
-})(_element.Element);
+})(_Element12.Element);
 
 exports.RedoButton = RedoButton;
 
-},{"./custom-events":6,"./element":8,"./handlers":9}],6:[function(require,module,exports){
-// Custom Event Polyfill for IE9+
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-(function () {
-	function CustomEvent(event, params) {
-		params = params || {
-			bubbles: false,
-			cancelable: false,
-			detail: undefined
-		};
-		var evt = document.createEvent('CustomEvent');
-		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-		return evt;
-	}
-
-	CustomEvent.prototype = window.Event.prototype;
-
-	window.CustomEvent = CustomEvent;
-})();
-
-var update = new CustomEvent('update');
-exports.update = update;
-var markychange = new CustomEvent('markychange');
-exports.markychange = markychange;
-
-},{}],7:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-exports.update = update;
-exports.undo = undo;
-exports.redo = redo;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _marked = require('marked');
-
-var _marked2 = _interopRequireDefault(_marked);
-
-var _operation = require('./operation');
-
-var _operation2 = _interopRequireDefault(_operation);
-
-function update(markdown, state, stateIndex) {
-	var html = (0, _marked2['default'])(markdown).toString() || '';
-	var newState = (0, _operation2['default'])(state, stateIndex, function (data) {
-		return data.set('markdown', markdown).set('html', html);
-	});
-	return newState;
-}
-
-function undo(state, stateIndex) {
-	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
-	return { state: state.get(stateIndex), index: stateIndex };
-}
-
-function redo(state, stateIndex) {
-	stateIndex = stateIndex < state.size - 6 ? stateIndex + 5 : state.size - 1;
-	return { state: state.get(stateIndex), index: stateIndex };
-}
-
-},{"./operation":11,"marked":3}],8:[function(require,module,exports){
+},{"./Element":6,"./custom-events":9,"./handlers":11}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6961,7 +6894,183 @@ var Element = (function () {
 
 exports.Element = Element;
 
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _Element2 = require('./Element');
+
+var HeadingOption = (function (_Element) {
+	_inherits(HeadingOption, _Element);
+
+	function HeadingOption(type, title, value) {
+		if (type === undefined) type = 'option';
+
+		_classCallCheck(this, HeadingOption);
+
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, [this.title.replace(' ', '-')]);
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', value);
+		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
+	}
+
+	return HeadingOption;
+})(_Element2.Element);
+
+exports.HeadingOption = HeadingOption;
+
+},{"./Element":6}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _Element2 = require('./Element');
+
+var _Options = require('./Options');
+
+var _handlers = require('./handlers');
+
+var _customEvents = require('./custom-events');
+
+var HeadingSelect = (function (_Element) {
+	_inherits(HeadingSelect, _Element);
+
+	function HeadingSelect(type, title, id, parent) {
+		if (type === undefined) type = 'select';
+		if (title === undefined) title = 'Heading';
+
+		var _this = this;
+
+		_classCallCheck(this, HeadingSelect);
+
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'constructor', this).call(this, type, title, id, parent);
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', this).call(this, [this.title, id]);
+		var editor = parent.element;
+		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function () {
+			var selected = _this.element.selectedIndex;
+			var value = _this.element.options[selected].value;
+			editor.focus();
+			var indices = [editor.selectionStart, editor.selectionEnd];
+			var headingify = (0, _handlers.blockHandler)(editor.value, indices, value + ' ');
+			editor.value = headingify.value;
+			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state.get(editor._marky.index).get('html');
+			_this.element.selectedIndex = 0;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+		});
+
+		var optionPlaceholder = new _Options.HeadingOption('option', 'Headings', '');
+		optionPlaceholder.assign('value', '');
+		var remove = new _Options.HeadingOption('option', 'Remove', '');
+		var option1 = new _Options.HeadingOption('option', 'Heading 1', '#');
+		var option2 = new _Options.HeadingOption('option', 'Heading 2', '##');
+		var option3 = new _Options.HeadingOption('option', 'Heading 3', '###');
+		var option4 = new _Options.HeadingOption('option', 'Heading 4', '####');
+		var option5 = new _Options.HeadingOption('option', 'Heading 5', '#####');
+		var option6 = new _Options.HeadingOption('option', 'Heading 6', '######');
+
+		optionPlaceholder.appendTo(this.element);
+		remove.appendTo(this.element);
+		option1.appendTo(this.element);
+		option2.appendTo(this.element);
+		option3.appendTo(this.element);
+		option4.appendTo(this.element);
+		option5.appendTo(this.element);
+		option6.appendTo(this.element);
+	}
+
+	return HeadingSelect;
+})(_Element2.Element);
+
+exports.HeadingSelect = HeadingSelect;
+
+},{"./Element":6,"./Options":7,"./custom-events":9,"./handlers":11}],9:[function(require,module,exports){
+// Custom Event Polyfill for IE9+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+(function () {
+	function CustomEvent(event, params) {
+		params = params || {
+			bubbles: false,
+			cancelable: false,
+			detail: undefined
+		};
+		var evt = document.createEvent('CustomEvent');
+		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+		return evt;
+	}
+
+	CustomEvent.prototype = window.Event.prototype;
+
+	window.CustomEvent = CustomEvent;
+})();
+
+var update = new CustomEvent('update');
+exports.update = update;
+var markychange = new CustomEvent('markychange');
+exports.markychange = markychange;
+
+},{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+exports.update = update;
+exports.undo = undo;
+exports.redo = redo;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _marked = require('marked');
+
+var _marked2 = _interopRequireDefault(_marked);
+
+var _operation = require('./operation');
+
+var _operation2 = _interopRequireDefault(_operation);
+
+function update(markdown, state, stateIndex) {
+	var html = (0, _marked2['default'])(markdown).toString() || '';
+	var newState = (0, _operation2['default'])(state, stateIndex, function (data) {
+		return data.set('markdown', markdown).set('html', html);
+	});
+	return newState;
+}
+
+function undo(state, stateIndex) {
+	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
+	return { state: state.get(stateIndex), index: stateIndex };
+}
+
+function redo(state, stateIndex) {
+	stateIndex = stateIndex < state.size - 6 ? stateIndex + 5 : state.size - 1;
+	return { state: state.get(stateIndex), index: stateIndex };
+}
+
+},{"./operation":13,"marked":3}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7056,7 +7165,7 @@ function insertHandler(string, indices, mark) {
 	return { value: value, range: [end, end + mark.length] };
 }
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7065,11 +7174,11 @@ Object.defineProperty(exports, '__esModule', {
 
 var _marky = require('../marky');
 
-var _element = require('./element');
+var _Element = require('./Element');
 
-var _buttons = require('./buttons');
+var _Buttons = require('./Buttons');
 
-var _selects = require('./selects');
+var _Selects = require('./Selects');
 
 var _customEvents = require('./custom-events');
 
@@ -7084,46 +7193,46 @@ exports['default'] = function () {
 
 	var containers = document.getElementsByTagName(tag);
 	Array.prototype.forEach.call(containers, function (container, i) {
-		var toolbar = new _element.Element('div', 'Toolbar');
+		var toolbar = new _Element.Element('div', 'Toolbar');
 		var id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
 
-		var textarea = new _element.Element('textarea', 'Editor');
+		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.assign('contentEditable', true);
 		textarea.addClass(['marky-editor', id]);
 		textarea.assign('_marky', new _marky.Marky());
 
-		var input = new _element.Element('input', 'Output');
+		var input = new _Element.Element('input', 'Output');
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
-		var headingSelect = new _selects.HeadingSelect('select', 'Heading', id, textarea);
-		var boldButton = new _buttons.BoldButton('button', 'Bold', id, textarea);
-		var italicButton = new _buttons.ItalicButton('button', 'Italic', id, textarea);
-		var strikethroughButton = new _buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
-		var codeButton = new _buttons.CodeButton('button', 'Code', id, textarea);
-		var blockquoteButton = new _buttons.BlockquoteButton('button', 'Blockquote', id, textarea);
-		var linkButton = new _buttons.LinkButton('button', 'Link', id, textarea);
-		var imageButton = new _buttons.ImageButton('button', 'Image', id, textarea);
-		var unorderedListButton = new _buttons.UnorderedListButton('button', 'Unordered-List', id, textarea);
-		var orderedListButton = new _buttons.OrderedListButton('button', 'Ordered-List', id, textarea);
-		var undoButton = new _buttons.UndoButton('button', 'Undo', id, textarea);
-		var redoButton = new _buttons.RedoButton('button', 'Redo', id, textarea);
+		var headingSelect = new _Selects.HeadingSelect('select', 'Heading', id, textarea);
+		var boldButton = new _Buttons.BoldButton('button', 'Bold', id, textarea);
+		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id, textarea);
+		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
+		var codeButton = new _Buttons.CodeButton('button', 'Code', id, textarea);
+		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id, textarea);
+		var linkButton = new _Buttons.LinkButton('button', 'Link', id, textarea);
+		var imageButton = new _Buttons.ImageButton('button', 'Image', id, textarea);
+		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered-List', id, textarea);
+		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered-List', id, textarea);
+		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
+		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
 
-		var separatorA = new _element.Element('span');
+		var separatorA = new _Element.Element('span');
 		separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
 
-		var separatorB = new _element.Element('span');
+		var separatorB = new _Element.Element('span');
 		separatorB.assign('textContent', '|');
 		separatorB.addClass(['separator']);
 
-		var separatorC = new _element.Element('span');
+		var separatorC = new _Element.Element('span');
 		separatorC.assign('textContent', '|');
 		separatorC.addClass(['separator']);
 
-		var separatorD = new _element.Element('span');
+		var separatorD = new _Element.Element('span');
 		separatorD.assign('textContent', '|');
 		separatorD.addClass(['separator']);
 
@@ -7175,7 +7284,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../marky":4,"./buttons":5,"./custom-events":6,"./element":8,"./selects":14}],11:[function(require,module,exports){
+},{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8,"./custom-events":9}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -7201,41 +7310,7 @@ exports['default'] = function (state, stateIndex, fn) {
 
 module.exports = exports['default'];
 
-},{"immutable":2}],12:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _element = require('./element');
-
-var HeadingOption = (function (_Element) {
-	_inherits(HeadingOption, _Element);
-
-	function HeadingOption(type, title, value) {
-		if (type === undefined) type = 'option';
-
-		_classCallCheck(this, HeadingOption);
-
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, [this.title.replace(' ', '-')]);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', value);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
-	}
-
-	return HeadingOption;
-})(_element.Element);
-
-exports.HeadingOption = HeadingOption;
-
-},{"./element":8}],13:[function(require,module,exports){
+},{"immutable":2}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7291,82 +7366,7 @@ exports["default"] = function () {
 
 module.exports = exports["default"];
 
-},{}],14:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _element = require('./element');
-
-var _options = require('./options');
-
-var _handlers = require('./handlers');
-
-var _customEvents = require('./custom-events');
-
-var HeadingSelect = (function (_Element) {
-	_inherits(HeadingSelect, _Element);
-
-	function HeadingSelect(type, title, id, parent) {
-		if (type === undefined) type = 'select';
-		if (title === undefined) title = 'Heading';
-
-		var _this = this;
-
-		_classCallCheck(this, HeadingSelect);
-
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'constructor', this).call(this, type, title, id, parent);
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', this).call(this, [this.title, id]);
-		var editor = parent.element;
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function () {
-			var selected = _this.element.selectedIndex;
-			var value = _this.element.options[selected].value;
-			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var headingify = (0, _handlers.blockHandler)(editor.value, indices, value + ' ');
-			editor.value = headingify.value;
-			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state.get(editor._marky.index).get('html');
-			_this.element.selectedIndex = 0;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
-		});
-
-		var optionPlaceholder = new _options.HeadingOption('option', 'Headings', '');
-		optionPlaceholder.assign('value', '');
-		var remove = new _options.HeadingOption('option', 'Remove', '');
-		var option1 = new _options.HeadingOption('option', 'Heading 1', '#');
-		var option2 = new _options.HeadingOption('option', 'Heading 2', '##');
-		var option3 = new _options.HeadingOption('option', 'Heading 3', '###');
-		var option4 = new _options.HeadingOption('option', 'Heading 4', '####');
-		var option5 = new _options.HeadingOption('option', 'Heading 5', '#####');
-		var option6 = new _options.HeadingOption('option', 'Heading 6', '######');
-
-		optionPlaceholder.appendTo(this.element);
-		remove.appendTo(this.element);
-		option1.appendTo(this.element);
-		option2.appendTo(this.element);
-		option3.appendTo(this.element);
-		option4.appendTo(this.element);
-		option5.appendTo(this.element);
-		option6.appendTo(this.element);
-	}
-
-	return HeadingSelect;
-})(_element.Element);
-
-exports.HeadingSelect = HeadingSelect;
-
-},{"./custom-events":6,"./element":8,"./handlers":9,"./options":12}]},{},[1])(1)
+},{}]},{},[1])(1)
 });
 
 

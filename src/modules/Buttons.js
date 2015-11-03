@@ -1,4 +1,4 @@
-import {Element} from './element';
+import {Element} from './Element';
 import {inlineHandler, blockHandler, insertHandler, listHandler} from './handlers';
 import {update, markychange} from './custom-events';
 
