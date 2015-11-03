@@ -29,6 +29,15 @@ Marky Mark has two dependencies to run, both of which are included in the /dist 
 
 Immutable.js handles the immutable state powering the undo/redo functionality. Meanwhile Marked is doing the heavylifting for the Markdown processing.
 
+## Install
+
+```bash
+npm install marky-mark --save
+jspm install npm:marky-mark
+bower install marky-mark
+git clone git:github.com/patrickfatrick/marky-mark.git
+```
+
 ## Usage
 
 The easiest way to instantiate an editor is to simply add `<marky-mark></marky-mark>` to your markup.
