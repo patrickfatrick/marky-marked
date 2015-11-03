@@ -15,6 +15,6 @@ export function undo (state, stateIndex) {
 }
 
 export function redo (state, stateIndex) {
-	stateIndex = (stateIndex < state.size - 5) ? stateIndex + 5 : state.size - 1;
+	stateIndex = (stateIndex < state.size - 6) ? stateIndex + 5 : state.size - 1;
 	return {state: state.get(stateIndex), index: stateIndex};
 }

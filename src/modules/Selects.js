@@ -1,16 +1,16 @@
-import {Element} from './Element';
-import {HeadingOption} from './Options';
+import {Element} from './element';
+import {HeadingOption} from './options';
 import {blockHandler} from './handlers';
 import {update} from './custom-events';
 
 export class HeadingSelect extends Element {
-	constructor (type = 'select', title = 'Heading', id) {
-		super(type, title, id);
+	constructor (type = 'select', title = 'Heading', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
+		const editor = parent.element;
 		super.listen('change', () => {
 			let selected = this.element.selectedIndex;
 			let value = this.element.options[selected].value;
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let headingify = blockHandler(editor.value, indices, value + ' ');

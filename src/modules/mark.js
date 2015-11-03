@@ -1,7 +1,7 @@
 import {Marky} from '../marky';
-import {Element} from './Element';
-import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
-import {HeadingSelect} from './Selects';
+import {Element} from './element';
+import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './buttons';
+import {HeadingSelect} from './selects';
 import {update, markychange} from './custom-events';
 
 /**
@@ -17,19 +17,28 @@ export default function (tag = 'marky-mark') {
 		let id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
+		
+		let textarea = new Element('textarea', 'Editor');
+		textarea.assign('contentEditable', true);
+		textarea.addClass(['marky-editor', id]);
+		textarea.assign('_marky', new Marky);
 
-		let headingSelect = new HeadingSelect('select', 'Heading', id);
-		let boldButton = new BoldButton('button', 'Bold', id);
-		let italicButton = new ItalicButton('button', 'Italic', id);
-		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id);
-		let codeButton = new CodeButton('button', 'Code', id);
-		let blockquoteButton = new BlockquoteButton('button', 'Blockquote', id);
-		let linkButton = new LinkButton('button', 'Link', id);
-		let imageButton = new ImageButton('button', 'Image', id);
-		let unorderedListButton = new UnorderedListButton('button', 'Unordered-List', id);
-		let orderedListButton = new OrderedListButton('button', 'Ordered-List', id);
-		let undoButton = new UndoButton('button', 'Undo', id);
-		let redoButton = new RedoButton('button', 'Redo', id);
+		let input = new Element('input', 'Output');
+		input.assign('type', 'hidden');
+		input.addClass(['marky-output', id]);
+
+		let headingSelect = new HeadingSelect('select', 'Heading', id, textarea);
+		let boldButton = new BoldButton('button', 'Bold', id, textarea);
+		let italicButton = new ItalicButton('button', 'Italic', id, textarea);
+		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id, textarea);
+		let codeButton = new CodeButton('button', 'Code', id, textarea);
+		let blockquoteButton = new BlockquoteButton('button', 'Blockquote', id, textarea);
+		let linkButton = new LinkButton('button', 'Link', id, textarea);
+		let imageButton = new ImageButton('button', 'Image', id, textarea);
+		let unorderedListButton = new UnorderedListButton('button', 'Unordered-List', id, textarea);
+		let orderedListButton = new OrderedListButton('button', 'Ordered-List', id, textarea);
+		let undoButton = new UndoButton('button', 'Undo', id, textarea);
+		let redoButton = new RedoButton('button', 'Redo', id, textarea);
 
 		let separatorA = new Element('span');
 		separatorA.assign('textContent', '|');
@@ -46,15 +55,6 @@ export default function (tag = 'marky-mark') {
 		let separatorD = new Element('span');
 		separatorD.assign('textContent', '|');
 		separatorD.addClass(['separator']);
-
-		let textarea = new Element('textarea', 'Editor');
-		textarea.assign('contentEditable', true);
-		textarea.addClass(['marky-editor', id]);
-		textarea.assign('_marky', new Marky);
-
-		let input = new Element('input', 'Output');
-		input.assign('type', 'hidden');
-		input.addClass(['marky-output', id]);
 
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
@@ -75,7 +75,7 @@ export default function (tag = 'marky-mark') {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
-
+		
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(markychange);

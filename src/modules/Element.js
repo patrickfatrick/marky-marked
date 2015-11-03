@@ -1,8 +1,9 @@
 export class Element {
-	constructor(type, title = null, id = null) {
+	constructor(type, title = null, id = null, parent = null) {
 		this.title = title;
 		this.type = type;
 		this.id = id;
+		this.parent = parent;
 		this.element = this.register();
 		if (this.title) this.element.title = this.title;
 	}
@@ -35,9 +36,5 @@ export class Element {
 
 	listen(evt, cb) {
 		return this.element.addEventListener(evt, cb);
-	}
-
-	parent() {
-		return this.element.parentNode;
 	}
 }

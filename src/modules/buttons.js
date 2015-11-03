@@ -1,22 +1,21 @@
-import {Element} from './Element';
+import {Element} from './element';
 import {inlineHandler, blockHandler, insertHandler, listHandler} from './handlers';
 import {update, markychange} from './custom-events';
 
 export class BoldButton extends Element {
-	constructor (type = 'button', title = 'Bold', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Bold', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
+		let editor = this.parent.element;
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let boldify = inlineHandler(editor.value, indices, '**');
@@ -31,21 +30,20 @@ export class BoldButton extends Element {
 }
 
 export class ItalicButton extends Element {
-	constructor (type = 'button', title = 'Italic', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Italic', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
+		let editor = this.parent.element;
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let italicize = inlineHandler(editor.value, indices, '_');
@@ -60,20 +58,19 @@ export class ItalicButton extends Element {
 }
 
 export class StrikethroughButton extends Element {
-	constructor (type = 'button', title = 'Strikethrough', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Strikethrough', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let strikitize = inlineHandler(editor.value, indices, '~~');
@@ -88,20 +85,19 @@ export class StrikethroughButton extends Element {
 }
 
 export class CodeButton extends Element {
-	constructor (type = 'button', title = 'Code', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Code', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let codify = inlineHandler(editor.value, indices, '`');
@@ -116,20 +112,19 @@ export class CodeButton extends Element {
 }
 
 export class BlockquoteButton extends Element {
-	constructor (type = 'button', title = 'Blockquote', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Blockquote', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let quotify = blockHandler(editor.value, indices, '> ');
@@ -144,20 +139,19 @@ export class BlockquoteButton extends Element {
 }
 
 export class LinkButton extends Element {
-	constructor (type = 'button', title = 'Link', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Link', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			const mark = '[DISPLAY TEXT](http://url.com)';
@@ -173,21 +167,20 @@ export class LinkButton extends Element {
 }
 
 export class ImageButton extends Element {
-	constructor (type = 'button', title = 'Image', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Image', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			const mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
@@ -203,20 +196,19 @@ export class ImageButton extends Element {
 }
 
 export class UnorderedListButton extends Element {
-	constructor (type = 'button', title = 'Unordered-List', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Unordered-List', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let listify = listHandler(editor.value, indices, 'ul');
@@ -231,20 +223,19 @@ export class UnorderedListButton extends Element {
 }
 
 export class OrderedListButton extends Element {
-	constructor (type = 'button', title = 'Ordered-List', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Ordered-List', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			const indices = [editor.selectionStart, editor.selectionEnd];
 			let listify = listHandler(editor.value, indices, 'ol');
@@ -259,21 +250,20 @@ export class OrderedListButton extends Element {
 }
 
 export class UndoButton extends Element {
-	constructor (type = 'button', title = 'Undo', id) {
-		super(type, title, id);
+	constructor (type = 'button', title = 'Undo', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-backward']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			let activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
 			let markdown = activeState.get('markdown');
@@ -286,21 +276,20 @@ export class UndoButton extends Element {
 }
 
 export class RedoButton extends Element {
-	constructor (type = 'button', title = 'Redo', id) {
-		super(type, title);
+	constructor (type = 'button', title = 'Redo', id, parent) {
+		super(type, title, id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
+		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-forward']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
-			const editor = document.querySelector('textarea.' + id);
 			editor.focus();
 			let activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
 			let markdown = activeState.get('markdown');
