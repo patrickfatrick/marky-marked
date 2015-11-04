@@ -1,6 +1,6 @@
 # Marky Marked
 
-_An in-browser editor so sweet you'll feel good vibrations._
+_An in-browser editor so sweet you'll be feeling good vibrations._
 
 [![Build Status](https://travis-ci.org/patrickfatrick/marky-marked.svg)](https://travis-ci.org/patrickfatrick/marky-marked)
 [![Dependency Status](https://david-dm.org/patrickfatrick/marky-marked.svg)](https://david-dm.org/patrickfatrick/marky-marked)
