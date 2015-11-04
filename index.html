@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Marky Marked</title>
+<link rel="stylesheet" href="./dist/marky-mark.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href='https://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+  body {
+    font-size: 1rem;
+    font-family: Open Sans, sans-serif;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .container {
+    width: 48%;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px; 
+  }
+  .html-container {
+    width: 80%;
+    height: auto;
+    padding-top: 3rem;
+    clear: both;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h2.heading {
+    font-size: 2.5rem;
+    font-family: Cardo, serif;
+    margin-left: 20px;
+  }
+  textarea.marky-editor {
+    width: 95%;
+    height: 250px;
+  }
+  #output {
+    min-height: 279px;
+  }
+  #html-output {
+    border: 1px solid #919191;
+    min-height: 500px;
+    padding: 2rem;
+    box-shadow: rgba(0,0,0,0.3) 0 19px 60px,rgba(0,0,0,0.22) 0 15px 20px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2 class="heading">Marky Marked</h2>
+  <marky-mark></marky-mark>
+</div>
+<div class="container">
+  <h2 class="heading">HTML Output</h2>
+
+  <div id="output">As you start to type in the Marky Mark editor your HTML will show up here.</div>
+</div>
+<div class="html-container">
+  <h2 class="heading">Final Product</h2>
+  <div id="html-output"></div>
+</div>
+<script src="./dist/marky.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    marky.mark();
+    var editor = document.querySelector('textarea.marky-editor');
+    var output = document.querySelector('input.marky-output');
+    var htmlOutput = document.getElementById('html-output');
+    editor.addEventListener('markychange', function (e) {
+      document.getElementById('output').textContent = output.value;
+      htmlOutput.innerHTML = ''; 
+      htmlOutput.insertAdjacentHTML('afterbegin', output.value);
+    });
+  });
+</script>
+</body>
+</html>
