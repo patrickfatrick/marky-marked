@@ -1,77 +1,74 @@
 @import 'imports';
 @import 'variables';
 @import 'mixins';
-
-.marky-toolbar {
-	min-width: 100%;
-	text-align: left;
-	margin-bottom: 0.3rem;
-	button {
-		@include no-outline;
-		@include side-margins(2px, 2px);
-		font-size: 1rem;
-		cursor: pointer;
-		border: 1px solid $gray;
-		padding: 3px;
-		border-radius: 4px;
-		box-shadow: 1px 1px 2px $gray;
-		min-width: 1.5rem;
-		min-height: 1.5rem;
-		text-align: center;
-		background-color: white;
-		color: black;
-		&.disabled, &:active {
+marky-mark {
+	.marky-toolbar {
+		min-width: 100%;
+		text-align: left;
+		margin-bottom: 0.3rem;
+		button {
+			@include no-outline;
+			@include side-margins(2px, 2px);
+			cursor: pointer;
+			border: 1px solid $gray;
+			padding: 3px;
+			border-radius: 4px;
+			box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
+			min-width: 1.5rem;
+			min-height: 1.5rem;
+			text-align: center;
+			background-color: white;
+			color: black;
+			&.disabled, &:active {
+				color: $gray;
+				background: -webkit-linear-gradient($white * 0.7, $white);
+				background: -moz-linear-gradient($white * 0.7, $white);
+				background: -ms-linear-gradient($white * 0.7, $white);
+				background: -o-linear-gradient($white * 0.7, $white);
+				background: linear-gradient($white * 0.7, $white);
+			}
+			&:focus {
+				border-color: $deepBlue;
+			}
+		}
+		select {
+			@include no-outline;
+			@include side-margins(2px, 2px);
+			-webkit-appearance: none;
+			outline: none;
+			border: 1px solid gray;
+			padding-left: 0.3rem;
+			border-radius: 4px;
+			box-shadow: rgba(0,0,0,0.3) 0 1px 1px,rgba(0,0,0,0.22) 0 1px 5px;
+			min-width: 5.2rem;
+			min-height: 1.5rem;
+			text-align: center;
+			background-color: white;
+			color: black;
+			&:focus {
+				border-color: $deepBlue;
+			}
+			@media all and (min-width: 1200px) {
+				min-width: 6rem;
+				padding-left: 0.7rem;
+			}
+		}
+		.separator {
+			@include side-padding(5px, 5px);
 			color: $gray;
-			background: -webkit-linear-gradient($white * 0.7, $white);
-			background: -moz-linear-gradient($white * 0.7, $white);
-			background: -ms-linear-gradient($white * 0.7, $white);
-			background: -o-linear-gradient($white * 0.7, $white);
-			background: linear-gradient($white * 0.7, $white);
-		}
-		&:focus {
-			border-color: $deepBlue;
+			@media all and (min-width: 1200px) {
+				@include side-padding(10px, 10px);
+			}
 		}
 	}
-	select {
+	.marky-editor {
 		@include no-outline;
-		@include side-margins(2px, 2px);
-		-webkit-appearance: none;
-		font-size: 1rem;
-		outline: none;
-		border: 1px solid gray;
-		padding-left: 0.3rem;
-		border-radius: 4px;
-		box-shadow: 1px 1px 2px gray;
-		min-width: 5.2rem;
-		min-height: 1.5rem;
-		text-align: center;
-		background-color: white;
-		color: black;
+		border: 2px solid $gray;
+		transition: border-color 200ms ease-out;
+		padding: 8px 12px;
+		border-radius: 6px;
 		&:focus {
 			border-color: $deepBlue;
 		}
-		@media all and (min-width: 1200px) {
-			min-width: 6rem;
-			padding-left: 0.7rem;
-		}
-	}
-	.separator {
-		@include side-padding(5px, 5px);
-		color: $gray;
-		@media all and (min-width: 1200px) {
-			@include side-padding(10px, 10px);
-		}
 	}
 }
-.marky-editor {
-	@include no-outline;
-	font-size: 1rem;
-	border: 2px solid $gray;
-	transition: border-color 200ms ease-out;
-	padding: 8px 12px;
-	border-radius: 6px;
-	&:focus {
-		border-color: $deepBlue;
-	}
-}
-
