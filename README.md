@@ -1,6 +1,6 @@
 # Marky Marked
 
-_An in-browser editor so sweet you'll be feeling good vibrations._
+_An in-browser editor so sweet you'll be feeling good vibrations._ [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Build Status](https://travis-ci.org/patrickfatrick/marky-marked.svg)](https://travis-ci.org/patrickfatrick/marky-marked)
 [![Dependency Status](https://david-dm.org/patrickfatrick/marky-marked.svg)](https://david-dm.org/patrickfatrick/marky-marked)
@@ -40,7 +40,16 @@ git clone git:github.com/patrickfatrick/marky-mark.git
 
 ## Usage
 
-The easiest way to instantiate an editor is to simply add `<marky-mark></marky-mark>` to your markup.
+The easiest way to instantiate an editor is to simply add `<marky-mark></marky-mark>` to your markup and then call `marky.mark()`.
+
+```html
+<marky-mark></marky-mark>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		marky.mark();
+	});
+</script>
+```
 
 You can also use any element as the container but you'll have to do the initialization in your Javascript.
 
