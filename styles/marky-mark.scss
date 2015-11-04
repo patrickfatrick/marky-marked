@@ -3,13 +3,13 @@
 @import 'mixins';
 
 .marky-toolbar {
-	font-size: 1rem;
 	min-width: 100%;
 	text-align: left;
 	margin-bottom: 0.3rem;
 	button {
 		@include no-outline;
 		@include side-margins(2px, 2px);
+		font-size: 1rem;
 		cursor: pointer;
 		border: 1px solid $gray;
 		padding: 3px;
@@ -36,6 +36,7 @@
 		@include no-outline;
 		@include side-margins(2px, 2px);
 		-webkit-appearance: none;
+		font-size: 1rem;
 		outline: none;
 		border: 1px solid gray;
 		padding-left: 0.3rem;
