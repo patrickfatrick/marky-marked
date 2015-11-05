@@ -6309,7 +6309,10 @@ var Marky = (function () {
 
 	_createClass(Marky, [{
 		key: 'update',
-		value: function update(markdown, state, index) {
+		value: function update(markdown) {
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+
 			var action = dispatcher.update(markdown, state, index);
 			this.state = action.state;
 			this.index = action.index;
@@ -7285,18 +7288,13 @@ exports['default'] = function () {
 module.exports = exports['default'];
 
 },{"../marky":4,"./Buttons":5,"./Element":6,"./Selects":8,"./custom-events":9}],13:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _immutable = require('immutable');
-
-exports['default'] = function (state, stateIndex, fn) {
-	if (state === undefined) state = (0, _immutable.List)([(0, _immutable.Map)({ markdown: '', html: '' })]);
-	if (stateIndex === undefined) stateIndex = 0;
-
+exports["default"] = function (state, stateIndex, fn) {
 	state = state.slice(0, stateIndex + 1);
 	var newVersion = fn(state.get(stateIndex));
 	state = state.push(newVersion);
@@ -7308,9 +7306,9 @@ exports['default'] = function (state, stateIndex, fn) {
 	return { state: state, index: stateIndex };
 };
 
-module.exports = exports['default'];
+module.exports = exports["default"];
 
-},{"immutable":2}],14:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

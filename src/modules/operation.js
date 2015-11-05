@@ -1,6 +1,4 @@
-import {Map, List} from 'immutable';
-
-export default function (state = List([Map({markdown: '', html: ''})]), stateIndex = 0, fn) {
+export default function (state, stateIndex, fn) {
 	state = state.slice(0, stateIndex + 1);
 	let newVersion = fn(state.get(stateIndex));
 	state = state.push(newVersion);

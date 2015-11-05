@@ -18,9 +18,6 @@ export class Marky {
 		this.mark = mark;
 		this.state = List([Map({markdown: '', html: ''})]),
 		this.index = 0;
-		this.update = this.update;
-		this.undo = this.undo;
-		this.redo = this.redo;
 	}
 
 	update(markdown, state = this.state, index = this.index) {

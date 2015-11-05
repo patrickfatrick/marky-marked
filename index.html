@@ -13,8 +13,11 @@
 		margin: 50px auto 50px auto;
 		max-width: 1200px;
 	}
+	.markdown-container .container:nth-child(2) {
+		margin-top: 20px;
+	}
 	.container {
-		width: 48%;
+		width: 97%;
 		float: left;
 		padding-left: 10px;
 		padding-right: 10px;
@@ -36,16 +39,16 @@
 	}
 	
 	h2.heading {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		font-family: Cardo, serif;
 		margin-left: 20px;
 	}
 	textarea.marky-editor {
-		width: 95%;
+		width: 96%;
 		height: 250px;
 	}
 	#output {
-		height: 276px;
+		height: 290px;
 		border: 1px solid #919191;
 		padding: 0.7rem;
 		overflow: scroll;
@@ -67,17 +70,25 @@
 		color: #c7254e;
 		background-color: #f9f2f4;
 	}
+	@media all and (min-width: 768px) {
+		.container {
+			width: 48%;
+		}
+		textarea.marky-editor {
+			width: 95%;
+		}
+	}
 </style>
 </head>
 <body>
 <div class="markdown-container">
 	<div class="container">
-		<h2 class="heading">Marky Marked</h2>
+		<h1 class="heading">Marky Marked</h1>
 		<marky-mark></marky-mark>
 	</div>
 	<div class="container">
 		<h2 class="heading">Turns into HTML</h2>
-		<div id="output">As you start to type in the Marky Mark editor your HTML will show up here.</div>
+		<div id="output"></div>
 	</div>
 </div>
 <div class="html-container">
@@ -116,10 +127,9 @@
 			htmlOutput.innerHTML = '';
 			htmlOutput.insertAdjacentHTML('afterbegin', output.value);
 		});
-		editor.addEventListener('load', function (e) {
-			output.value = editor.value;
-		});
-		editor._marky.update('# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is an in-browser text editor combining the point-and-click ease of use of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n- [Immutable.js](https://facebook.github.io/immutable-js/)\r\n- [Marked](https://github.com/chjj/marked)\r\n- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarked handles the heavy-lifting with the Markdown parsing while Immutable.js is used for a pretty cool feature, which is undo/redo by way of persistent state management.\r\n\n##Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\n\nnpm install marky-mark --save\r\n\njspm install npm:marky-mark\r\n\nbower install marky-mark\r\n\ngit clone git:github.com/patrickfatrick/marky-mark.git\r\n\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.');
+		editor.value = '# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is an in-browser text editor combining the point-and-click ease of use of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n\n- [Immutable.js](https://facebook.github.io/immutable-js/)\r\n- [Marked](https://github.com/chjj/marked)\r\n- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarked handles the heavy-lifting with the Markdown parsing while Immutable.js is used for a pretty cool feature, which is undo/redo by way of persistent state management.\r\n\n##Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\n\nnpm install marky-mark --save\r\n\njspm install npm:marky-mark\r\n\nbower install marky-mark\r\n\ngit clone git:github.com/patrickfatrick/marky-mark.git\r\n\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
+		editor._marky.update(editor.value);
+		editor.dispatchEvent(markychange);
 	});
 </script>
 </body>
