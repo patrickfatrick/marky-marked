@@ -20,7 +20,7 @@ export class Marky {
 		this.index = 0;
 	}
 
-	update(markdown, state, index) {
+	update(markdown, state = this.state, index = this.index) {
 		const action = dispatcher.update(markdown, state, index);
 		this.state = action.state;
 		this.index = action.index;
