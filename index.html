@@ -7,73 +7,91 @@
 <link href='https://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <style>
-  body {
-    font-size: 1rem;
-    font-family: Open Sans, sans-serif;
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-  .container {
-    width: 48%;
-    float: left;
-    padding-left: 10px;
-    padding-right: 10px; 
-  }
-  .html-container {
-    width: 80%;
-    height: auto;
-    padding-top: 3rem;
-    clear: both;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  h2.heading {
-    font-size: 2.5rem;
-    font-family: Cardo, serif;
-    margin-left: 20px;
-  }
-  textarea.marky-editor {
-    width: 95%;
-    height: 250px;
-  }
-  #output {
-    min-height: 279px;
-  }
-  #html-output {
-    border: 1px solid #919191;
-    min-height: 500px;
-    padding: 2rem;
-    box-shadow: rgba(0,0,0,0.3) 0 19px 60px,rgba(0,0,0,0.22) 0 15px 20px;
-  }
+	body {
+		font-size: 1rem;
+		font-family: Open Sans, sans-serif;
+		margin: 50px auto 50px auto;
+		max-width: 1200px;
+	}
+	.container {
+		width: 48%;
+		float: left;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.html-container {
+		width: 97%;
+		height: auto;
+		padding-top: 3rem;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-left: auto;
+		margin-right: auto;
+		clear: both;
+	}
+	h2.heading {
+		font-size: 2.5rem;
+		font-family: Cardo, serif;
+		margin-left: 20px;
+	}
+	textarea.marky-editor {
+		width: 95%;
+		height: 250px;
+	}
+	#output {
+		min-height: 276px;
+		border: 1px solid #919191;
+		padding: 0.7rem;
+		overflow: scroll;
+	}
+	#html-output {
+		border: 1px solid #919191;
+		min-height: 500px;
+		padding: 2rem;
+		box-shadow: rgba(0,0,0,0.3) 0 19px 60px,rgba(0,0,0,0.22) 0 15px 20px;
+	}
+	blockquote {
+		color: lightgray;
+		border-left: 5px solid lightgray;
+		padding-left: 5px;
+	}
+	pre {
+		padding: 2px 4px;
+		font-size: 90%;
+		color: #c7254e;
+		background-color: #f9f2f4;
+	}
 </style>
 </head>
 <body>
-<div class="container">
-  <h2 class="heading">Marky Marked</h2>
-  <marky-mark></marky-mark>
-</div>
-<div class="container">
-  <h2 class="heading">HTML Output</h2>
-
-  <div id="output">As you start to type in the Marky Mark editor your HTML will show up here.</div>
+<div class="markdown-container">
+	<div class="container">
+		<h2 class="heading">Marky Marked</h2>
+		<marky-mark></marky-mark>
+	</div>
+	<div class="container">
+		<h2 class="heading">Turns into HTML</h2>
+		<div id="output">As you start to type in the Marky Mark editor your HTML will show up here.</div>
+	</div>
 </div>
 <div class="html-container">
-  <h2 class="heading">Final Product</h2>
-  <div id="html-output"></div>
+	<h2 class="heading">Which turns into</h2>
+	<div id="html-output"></div>
 </div>
 <script src="./dist/marky.min.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    marky.mark();
-    var editor = document.querySelector('textarea.marky-editor');
-    var output = document.querySelector('input.marky-output');
-    var htmlOutput = document.getElementById('html-output');
-    editor.addEventListener('markychange', function (e) {
-      document.getElementById('output').textContent = output.value;
-      htmlOutput.innerHTML = ''; 
-      htmlOutput.insertAdjacentHTML('afterbegin', output.value);
-    });
-  });
+	document.addEventListener('DOMContentLoaded', function () {
+		marky.mark();
+		var editor = document.querySelector('textarea.marky-editor');
+		var output = document.querySelector('input.marky-output');
+		var htmlOutput = document.getElementById('html-output');
+		editor.addEventListener('markychange', function (e) {
+			document.getElementById('output').textContent = output.value;
+			htmlOutput.innerHTML = '';
+			htmlOutput.insertAdjacentHTML('afterbegin', output.value);
+		});
+		editor.value = "# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is an in-browser text editor combining the point-and-click ease of use of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n- [Immutable.js](https://facebook.github.io/immutable-js/\r\n- [Marked](https://github.com/chjj/marked)\r\n- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarked handles the heavy-lifting with the Markdown parsing while Immutable.js is used for a pretty cool feature, which is undo/redo by way of persistent state management.\r\n\n##Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\n\nnpm install marky-mark --save\r\n\njspm install npm:marky-mark\r\n\nbower install marky-mark\r\n\ngit clone git:github.com/patrickfatrick/marky-mark.git\r\n\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage."
+	});
 </script>
 </body>
 </html>
