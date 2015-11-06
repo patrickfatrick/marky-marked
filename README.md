@@ -32,10 +32,10 @@ Immutable.js handles the immutable state powering the undo/redo functionality. M
 ## Install
 
 ```bash
-npm install marky-mark --save
-jspm install npm:marky-mark
-bower install marky-mark
-git clone git:github.com/patrickfatrick/marky-mark.git
+npm install marky-marked --save
+jspm install npm:marky-marked
+bower install marky-marked
+git clone git:github.com/patrickfatrick/marky-marked.git
 ```
 
 ## Usage
