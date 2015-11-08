@@ -89,13 +89,13 @@ export default function (tag = 'marky-mark') {
 		}, false);
 
 		textarea.listen('markychange', function (e) {
-			let html = this._marky.state[this._marky.index].html;
+			let html = this._marky.state.get(this._marky.index).get('html');
 			if (this._marky.index === 0)  {
 				undoButton.addClass(['disabled']);
 			} else {
 				undoButton.removeClass(['disabled']);
 			}
-			if (this._marky.index === this._marky.state.length - 1) {
+			if (this._marky.index === this._marky.state.size - 1) {
 				redoButton.addClass(['disabled']);
 			} else {
 				redoButton.removeClass(['disabled']);
