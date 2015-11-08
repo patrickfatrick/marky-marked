@@ -41,4 +41,13 @@ export class Marky {
 		this.index = action.index;
 		return action.state;
 	}
+
+	expandSelectionForward (num = 0, start, end) {
+		return [start, end + num];
+	}
+
+	expandSelectionBackward (num = 0, start, end) {
+		return [start - num, end];
+	}
+
 }
