@@ -2,7 +2,7 @@ import {Marky} from '../marky';
 import {Element} from './Element';
 import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
 import {HeadingSelect} from './Selects';
-import {update, markychange} from './custom-events';
+import {markyblur, markyfocus, markyselect, update, markychange} from './custom-events';
 
 /**
  * Register and append the DOM elements needed and set the event listeners
@@ -17,11 +17,18 @@ export default function (tag = 'marky-mark') {
 		let id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
-		
+
 		let textarea = new Element('textarea', 'Editor');
-		textarea.assign('contentEditable', true);
 		textarea.addClass(['marky-editor', id]);
 		textarea.assign('_marky', new Marky);
+		textarea.element.expandSelectionForward = function (num) {
+			let arr = this._marky.expandSelectionForward(num, this.selectionStart, this.selectionEnd);
+			return this.setSelectionRange(arr[0], arr[1]);
+		};
+		textarea.element.expandSelectionBackward = function (num) {
+			let arr = this._marky.expandSelectionBackward(num, this.selectionStart, this.selectionEnd);
+			return this.setSelectionRange(arr[0], arr[1]);
+		};
 
 		let input = new Element('input', 'Output');
 		input.assign('type', 'hidden');
@@ -75,20 +82,20 @@ export default function (tag = 'marky-mark') {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
-		
+
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(markychange);
 		}, false);
 
 		textarea.listen('markychange', function (e) {
-			let html = this._marky.state.get(this._marky.index).get('html');
+			let html = this._marky.state[this._marky.index].html;
 			if (this._marky.index === 0)  {
 				undoButton.addClass(['disabled']);
 			} else {
 				undoButton.removeClass(['disabled']);
 			}
-			if (this._marky.index === this._marky.state.size - 1) {
+			if (this._marky.index === this._marky.state.length - 1) {
 				redoButton.addClass(['disabled']);
 			} else {
 				redoButton.removeClass(['disabled']);
@@ -100,6 +107,17 @@ export default function (tag = 'marky-mark') {
 			return e.target.dispatchEvent(update);
 		}, false);
 
-	});
+		textarea.listen('select', function (e) {
+			return e.target.dispatchEvent(markyselect);
+		});
 
+		textarea.listen('blur', function (e) {
+			return e.target.dispatchEvent(markyblur);
+		});
+
+		textarea.listen('focus', function (e) {
+			return e.target.dispatchEvent(markyfocus);
+		});
+
+	});
 }
