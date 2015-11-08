@@ -103,7 +103,6 @@ But if you undo to a previous state and then create a new state by typing or add
 ## What's the plan?
 
 - More annotations.
-- Make a github page to host a demo.
 - Add more JSDOM and/or browser-based testing.
 - Explore a nicer modal-based link and url entry.
 - Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.

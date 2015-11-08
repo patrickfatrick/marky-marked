@@ -16,5 +16,8 @@
 	window.CustomEvent = CustomEvent;
 })();
 
+export var markyblur = new CustomEvent('markyblur');
+export var markyfocus = new CustomEvent('markyfocus');
+export var markyselect = new CustomEvent('markyselect');
 export var update = new CustomEvent('update');
 export var markychange = new CustomEvent('markychange');

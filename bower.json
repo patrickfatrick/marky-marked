@@ -15,7 +15,7 @@
 		"dates"
 	],
 	"license": "MIT",
-	"homepage": "https://github.com/patrickfatrick/marky-mark",
+	"homepage": "https://github.com/patrickfatrick/marky-marked",
 	"ignore": [
 		"**/.*",
 		"node_modules",

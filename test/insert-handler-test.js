@@ -16,7 +16,7 @@ describe('insert handling', () => {
 	});
 
 	it('converts to HTML', () => {
-		var container = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
 		document.body.appendChild(container);
 		mark('marky-mark');
 		container.children[1].value = 'Some text ![Image](http://imagesource.com/image.jpg)';

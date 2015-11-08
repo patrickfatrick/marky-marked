@@ -122,12 +122,14 @@
 		var editor = document.querySelector('textarea.marky-editor');
 		var output = document.querySelector('input.marky-output');
 		var htmlOutput = document.getElementById('html-output');
+
+		//editor.dispatchEvent(markyinit);
 		editor.addEventListener('markychange', function (e) {
 			document.getElementById('output').textContent = output.value;
 			htmlOutput.innerHTML = '';
 			htmlOutput.insertAdjacentHTML('afterbegin', output.value);
 		});
-		editor.value = '# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is an in-browser text editor combining the point-and-click ease of use of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n\n- [Immutable.js](https://facebook.github.io/immutable-js/)\r\n- [Marked](https://github.com/chjj/marked)\r\n- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarked handles the heavy-lifting with the Markdown parsing while Immutable.js is used for a pretty cool feature, which is undo/redo by way of persistent state management.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
+		editor.value = '# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is an in-browser text editor combining the point-and-click ease of use of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n\n- [Immutable.js](https://facebook.github.io/immutable-js/)\r\n- [Marked](https://github.com/chjj/marked)\r\n- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarked handles the heavy-lifting with the Markdown parsing while Immutable.js is used for a pretty cool feature, which is undo/redo by way of persistent state management.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or remove all of this text by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
 		editor._marky.update(editor.value);
 		editor.dispatchEvent(markychange);
 	});
