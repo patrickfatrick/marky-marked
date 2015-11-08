@@ -16,18 +16,14 @@ Marky Marked is an in-browser editor combining Markdown with the typical WYSIWYG
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
 
-On top of all of that because it's built with immutable states Marky Marked comes with undo and redo.
+On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#Undo/Redo) below).
 
 ## Dependencies
 
 Marky Marked has two dependencies to run, both of which are included in the /dist files:
 
-- [Immutable.js](https://facebook.github.io/immutable-js/)
-- [Marked](https://github.com/chjj/marked)
-
+- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.
 - Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.
-
-Immutable.js handles the immutable state powering the undo/redo functionality. Meanwhile Marked is doing the heavylifting for the Markdown processing.
 
 ## Install
 
@@ -51,7 +47,7 @@ The easiest way to instantiate an editor is to simply add `<marky-mark></marky-m
 </script>
 ```
 
-You can also use any element as the container but you'll have to do the initialization in your Javascript.
+You can also use any element as the container but you'll have to reference the container element in your Javascript.
 
 ```html
 <mark-wahlberg></mark-wahlberg>
@@ -67,9 +63,17 @@ From there Marky Marked should handle the rest.
 
 ## Styling
 
-The repo comes with a stylesheet in /dist that will get you where you want to go. But you are of course welcome to handle your own styling.
+The repo comes with a stylesheet in `/dist` that will get you where you want to go. But you are of course welcome to handle your own styling.
 
 If you do use the stylesheet that comes with, you will need to install [Font Awesome](http://fontawesome.io/) onto your site, or you will be without toolbar icons.
+
+## Undo/Redo
+
+Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 500 states, after which it starts clearing out the oldest states as states are created. So it's not infinite.
+
+The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 100 user-facing states at any given time that reflect 500 changes (keep in mind that typing a single character counts as a change).
+
+But if you undo to a previous state and then create a new state by typing or adding a format from the toolbar, the timeline erases those states after the one you went back to. Just like in most any file editor.
 
 ## API
 
@@ -78,11 +82,11 @@ At any given time in the state of the editor you can access both the markdown an
 ```javascript
 var _marky = document.querySelector('.marky-editor.editor-0')._marky;
 var index = _marky.index;
-var markdown = _marky.state.get(index).get('markdown');
-var html = _marky.state.get(index).get('html');
+var markdown = _marky.state[index].markdown;
+var html = _marky.state[index].html;
 ```
 
-You'll notice the immutable `get()` syntax here. Since state is immutable you can also grab the markdown or HTML at any point in recent history by changing the index.
+Since state is immutable you can also grab the markdown or HTML at any point in recent history by changing the index.
 
 You can listen to update events like so:
 
@@ -92,18 +96,54 @@ editor.addEventListener('markychange', function (e) {
 	// Do stuff;
 });
 ```
-## Undo/Redo
 
-Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 500 states, after which it starts clearing out the oldest states as states are created. So it's not infinite.
+### Undo/Redo
 
-The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 100 user-facing states at any given time that reflect 500 changes (keep in mind that typing a single character counts as a change).
+You can manually undo and redo like so, optionally passing in the number of states to undo or redo by as an argument. If no argument is passed Marky Marked will assume 5 as if the button was pushed.
 
-But if you undo to a previous state and then create a new state by typing or adding a format from the toolbar, the timeline erases those states after the one you went back to. Just like in most any file editor.
+```javascript
+document.querySelector('.marky-editor')._marky.undo(20);
+document.querySelector('.marky-editor')._marky.redo(13);
+```
+
+The new state index will be returned.
+
+### Setting the selection
+
+You can set the text selection in the editor like so, passing in an array for the start and end positions. If no argument is passed Marky Marked will assume [0, 0];
+
+```javascript
+document.querySelector('.marky-editor')._marky.setSelection([5, 7]);
+```
+
+This method returns the array that was passed in.
+
+### Expanding the selection
+
+You can expand the current text selection forward or backward in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will assume 0;
+
+```javascript
+document.querySelector('.marky-editor')._marky.expandSelectionForward(3);
+document.querySelector('.marky-editor')._marky.expandSelectionBackward(20);
+```
+
+This method returns the array that was passed in.
+
+### Moving the cursor
+
+You can also move the cursor in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will assume 0;
+
+```javascript
+document.querySelector('.marky-editor')._marky.moveCursorForward(3);
+document.querySelector('.marky-editor')._marky.moveCursorBackward(20);
+```
+
+This method returns the new cursor position in the editor.
 
 ## What's the plan?
 
 - More annotations.
-- Add more JSDOM and/or browser-based testing.
+- Browser-based testing.
 - Explore a nicer modal-based link and url entry.
 - Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.
 

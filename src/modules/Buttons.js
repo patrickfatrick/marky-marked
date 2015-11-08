@@ -1,6 +1,6 @@
 import {Element} from './Element';
 import {inlineHandler, blockHandler, insertHandler, listHandler} from './handlers';
-import {update, markychange} from './custom-events';
+import {update} from './custom-events';
 
 export class BoldButton extends Element {
 	constructor (type = 'button', title = 'Bold', id, parent) {
@@ -265,12 +265,7 @@ export class UndoButton extends Element {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
 			editor.focus();
-			let activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
-			let markdown = activeState.markdown;
-			let html = activeState.html;
-			editor.value = markdown;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(markychange);
+			return editor._marky.undo(editor._marky.state, editor._marky.index);
 		});
 	}
 }
@@ -291,12 +286,7 @@ export class RedoButton extends Element {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
 			editor.focus();
-			let activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
-			let markdown = activeState.markdown;
-			let html = activeState.html;
-			editor.value = markdown;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(markychange);
+			return editor._marky.redo(editor._marky.state, editor._marky.index);
 		});
 	}
 }

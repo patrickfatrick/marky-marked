@@ -12,12 +12,12 @@ export function update (markdown, state, stateIndex) {
 	return newState;
 }
 
-export function undo (state, stateIndex) {
-	stateIndex = (stateIndex > 4) ? stateIndex - 5 : 0;
+export function undo (num, state, stateIndex) {
+	stateIndex = (stateIndex > (num - 1)) ? stateIndex - num : 0;
 	return {state: state[stateIndex], index: stateIndex};
 }
 
-export function redo (state, stateIndex) {
-	stateIndex = (stateIndex < state.length - 6) ? stateIndex + 5 : state.length - 1;
+export function redo (num, state, stateIndex) {
+	stateIndex = (stateIndex < state.length - (num + 1)) ? stateIndex + num : state.length - 1;
 	return {state: state[stateIndex], index: stateIndex};
 }

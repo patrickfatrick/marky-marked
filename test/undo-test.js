@@ -14,7 +14,7 @@ describe('undo', () => {
 			{markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'}
 		];
 		const stateIndex = 5;
-		let newState = dispatcher.undo(initialState, stateIndex).state;
+		let newState = dispatcher.undo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.be.empty;
 		newState.html.should.be.empty;
@@ -31,7 +31,7 @@ describe('undo', () => {
 			{markdown: 'Some really super funny awesome crazy text', html: '<p>Some super really funny awesome crazy text</p>'}
 		];
 		const stateIndex = 5;
-		let newState = dispatcher.undo(initialState, stateIndex).state;
+		let newState = dispatcher.undo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.be.empty;
 		newState.html.should.be.empty;
@@ -45,7 +45,7 @@ describe('undo', () => {
 			{markdown: 'Some super funny text', html: '<p>Some super funny text</p>'}
 		];
 		const stateIndex = 3;
-		let newState = dispatcher.undo(initialState, stateIndex).state;
+		let newState = dispatcher.undo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.be.empty;
 		newState.html.should.be.empty;

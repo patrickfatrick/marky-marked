@@ -1334,16 +1334,18 @@ var _modulesDispatcher = require('./modules/dispatcher');
 
 var dispatcher = _interopRequireWildcard(_modulesDispatcher);
 
+var _modulesCustomEvents = require('./modules/custom-events');
+
 (0, _modulesPrototypes2['default'])();
 
 var Marky = (function () {
-	function Marky() {
+	function Marky(editor) {
 		_classCallCheck(this, Marky);
 
 		this.mark = _modulesMark2['default'];
-		//this.state = List([Map({markdown: '', html: ''})]),
 		this.state = [{ markdown: '', html: '' }];
 		this.index = 0;
+		this.editor = editor;
 	}
 
 	_createClass(Marky, [{
@@ -1358,35 +1360,92 @@ var Marky = (function () {
 		}
 	}, {
 		key: 'undo',
-		value: function undo(state, index) {
+		value: function undo() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
+
 			if (index === 0) return state[0];
 
-			var action = dispatcher.undo(state, index);
+			var action = dispatcher.undo(num, state, index);
 			this.index = action.index;
-			return action.state;
+			editor.value = action.state.markdown;
+			editor.nextSibling.value = action.state.html;
+			editor.dispatchEvent(_modulesCustomEvents.markychange);
+			return this.index;
 		}
 	}, {
 		key: 'redo',
-		value: function redo(state, index) {
+		value: function redo() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
+
 			if (index === state.length - 1) return state[state.length - 1];
 
-			var action = dispatcher.redo(state, index);
+			var action = dispatcher.redo(num, state, index);
 			this.index = action.index;
-			return action.state;
+			editor.value = action.state.markdown;
+			editor.nextSibling.value = action.state.html;
+			editor.dispatchEvent(_modulesCustomEvents.markychange);
+			return this.index;
+		}
+	}, {
+		key: 'setSelection',
+		value: function setSelection() {
+			var arr = arguments.length <= 0 || arguments[0] === undefined ? [0, 0] : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			editor.setSelectionRange(arr[0], arr[1]);
+			return arr;
 		}
 	}, {
 		key: 'expandSelectionForward',
-		value: function expandSelectionForward(num, start, end) {
-			if (num === undefined) num = 0;
+		value: function expandSelectionForward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
 
-			return [start, end + num];
+			var start = editor.selectionStart;
+			var end = editor.selectionEnd + num;
+
+			editor.setSelectionRange(start, end);
+			return [start, end];
 		}
 	}, {
 		key: 'expandSelectionBackward',
-		value: function expandSelectionBackward(num, start, end) {
-			if (num === undefined) num = 0;
+		value: function expandSelectionBackward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
 
-			return [start - num, end];
+			var start = editor.selectionStart - num;
+			var end = editor.selectionEnd;
+
+			editor.setSelectionRange(start, end);
+			return [start, end];
+		}
+	}, {
+		key: 'moveCursorBackward',
+		value: function moveCursorBackward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart - num;
+
+			editor.setSelectionRange(start, start);
+			return start;
+		}
+	}, {
+		key: 'moveCursorForward',
+		value: function moveCursorForward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart + num;
+
+			editor.setSelectionRange(start, start);
+			return start;
 		}
 	}]);
 
@@ -1395,7 +1454,7 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/dispatcher":9,"./modules/mark":11,"./modules/prototypes":13}],4:[function(require,module,exports){
+},{"./modules/custom-events":8,"./modules/dispatcher":9,"./modules/mark":11,"./modules/prototypes":13}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1783,12 +1842,7 @@ var UndoButton = (function (_Element10) {
 			e.preventDefault();
 			if (_this.element.classList.contains('disabled')) return;
 			editor.focus();
-			var activeState = editor._marky.undo(editor._marky.state, editor._marky.index);
-			var markdown = activeState.markdown;
-			var html = activeState.html;
-			editor.value = markdown;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.markychange);
+			return editor._marky.undo(editor._marky.state, editor._marky.index);
 		});
 	}
 
@@ -1822,12 +1876,7 @@ var RedoButton = (function (_Element11) {
 			e.preventDefault();
 			if (_this2.element.classList.contains('disabled')) return;
 			editor.focus();
-			var activeState = editor._marky.redo(editor._marky.state, editor._marky.index);
-			var markdown = activeState.markdown;
-			var html = activeState.html;
-			editor.value = markdown;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.markychange);
+			return editor._marky.redo(editor._marky.state, editor._marky.index);
 		});
 	}
 
@@ -2125,13 +2174,13 @@ function update(markdown, state, stateIndex) {
 	return newState;
 }
 
-function undo(state, stateIndex) {
-	stateIndex = stateIndex > 4 ? stateIndex - 5 : 0;
+function undo(num, state, stateIndex) {
+	stateIndex = stateIndex > num - 1 ? stateIndex - num : 0;
 	return { state: state[stateIndex], index: stateIndex };
 }
 
-function redo(state, stateIndex) {
-	stateIndex = stateIndex < state.length - 6 ? stateIndex + 5 : state.length - 1;
+function redo(num, state, stateIndex) {
+	stateIndex = stateIndex < state.length - (num + 1) ? stateIndex + num : state.length - 1;
 	return { state: state[stateIndex], index: stateIndex };
 }
 
@@ -2162,10 +2211,13 @@ function inlineHandler(string, indices, mark) {
 				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';
 			}
-			if (string.indexOf(mark, indices[index]) === indices[index]) {
+			if (string.indexOf(mark, indices[index]) == indices[index]) {
 				string = string.substring(0, indices[index]) + string.substring(indices[index] + mark.length, string.length);
 				if (index == 0 && indices[0] != indices[1]) {
 					indices[1] = indices[1] - mark.length;
+				}
+				if (index == 0 && indices[0] === indices[1]) {
+					indices[0] = indices[0] - mark.length;
 				}
 				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';
@@ -2265,15 +2317,7 @@ exports['default'] = function () {
 
 		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
-		textarea.assign('_marky', new _marky.Marky());
-		textarea.element.expandSelectionForward = function (num) {
-			var arr = this._marky.expandSelectionForward(num, this.selectionStart, this.selectionEnd);
-			return this.setSelectionRange(arr[0], arr[1]);
-		};
-		textarea.element.expandSelectionBackward = function (num) {
-			var arr = this._marky.expandSelectionBackward(num, this.selectionStart, this.selectionEnd);
-			return this.setSelectionRange(arr[0], arr[1]);
-		};
+		textarea.assign('_marky', new _marky.Marky(textarea.element));
 
 		var input = new _Element.Element('input', 'Output');
 		input.assign('type', 'hidden');

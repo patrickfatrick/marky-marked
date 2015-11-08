@@ -14,10 +14,13 @@ export function inlineHandler (string, indices, mark) {
 				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';
 			}
-			if (string.indexOf(mark, indices[index]) === indices[index]) {
+			if (string.indexOf(mark, indices[index]) == indices[index]) {
 				string = string.substring(0, indices[index]) + string.substring(indices[index] + mark.length, string.length);
 				if (index == 0 && (indices[0] != indices[1])) {
 					indices[1] = indices[1] - mark.length;
+				}
+				if (index == 0 && (indices[0] === indices[1])) {
+					indices[0] = indices[0] - mark.length;
 				}
 				if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length;
 				useMark[index] = '';

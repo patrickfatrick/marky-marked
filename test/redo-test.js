@@ -14,7 +14,7 @@ describe('redo', () => {
 			{markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>'}
 		];
 		const stateIndex = 0;
-		let newState = dispatcher.redo(initialState, stateIndex).state;
+		let newState = dispatcher.redo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.not.be.empty;
 		newState.html.should.not.be.empty;
@@ -31,7 +31,7 @@ describe('redo', () => {
 			{markdown: 'Some really super funny awesome crazy text', html: '<p>Some super really funny awesome crazy text</p>'}
 		];
 		const stateIndex = 1;
-		let newState = dispatcher.redo(initialState, stateIndex).state;
+		let newState = dispatcher.redo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.equal('Some really super funny awesome crazy text');
 		newState.html.should.contain('<p>Some super really funny awesome crazy text</p>');
@@ -45,7 +45,7 @@ describe('redo', () => {
 			{markdown: 'Some super funny text', html: '<p>Some super funny text</p>'}
 		];
 		const stateIndex = 1;
-		let newState = dispatcher.redo(initialState, stateIndex).state;
+		let newState = dispatcher.redo(5, initialState, stateIndex).state;
 
 		newState.markdown.should.equal('Some super funny text');
 		newState.html.should.equal('<p>Some super funny text</p>');
