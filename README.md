@@ -1,6 +1,7 @@
 # Marky Marked
 
-_An in-browser editor so sweet you'll be feeling good vibrations._ [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
+_An in-browser editor so sweet you'll be feeling good vibrations._  
+[http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Build Status](https://travis-ci.org/patrickfatrick/marky-marked.svg)](https://travis-ci.org/patrickfatrick/marky-marked)
 [![Dependency Status](https://david-dm.org/patrickfatrick/marky-marked.svg)](https://david-dm.org/patrickfatrick/marky-marked)
@@ -12,7 +13,7 @@ _An in-browser editor so sweet you'll be feeling good vibrations._ [http://patri
 
 ## What is it?
 
-Marky Marked is an in-browser editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's excellent [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor.
+Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor and a smaller footprint. Marky Marked's minified file is less than 50KB including dependency.
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
 
@@ -97,7 +98,7 @@ editor.addEventListener('markychange', function (e) {
 });
 ```
 
-### Undo/Redo
+#### Undo/Redo
 
 You can manually undo and redo like so, optionally passing in the number of states to undo or redo by as an argument. If no argument is passed Marky Marked will assume 5 as if the button was pushed.
 
@@ -108,7 +109,7 @@ document.querySelector('.marky-editor')._marky.redo(13);
 
 The new state index will be returned.
 
-### Setting the selection
+#### Setting the selection
 
 You can set the text selection in the editor like so, passing in an array for the start and end positions. If no argument is passed Marky Marked will assume [0, 0];
 
@@ -118,7 +119,7 @@ document.querySelector('.marky-editor')._marky.setSelection([5, 7]);
 
 This method returns the array that was passed in.
 
-### Expanding the selection
+#### Expanding the selection
 
 You can expand the current text selection forward or backward in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will assume 0;
 
@@ -129,7 +130,7 @@ document.querySelector('.marky-editor')._marky.expandSelectionBackward(20);
 
 This method returns the array that was passed in.
 
-### Moving the cursor
+#### Moving the cursor
 
 You can also move the cursor in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will assume 0;
 
