@@ -62,19 +62,19 @@ export function listHandler (string, indices, type) {
 		let mark = (type === 'ul') ? '-' + ' ' : (i + 1) + '.' + ' ';
 		let newLine;
 		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
-			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_]|[a-zA-Z]|\n|$/gm));
-			newLine = line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
+			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
 			if (currentFormat.trim() !== mark.trim()) {
-				newLine = mark + line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
 			}
 			return newLines.push(newLine);
 		}
 		newLine = mark + line.substring(0, line.length);
 		return newLines.push(newLine);
 	});
-	let joined= newLines.join('\r\n');
+	let joined = newLines.join('\r\n');
 	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
-	return {value: value, range: [start, start + joined.length]};
+	return {value: value, range: [start, start + joined.replace(/\n/gm, '').length]};
 }
 
 export function insertHandler (string, indices, mark) {

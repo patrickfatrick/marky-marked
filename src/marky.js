@@ -21,13 +21,13 @@ export class Marky {
 		this.editor = editor;
 	}
 
-	update(markdown, state = this.state, index = this.index) {
+	update (markdown, state = this.state, index = this.index) {
 		const action = dispatcher.update(markdown, state, index);
 		this.state = action.state;
 		this.index = action.index;
 	}
 
-	undo(num = 5, state = this.state, index = this.index, editor = this.editor) {
+	undo (num = 5, state = this.state, index = this.index, editor = this.editor) {
 		if (index === 0) return state[0];
 
 		const action = dispatcher.undo(num, state, index);
@@ -38,7 +38,7 @@ export class Marky {
 		return this.index;
 	}
 
-	redo(num = 5, state = this.state, index = this.index, editor = this.editor) {
+	redo (num = 5, state = this.state, index = this.index, editor = this.editor) {
 		if (index === state.length - 1) return state[state.length - 1];
 
 		const action = dispatcher.redo(num, state, index);

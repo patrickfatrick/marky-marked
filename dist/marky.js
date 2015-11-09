@@ -1842,7 +1842,7 @@ var UndoButton = (function (_Element10) {
 			e.preventDefault();
 			if (_this.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.undo(editor._marky.state, editor._marky.index);
+			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
 		});
 	}
 
@@ -1876,7 +1876,7 @@ var RedoButton = (function (_Element11) {
 			e.preventDefault();
 			if (_this2.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.redo(editor._marky.state, editor._marky.index);
+			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
 		});
 	}
 
@@ -2077,7 +2077,7 @@ var HeadingSelect = (function (_Element) {
 			editor.value = headingify.value;
 			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state.get(editor._marky.index).get('html');
+			var html = editor._marky.state[editor._marky.index].html;
 			_this.element.selectedIndex = 0;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2259,10 +2259,10 @@ function listHandler(string, indices, type) {
 		var mark = type === 'ul' ? '-' + ' ' : i + 1 + '.' + ' ';
 		var newLine = undefined;
 		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
-			var currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_]|[a-zA-Z]|\n|$/gm));
-			newLine = line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+			var currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
+			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
 			if (currentFormat.trim() !== mark.trim()) {
-				newLine = mark + line.substring(line.search(/[~*`_]|[a-zA-Z]|\n|$/gm), line.length);
+				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
 			}
 			return newLines.push(newLine);
 		}
@@ -2271,7 +2271,7 @@ function listHandler(string, indices, type) {
 	});
 	var joined = newLines.join('\r\n');
 	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
-	return { value: value, range: [start, start + joined.length] };
+	return { value: value, range: [start, start + joined.replace(/\n/gm, '').length] };
 }
 
 function insertHandler(string, indices, mark) {

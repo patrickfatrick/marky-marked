@@ -17,7 +17,7 @@ export class HeadingSelect extends Element {
 			editor.value = headingify.value;
 			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
 			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state.get(editor._marky.index).get('html');
+			let html = editor._marky.state[editor._marky.index].html;
 			this.element.selectedIndex = 0;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(update);
