@@ -35,6 +35,7 @@
 		@include no-outline;
 		@include side-margins(2px, 2px);
 		-webkit-appearance: none;
+		-moz-appearance: none;
 		font-size: 1rem;
 		outline: none;
 		border: 1px solid gray;
@@ -46,12 +47,13 @@
 		text-align: center;
 		background-color: white;
 		color: black;
+		text-align: left;
 		&:focus {
 			border-color: $deepBlue;
 		}
 		@media all and (min-width: 1200px) {
 			min-width: 6rem;
-			padding-left: 0.7rem;
+			padding-left: 0.6rem;
 		}
 	}
 	.separator {
