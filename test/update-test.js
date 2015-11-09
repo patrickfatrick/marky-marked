@@ -1,6 +1,5 @@
 import chai from 'chai';
 import jsdom from 'jsdom';
-import {Map, List} from 'immutable';
 import mark from '../src/modules/mark';
 import * as dispatcher from '../src/modules/dispatcher';
 
@@ -8,29 +7,29 @@ chai.should();
 describe('update', () => {
 
 	it('handles updating state', () => {
-		const initialState = List([Map({markdown: '', html: ''})]);
+		const initialState = [{markdown: '', html: ''}];
 		const stateIndex = 0;
 		let newState = dispatcher.update('Some text', initialState, stateIndex);
 
-		newState.state.size.should.equal(2);
-		newState.state.get(1).get('markdown').should.equal('Some text');
-		newState.state.get(1).get('html').should.contain('<p>Some text</p>');
-		newState.state.get(0).get('markdown').should.be.empty;
+		newState.state.length.should.equal(2);
+		newState.state[1].markdown.should.equal('Some text');
+		newState.state[1].html.should.contain('<p>Some text</p>');
+		newState.state[0].markdown.should.be.empty;
 		newState.index.should.equal(1);
 	});
 
 	it('adds to existing state', () => {
-		const initialState = List([
-			Map({markdown: '', html: ''}),
-			Map({markdown: 'Some text', html: '<p>Some text</p>'})
-		]);
+		const initialState = [
+			{markdown: '', html: ''},
+			{markdown: 'Some text', html: '<p>Some text</p>'}
+		];
 		const stateIndex = 1;
 		let newState = dispatcher.update('', initialState, stateIndex);
 
-		newState.state.size.should.equal(3);
-		newState.state.get(2).get('markdown').should.be.empty;
-		newState.state.get(2).get('html').should.be.empty;
-		newState.state.get(1).get('markdown').should.equal('Some text');
+		newState.state.length.should.equal(3);
+		newState.state[2].markdown.should.be.empty;
+		newState.state[2].html.should.be.empty;
+		newState.state[1].markdown.should.equal('Some text');
 		newState.index.should.equal(2);
 	});
 

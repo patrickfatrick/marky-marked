@@ -6,48 +6,82 @@
  * https://www.github.com/patrickfatrick/marky-mark
  */
 
-import {Map, List} from 'immutable';
 import prototypes from './modules/prototypes';
 import mark from './modules/mark';
 import * as dispatcher from './modules/dispatcher';
+import {markychange} from './modules/custom-events';
 
 prototypes();
 
 export class Marky {
-	constructor () {
+	constructor (editor) {
 		this.mark = mark;
-		this.state = List([Map({markdown: '', html: ''})]),
+		this.state = [{markdown: '', html: ''}];
 		this.index = 0;
+		this.editor = editor;
 	}
 
-	update(markdown, state = this.state, index = this.index) {
+	update (markdown, state = this.state, index = this.index) {
 		const action = dispatcher.update(markdown, state, index);
 		this.state = action.state;
 		this.index = action.index;
 	}
 
-	undo(state, index) {
-		if (index === 0) return state.get(0);
+	undo (num = 5, state = this.state, index = this.index, editor = this.editor) {
+		if (index === 0) return state[0];
 
-		const action = dispatcher.undo(state, index);
+		const action = dispatcher.undo(num, state, index);
 		this.index = action.index;
-		return action.state;
+		editor.value = action.state.markdown;
+		editor.nextSibling.value = action.state.html;
+		editor.dispatchEvent(markychange);
+		return this.index;
 	}
 
-	redo(state, index) {
-		if (index === state.size - 1) return state.get(state.size - 1);
+	redo (num = 5, state = this.state, index = this.index, editor = this.editor) {
+		if (index === state.length - 1) return state[state.length - 1];
 
-		const action = dispatcher.redo(state, index);
+		const action = dispatcher.redo(num, state, index);
 		this.index = action.index;
-		return action.state;
+		editor.value = action.state.markdown;
+		editor.nextSibling.value = action.state.html;
+		editor.dispatchEvent(markychange);
+		return this.index;
 	}
 
-	expandSelectionForward (num = 0, start, end) {
-		return [start, end + num];
+	setSelection (arr = [0, 0], editor = this.editor) {
+		editor.setSelectionRange(arr[0], arr[1]);
+		return arr;
 	}
 
-	expandSelectionBackward (num = 0, start, end) {
-		return [start - num, end];
+	expandSelectionForward (num = 0, editor = this.editor) {
+		const start = editor.selectionStart;
+		const end = editor.selectionEnd + num;
+
+		editor.setSelectionRange(start, end);
+		return [start, end];
+	}
+
+	expandSelectionBackward (num = 0, editor = this.editor) {
+		const start = editor.selectionStart - num;
+		const end = editor.selectionEnd;
+
+		editor.setSelectionRange(start, end);
+		return [start, end];
+	}
+
+	moveCursorBackward (num = 0, editor = this.editor) {
+		const start = editor.selectionStart - num;
+
+		editor.setSelectionRange(start, start);
+		return start;
+	}
+
+	moveCursorForward (num = 0, editor = this.editor) {
+		const start = editor.selectionStart + num;
+
+		editor.setSelectionRange(start, start);
+		return start;
 	}
 
 }

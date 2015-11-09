@@ -32,13 +32,12 @@ describe('list handling', () => {
 		let headingify = listHandler(string, indices, 'ul');
 
 		headingify.value.should.equal('- Some text\r\n- Some other text');
-		headingify.range.should.contain.members([0, 30]);
+		headingify.range.should.contain.members([0, 29]);
 	});
 
 	it('ignores other lines around the selection', () => {
 		let string = 'Some text\r\nSome other text';
 		let indices = [11, 26];
-
 		let headingify = listHandler(string, indices, 'ul');
 
 		headingify.value.should.equal('Some text\r\n- Some other text');
@@ -112,7 +111,7 @@ describe('list handling', () => {
 		let headingify = listHandler(string, indices, 'ul');
 
 		headingify.value.should.equal('- Some text\r\n- Some other text\r\n- Even more text');
-		headingify.range.should.contain.members([0, 48]);
+		headingify.range.should.contain.members([0, 46]);
 	});
 
 	it('exchanges one unordered list for an ordered list', () => {
@@ -122,7 +121,7 @@ describe('list handling', () => {
 		let headingify = listHandler(string, indices, 'ol');
 
 		headingify.value.should.equal('1. Some text\r\n2. Some other text\r\n3. Even more text');
-		headingify.range.should.contain.members([0, 51]);
+		headingify.range.should.contain.members([0, 49]);
 	});
 
 	it('exchanges one ordered list for an unordered list', () => {
@@ -132,11 +131,11 @@ describe('list handling', () => {
 		let headingify = listHandler(string, indices, 'ul');
 
 		headingify.value.should.equal('- Some text\r\n- Some other text\r\n- Even more text');
-		headingify.range.should.contain.members([0, 48]);
+		headingify.range.should.contain.members([0, 46]);
 	});
 
 	it('converts to HTML', () => {
-		var container = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
 		document.body.appendChild(container);
 		mark('marky-mark');
 		container.children[1].value = '- Some text\r\n- Some other text';

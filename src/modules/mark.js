@@ -20,15 +20,7 @@ export default function (tag = 'marky-mark') {
 
 		let textarea = new Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
-		textarea.assign('_marky', new Marky);
-		textarea.element.expandSelectionForward = function (num) {
-			let arr = this._marky.expandSelectionForward(num, this.selectionStart, this.selectionEnd);
-			return this.setSelectionRange(arr[0], arr[1]);
-		};
-		textarea.element.expandSelectionBackward = function (num) {
-			let arr = this._marky.expandSelectionBackward(num, this.selectionStart, this.selectionEnd);
-			return this.setSelectionRange(arr[0], arr[1]);
-		};
+		textarea.assign('_marky', new Marky(textarea.element));
 
 		let input = new Element('input', 'Output');
 		input.assign('type', 'hidden');
@@ -89,13 +81,13 @@ export default function (tag = 'marky-mark') {
 		}, false);
 
 		textarea.listen('markychange', function (e) {
-			let html = this._marky.state.get(this._marky.index).get('html');
+			let html = this._marky.state[this._marky.index].html;
 			if (this._marky.index === 0)  {
 				undoButton.addClass(['disabled']);
 			} else {
 				undoButton.removeClass(['disabled']);
 			}
-			if (this._marky.index === this._marky.state.size - 1) {
+			if (this._marky.index === this._marky.state.length - 1) {
 				redoButton.addClass(['disabled']);
 			} else {
 				redoButton.removeClass(['disabled']);

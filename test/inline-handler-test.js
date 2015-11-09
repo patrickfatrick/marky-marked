@@ -76,8 +76,18 @@ describe('inline handling', () => {
 		boldify.range.should.contain.members([8, 13]);
 	});
 
+	it('removes marks around blank strings', () => {
+		let string = 'So****me text';
+		let indices = [4, 4];
+
+		let boldify = inlineHandler(string, indices, '**');
+
+		boldify.value.should.equal('Some text');
+		boldify.range.should.contain.members([2, 2]);
+	});
+
 	it('converts to HTML', () => {
-		var container = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
 		document.body.appendChild(container);
 		mark('marky-mark');
 		container.children[1].value = '**Some text**';

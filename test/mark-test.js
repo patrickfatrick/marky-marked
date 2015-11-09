@@ -6,11 +6,11 @@ chai.should();
 
 describe('mark', () => {
 	it('works in the DOM', () => {
-		var container = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
 		container.tagName.toLowerCase().should.equal('marky-mark');
 	});
 	it('creates a toolbar, a textarea, and a hidden input', () => {
-		var container = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
 		document.body.appendChild(container);
 		mark('marky-mark');
 		container.children[0].tagName.toLowerCase().should.equal('div');
@@ -40,8 +40,8 @@ describe('mark', () => {
 		container.children[0].children[15].classList.should.have.property('0', 'redo');
 	});
 	it('initializes on marky-mark tags by default', () => {
-		var container = document.createElement('marky-mark');
-		var anotherContainer = document.createElement('funky-bunch');
+		const container = document.createElement('marky-mark');
+		const anotherContainer = document.createElement('funky-bunch');
 		document.body.appendChild(container);
 		document.body.appendChild(anotherContainer);
 		mark();
@@ -54,9 +54,9 @@ describe('mark', () => {
 		container.children[2].classList.should.have.property('0', 'marky-output');
 	});
 	it('initializes on multiple elements', () => {
-		var container = document.createElement('marky-mark');
-		var anotherContainer = document.createElement('funky-bunch');
-		var yetAnotherContainer = document.createElement('marky-mark');
+		const container = document.createElement('marky-mark');
+		const anotherContainer = document.createElement('funky-bunch');
+		const yetAnotherContainer = document.createElement('marky-mark');
 		document.body.appendChild(container);
 		document.body.appendChild(anotherContainer);
 		document.body.appendChild(yetAnotherContainer);
