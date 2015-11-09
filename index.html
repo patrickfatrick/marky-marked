@@ -127,7 +127,6 @@
 		var output = document.querySelector('input.marky-output');
 		var htmlOutput = document.getElementById('html-output');
 
-		//editor.dispatchEvent(markyinit);
 		editor.addEventListener('markychange', function (e) {
 			document.getElementById('output').textContent = output.value;
 			htmlOutput.innerHTML = '';
