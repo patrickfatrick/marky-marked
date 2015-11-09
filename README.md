@@ -128,7 +128,7 @@ document.querySelector('.marky-editor')._marky.expandSelectionForward(3);
 document.querySelector('.marky-editor')._marky.expandSelectionBackward(20);
 ```
 
-This method returns the array that was passed in.
+This method returns the new starting and ending positions for the selection.
 
 #### Moving the cursor
 
