@@ -1,11 +1,11 @@
 {
 	"name": "marky-marked",
 	"main": "index.js",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],
-	"description": "A browser editor combining the power of markdown with the ease of WYSIWYG",
+	"description": "An in-browser editor so sweet you'll be feeling good vibrations.",
 	"moduleType": [
 		"globals",
 		"node"
