@@ -91,7 +91,10 @@ var html = _marky.state[index].html;
 
 Since state is immutable you can also grab the markdown or HTML at any point in recent history by changing the index.
 
-You can listen to update events like so:
+
+#### Events
+
+You can watch for a number of events from the `marky-editor` element.
 
 ```javascript
 var editor = document.querySelector('.marky-editor.editor-0');
@@ -100,9 +103,8 @@ editor.addEventListener('markychange', function (e) {
 });
 ```
 
-#### Events
+Here's the list of possibilities
 
-You can watch for a number of events from the `marky-editor` element.
 
 ```javascript
 update // Emitted when any forward-progress change happens to the state (not including undo/redo).
