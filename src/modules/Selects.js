@@ -1,7 +1,5 @@
 import {Element} from './Element';
 import {HeadingOption} from './Options';
-import {blockHandler} from './handlers';
-import {update} from './custom-events';
 
 export class HeadingSelect extends Element {
 	constructor (type = 'select', title = 'Heading', id, parent) {
@@ -10,28 +8,21 @@ export class HeadingSelect extends Element {
 		const editor = parent.element;
 		super.listen('change', () => {
 			let selected = this.element.selectedIndex;
-			let value = this.element.options[selected].value;
+			let value = parseInt(this.element.options[selected].value);
 			editor.focus();
-			const indices = [editor.selectionStart, editor.selectionEnd];
-			let headingify = blockHandler(editor.value, indices, value + ' ');
-			editor.value = headingify.value;
-			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			let html = editor._marky.state[editor._marky.index].html;
 			this.element.selectedIndex = 0;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(update);
+			return editor._marky.heading(value, [editor.selectionStart, editor.selectionEnd]);
 		});
 
 		let optionPlaceholder = new HeadingOption('option', 'Headings', '');
 		optionPlaceholder.assign('value', '');
-		let remove = new HeadingOption('option', 'Remove', '');
-		let option1 = new HeadingOption('option', 'Heading 1', '#');
-		let option2 = new HeadingOption('option', 'Heading 2', '##');
-		let option3 = new HeadingOption('option', 'Heading 3', '###');
-		let option4 = new HeadingOption('option', 'Heading 4', '####');
-		let option5 = new HeadingOption('option', 'Heading 5', '#####');
-		let option6 = new HeadingOption('option', 'Heading 6', '######');
+		let remove = new HeadingOption('option', 'Remove', '0');
+		let option1 = new HeadingOption('option', 'Heading 1', '1');
+		let option2 = new HeadingOption('option', 'Heading 2', '2');
+		let option3 = new HeadingOption('option', 'Heading 3', '3');
+		let option4 = new HeadingOption('option', 'Heading 4', '4');
+		let option5 = new HeadingOption('option', 'Heading 5', '5');
+		let option6 = new HeadingOption('option', 'Heading 6', '6');
 
 		optionPlaceholder.appendTo(this.element);
 		remove.appendTo(this.element);

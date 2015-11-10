@@ -9,7 +9,8 @@
 import prototypes from './modules/prototypes';
 import mark from './modules/mark';
 import * as dispatcher from './modules/dispatcher';
-import {markychange} from './modules/custom-events';
+import {update, markychange} from './modules/custom-events';
+import {inlineHandler, blockHandler, insertHandler, listHandler} from './modules/handlers';
 
 prototypes();
 
@@ -82,6 +83,135 @@ export class Marky {
 
 		editor.setSelectionRange(start, start);
 		return start;
+	}
+
+	bold (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let boldify = inlineHandler(editor.value, indices, '**');
+		editor.value = boldify.value;
+		editor.setSelectionRange(boldify.range[0], boldify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [boldify.range[0], boldify.range[1]];
+	}
+
+	italic (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let italicize = inlineHandler(editor.value, indices, '_');
+		editor.value = italicize.value;
+		editor.setSelectionRange(italicize.range[0], italicize.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [italicize.range[0], italicize.range[1]];
+	}
+
+	strikethrough (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let strikitize = inlineHandler(editor.value, indices, '~~');
+		editor.value = strikitize.value;
+		editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [strikitize.range[0], strikitize.range[1]];
+	}
+
+	code (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let codify = inlineHandler(editor.value, indices, '`');
+		editor.value = codify.value;
+		editor.setSelectionRange(codify.range[0], codify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [codify.range[0], codify.range[1]];
+	}
+
+	blockquote (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let quotify = blockHandler(editor.value, indices, '> ');
+		editor.value = quotify.value;
+		editor.setSelectionRange(quotify.range[0], quotify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [quotify.range[0], quotify.range[1]];
+	}
+
+	heading (value = 0, indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let markArr = [];
+		let mark;
+		for (let i = 1; i <= value; i++) {
+			markArr.push('#');
+		}
+		mark = markArr.join('');
+		let space = mark ? ' ' : '';
+		let headingify = blockHandler(editor.value, indices, mark + space);
+		editor.value = headingify.value;
+		editor.setSelectionRange(headingify.range[0], headingify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [headingify.range[0], headingify.range[1]];
+	}
+
+	link (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		const mark = '[DISPLAY TEXT](http://url.com)';
+		let linkify = insertHandler(editor.value, indices, mark);
+		editor.value = linkify.value;
+		editor.setSelectionRange(linkify.range[0], linkify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [linkify.range[0], linkify.range[1]];
+	}
+
+	image (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		const mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
+		let imageify = insertHandler(editor.value, indices, mark);
+		editor.value = imageify.value;
+		editor.setSelectionRange(imageify.range[0], imageify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [imageify.range[0], imageify.range[1]];
+	}
+
+	unorderedList (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let listify = listHandler(editor.value, indices, 'ul');
+		editor.value = listify.value;
+		editor.setSelectionRange(listify.range[0], listify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [listify.range[0], listify.range[1]];
+	}
+
+	orderedList (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let listify = listHandler(editor.value, indices, 'ol');
+		editor.value = listify.value;
+		editor.setSelectionRange(listify.range[0], listify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [listify.range[0], listify.range[1]];
 	}
 
 }

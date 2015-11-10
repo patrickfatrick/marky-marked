@@ -1336,6 +1336,8 @@ var dispatcher = _interopRequireWildcard(_modulesDispatcher);
 
 var _modulesCustomEvents = require('./modules/custom-events');
 
+var _modulesHandlers = require('./modules/handlers');
+
 (0, _modulesPrototypes2['default'])();
 
 var Marky = (function () {
@@ -1447,6 +1449,166 @@ var Marky = (function () {
 			editor.setSelectionRange(start, start);
 			return start;
 		}
+	}, {
+		key: 'bold',
+		value: function bold(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var boldify = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '**');
+			editor.value = boldify.value;
+			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [boldify.range[0], boldify.range[1]];
+		}
+	}, {
+		key: 'italic',
+		value: function italic(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var italicize = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '_');
+			editor.value = italicize.value;
+			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [italicize.range[0], italicize.range[1]];
+		}
+	}, {
+		key: 'strikethrough',
+		value: function strikethrough(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var strikitize = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '~~');
+			editor.value = strikitize.value;
+			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [strikitize.range[0], strikitize.range[1]];
+		}
+	}, {
+		key: 'code',
+		value: function code(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var codify = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '`');
+			editor.value = codify.value;
+			editor.setSelectionRange(codify.range[0], codify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [codify.range[0], codify.range[1]];
+		}
+	}, {
+		key: 'blockquote',
+		value: function blockquote(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var quotify = (0, _modulesHandlers.blockHandler)(editor.value, indices, '> ');
+			editor.value = quotify.value;
+			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [quotify.range[0], quotify.range[1]];
+		}
+	}, {
+		key: 'heading',
+		value: function heading(value, indices) {
+			if (value === undefined) value = 0;
+			var editor = arguments.length <= 2 || arguments[2] === undefined ? this.editor : arguments[2];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var markArr = [];
+			var mark = undefined;
+			for (var i = 1; i <= value; i++) {
+				markArr.push('#');
+			}
+			mark = markArr.join('');
+			var space = mark ? ' ' : '';
+			var headingify = (0, _modulesHandlers.blockHandler)(editor.value, indices, mark + space);
+			editor.value = headingify.value;
+			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [headingify.range[0], headingify.range[1]];
+		}
+	}, {
+		key: 'link',
+		value: function link(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var mark = '[DISPLAY TEXT](http://url.com)';
+			var linkify = (0, _modulesHandlers.insertHandler)(editor.value, indices, mark);
+			editor.value = linkify.value;
+			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [linkify.range[0], linkify.range[1]];
+		}
+	}, {
+		key: 'image',
+		value: function image(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
+			var imageify = (0, _modulesHandlers.insertHandler)(editor.value, indices, mark);
+			editor.value = imageify.value;
+			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [imageify.range[0], imageify.range[1]];
+		}
+	}, {
+		key: 'unorderedList',
+		value: function unorderedList(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _modulesHandlers.listHandler)(editor.value, indices, 'ul');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [listify.range[0], listify.range[1]];
+		}
+	}, {
+		key: 'orderedList',
+		value: function orderedList(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _modulesHandlers.listHandler)(editor.value, indices, 'ol');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_modulesCustomEvents.update);
+			return [listify.range[0], listify.range[1]];
+		}
 	}]);
 
 	return Marky;
@@ -1454,7 +1616,7 @@ var Marky = (function () {
 
 exports.Marky = Marky;
 
-},{"./modules/custom-events":8,"./modules/dispatcher":9,"./modules/mark":11,"./modules/prototypes":13}],4:[function(require,module,exports){
+},{"./modules/custom-events":8,"./modules/dispatcher":9,"./modules/handlers":10,"./modules/mark":11,"./modules/prototypes":13}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1468,10 +1630,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _Element12 = require('./Element');
-
-var _handlers = require('./handlers');
-
-var _customEvents = require('./custom-events');
 
 var BoldButton = (function (_Element) {
 	_inherits(BoldButton, _Element);
@@ -1495,14 +1653,7 @@ var BoldButton = (function (_Element) {
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
-			editor.value = boldify.value;
-			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.bold([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1533,14 +1684,7 @@ var ItalicButton = (function (_Element2) {
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
-			editor.value = italicize.value;
-			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.italic([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1571,14 +1715,7 @@ var StrikethroughButton = (function (_Element3) {
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
-			editor.value = strikitize.value;
-			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.strikethrough([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1609,14 +1746,7 @@ var CodeButton = (function (_Element4) {
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
-			editor.value = codify.value;
-			editor.setSelectionRange(codify.range[0], codify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.code([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1647,14 +1777,7 @@ var BlockquoteButton = (function (_Element5) {
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '> ');
-			editor.value = quotify.value;
-			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.blockquote([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1685,15 +1808,7 @@ var LinkButton = (function (_Element6) {
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var mark = '[DISPLAY TEXT](http://url.com)';
-			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
-			editor.value = linkify.value;
-			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.link([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1724,15 +1839,7 @@ var ImageButton = (function (_Element7) {
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
-			var imagify = (0, _handlers.insertHandler)(editor.value, indices, mark);
-			editor.value = imagify.value;
-			editor.setSelectionRange(imagify.range[0], imagify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.image([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1763,14 +1870,7 @@ var UnorderedListButton = (function (_Element8) {
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ul');
-			editor.value = listify.value;
-			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.unorderedList([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1801,14 +1901,7 @@ var OrderedListButton = (function (_Element9) {
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', this).call(this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ol');
-			editor.value = listify.value;
-			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			return editor.dispatchEvent(_customEvents.update);
+			return editor._marky.orderedList([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 
@@ -1885,7 +1978,7 @@ var RedoButton = (function (_Element11) {
 
 exports.RedoButton = RedoButton;
 
-},{"./Element":5,"./custom-events":8,"./handlers":10}],5:[function(require,module,exports){
+},{"./Element":5}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2050,10 +2143,6 @@ var _Element2 = require('./Element');
 
 var _Options = require('./Options');
 
-var _handlers = require('./handlers');
-
-var _customEvents = require('./custom-events');
-
 var HeadingSelect = (function (_Element) {
 	_inherits(HeadingSelect, _Element);
 
@@ -2070,28 +2159,21 @@ var HeadingSelect = (function (_Element) {
 		var editor = parent.element;
 		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', this).call(this, 'change', function () {
 			var selected = _this.element.selectedIndex;
-			var value = _this.element.options[selected].value;
+			var value = parseInt(_this.element.options[selected].value);
 			editor.focus();
-			var indices = [editor.selectionStart, editor.selectionEnd];
-			var headingify = (0, _handlers.blockHandler)(editor.value, indices, value + ' ');
-			editor.value = headingify.value;
-			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
 			_this.element.selectedIndex = 0;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			return editor._marky.heading(value, [editor.selectionStart, editor.selectionEnd]);
 		});
 
 		var optionPlaceholder = new _Options.HeadingOption('option', 'Headings', '');
 		optionPlaceholder.assign('value', '');
-		var remove = new _Options.HeadingOption('option', 'Remove', '');
-		var option1 = new _Options.HeadingOption('option', 'Heading 1', '#');
-		var option2 = new _Options.HeadingOption('option', 'Heading 2', '##');
-		var option3 = new _Options.HeadingOption('option', 'Heading 3', '###');
-		var option4 = new _Options.HeadingOption('option', 'Heading 4', '####');
-		var option5 = new _Options.HeadingOption('option', 'Heading 5', '#####');
-		var option6 = new _Options.HeadingOption('option', 'Heading 6', '######');
+		var remove = new _Options.HeadingOption('option', 'Remove', '0');
+		var option1 = new _Options.HeadingOption('option', 'Heading 1', '1');
+		var option2 = new _Options.HeadingOption('option', 'Heading 2', '2');
+		var option3 = new _Options.HeadingOption('option', 'Heading 3', '3');
+		var option4 = new _Options.HeadingOption('option', 'Heading 4', '4');
+		var option5 = new _Options.HeadingOption('option', 'Heading 5', '5');
+		var option6 = new _Options.HeadingOption('option', 'Heading 6', '6');
 
 		optionPlaceholder.appendTo(this.element);
 		remove.appendTo(this.element);
@@ -2108,7 +2190,7 @@ var HeadingSelect = (function (_Element) {
 
 exports.HeadingSelect = HeadingSelect;
 
-},{"./Element":5,"./Options":6,"./custom-events":8,"./handlers":10}],8:[function(require,module,exports){
+},{"./Element":5,"./Options":6}],8:[function(require,module,exports){
 // Custom Event Polyfill for IE9+
 'use strict';
 
