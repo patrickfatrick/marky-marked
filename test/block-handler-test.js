@@ -140,7 +140,6 @@ describe('block handling', () => {
 		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
-		console.log(editor);
 		editor.value = '## Some text';
 		editor.dispatchEvent(update);
 
