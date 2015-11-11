@@ -2,20 +2,19 @@ var istanbul = require('browserify-istanbul');
 
 module.exports = function (karma) {
 	karma.set({
-		basePath: './',
-		files: ['test/test.js'],
+		basePath: '',
+		files: ['test/**/*.js'],
 		frameworks: ['browserify', 'mocha', 'chai'],
 		plugins: [
-  		'karma-browserify',
+			'karma-browserify',
 			'karma-mocha',
 			'karma-chai',
-			'karma-chrome-launcher',
+			'karma-coverage',
 			'karma-phantomjs-launcher'
-		],	
-		browsers: ['PhantomJS'], // 'Chrome'
+		],
+		browsers: ['PhantomJS'],
 
 		preprocessors: {
-			'src/**/*.js': ['browserify'],
 			'test/**/*.js': ['browserify']
 		},
 		browserify: {
@@ -23,7 +22,7 @@ module.exports = function (karma) {
 			bundleDelay: 1000,
 			transform: [['babelify', {
 				ignore: /node_modules/
-            }], istanbul({
+						}], istanbul({
 				ignore: ['test/**', '**/node_modules/**']
 			})],
 			extensions: ['.js']
@@ -37,15 +36,21 @@ module.exports = function (karma) {
 				type: 'html',
 				dir: 'coverage',
 				subdir: 'html'
-            }, {
+						}, {
 				type: 'lcovonly',
 				dir: 'coverage',
 				subdir: 'lcov'
-            }]
+						}]
+		},
+		client: {
+			mocha: {
+				reporter: 'html', // change Karma's debug.html to the mocha web reporter
+				ui: 'tdd'
+			}
 		},
 		port: 9090,
-		logLevel: karma.LOG_DISABLE,
-		singleRun: false,
+		logLevel: karma.LOG_INFO,
+		singleRun: true,
 		autoWatch: false,
 		browserNoActivityTimeout: 30000,
 		colors: true
