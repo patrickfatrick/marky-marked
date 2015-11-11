@@ -1,17 +1,4 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.marky = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _srcMarky = require('./src/marky');
-
-var marky = new _srcMarky.Marky();
-exports['default'] = marky;
-module.exports = exports['default'];
-
-},{"./src/marky":3}],2:[function(require,module,exports){
 (function (global){
 /**
  * marked - a markdown parser
@@ -1301,322 +1288,20 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 'use strict';
 
-/**
- * Marky Mark
- * Author: Patrick Fricano
- * https://www.github.com/patrickfatrick/marky-mark
- */
-
 Object.defineProperty(exports, '__esModule', {
-	value: true
+  value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _modulesMarky = require('./modules/Marky');
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+var marky = new _modulesMarky.Marky();
+exports['default'] = marky;
+module.exports = exports['default'];
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var _modulesPrototypes = require('./modules/prototypes');
-
-var _modulesPrototypes2 = _interopRequireDefault(_modulesPrototypes);
-
-var _modulesMark = require('./modules/mark');
-
-var _modulesMark2 = _interopRequireDefault(_modulesMark);
-
-var _modulesDispatcher = require('./modules/dispatcher');
-
-var dispatcher = _interopRequireWildcard(_modulesDispatcher);
-
-var _modulesCustomEvents = require('./modules/custom-events');
-
-var _modulesHandlers = require('./modules/handlers');
-
-(0, _modulesPrototypes2['default'])();
-
-var Marky = (function () {
-	function Marky(editor) {
-		_classCallCheck(this, Marky);
-
-		this.mark = _modulesMark2['default'];
-		this.state = [{ markdown: '', html: '' }];
-		this.index = 0;
-		this.editor = editor;
-	}
-
-	_createClass(Marky, [{
-		key: 'update',
-		value: function update(markdown) {
-			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
-			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
-
-			var action = dispatcher.update(markdown, state, index);
-			this.state = action.state;
-			this.index = action.index;
-		}
-	}, {
-		key: 'undo',
-		value: function undo() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
-			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
-			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
-			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
-
-			if (index === 0) return state[0];
-
-			var action = dispatcher.undo(num, state, index);
-			this.index = action.index;
-			editor.value = action.state.markdown;
-			editor.nextSibling.value = action.state.html;
-			editor.dispatchEvent(_modulesCustomEvents.markychange);
-			return this.index;
-		}
-	}, {
-		key: 'redo',
-		value: function redo() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
-			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
-			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
-			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
-
-			if (index === state.length - 1) return state[state.length - 1];
-
-			var action = dispatcher.redo(num, state, index);
-			this.index = action.index;
-			editor.value = action.state.markdown;
-			editor.nextSibling.value = action.state.html;
-			editor.dispatchEvent(_modulesCustomEvents.markychange);
-			return this.index;
-		}
-	}, {
-		key: 'setSelection',
-		value: function setSelection() {
-			var arr = arguments.length <= 0 || arguments[0] === undefined ? [0, 0] : arguments[0];
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			editor.setSelectionRange(arr[0], arr[1]);
-			return arr;
-		}
-	}, {
-		key: 'expandSelectionForward',
-		value: function expandSelectionForward() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			var start = editor.selectionStart;
-			var end = editor.selectionEnd + num;
-
-			editor.setSelectionRange(start, end);
-			return [start, end];
-		}
-	}, {
-		key: 'expandSelectionBackward',
-		value: function expandSelectionBackward() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			var start = editor.selectionStart - num;
-			var end = editor.selectionEnd;
-
-			editor.setSelectionRange(start, end);
-			return [start, end];
-		}
-	}, {
-		key: 'moveCursorBackward',
-		value: function moveCursorBackward() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			var start = editor.selectionStart - num;
-
-			editor.setSelectionRange(start, start);
-			return start;
-		}
-	}, {
-		key: 'moveCursorForward',
-		value: function moveCursorForward() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			var start = editor.selectionStart + num;
-
-			editor.setSelectionRange(start, start);
-			return start;
-		}
-	}, {
-		key: 'bold',
-		value: function bold(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var boldify = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '**');
-			editor.value = boldify.value;
-			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [boldify.range[0], boldify.range[1]];
-		}
-	}, {
-		key: 'italic',
-		value: function italic(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var italicize = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '_');
-			editor.value = italicize.value;
-			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [italicize.range[0], italicize.range[1]];
-		}
-	}, {
-		key: 'strikethrough',
-		value: function strikethrough(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var strikitize = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '~~');
-			editor.value = strikitize.value;
-			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [strikitize.range[0], strikitize.range[1]];
-		}
-	}, {
-		key: 'code',
-		value: function code(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var codify = (0, _modulesHandlers.inlineHandler)(editor.value, indices, '`');
-			editor.value = codify.value;
-			editor.setSelectionRange(codify.range[0], codify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [codify.range[0], codify.range[1]];
-		}
-	}, {
-		key: 'blockquote',
-		value: function blockquote(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var quotify = (0, _modulesHandlers.blockHandler)(editor.value, indices, '> ');
-			editor.value = quotify.value;
-			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [quotify.range[0], quotify.range[1]];
-		}
-	}, {
-		key: 'heading',
-		value: function heading(value, indices) {
-			if (value === undefined) value = 0;
-			var editor = arguments.length <= 2 || arguments[2] === undefined ? this.editor : arguments[2];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var markArr = [];
-			var mark = undefined;
-			for (var i = 1; i <= value; i++) {
-				markArr.push('#');
-			}
-			mark = markArr.join('');
-			var space = mark ? ' ' : '';
-			var headingify = (0, _modulesHandlers.blockHandler)(editor.value, indices, mark + space);
-			editor.value = headingify.value;
-			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [headingify.range[0], headingify.range[1]];
-		}
-	}, {
-		key: 'link',
-		value: function link(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var mark = '[DISPLAY TEXT](http://url.com)';
-			var linkify = (0, _modulesHandlers.insertHandler)(editor.value, indices, mark);
-			editor.value = linkify.value;
-			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [linkify.range[0], linkify.range[1]];
-		}
-	}, {
-		key: 'image',
-		value: function image(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
-			var imageify = (0, _modulesHandlers.insertHandler)(editor.value, indices, mark);
-			editor.value = imageify.value;
-			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [imageify.range[0], imageify.range[1]];
-		}
-	}, {
-		key: 'unorderedList',
-		value: function unorderedList(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var listify = (0, _modulesHandlers.listHandler)(editor.value, indices, 'ul');
-			editor.value = listify.value;
-			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [listify.range[0], listify.range[1]];
-		}
-	}, {
-		key: 'orderedList',
-		value: function orderedList(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
-
-			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var listify = (0, _modulesHandlers.listHandler)(editor.value, indices, 'ol');
-			editor.value = listify.value;
-			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
-			var html = editor._marky.state[editor._marky.index].html;
-			editor.nextSibling.value = html;
-			editor.dispatchEvent(_modulesCustomEvents.update);
-			return [listify.range[0], listify.range[1]];
-		}
-	}]);
-
-	return Marky;
-})();
-
-exports.Marky = Marky;
-
-},{"./modules/custom-events":8,"./modules/dispatcher":9,"./modules/handlers":10,"./modules/mark":11,"./modules/prototypes":13}],4:[function(require,module,exports){
+},{"./modules/Marky":5}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1978,7 +1663,7 @@ var RedoButton = (function (_Element11) {
 
 exports.RedoButton = RedoButton;
 
-},{"./Element":5}],5:[function(require,module,exports){
+},{"./Element":4}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2092,7 +1777,322 @@ var Element = (function () {
 
 exports.Element = Element;
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+'use strict';
+
+/**
+ * Marky Mark
+ * Author: Patrick Fricano
+ * https://www.github.com/patrickfatrick/marky-mark
+ */
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _prototypes = require('./prototypes');
+
+var _prototypes2 = _interopRequireDefault(_prototypes);
+
+var _mark = require('./mark');
+
+var _mark2 = _interopRequireDefault(_mark);
+
+var _dispatcher = require('./dispatcher');
+
+var dispatcher = _interopRequireWildcard(_dispatcher);
+
+var _customEvents = require('./custom-events');
+
+var _handlers = require('./handlers');
+
+(0, _prototypes2['default'])();
+
+var Marky = (function () {
+	function Marky(editor) {
+		_classCallCheck(this, Marky);
+
+		this.mark = _mark2['default'];
+		this.state = [{ markdown: '', html: '' }];
+		this.index = 0;
+		this.editor = editor;
+	}
+
+	_createClass(Marky, [{
+		key: 'update',
+		value: function update(markdown) {
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+
+			var action = dispatcher.update(markdown, state, index);
+			this.state = action.state;
+			this.index = action.index;
+		}
+	}, {
+		key: 'undo',
+		value: function undo() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
+
+			if (index === 0) return state[0];
+
+			var action = dispatcher.undo(num, state, index);
+			this.index = action.index;
+			editor.value = action.state.markdown;
+			editor.nextSibling.value = action.state.html;
+			editor.dispatchEvent(_customEvents.markychange);
+			return this.index;
+		}
+	}, {
+		key: 'redo',
+		value: function redo() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
+			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
+
+			if (index === state.length - 1) return state[state.length - 1];
+
+			var action = dispatcher.redo(num, state, index);
+			this.index = action.index;
+			editor.value = action.state.markdown;
+			editor.nextSibling.value = action.state.html;
+			editor.dispatchEvent(_customEvents.markychange);
+			return this.index;
+		}
+	}, {
+		key: 'setSelection',
+		value: function setSelection() {
+			var arr = arguments.length <= 0 || arguments[0] === undefined ? [0, 0] : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			editor.setSelectionRange(arr[0], arr[1]);
+			return arr;
+		}
+	}, {
+		key: 'expandSelectionForward',
+		value: function expandSelectionForward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart;
+			var end = editor.selectionEnd + num;
+
+			editor.setSelectionRange(start, end);
+			return [start, end];
+		}
+	}, {
+		key: 'expandSelectionBackward',
+		value: function expandSelectionBackward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart - num;
+			var end = editor.selectionEnd;
+
+			editor.setSelectionRange(start, end);
+			return [start, end];
+		}
+	}, {
+		key: 'moveCursorBackward',
+		value: function moveCursorBackward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart - num;
+
+			editor.setSelectionRange(start, start);
+			return start;
+		}
+	}, {
+		key: 'moveCursorForward',
+		value: function moveCursorForward() {
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			var start = editor.selectionStart + num;
+
+			editor.setSelectionRange(start, start);
+			return start;
+		}
+	}, {
+		key: 'bold',
+		value: function bold(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
+			editor.value = boldify.value;
+			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [boldify.range[0], boldify.range[1]];
+		}
+	}, {
+		key: 'italic',
+		value: function italic(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
+			editor.value = italicize.value;
+			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [italicize.range[0], italicize.range[1]];
+		}
+	}, {
+		key: 'strikethrough',
+		value: function strikethrough(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
+			editor.value = strikitize.value;
+			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [strikitize.range[0], strikitize.range[1]];
+		}
+	}, {
+		key: 'code',
+		value: function code(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
+			editor.value = codify.value;
+			editor.setSelectionRange(codify.range[0], codify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [codify.range[0], codify.range[1]];
+		}
+	}, {
+		key: 'blockquote',
+		value: function blockquote(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '> ');
+			editor.value = quotify.value;
+			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [quotify.range[0], quotify.range[1]];
+		}
+	}, {
+		key: 'heading',
+		value: function heading(value, indices) {
+			if (value === undefined) value = 0;
+			var editor = arguments.length <= 2 || arguments[2] === undefined ? this.editor : arguments[2];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var markArr = [];
+			var mark = undefined;
+			for (var i = 1; i <= value; i++) {
+				markArr.push('#');
+			}
+			mark = markArr.join('');
+			var space = mark ? ' ' : '';
+			var headingify = (0, _handlers.blockHandler)(editor.value, indices, mark + space);
+			editor.value = headingify.value;
+			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [headingify.range[0], headingify.range[1]];
+		}
+	}, {
+		key: 'link',
+		value: function link(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var mark = '[DISPLAY TEXT](http://url.com)';
+			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
+			editor.value = linkify.value;
+			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [linkify.range[0], linkify.range[1]];
+		}
+	}, {
+		key: 'image',
+		value: function image(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
+			var imageify = (0, _handlers.insertHandler)(editor.value, indices, mark);
+			editor.value = imageify.value;
+			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [imageify.range[0], imageify.range[1]];
+		}
+	}, {
+		key: 'unorderedList',
+		value: function unorderedList(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ul');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [listify.range[0], listify.range[1]];
+		}
+	}, {
+		key: 'orderedList',
+		value: function orderedList(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ol');
+			editor.value = listify.value;
+			editor.setSelectionRange(listify.range[0], listify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [listify.range[0], listify.range[1]];
+		}
+	}]);
+
+	return Marky;
+})();
+
+exports.Marky = Marky;
+
+},{"./custom-events":8,"./dispatcher":9,"./handlers":10,"./mark":11,"./prototypes":13}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2126,7 +2126,7 @@ var HeadingOption = (function (_Element) {
 
 exports.HeadingOption = HeadingOption;
 
-},{"./Element":5}],7:[function(require,module,exports){
+},{"./Element":4}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2190,7 +2190,7 @@ var HeadingSelect = (function (_Element) {
 
 exports.HeadingSelect = HeadingSelect;
 
-},{"./Element":5,"./Options":6}],8:[function(require,module,exports){
+},{"./Element":4,"./Options":6}],8:[function(require,module,exports){
 // Custom Event Polyfill for IE9+
 'use strict';
 
@@ -2266,7 +2266,7 @@ function redo(num, state, stateIndex) {
 	return { state: state[stateIndex], index: stateIndex };
 }
 
-},{"./operation":12,"marked":2}],10:[function(require,module,exports){
+},{"./operation":12,"marked":1}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2371,7 +2371,7 @@ Object.defineProperty(exports, '__esModule', {
 	value: true
 });
 
-var _marky = require('../marky');
+var _Marky = require('./Marky');
 
 var _Element = require('./Element');
 
@@ -2399,7 +2399,7 @@ exports['default'] = function () {
 
 		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
-		textarea.assign('_marky', new _marky.Marky(textarea.element));
+		textarea.assign('_marky', new _Marky.Marky(textarea.element));
 
 		var input = new _Element.Element('input', 'Output');
 		input.assign('type', 'hidden');
@@ -2494,7 +2494,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../marky":3,"./Buttons":4,"./Element":5,"./Selects":7,"./custom-events":8}],12:[function(require,module,exports){
+},{"./Buttons":3,"./Element":4,"./Marky":5,"./Selects":7,"./custom-events":8}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2575,7 +2575,7 @@ exports["default"] = function () {
 
 module.exports = exports["default"];
 
-},{}]},{},[1])(1)
+},{}]},{},[2])(2)
 });
 
 

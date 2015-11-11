@@ -1,17 +1,11 @@
 import chai from 'chai';
-import jsdom from 'jsdom';
 import mark from '../src/modules/mark';
 
 chai.should();
 
 describe('mark', () => {
-	it('works in the DOM', () => {
-		const container = document.createElement('marky-mark');
-		container.tagName.toLowerCase().should.equal('marky-mark');
-	});
 	it('creates a toolbar, a textarea, and a hidden input', () => {
-		const container = document.createElement('marky-mark');
-		document.body.appendChild(container);
+		const container = document.getElementsByTagName('marky-mark')[0];
 		mark('marky-mark');
 		container.children[0].tagName.toLowerCase().should.equal('div');
 		container.children[0].classList.should.have.property('0', 'marky-toolbar');
@@ -21,8 +15,7 @@ describe('mark', () => {
 		container.children[2].classList.should.have.property('0', 'marky-output');
 	});
 	it('creates a bunch of toolbar controls', () => {
-		const container = document.createElement('marky-mark');
-		document.body.appendChild(container);
+		const container = document.getElementsByTagName('marky-mark')[0];
 		mark('marky-mark');
 		container.children[0].children[0].tagName.toLowerCase().should.equal('select');
 		container.children[0].children[0].children[0].tagName.toLowerCase().should.equal('option');
@@ -40,12 +33,11 @@ describe('mark', () => {
 		container.children[0].children[15].classList.should.have.property('0', 'redo');
 	});
 	it('initializes on marky-mark tags by default', () => {
-		const container = document.createElement('marky-mark');
+		const container = document.getElementsByTagName('marky-mark')[0];
 		const anotherContainer = document.createElement('funky-bunch');
-		document.body.appendChild(container);
 		document.body.appendChild(anotherContainer);
 		mark();
-		anotherContainer.children.should.be.empty;
+		chai.expect(anotherContainer.children[0]).to.be.undefined;
 		container.children[0].tagName.toLowerCase().should.equal('div');
 		container.children[0].classList.should.have.property('0', 'marky-toolbar');
 		container.children[1].tagName.toLowerCase().should.equal('textarea');
@@ -54,14 +46,13 @@ describe('mark', () => {
 		container.children[2].classList.should.have.property('0', 'marky-output');
 	});
 	it('initializes on multiple elements', () => {
-		const container = document.createElement('marky-mark');
+		const container = document.getElementsByTagName('marky-mark')[0];
 		const anotherContainer = document.createElement('funky-bunch');
 		const yetAnotherContainer = document.createElement('marky-mark');
-		document.body.appendChild(container);
 		document.body.appendChild(anotherContainer);
 		document.body.appendChild(yetAnotherContainer);
 		mark();
-		anotherContainer.children.should.be.empty;
+		chai.expect(anotherContainer.children[0]).to.be.undefined;
 		yetAnotherContainer.children[0].tagName.toLowerCase().should.equal('div');
 		yetAnotherContainer.children[0].classList.should.have.property('0', 'marky-toolbar');
 		container.children[0].tagName.toLowerCase().should.equal('div');

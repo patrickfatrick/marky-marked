@@ -1,6 +1,6 @@
 import chai from 'chai';
-import jsdom from 'jsdom';
 import mark from '../src/modules/mark';
+import {update} from '../src/modules/custom-events';
 import * as dispatcher from '../src/modules/dispatcher';
 
 chai.should();
@@ -34,16 +34,14 @@ describe('update', () => {
 	});
 
 	it('is triggered by an update event', () => {
-		var container = document.createElement('marky-mark');
-		document.body.appendChild(container);
-		mark('marky-mark');
-		container.children[1].value = 'Some text';
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		const output = document.querySelector('.marky-output');
+		editor.value = 'Some text';
+		editor.dispatchEvent(update);
 
-		var evt = document.createEvent('HTMLEvents');
-		evt.initEvent('update', false, true);
-		container.children[1].dispatchEvent(evt);
-
-		container.children[2].value.should.contain('<p>Some text</p>');
+		output.value.should.contain('<p>Some text</p>');
 	});
 
 });

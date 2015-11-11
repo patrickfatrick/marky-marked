@@ -1,4 +1,4 @@
-import {Marky} from '../marky';
+import {Marky} from './Marky';
 import {Element} from './Element';
 import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
 import {HeadingSelect} from './Selects';

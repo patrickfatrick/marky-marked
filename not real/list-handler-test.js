@@ -1,7 +1,7 @@
 import chai from 'chai';
+import jsdom from 'jsdom';
 import mark from '../src/modules/mark';
 import {listHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
 
 chai.should();
 describe('list handling', () => {
@@ -133,16 +133,18 @@ describe('list handling', () => {
 		headingify.value.should.equal('- Some text\r\n- Some other text\r\n- Even more text');
 		headingify.range.should.contain.members([0, 46]);
 	});
-	
-	it('converts to HTML', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
-		const editor = document.querySelector('.marky-editor');
-		const output = document.querySelector('.marky-output');
-		editor.value = '- Some text\r\n- Some other text';
-		editor.dispatchEvent(update);
 
-		output.value.should.contain('<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>');
+	it('converts to HTML', () => {
+		const container = document.createElement('marky-mark');
+		document.body.appendChild(container);
+		mark('marky-mark');
+		container.children[1].value = '- Some text\r\n- Some other text';
+
+		const evt = document.createEvent('HTMLEvents');
+		evt.initEvent('update', false, true);
+		container.children[1].dispatchEvent(evt);
+
+		container.children[2].value.should.contain('<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>');
 	});
 
 });

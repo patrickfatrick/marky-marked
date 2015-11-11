@@ -8,7 +8,7 @@ module.exports = {
 			compact: false
 		}],
 		config: './config.js',
-		src: src + '/index.js',
+		src: src + '/src/marky.js',
 		dest: dest + '/',
 		outputName: 'marky.js',
 		standalone: 'marky'
@@ -18,7 +18,7 @@ module.exports = {
 			compact: true
 		}],
 		config: './config.js',
-		src: src + '/index.js',
+		src: src + '/src/marky.js',
 		dest: dest + '/',
 		outputName: 'marky.min.js',
 		standalone: 'marky'
