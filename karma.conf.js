@@ -14,7 +14,6 @@ module.exports = function (karma) {
 			'karma-phantomjs-launcher'
 		],
 		browsers: ['PhantomJS'],
-
 		preprocessors: {
 			'src/**.js': ['browserify'],
 			'test/**/*.js': ['browserify']
@@ -33,23 +32,6 @@ module.exports = function (karma) {
 			extensions: ['.js']
 		},
 		reporters: ['coverage', 'mocha'],
-//		coverageReporter: {
-//			reporters: [
-//				{
-//					type: 'text'
-//				},
-//				{
-//					type: 'html',
-//					dir: 'coverage',
-//					subdir: 'html'
-//				},
-//				{
-//					type: 'lcovonly',
-//					dir: 'coverage',
-//					subdir: 'lcov'
-//				}
-//			]
-//		},
 		coverageReporter: {
 			reporters: [
 				{

@@ -29,10 +29,10 @@ Marky Marked has two dependencies to run, both of which are included in the /dis
 ## Install
 
 ```bash
-npm install marky-marked --save
-jspm install npm:marky-marked
-bower install marky-marked
-git clone git:github.com/patrickfatrick/marky-marked.git
+$npm install marky-marked --save
+$jspm install npm:marky-marked
+$bower install marky-marked
+$git clone git:github.com/patrickfatrick/marky-marked.git
 ```
 
 ## Usage
@@ -195,6 +195,17 @@ document.querySelector('.marky-editor')._marky.moveCursorBackward(20);
 
 This method returns the new cursor position in the editor.
 
+## Testing
+
+Marky Marked uses a combination of Karma, Mocha, Chai, and Istanbul for tests. To run the tests,
+
+```bash
+$npm install
+$npm test
+```
+
+You may need to install the karma and its plugins globally if you don't already have them.
+
 ## What's the plan?
 
 - Annotations.
@@ -210,4 +221,4 @@ Marky Marked is freely distributable under the terms of the [MIT license](./LICE
 [license-url]: LICENSE
 
 
-_Each Marky Marked release is linted with ESLint and tested with Mocha Chai._
+_Each Marky Marked release is linted with ESLint and tested with a combination of Karma, Mocha, Chai, and Istanbul._

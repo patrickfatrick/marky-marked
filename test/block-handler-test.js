@@ -138,7 +138,6 @@ describe('block handling', () => {
 	it('converts to HTML', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
 		mark();
-		console.log(document.getElementsByTagName('marky-mark')[0]);
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = '## Some text';
