@@ -1316,6 +1316,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var _Element12 = require('./Element');
 
+/**
+ * Creates HTML button elements
+ * @class
+ * @requires Element
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
+
 var BoldButton = (function (_Element) {
 	_inherits(BoldButton, _Element);
 
@@ -1664,6 +1674,14 @@ var RedoButton = (function (_Element11) {
 exports.RedoButton = RedoButton;
 
 },{"./Element":4}],4:[function(require,module,exports){
+/**
+ * Creates an HTML element with some built-in shortcut methods
+ * @class
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1783,7 +1801,7 @@ exports.Element = Element;
 /**
  * Marky Mark
  * Author: Patrick Fricano
- * https://www.github.com/patrickfatrick/marky-mark
+ * https://www.github.com/patrickfatrick/marky-marked
  */
 
 Object.defineProperty(exports, '__esModule', {
@@ -1826,6 +1844,14 @@ var Marky = (function () {
 		this.editor = editor;
 	}
 
+	/** 
+  * Handles updating the state on forward-progress changes
+  * @requires dispatcher/update
+  * @param {String} markdown the new markdown blob
+  * @param {Array}  state    the state timeline
+  * @param {Number} index    current state index
+  */
+
 	_createClass(Marky, [{
 		key: 'update',
 		value: function update(markdown) {
@@ -1836,6 +1862,16 @@ var Marky = (function () {
 			this.state = action.state;
 			this.index = action.index;
 		}
+
+		/**
+   * Handles moving backward in state
+   * @requires dispatcher/undo
+   * @param   {Number}      num    number of states to move back
+   * @param   {Array}       state  the state timeline
+   * @param   {Number}      index  current state index
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Number}      the new index
+   */
 	}, {
 		key: 'undo',
 		value: function undo() {
@@ -1853,6 +1889,16 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.markychange);
 			return this.index;
 		}
+
+		/**
+   * Handles moving forward in state
+   * @requires dispatcher/redo
+   * @param   {Number}      num    number of states to move back
+   * @param   {Array}       state  the state timeline
+   * @param   {Number}      index  current state index
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Number}      the new index
+   */
 	}, {
 		key: 'redo',
 		value: function redo() {
@@ -1870,6 +1916,13 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.markychange);
 			return this.index;
 		}
+
+		/**
+   * Setsa the selection indices in the editor
+   * @param   {Array}       arr    starting and ending indices
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Array}       the array that was passed in
+   */
 	}, {
 		key: 'setSelection',
 		value: function setSelection() {
@@ -1879,6 +1932,13 @@ var Marky = (function () {
 			editor.setSelectionRange(arr[0], arr[1]);
 			return arr;
 		}
+
+		/**
+   * expands the selection to the right
+   * @param   {Number}      num    number of characters to expand by
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Array}       the new selection indices
+   */
 	}, {
 		key: 'expandSelectionForward',
 		value: function expandSelectionForward() {
@@ -1891,6 +1951,13 @@ var Marky = (function () {
 			editor.setSelectionRange(start, end);
 			return [start, end];
 		}
+
+		/**
+   * expands the selection to the left
+   * @param   {Number}      num    number of characters to expand by
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Array}       the new selection indices
+   */
 	}, {
 		key: 'expandSelectionBackward',
 		value: function expandSelectionBackward() {
@@ -1903,6 +1970,13 @@ var Marky = (function () {
 			editor.setSelectionRange(start, end);
 			return [start, end];
 		}
+
+		/**
+   * expands the cursor to the right
+   * @param   {Number}      num    number of characters to move by
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Array}       the new cursor position
+   */
 	}, {
 		key: 'moveCursorBackward',
 		value: function moveCursorBackward() {
@@ -1914,6 +1988,13 @@ var Marky = (function () {
 			editor.setSelectionRange(start, start);
 			return start;
 		}
+
+		/**
+   * expands the cursor to the left
+   * @param   {Number}      num    number of characters to move by
+   * @param   {HTMLElement} editor the marky marked editor
+   * @returns {Array}       the new cursor position
+   */
 	}, {
 		key: 'moveCursorForward',
 		value: function moveCursorForward() {
@@ -1925,6 +2006,14 @@ var Marky = (function () {
 			editor.setSelectionRange(start, start);
 			return start;
 		}
+
+		/**
+   * implements a bold on a selection
+   * @requires handlers/inlineHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the bold
+   */
 	}, {
 		key: 'bold',
 		value: function bold(indices) {
@@ -1940,6 +2029,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [boldify.range[0], boldify.range[1]];
 		}
+
+		/**
+   * implements an italic on a selection
+   * @requires handlers/inlineHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the italic
+   */
 	}, {
 		key: 'italic',
 		value: function italic(indices) {
@@ -1955,6 +2052,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [italicize.range[0], italicize.range[1]];
 		}
+
+		/**
+   * implements a strikethrough on a selection
+   * @requires handlers/inlineHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the strikethrough
+   */
 	}, {
 		key: 'strikethrough',
 		value: function strikethrough(indices) {
@@ -1970,6 +2075,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [strikitize.range[0], strikitize.range[1]];
 		}
+
+		/**
+   * implements a code on a selection
+   * @requires handlers/inlineHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the code
+   */
 	}, {
 		key: 'code',
 		value: function code(indices) {
@@ -1985,6 +2098,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [codify.range[0], codify.range[1]];
 		}
+
+		/**
+   * implements a blockquote on a selection
+   * @requires handlers/blockHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the bold
+   */
 	}, {
 		key: 'blockquote',
 		value: function blockquote(indices) {
@@ -2000,6 +2121,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [quotify.range[0], quotify.range[1]];
 		}
+
+		/**
+   * implements a heading on a selection
+   * @requires handlers/blockHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the heading
+   */
 	}, {
 		key: 'heading',
 		value: function heading(value, indices) {
@@ -2023,6 +2152,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [headingify.range[0], headingify.range[1]];
 		}
+
+		/**
+   * inserts a link snippet at the end of a selection
+   * @requires handlers/insertHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the snippet is inserted
+   */
 	}, {
 		key: 'link',
 		value: function link(indices) {
@@ -2039,6 +2176,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [linkify.range[0], linkify.range[1]];
 		}
+
+		/**
+   * inserts an image snippet at the end of a selection
+   * @requires handlers/insertHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the snippet is inserted
+   */
 	}, {
 		key: 'image',
 		value: function image(indices) {
@@ -2055,6 +2200,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [imageify.range[0], imageify.range[1]];
 		}
+
+		/**
+   * implements an unordered list on a selection
+   * @requires handlers/listHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the list is implemented
+   */
 	}, {
 		key: 'unorderedList',
 		value: function unorderedList(indices) {
@@ -2070,6 +2223,14 @@ var Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [listify.range[0], listify.range[1]];
 		}
+
+		/**
+   * implements an ordered list on a selection
+   * @requires handlers/listHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the list is implemented
+   */
 	}, {
 		key: 'orderedList',
 		value: function orderedList(indices) {
@@ -2096,7 +2257,7 @@ exports.Marky = Marky;
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-	value: true
+  value: true
 });
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2107,21 +2268,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var _Element2 = require('./Element');
 
+/**
+ * Creates HTML option elements
+ * @class
+ * @requires Element
+ * @param {String}	type		tag name for the element
+ * @param {String}	title		title for the element
+ * @param {String} 	value		a value to assign the element
+ */
+
 var HeadingOption = (function (_Element) {
-	_inherits(HeadingOption, _Element);
+  _inherits(HeadingOption, _Element);
 
-	function HeadingOption(type, title, value) {
-		if (type === undefined) type = 'option';
+  function HeadingOption(type, title, value) {
+    if (type === undefined) type = 'option';
 
-		_classCallCheck(this, HeadingOption);
+    _classCallCheck(this, HeadingOption);
 
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, [this.title.replace(' ', '-')]);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', value);
-		_get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
-	}
+    _get(Object.getPrototypeOf(HeadingOption.prototype), 'constructor', this).call(this, type, title);
+    _get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', this).call(this, [this.title.replace(' ', '-')]);
+    _get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'value', value);
+    _get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', this).call(this, 'textContent', this.title);
+  }
 
-	return HeadingOption;
+  return HeadingOption;
 })(_Element2.Element);
 
 exports.HeadingOption = HeadingOption;
@@ -2142,6 +2312,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _Element2 = require('./Element');
 
 var _Options = require('./Options');
+
+/**
+ * Creates HTML select elements
+ * @class
+ * @requires Element
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
 
 var HeadingSelect = (function (_Element) {
 	_inherits(HeadingSelect, _Element);
@@ -2229,7 +2409,7 @@ exports.markychange = markychange;
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-	value: true
+  value: true
 });
 exports.update = update;
 exports.undo = undo;
@@ -2245,28 +2425,58 @@ var _operation = require('./operation');
 
 var _operation2 = _interopRequireDefault(_operation);
 
+/**
+ * updates the state
+ * @external marked
+ * @requires operation
+ * @param   {String} markdown   markdown blob
+ * @param   {Array}  state      the state timeline
+ * @param   {Number} stateIndex the current state index
+ * @returns {Object} the newly active state
+ */
+
 function update(markdown, state, stateIndex) {
-	var html = (0, _marked2['default'])(markdown).toString() || '';
-	//console.log(state);
-	var newState = (0, _operation2['default'])(state, stateIndex, function () {
-		//console.log(data);
-		return { markdown: markdown, html: html };
-		//return data.set('markdown', markdown).set('html', html);
-	});
-	return newState;
+  var html = (0, _marked2['default'])(markdown).toString() || '';
+  var newState = (0, _operation2['default'])(state, stateIndex, function () {
+    return { markdown: markdown, html: html };
+  });
+  return newState;
 }
+
+/**
+ * moves backward in state
+ * @param   {Number} num        the number of states to move back by
+ * @param   {Array}  state      the state timeline
+ * @param   {Number} stateIndex the current state index
+ * @returns {Object} the newly active state
+ */
 
 function undo(num, state, stateIndex) {
-	stateIndex = stateIndex > num - 1 ? stateIndex - num : 0;
-	return { state: state[stateIndex], index: stateIndex };
+  stateIndex = stateIndex > num - 1 ? stateIndex - num : 0;
+  return { state: state[stateIndex], index: stateIndex };
 }
 
+/**
+ * moves forwardin state
+ * @param   {Number} num        the number of states to move back by
+ * @param   {Array}  state      the state timeline
+ * @param   {Number} stateIndex the current state index
+ * @returns {Object} the newly active state
+ */
+
 function redo(num, state, stateIndex) {
-	stateIndex = stateIndex < state.length - (num + 1) ? stateIndex + num : state.length - 1;
-	return { state: state[stateIndex], index: stateIndex };
+  stateIndex = stateIndex < state.length - (num + 1) ? stateIndex + num : state.length - 1;
+  return { state: state[stateIndex], index: stateIndex };
 }
 
 },{"./operation":12,"marked":1}],10:[function(require,module,exports){
+/**
+ * Handles wrapping format strings around a selection
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the format string to use
+ * @returns {Object} the new string, the updated indices
+ */
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2310,6 +2520,14 @@ function inlineHandler(string, indices, mark) {
 	return { value: value, range: [indices[0] + useMark[0].length, indices[1] + useMark[1].length] };
 }
 
+/**
+ * Handles adding/removing a format string to a line
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the format string to use
+ * @returns {Object} the new string, the updated indices
+ */
+
 function blockHandler(string, indices, mark) {
 	var start = indices[0];
 	var end = indices[1];
@@ -2330,6 +2548,14 @@ function blockHandler(string, indices, mark) {
 	value = string.substring(0, lineStart) + mark + string.substring(lineStart, string.length);
 	return { value: value, range: [start + mark.length, end + mark.length] };
 }
+
+/**
+ * Handles adding/removing format strings to groups os lines
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} type    ul or ol
+ * @returns {Object} the new string, the updated indices
+ */
 
 function listHandler(string, indices, type) {
 	var start = string.lineStart(indices[0]);
@@ -2355,6 +2581,14 @@ function listHandler(string, indices, type) {
 	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
 	return { value: value, range: [start, start + joined.replace(/\n/gm, '').length] };
 }
+
+/**
+ * Handles inserting a snippet at the end of a selection
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the snippet to insert
+ * @returns {Object} the new string, the updated indices
+ */
 
 function insertHandler(string, indices, mark) {
 	var end = indices[1];
@@ -2495,6 +2729,13 @@ exports['default'] = function () {
 module.exports = exports['default'];
 
 },{"./Buttons":3,"./Element":4,"./Marky":5,"./Selects":7,"./custom-events":8}],12:[function(require,module,exports){
+/**
+ * Handles adding and removing state
+ * @param   {Array}    state      the state timeline
+ * @param   {Number}   stateIndex the current state index
+ * @param   {Function} fn         a function to call
+ * @returns {Object}   the new timeline
+ */
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2503,12 +2744,8 @@ Object.defineProperty(exports, "__esModule", {
 
 exports["default"] = function (state, stateIndex, fn) {
 	state = state.slice(0, stateIndex + 1);
-	//console.log(state);
-	//let newVersion = fn(state[stateIndex]);
 	var newVersion = fn();
-	//console.log(state);
 	state.push(newVersion);
-	//console.log(state);
 	stateIndex++;
 	if (stateIndex > 499) {
 		state.shift();
@@ -2527,12 +2764,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports["default"] = function () {
+	/**
+  * Finds the first index based on a regex match
+  * @param   {RegExp} regex a regex object
+  * @param   {Number} index optional starting index
+  * @returns {Number} the index of the match
+  */
 	String.prototype.indexOfMatch = function (regex, index) {
 		var str = index !== null ? this.substring(index) : this;
 		var matches = str.match(regex);
 		return matches ? str.indexOf(matches[0]) + index : -1;
 	};
 
+	/**
+  * Finds the first index based on a regex match
+  * @param   {RegExp} regex a regex object
+  * @param   {Number} index optional starting index
+  * @returns {Number} the index of the match
+  */
 	String.prototype.indicesOfMatches = function (regex, index) {
 		var str = index !== null ? this.substring(index) : this;
 		var matches = str.match(regex);
@@ -2544,28 +2793,54 @@ exports["default"] = function () {
 		return indices ? indices : -1;
 	};
 
+	/**
+  * Finds the last index based on a regex match
+  * @param   {RegExp} regex a regex object
+  * @param   {Number} index optional ending index
+  * @returns {Number} the index of the match
+  */
 	String.prototype.lastIndexOfMatch = function (regex, index) {
 		var str = index !== null ? this.substring(0, index) : this;
 		var matches = str.match(regex);
 		return matches ? str.lastIndexOf(matches[matches.length - 1]) : -1;
 	};
 
+	/**
+  * Creates an array of lines separated by line breaks
+  * @param   {Number} index optional ending index
+  * @returns {Array}  an array of strings
+  */
 	String.prototype.splitLinesBackward = function (index) {
 		var str = index ? this.substring(0, index) : this;
 		return str.split(/\r\n|\r|\n/);
 	};
 
+	/**
+  * Creates an array of lines separated by line breaks
+  * @param   {Number} index optional starting index
+  * @returns {Array}  an array of strings
+  */
 	String.prototype.splitLines = function (index) {
 		var str = index ? this.substring(index) : this;
 		return str.split(/\r\n|\r|\n/);
 	};
 
+	/**
+  * Finds the start of a line
+  * @param   {Number} index 	optional position
+  * @returns {Number} the index of the line start
+  */
 	String.prototype.lineStart = function () {
 		var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 
 		return this.lastIndexOfMatch(/^.*/gm, index);
 	};
 
+	/**
+  * Finds the end of a line
+  * @param   {Number} index 	optional position
+  * @returns {Number} the index of the line end
+  */
 	String.prototype.lineEnd = function () {
 		var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
 

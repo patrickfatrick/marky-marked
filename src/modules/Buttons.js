@@ -1,5 +1,15 @@
 import {Element} from './Element';
 
+/**
+ * Creates HTML button elements
+ * @class
+ * @requires Element
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
+
 export class BoldButton extends Element {
 	constructor (type = 'button', title = 'Bold', id, parent) {
 		super(type, title, id, parent);

@@ -1,3 +1,11 @@
+/**
+ * Creates an HTML element with some built-in shortcut methods
+ * @class
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
 export class Element {
 	constructor(type, title = null, id = null, parent = null) {
 		this.title = title;

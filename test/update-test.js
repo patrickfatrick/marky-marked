@@ -32,6 +32,21 @@ describe('update', () => {
 		newState.state[1].markdown.should.equal('Some text');
 		newState.index.should.equal(2);
 	});
+	
+	it('removes old states when there are 500 of them', () => {
+		const initialState = [
+			{markdown: '', html: ''},
+			{markdown: 'Some text', html: '<p>Some text</p>'}
+		];
+		const stateIndex = 499;
+		let newState = dispatcher.update('', initialState, stateIndex);
+
+		newState.state.length.should.equal(2);
+		newState.state[1].markdown.should.be.empty;
+		newState.state[1].html.should.be.empty;
+		newState.state[0].markdown.should.equal('Some text');
+		newState.index.should.equal(499);
+	});
 
 	it('is triggered by an update event', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];

@@ -1,11 +1,14 @@
+/**
+ * Handles adding and removing state
+ * @param   {Array}    state      the state timeline
+ * @param   {Number}   stateIndex the current state index
+ * @param   {Function} fn         a function to call
+ * @returns {Object}   the new timeline
+ */
 export default function (state, stateIndex, fn) {
 	state = state.slice(0, stateIndex + 1);
-	//console.log(state);
-	//let newVersion = fn(state[stateIndex]);
 	let newVersion = fn();
-	//console.log(state);
 	state.push(newVersion);
-	//console.log(state);
 	stateIndex++;
 	if (stateIndex > 499) {
 		state.shift();

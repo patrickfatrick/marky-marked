@@ -1,6 +1,16 @@
 import {Element} from './Element';
 import {HeadingOption} from './Options';
 
+/**
+ * Creates HTML select elements
+ * @class
+ * @requires Element
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
+
 export class HeadingSelect extends Element {
 	constructor (type = 'select', title = 'Heading', id, parent) {
 		super(type, title, id, parent);

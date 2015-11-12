@@ -1,3 +1,10 @@
+/**
+ * Handles wrapping format strings around a selection
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the format string to use
+ * @returns {Object} the new string, the updated indices
+ */
 export function inlineHandler (string, indices, mark) {
 	let value;
 	let useMark = [mark, mark];
@@ -31,6 +38,13 @@ export function inlineHandler (string, indices, mark) {
 	return {value: value, range: [indices[0] + useMark[0].length, indices[1] + useMark[1].length]};
 }
 
+/**
+ * Handles adding/removing a format string to a line
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the format string to use
+ * @returns {Object} the new string, the updated indices
+ */
 export function blockHandler (string, indices, mark) {
 	const start = indices[0];
 	const end = indices[1];
@@ -52,6 +66,13 @@ export function blockHandler (string, indices, mark) {
 	return {value: value, range: [start + mark.length, end + mark.length]};
 }
 
+/**
+ * Handles adding/removing format strings to groups os lines
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} type    ul or ol
+ * @returns {Object} the new string, the updated indices
+ */
 export function listHandler (string, indices, type) {
 	const start = string.lineStart(indices[0]);
 	const end = string.lineEnd(indices[1]);
@@ -77,6 +98,13 @@ export function listHandler (string, indices, type) {
 	return {value: value, range: [start, start + joined.replace(/\n/gm, '').length]};
 }
 
+/**
+ * Handles inserting a snippet at the end of a selection
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the snippet to insert
+ * @returns {Object} the new string, the updated indices
+ */
 export function insertHandler (string, indices, mark) {
 	const end = indices[1];
 	let value;
