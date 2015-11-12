@@ -15,7 +15,7 @@ _An in-browser editor so sweet you'll be feeling good vibrations._
 
 Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor and a smaller footprint. Marky Marked's minified file is less than 50KB including dependency.
 
-Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
+Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
 
 On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#Undo/Redo) below).
 
@@ -138,6 +138,7 @@ Again an array representing the new starting and ending position is returned.
 The full list of formatting methods is
 
 ```javascript
+heading()
 bold()
 italic()
 strikethrough()
@@ -147,7 +148,6 @@ link()
 image()
 unorderedList()
 orderedList()
-heading()
 ```
 
 **NOTE:** These methods behave exactly like the toolbar buttons. They do not always apply the formatting and instead act more like toggles, with the exception of `link()` and `image()` which always insert the relevant Markdown snippet.
@@ -209,7 +209,6 @@ You may need to install the karma and its plugins globally if you don't already 
 ## What's the plan?
 
 - Annotations.
-- Browser-based testing.
 - Explore a nicer modal-based link and url entry.
 - Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.
 
