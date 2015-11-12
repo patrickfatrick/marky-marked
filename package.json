@@ -1,57 +1,56 @@
 {
-  "name": "marky-marked",
-  "version": "0.3.0",
-  "description": "An in-browser editor so sweet you'll be feeling good vibrations.",
-  "main": "index.js",
-  "format": "es6",
-  "engines": {
-    "npm": "^3.3.8"
-  },
-  "scripts": {
-    "test": "istanbul cover _mocha -- -R spec --require ./test/test_helper.js --compilers js:babel/register"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://www.github.com/patrickfatrick/marky-marked"
-  },
-  "keywords": [
-    "javascript",
-    "dates"
-  ],
-  "author": "Patrick Fricano <patrick.fricano@icloud.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "babel": "^5.8.23",
-    "babelify": "^6.3.0",
-    "browserify": "^12.0.1",
-    "browserify-istanbul": "^0.2.1",
-    "chai": "^3.4.0",
-    "coveralls": "^2.11.4",
-    "estraverse": "^4.1.0",
-    "font-awesome": "^4.4.0",
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^1.0.0",
-    "gulp-sass": "^2.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.4.2",
-    "gulp-util": "^3.0.7",
-    "istanbul": "^0.4.0",
-    "jsdom": "^7.0.2",
-    "karma": "^0.13.15",
-    "karma-browserify": "^4.4.0",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^0.2.1",
-    "karma-coverage": "^0.5.3",
-    "karma-mocha": "^0.2.0",
-    "karma-mocha-reporter": "^1.1.1",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "mocha": "^2.3.3",
-    "phantomjs": "^1.9.18",
-    "require-dir": "^0.3.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "marked": "^0.3.5"
-  }
+	"name": "marky-marked",
+	"version": "0.3.0",
+	"description": "An in-browser editor so sweet you'll be feeling good vibrations.",
+	"main": "index.js",
+	"format": "es6",
+	"engines": {
+		"npm": "^3.3.8"
+	},
+	"scripts": {
+		"test": "karma start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://www.github.com/patrickfatrick/marky-marked"
+	},
+	"keywords": [
+		"javascript",
+		"dates"
+	],
+	"author": "Patrick Fricano <patrick.fricano@icloud.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"babel": "^5.8.23",
+		"babelify": "^6.3.0",
+		"browserify": "^12.0.1",
+		"browserify-istanbul": "^0.2.1",
+		"chai": "^3.4.0",
+		"coveralls": "^2.11.4",
+		"estraverse": "^4.1.0",
+		"font-awesome": "^4.4.0",
+		"gulp": "^3.9.0",
+		"gulp-eslint": "^1.0.0",
+		"gulp-sass": "^2.1.0",
+		"gulp-sourcemaps": "^1.6.0",
+		"gulp-uglify": "^1.4.2",
+		"gulp-util": "^3.0.7",
+		"istanbul": "^0.4.0",
+		"jsdom": "^7.0.2",
+		"karma": "^0.13.15",
+		"karma-browserify": "^4.4.0",
+		"karma-chai": "^0.1.0",
+		"karma-coverage": "^0.5.3",
+		"karma-mocha": "^0.2.0",
+		"karma-mocha-reporter": "^1.1.1",
+		"karma-phantomjs-launcher": "^0.2.1",
+		"mocha": "^2.3.3",
+		"phantomjs": "^1.9.18",
+		"require-dir": "^0.3.0",
+		"vinyl-buffer": "^1.0.0",
+		"vinyl-source-stream": "^1.1.0"
+	},
+	"dependencies": {
+		"marked": "^0.3.5"
+	}
 }

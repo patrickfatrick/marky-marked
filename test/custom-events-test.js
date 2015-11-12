@@ -1,0 +1,143 @@
+import chai from 'chai';
+import mark from '../src/modules/mark';
+import {update, markychange, markyfocus, markyblur, markyselect} from '../src/modules/custom-events';
+
+chai.should();
+
+describe('custom events', () => {
+	it('creates an update event', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('update', function (e) {
+			dispatched++;
+		});
+		editor.dispatchEvent(update);
+
+		dispatched.should.equal(1);
+	});
+	it('creates a markychange event', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markychange', function (e) {
+			dispatched++;
+		});
+		editor.dispatchEvent(markychange);
+
+		dispatched.should.equal(1);
+	});
+	it('creates a markyfocus event', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyfocus', function (e) {
+			dispatched++;
+		});
+		editor.dispatchEvent(markyfocus);
+
+		dispatched.should.equal(1);
+	});
+	it('creates a markyblur event', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyblur', function (e) {
+			dispatched++;
+		});
+		editor.dispatchEvent(markyblur);
+
+		dispatched.should.equal(1);
+	});
+	it('creates a markyselect event', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyselect', function (e) {
+			dispatched++;
+		});
+		editor.dispatchEvent(markyselect);
+
+		dispatched.should.equal(1);
+	});
+	it('dispatches markyfocus on focus', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyfocus', function (e) {
+			dispatched++;
+		});
+		var focus;
+		focus = document.createEvent('HTMLEvents');
+		focus.initEvent('focus', true, true, window);
+		editor.dispatchEvent(focus);
+
+		dispatched.should.equal(1);
+	});
+	it('dispatches markyblur on blur', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyblur', function (e) {
+			dispatched++;
+		});
+		var blur;
+		blur = document.createEvent('HTMLEvents');
+		blur.initEvent('blur', true, true, window);
+		editor.dispatchEvent(blur);
+
+		dispatched.should.equal(1);
+	});
+	it('dispatches markyselect on select', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markyselect', function (e) {
+			dispatched++;
+		});
+		var select;
+		select = document.createEvent('HTMLEvents');
+		select.initEvent('select', true, true, window);
+		editor.dispatchEvent(select);
+
+		dispatched.should.equal(1);
+	});
+	it('dispatches markychange on update', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('markychange', function (e) {
+			dispatched++;
+		});
+		var update;
+		update = document.createEvent('HTMLEvents');
+		update.initEvent('update', true, true, window);
+		editor.dispatchEvent(update);
+
+		dispatched.should.equal(1);
+	});
+	it('dispatches update on input', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		mark();
+		const editor = document.querySelector('.marky-editor');
+		let dispatched = 0;
+		editor.addEventListener('update', function (e) {
+			dispatched++;
+		});
+		var input;
+		input = document.createEvent('HTMLEvents');
+		input.initEvent('input', true, true, window);
+		editor.dispatchEvent(input);
+
+		dispatched.should.equal(1);
+	});
+});

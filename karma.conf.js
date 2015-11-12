@@ -11,8 +11,7 @@ module.exports = function (karma) {
 			'karma-chai',
 			'karma-coverage',
 			'karma-mocha-reporter',
-			'karma-phantomjs-launcher',
-			'karma-chrome-launcher'
+			'karma-phantomjs-launcher'
 		],
 		browsers: ['PhantomJS'],
 
@@ -26,29 +25,39 @@ module.exports = function (karma) {
 			transform: [
 				['babelify', {
 					ignore: /node_modules/
-				}], 
+				}],
 				istanbul({
 					ignore: ['test/**', '**/node_modules/**']
 				})
 			],
 			extensions: ['.js']
 		},
-
 		reporters: ['coverage', 'mocha'],
+//		coverageReporter: {
+//			reporters: [
+//				{
+//					type: 'text'
+//				},
+//				{
+//					type: 'html',
+//					dir: 'coverage',
+//					subdir: 'html'
+//				},
+//				{
+//					type: 'lcovonly',
+//					dir: 'coverage',
+//					subdir: 'lcov'
+//				}
+//			]
+//		},
 		coverageReporter: {
 			reporters: [
 				{
-					type: 'text'
-				}, 
-				{
-					type: 'html',
-					dir: 'coverage',
-					subdir: 'html'
-				}, 
-				{
 					type: 'lcovonly',
-					dir: 'coverage',
-					subdir: 'lcov'
+					dir: 'coverage'
+				},
+				{
+					type: 'text'
 				}
 			]
 		},
