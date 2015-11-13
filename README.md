@@ -204,7 +204,7 @@ $npm install
 $npm test
 ```
 
-You may need to install the karma and its plugins globally if you don't already have them.
+You may need to install the karma and its plugins globally if you don't already have them. You can also test in other browsers by adding them to karma.conf.js. Chrome and Safari launchers are plugged but not included in the list of browsers by default.
 
 ## What's the plan?
 
