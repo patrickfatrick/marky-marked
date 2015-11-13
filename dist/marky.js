@@ -2626,6 +2626,7 @@ exports['default'] = function () {
 
 	var containers = document.getElementsByTagName(tag);
 	Array.prototype.forEach.call(containers, function (container, i) {
+		if (container.children.length) return;
 		var toolbar = new _Element.Element('div', 'Toolbar');
 		var id = 'editor-' + i;
 		container.id = id;
@@ -2816,7 +2817,7 @@ exports["default"] = function () {
 	};
 
 	/**
-  * Creates an array of lines separated by line breaks
+  * Creates an array of lines split by line breaks
   * @param   {Number} index optional starting index
   * @returns {Array}  an array of strings
   */

@@ -11,9 +11,12 @@ module.exports = function (karma) {
 			'karma-chai',
 			'karma-coverage',
 			'karma-mocha-reporter',
-			'karma-phantomjs-launcher'
+			'karma-phantomjs-launcher',
+			'karma-chrome-launcher',
+			'karma-firefox-launcher',
+			'karma-safari-launcher'
 		],
-		browsers: ['PhantomJS'],
+		browsers: ['PhantomJS', 'Chrome', 'Firefox', 'Safari'],
 		preprocessors: {
 			'src/**.js': ['browserify'],
 			'test/**/*.js': ['browserify']

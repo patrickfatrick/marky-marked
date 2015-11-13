@@ -1,5 +1,4 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {Element} from '../src/modules/Element';
 import {BoldButton} from '../src/modules/Buttons';
 import {HeadingSelect} from '../src/modules/Selects';
@@ -16,8 +15,6 @@ describe('Element', () => {
 		element.id.should.equal('element');
 	});
 	it('creates a button', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let element = new BoldButton('button', 'Bold', 'bold', editor);
 
@@ -27,8 +24,6 @@ describe('Element', () => {
 		element.id.should.equal('bold');
 	});
 	it('creates a select', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let element = new HeadingSelect('select', 'Headings', 'headings', editor);
 
@@ -38,8 +33,6 @@ describe('Element', () => {
 		element.id.should.equal('headings');
 	});
 	it('creates an option', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let element = new HeadingOption('option', 'Heading 1', 'heading-1');
 

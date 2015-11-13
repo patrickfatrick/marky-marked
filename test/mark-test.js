@@ -6,7 +6,6 @@ chai.should();
 describe('mark', () => {
 	it('creates a toolbar, a textarea, and a hidden input', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
-		mark('marky-mark');
 		container.children[0].tagName.toLowerCase().should.equal('div');
 		container.children[0].classList.should.have.property('0', 'marky-toolbar');
 		container.children[1].tagName.toLowerCase().should.equal('textarea');
@@ -16,7 +15,6 @@ describe('mark', () => {
 	});
 	it('creates a bunch of toolbar controls', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
-		mark('marky-mark');
 		container.children[0].children[0].tagName.toLowerCase().should.equal('select');
 		container.children[0].children[0].children[0].tagName.toLowerCase().should.equal('option');
 		container.children[0].children[1].classList.should.have.property('0', 'separator');
@@ -34,9 +32,7 @@ describe('mark', () => {
 	});
 	it('initializes on marky-mark tags by default', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
-		const anotherContainer = document.createElement('funky-bunch');
-		document.body.appendChild(anotherContainer);
-		mark();
+		const anotherContainer = document.getElementsByTagName('funky-bunch')[0];
 		chai.expect(anotherContainer.children[0]).to.be.undefined;
 		container.children[0].tagName.toLowerCase().should.equal('div');
 		container.children[0].classList.should.have.property('0', 'marky-toolbar');
@@ -47,11 +43,8 @@ describe('mark', () => {
 	});
 	it('initializes on multiple elements', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
-		const anotherContainer = document.createElement('funky-bunch');
-		const yetAnotherContainer = document.createElement('marky-mark');
-		document.body.appendChild(anotherContainer);
-		document.body.appendChild(yetAnotherContainer);
-		mark();
+		const anotherContainer = document.getElementsByTagName('funky-bunch')[0];
+		const yetAnotherContainer = document.getElementsByTagName('marky-mark')[1];
 		chai.expect(anotherContainer.children[0]).to.be.undefined;
 		yetAnotherContainer.children[0].tagName.toLowerCase().should.equal('div');
 		yetAnotherContainer.children[0].classList.should.have.property('0', 'marky-toolbar');
@@ -61,6 +54,14 @@ describe('mark', () => {
 		container.children[1].classList.should.have.property('0', 'marky-editor');
 		container.children[2].type.should.equal('hidden');
 		container.children[2].classList.should.have.property('0', 'marky-output');
+	});
+	it('checks that the element is empty', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		const anotherContainer = document.createElement('marky-mark');
+		document.body.appendChild(anotherContainer);
+		mark();
+		container.children.length.should.equal(3);
+		anotherContainer.children.length.should.equal(3);
 	});
 
 })

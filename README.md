@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 ```
 
-From there Marky Marked should handle the rest.
+From there Marky Marked should handle the rest. Note that the element you use should be empty. If it has any innerHTML Marky Marked will skip it. This is to ensure you can't initialize the same element more than once.
 
 ## Styling
 

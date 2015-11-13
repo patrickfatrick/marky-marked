@@ -1,13 +1,10 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {update, markychange, markyfocus, markyblur, markyselect} from '../src/modules/custom-events';
 
 chai.should();
 
 describe('custom events', () => {
 	it('creates an update event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('update', function (e) {
@@ -18,8 +15,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('creates a markychange event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markychange', function (e) {
@@ -30,8 +25,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('creates a markyfocus event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyfocus', function (e) {
@@ -42,8 +35,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('creates a markyblur event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyblur', function (e) {
@@ -54,8 +45,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('creates a markyselect event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyselect', function (e) {
@@ -66,8 +55,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('dispatches markyfocus on focus', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyfocus', function (e) {
@@ -81,8 +68,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('dispatches markyblur on blur', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyblur', function (e) {
@@ -96,8 +81,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('dispatches markyselect on select', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markyselect', function (e) {
@@ -111,8 +94,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('dispatches markychange on update', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markychange', function (e) {
@@ -126,8 +107,6 @@ describe('custom events', () => {
 		dispatched.should.equal(1);
 	});
 	it('dispatches update on input', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('update', function (e) {

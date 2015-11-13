@@ -1,11 +1,8 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 
 chai.should();
 describe('toolbar buttons', () => {
 	it('calls the bold method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -14,8 +11,6 @@ describe('toolbar buttons', () => {
 		output.value.should.equal('<p><strong>Some text</strong></p>\n');
 	});
 	it('calls the italic method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -24,8 +19,6 @@ describe('toolbar buttons', () => {
 		output.value.should.equal('<p><em>Some text</em></p>\n');
 	});
 	it('calls the strikethrough method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -34,8 +27,6 @@ describe('toolbar buttons', () => {
 		output.value.should.equal('<p><del>Some text</del></p>\n');
 	});
 	it('calls the code method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -44,8 +35,6 @@ describe('toolbar buttons', () => {
 		output.value.should.equal('<p><code>Some text</code></p>\n');
 	});
 	it('calls the blockquote method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -54,8 +43,6 @@ describe('toolbar buttons', () => {
 		output.value.should.equal('<blockquote>\n<p>Some text</p>\n</blockquote>\n');
 	});
 	it('calls the link method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -66,8 +53,6 @@ describe('toolbar buttons', () => {
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('calls the image method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -78,8 +63,6 @@ describe('toolbar buttons', () => {
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('calls the unorderedList method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text\r\nSome other text';
@@ -88,8 +71,6 @@ describe('toolbar buttons', () => {
 		editor.value.should.equal('- Some text\n- Some other text');
 	});
 	it('calls the ordered list method', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text\r\nSome other text';

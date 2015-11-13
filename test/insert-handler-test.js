@@ -1,5 +1,4 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {insertHandler} from '../src/modules/handlers';
 import {update} from '../src/modules/custom-events';
 
@@ -14,10 +13,8 @@ describe('insert handling', () => {
 		boldify.value.should.equal('Some text [DISPLAY TEXT](https://url.com)');
 		boldify.range.should.contain.members([10, 41]);
 	});
-	
+
 	it('converts to HTML', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text ![Image](http://imagesource.com/image.jpg)';

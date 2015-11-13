@@ -1,11 +1,8 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 
 chai.should();
 describe('marky methods', () => {
 	it('updates the state', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -15,8 +12,6 @@ describe('marky methods', () => {
 		editor._marky.state.length.should.equal(length + 1);
 	});
 	it('undoes the state', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor._marky.index = 1;
@@ -25,8 +20,6 @@ describe('marky methods', () => {
 		editor._marky.index.should.equal(0);
 	});
 	it('redoes the state', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor._marky.index = 0;
@@ -35,30 +28,24 @@ describe('marky methods', () => {
 		editor._marky.index.should.equal(1);
 	});
 	it('sets the selection', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
-		editor.setSelectionRange(0);
+		editor.setSelectionRange(0, 0);
 		editor._marky.setSelection([0, 9]);
 		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(9);
 	});
 	it('expands the selection forward', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
-		editor.setSelectionRange(0);
+		editor.setSelectionRange(0, 0);
 		editor._marky.expandSelectionForward(1);
 		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(1);
 	});
 	it('expands the selection backward', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -68,19 +55,15 @@ describe('marky methods', () => {
 		editor.selectionEnd.should.equal(9);
 	});
 	it('moves the cursor forward', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
-		editor.setSelectionRange(0);
+		editor.setSelectionRange(0, 0);
 		editor._marky.moveCursorForward(1);
 		editor.selectionStart.should.equal(1);
 		editor.selectionEnd.should.equal(1);
 	});
 	it('moves the cursor backward', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -90,8 +73,6 @@ describe('marky methods', () => {
 		editor.selectionEnd.should.equal(8);
 	});
 	it('implements a bold', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -100,8 +81,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<p><strong>Some text</strong></p>\n');
 	});
 	it('implements an italic', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -110,8 +89,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<p><em>Some text</em></p>\n');
 	});
 	it('implements a strikethrough', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -120,8 +97,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<p><del>Some text</del></p>\n');
 	});
 	it('implements a code block', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -130,8 +105,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<p><code>Some text</code></p>\n');
 	});
 	it('implements a blockquote', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -140,8 +113,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<blockquote>\n<p>Some text</p>\n</blockquote>\n');
 	});
 	it('implements a heading', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -150,8 +121,6 @@ describe('marky methods', () => {
 		output.value.should.equal('<h1 id="some-text">Some text</h1>\n');
 	});
 	it('inserts a link snippet', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -162,8 +131,6 @@ describe('marky methods', () => {
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('inserts an image snippet', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
@@ -174,8 +141,6 @@ describe('marky methods', () => {
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('implement an unordered list', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text\r\nSome other text';
@@ -184,8 +149,6 @@ describe('marky methods', () => {
 		editor.value.should.equal('- Some text\n- Some other text');
 	});
 	it('implement an ordered list', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text\r\nSome other text';

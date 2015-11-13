@@ -1,5 +1,4 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {blockHandler} from '../src/modules/handlers';
 import {update} from '../src/modules/custom-events';
 
@@ -136,8 +135,6 @@ describe('block handling', () => {
 	});
 
 	it('converts to HTML', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = '## Some text';

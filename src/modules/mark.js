@@ -13,6 +13,7 @@ export default function (tag = 'marky-mark') {
 
 	let containers = document.getElementsByTagName(tag);
 	Array.prototype.forEach.call(containers, (container, i) => {
+		if (container.children.length) return;
 		let toolbar = new Element('div', 'Toolbar');
 		let id = 'editor-' + i;
 		container.id = id;

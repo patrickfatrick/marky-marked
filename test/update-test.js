@@ -1,5 +1,4 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {update} from '../src/modules/custom-events';
 import * as dispatcher from '../src/modules/dispatcher';
 
@@ -32,7 +31,7 @@ describe('update', () => {
 		newState.state[1].markdown.should.equal('Some text');
 		newState.index.should.equal(2);
 	});
-	
+
 	it('removes old states when there are 500 of them', () => {
 		const initialState = [
 			{markdown: '', html: ''},
@@ -49,8 +48,6 @@ describe('update', () => {
 	});
 
 	it('is triggered by an update event', () => {
-		const container = document.getElementsByTagName('marky-mark')[0];
-		mark();
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
