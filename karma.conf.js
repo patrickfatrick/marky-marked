@@ -16,7 +16,7 @@ module.exports = function (karma) {
 			'karma-firefox-launcher',
 			'karma-safari-launcher'
 		],
-		browsers: ['PhantomJS', 'Chrome', 'Firefox', 'Safari'],
+		browsers: ['PhantomJS', 'Firefox'], // Chrome, Safari
 		preprocessors: {
 			'src/**.js': ['browserify'],
 			'test/**/*.js': ['browserify']
