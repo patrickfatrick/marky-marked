@@ -208,7 +208,6 @@ You may need to install the karma and its plugins globally if you don't already 
 
 ## What's the plan?
 
-- Annotations.
 - Explore a nicer modal-based link and url entry.
 - Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.
 
