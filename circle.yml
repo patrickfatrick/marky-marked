@@ -1,11 +1,6 @@
 machine:
   node:
     version: 5
-dependencies:
-  pre:
-    - npm install npm@'>=3.3.6' -g
-  override:
-    - npm install
 test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
