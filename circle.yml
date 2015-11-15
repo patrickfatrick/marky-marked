@@ -1,9 +1,9 @@
 machine:
-	node:
-		version: 5
+  node:
+    version: 5
 dependencies:
-	pre:
-		- npm install npm@'>=3.3.6' -g
+  pre:
+    - npm install npm@'>=3.3.6' -g
 test:
-	post:
-		- cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  post:
+    - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
