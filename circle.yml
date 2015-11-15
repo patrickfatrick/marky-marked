@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5
+    version: 4
 test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
