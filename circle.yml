@@ -12,3 +12,6 @@ test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
     - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+general:
+  artifacts:
+    - ./coverage
