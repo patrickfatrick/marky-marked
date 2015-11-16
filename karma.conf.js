@@ -40,7 +40,7 @@ module.exports = function (karma) {
 		coverageReporter: {
 			reporters: [
 				{
-					type: 'lcov',
+					type: 'lcovonly',
 					dir: 'coverage'
 				},
 				{
