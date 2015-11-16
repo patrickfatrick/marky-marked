@@ -12,8 +12,8 @@ import {HeadingOption} from './Options';
  */
 
 export class HeadingSelect extends Element {
-	constructor (type = 'select', title = 'Heading', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'select', title || 'Heading', id, parent);
 		super.addClass([this.title, id]);
 		const editor = parent.element;
 		super.listen('change', () => {

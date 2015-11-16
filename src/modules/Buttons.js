@@ -11,8 +11,8 @@ import {Element} from './Element';
  */
 
 export class BoldButton extends Element {
-	constructor (type = 'button', title = 'Bold', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Bold', id, parent);
 		super.addClass([this.title, id]);
 		let editor = this.parent.element;
 		let icon = new Element('i');
@@ -31,8 +31,8 @@ export class BoldButton extends Element {
 }
 
 export class ItalicButton extends Element {
-	constructor (type = 'button', title = 'Italic', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Italic', id, parent);
 		super.addClass([this.title, id]);
 		let editor = this.parent.element;
 		let icon = new Element('i');
@@ -52,8 +52,8 @@ export class ItalicButton extends Element {
 }
 
 export class StrikethroughButton extends Element {
-	constructor (type = 'button', title = 'Strikethrough', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Strikethrough', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -72,8 +72,8 @@ export class StrikethroughButton extends Element {
 }
 
 export class CodeButton extends Element {
-	constructor (type = 'button', title = 'Code', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Code', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -92,8 +92,8 @@ export class CodeButton extends Element {
 }
 
 export class BlockquoteButton extends Element {
-	constructor (type = 'button', title = 'Blockquote', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Blockquote', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -112,8 +112,8 @@ export class BlockquoteButton extends Element {
 }
 
 export class LinkButton extends Element {
-	constructor (type = 'button', title = 'Link', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Link', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -132,8 +132,8 @@ export class LinkButton extends Element {
 }
 
 export class ImageButton extends Element {
-	constructor (type = 'button', title = 'Image', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Image', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -153,8 +153,8 @@ export class ImageButton extends Element {
 }
 
 export class UnorderedListButton extends Element {
-	constructor (type = 'button', title = 'Unordered-List', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Unordered-List', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -173,8 +173,8 @@ export class UnorderedListButton extends Element {
 }
 
 export class OrderedListButton extends Element {
-	constructor (type = 'button', title = 'Ordered-List', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Ordered-List', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -193,8 +193,8 @@ export class OrderedListButton extends Element {
 }
 
 export class UndoButton extends Element {
-	constructor (type = 'button', title = 'Undo', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Undo', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -214,8 +214,8 @@ export class UndoButton extends Element {
 }
 
 export class RedoButton extends Element {
-	constructor (type = 'button', title = 'Redo', id, parent) {
-		super(type, title, id, parent);
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Redo', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;

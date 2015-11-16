@@ -22,7 +22,7 @@ export class Marky {
 		this.editor = editor;
 	}
 
-	/** 
+	/**
 	 * Handles updating the state on forward-progress changes
 	 * @requires dispatcher/update
 	 * @param {String} markdown the new markdown blob
@@ -45,7 +45,7 @@ export class Marky {
 	 * @returns {Number}      the new index
 	 */
 	undo (num = 5, state = this.state, index = this.index, editor = this.editor) {
-		if (index === 0) return state[0];
+		if (index === 0) return index;
 
 		const action = dispatcher.undo(num, state, index);
 		this.index = action.index;
@@ -65,7 +65,7 @@ export class Marky {
 	 * @returns {Number}      the new index
 	 */
 	redo (num = 5, state = this.state, index = this.index, editor = this.editor) {
-		if (index === state.length - 1) return state[state.length - 1];
+		if (index === state.length - 1) return index;
 
 		const action = dispatcher.redo(num, state, index);
 		this.index = action.index;

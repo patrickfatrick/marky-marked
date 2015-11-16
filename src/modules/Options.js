@@ -9,8 +9,8 @@ import {Element} from './Element';
  * @param {String} 	value		a value to assign the element
  */
 export class HeadingOption extends Element {
-	constructor (type = 'option', title, value) {
-		super(type, title);
+	constructor (type, title, value) {
+		super(type || 'option', title);
 		super.addClass([this.title.replace(' ', '-')]);
 		super.assign('value', value);
 		super.assign('textContent', this.title);

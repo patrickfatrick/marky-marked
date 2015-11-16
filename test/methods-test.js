@@ -112,6 +112,14 @@ describe('marky methods', () => {
 		editor._marky.heading(1);
 		output.value.should.equal('<h1 id="some-text">Some text</h1>\n');
 	});
+	it('implements a heading with a default of 0', () => {
+		const editor = document.querySelector('.marky-editor');
+		const output = document.querySelector('.marky-output');
+		editor.value = '# Some text';
+		editor.setSelectionRange(2, 9);
+		editor._marky.heading();
+		output.value.should.equal('<p>Some text</p>\n');
+	});
 	it('inserts a link snippet', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text';
@@ -143,5 +151,33 @@ describe('marky methods', () => {
 		editor.setSelectionRange(0, 26);
 		editor._marky.orderedList();
 		editor.value.should.equal('1. Some text\n2. Some other text');
+	});
+	it('undoes state', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		const editor = container.children[1];
+		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const index = 1;
+		editor._marky.undo(1, state, index).should.equal(0);
+	});
+	it('does not undo state if state is at 0 index', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		const editor = container.children[1];
+		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const index = 0;
+		editor._marky.undo(1, state, index).should.equal(0);
+	});
+	it('redoes state', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		const editor = container.children[1];
+		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const index = 0;
+		editor._marky.redo(1, state, index).should.equal(1);
+	});
+	it('does not redo state if state is at last index', () => {
+		const container = document.getElementsByTagName('marky-mark')[0];
+		const editor = container.children[1];
+		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const index = 1;
+		editor._marky.redo(1, state, index).should.equal(1);
 	});
 });

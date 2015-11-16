@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {Element} from '../src/modules/Element';
-import {BoldButton} from '../src/modules/Buttons';
+import {BoldButton, ItalicButton} from '../src/modules/Buttons';
 import {HeadingSelect} from '../src/modules/Selects';
 import {HeadingOption} from '../src/modules/Options';
 
@@ -14,7 +14,7 @@ describe('Element', () => {
 		element.title.should.equal('element');
 		element.id.should.equal('element');
 	});
-	it('creates a button', () => {
+	it('creates a bold button', () => {
 		const editor = document.querySelector('.marky-editor');
 		let element = new BoldButton('button', 'Bold', 'bold', editor);
 
@@ -22,6 +22,15 @@ describe('Element', () => {
 		element.should.be.an.instanceof(BoldButton);
 		element.title.should.equal('Bold');
 		element.id.should.equal('bold');
+	});
+	it('creates an italic button', () => {
+		const editor = document.querySelector('.marky-editor');
+		let element = new ItalicButton('button', 'Italic', 'italic', editor);
+
+		element.should.be.an.instanceof(Element);
+		element.should.be.an.instanceof(ItalicButton);
+		element.title.should.equal('Italic');
+		element.id.should.equal('italic');
 	});
 	it('creates a select', () => {
 		const editor = document.querySelector('.marky-editor');
