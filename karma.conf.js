@@ -1,4 +1,5 @@
 var istanbul = require('browserify-istanbul');
+var isparta = require('isparta');
 
 module.exports = function (karma) {
 	karma.set({
@@ -29,6 +30,7 @@ module.exports = function (karma) {
 					ignore: /node_modules/
 				}],
 				istanbul({
+					instrumenter: isparta,
 					ignore: ['test/**', '**/node_modules/**']
 				})
 			],
@@ -38,7 +40,7 @@ module.exports = function (karma) {
 		coverageReporter: {
 			reporters: [
 				{
-					type: 'lcovonly',
+					type: 'lcov',
 					dir: 'coverage'
 				},
 				{
