@@ -3,7 +3,7 @@ machine:
     version: 5
 dependencies:
   pre:
-    - npm clear cache
+    - npm cache clear
     - npm install npm@'>=3.3.6' -g
 test:
   post:
