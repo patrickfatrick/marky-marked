@@ -1,0 +1,11 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "gulpfile.js",
+    "**/gulp/**"
+  ],
+  "test": [
+    "**/test/**"
+  ]
+}
