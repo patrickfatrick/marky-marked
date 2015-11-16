@@ -1,6 +1,9 @@
 machine:
   node:
     version: 5
+  environment:
+    COVERALLS_SERVICE_NAME: circleci
+    COVERALLS_REPO_TOKEN: CmBgUpM65FH2UZKHeVUlTgjXZag9Ae5eK
 dependencies:
   pre:
     - npm cache clear
