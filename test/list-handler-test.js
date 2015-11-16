@@ -1,5 +1,4 @@
 import chai from 'chai';
-import mark from '../src/modules/mark';
 import {listHandler} from '../src/modules/handlers';
 import {update} from '../src/modules/custom-events';
 
