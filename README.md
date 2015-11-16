@@ -3,10 +3,10 @@
 _An in-browser editor so sweet you'll be feeling good vibrations._
 [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
-[![Build Status](https://travis-ci.org/patrickfatrick/marky-marked.svg)](https://travis-ci.org/patrickfatrick/marky-marked)
+[![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
 [![Dependency Status](https://david-dm.org/patrickfatrick/marky-marked.svg)](https://david-dm.org/patrickfatrick/marky-marked)
 [![devDependency Status](https://david-dm.org/patrickfatrick/marky-marked/dev-status.svg)](https://david-dm.org/patrickfatrick/marky-marked#info=devDependencies)
-[![Coverage Status](https://coveralls.io/repos/patrickfatrick/marky-marked/badge.svg?branch=master&service=github)](https://coveralls.io/github/patrickfatrick/marky-marked?branch=master)
+[![codecov.io](https://codecov.io/github/patrickfatrick/marky-marked/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/marky-marked?branch=master)
 [![MIT License][license-image]][license-url]
 
 ![Marky Marked](./images/marky-marked.png)
@@ -42,9 +42,9 @@ The easiest way to instantiate an editor is to simply add `<marky-mark></marky-m
 ```html
 <marky-mark></marky-mark>
 <script>
-	document.addEventListener('DOMContentLoaded', function () {
-		marky.mark();
-	});
+  document.addEventListener('DOMContentLoaded', function () {
+    marky.mark();
+  });
 </script>
 ```
 
@@ -55,7 +55,7 @@ You can also use any element as the container but you'll have to reference the c
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-	marky.mark(document.getElementsByTagName('mark-wahlberg'));
+  marky.mark(document.getElementsByTagName('mark-wahlberg'));
 });
 </script>
 ```
@@ -99,7 +99,7 @@ You can watch for a number of events from the `marky-editor` element.
 ```javascript
 var editor = document.querySelector('.marky-editor.editor-0');
 editor.addEventListener('markychange', function (e) {
-	// Do stuff;
+  // Do stuff;
 });
 ```
 
