@@ -17,7 +17,7 @@ Marky Marked is a lightweight in-browser content editor combining Markdown with 
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easier to parse in the editor than a lot of WYSIWYGs which sometimes create messy markup. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup.
 
-On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#Undo/Redo) below).
+On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#undoredo) below).
 
 ## Dependencies
 
