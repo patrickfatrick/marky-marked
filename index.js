@@ -1,2 +1,2 @@
 import marky from './src/marky';
-export default marky;
+module.exports = marky;
