@@ -24,7 +24,7 @@ module.exports = {
 		standalone: 'marky'
 	},
 	lint: {
-		src: src + '/src/**/*.js'
+		src: [src + '/index.js', src + '/src/**/*.js']
 	},
 	sass: {
 		src: src + '/styles/marky-mark.scss',
