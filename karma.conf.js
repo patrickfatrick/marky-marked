@@ -46,7 +46,11 @@ module.exports = function (karma) {
 				{
 					type: 'text'
 				}
-			]
+			],
+			instrumenters: { isparta : isparta },
+			instrumenter: {
+				'**/*.js': 'isparta'
+			}
 		},
 		port: 9876,
 		logLevel: karma.LOG_INFO,
