@@ -2,6 +2,7 @@ import {Marky} from './Marky';
 import {Element} from './Element';
 import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
 import {HeadingSelect} from './Selects';
+import {LinkDialog} from './Dialogs';
 import {markyblur, markyfocus, markyselect, update, markychange} from './custom-events';
 
 /**
@@ -18,6 +19,9 @@ export default function (tag = 'marky-mark') {
 		let id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
+		
+		let dialogs = new Element('div', 'Dialogs');
+		dialogs.addClass(['marky-dialogs', id]);	
 
 		let textarea = new Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
@@ -40,6 +44,8 @@ export default function (tag = 'marky-mark') {
 		let undoButton = new UndoButton('button', 'Undo', id, textarea);
 		let redoButton = new RedoButton('button', 'Redo', id, textarea);
 
+		let linkDialog = new LinkDialog('div', 'Link-Dialog', id, textarea);
+		
 		let separatorA = new Element('span');
 		separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
@@ -75,6 +81,8 @@ export default function (tag = 'marky-mark') {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
+		dialogs.appendTo(toolbar.element);
+		linkDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);

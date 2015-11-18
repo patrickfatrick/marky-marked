@@ -1311,7 +1311,7 @@ var _Marky = require('./modules/Marky');
 var marky = new _Marky.Marky();
 exports.default = marky;
 
-},{"./modules/Marky":6}],4:[function(require,module,exports){
+},{"./modules/Marky":7}],4:[function(require,module,exports){
 'use strict';
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1649,7 +1649,72 @@ var RedoButton = exports.RedoButton = (function (_Element11) {
 	return RedoButton;
 })(_Element12.Element);
 
-},{"./Element":5}],5:[function(require,module,exports){
+},{"./Element":6}],5:[function(require,module,exports){
+'use strict';
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.LinkDialog = undefined;
+
+var _Element2 = require('./Element');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * Creates HTML button elements
+ * @class
+ * @requires Element
+ * @param {String}			type		tag name for the element
+ * @param {String}			title		title for the element
+ * @param {String}			id			editor ID to associate with the element
+ * @param {HTMLElement}	parent	element this element should have access to
+ */
+
+var LinkDialog = exports.LinkDialog = (function (_Element) {
+	_inherits(LinkDialog, _Element);
+
+	function LinkDialog(type, title, id, parent) {
+		_classCallCheck(this, LinkDialog);
+
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkDialog).call(this, type || 'div', title || 'Link-Dialog', id, parent));
+
+		_get(Object.getPrototypeOf(LinkDialog.prototype), 'addClass', _this).call(_this, [_this.title, id]);
+		var editor = _this.parent.element;
+
+		var linkForm = new _Element2.Element('form', 'Link-Form');
+
+		var linkUrlInput = new _Element2.Element('input', 'Link-Url');
+		linkUrlInput.assign('type', 'text');
+
+		var linkDisplayInput = new _Element2.Element('input', 'Link-Display');
+		linkDisplayInput.assign('type', 'text');
+
+		var insertButton = new _Element2.Element('button', 'Insert-Link');
+		insertButton.addClass(['insert']);
+		insertButton.assign('textContent', 'Insert');
+
+		linkForm.appendTo(_this.element);
+		linkUrlInput.appendTo(linkForm.element);
+		linkDisplayInput.appendTo(linkForm.element);
+		insertButton.appendTo(linkForm.element);
+
+		linkForm.listen('blur', function () {
+			this.element.style.display = 'none';
+		});
+		return _this;
+	}
+
+	return LinkDialog;
+})(_Element2.Element);
+
+},{"./Element":6}],6:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1770,7 +1835,7 @@ var Element = exports.Element = (function () {
 	return Element;
 })();
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict'
 
 /**
@@ -2247,7 +2312,7 @@ var Marky = exports.Marky = (function () {
 	return Marky;
 })();
 
-},{"./custom-events":9,"./dispatcher":10,"./handlers":11,"./mark":12,"./prototypes":14}],7:[function(require,module,exports){
+},{"./custom-events":10,"./dispatcher":11,"./handlers":12,"./mark":13,"./prototypes":15}],8:[function(require,module,exports){
 'use strict';
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2291,7 +2356,7 @@ var HeadingOption = exports.HeadingOption = (function (_Element) {
   return HeadingOption;
 })(_Element2.Element);
 
-},{"./Element":5}],8:[function(require,module,exports){
+},{"./Element":6}],9:[function(require,module,exports){
 'use strict';
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2363,7 +2428,7 @@ var HeadingSelect = exports.HeadingSelect = (function (_Element) {
 	return HeadingSelect;
 })(_Element2.Element);
 
-},{"./Element":5,"./Options":7}],9:[function(require,module,exports){
+},{"./Element":6,"./Options":8}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2393,7 +2458,7 @@ var markyselect = exports.markyselect = new CustomEvent('markyselect');
 var update = exports.update = new CustomEvent('update');
 var markychange = exports.markychange = new CustomEvent('markychange');
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2454,7 +2519,7 @@ function redo(num, state, stateIndex) {
   return { state: state[stateIndex], index: stateIndex };
 }
 
-},{"./operation":13,"marked":2}],11:[function(require,module,exports){
+},{"./operation":14,"marked":2}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2579,7 +2644,7 @@ function insertHandler(string, indices, mark) {
 	return { value: value, range: [end, end + mark.length] };
 }
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2596,6 +2661,9 @@ exports.default = function () {
 		var id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
+
+		var dialogs = new _Element.Element('div', 'Dialogs');
+		dialogs.addClass(['marky-dialogs', id]);
 
 		var textarea = new _Element.Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
@@ -2617,6 +2685,8 @@ exports.default = function () {
 		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered-List', id, textarea);
 		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
+
+		var linkDialog = new _Dialogs.LinkDialog('div', 'Link-Dialog', id, textarea);
 
 		var separatorA = new _Element.Element('span');
 		separatorA.assign('textContent', '|');
@@ -2653,6 +2723,8 @@ exports.default = function () {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
+		dialogs.appendTo(toolbar.element);
+		linkDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
@@ -2700,9 +2772,11 @@ var _Buttons = require('./Buttons');
 
 var _Selects = require('./Selects');
 
+var _Dialogs = require('./Dialogs');
+
 var _customEvents = require('./custom-events');
 
-},{"./Buttons":4,"./Element":5,"./Marky":6,"./Selects":8,"./custom-events":9}],13:[function(require,module,exports){
+},{"./Buttons":4,"./Dialogs":5,"./Element":6,"./Marky":7,"./Selects":9,"./custom-events":10}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2721,7 +2795,7 @@ exports.default = function (state, stateIndex, fn) {
 	return { state: state, index: stateIndex };
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
