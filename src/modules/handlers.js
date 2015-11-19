@@ -114,24 +114,10 @@ export function indentHandler (string, indices, type) {
 	lines.forEach((line) => {
 		let mark = '    ';
 		let newLine;
-//		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
-//			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
-//			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-//			if (currentFormat.trim() !== mark.trim()) {
-//				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-//			}
-//			return newLines.push(newLine);
-//		}
 		if (type === 'out') {
-//			if (line.indexOf(mark, 0) === 0) {
-//				newLine = line.substring(mark.length, line.length);
-//			} else {
-//				newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-//			}
 			newLine = (line.indexOf(mark, 0) === 0) ? line.substring(mark.length, line.length) : line.substring(line.search(/[~*`_[!#>-]|[a-zA-Z0-9]|\r|\n|$/gm), line.length);
 			return newLines.push(newLine);
 		}
-
 		newLine = mark + line.substring(0, line.length);
 		return newLines.push(newLine);
 	});
