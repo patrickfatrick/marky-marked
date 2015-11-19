@@ -30,6 +30,9 @@
 		&:focus {
 			border-color: $deepBlue;
 		}
+		@media all and (min-width: 1200px) {
+			font-size: 1rem;
+		}
 	}
 	select {
 		@include no-outline;
@@ -59,9 +62,6 @@
 	.separator {
 		@include side-padding(2px, 2px);
 		color: $gray;
-		@media all and (min-width: 1200px) {
-			@include side-padding(5px, 5px);
-		}
 	}
 	.marky-dialogs {
 		position: relative;
