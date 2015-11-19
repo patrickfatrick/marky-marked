@@ -76,6 +76,16 @@ The undo/redo buttons advance or go back five steps in the state timeline. So yo
 
 But if you undo to a previous state and then create a new state by typing or adding a format from the toolbar, the timeline erases those states after the one you went back to. Just like in most any file editor.
 
+## Indent/Outdent
+
+New to v1.1.0 are toolbar buttons for indenting and outdenting. These buttons will add and subtract four spaces to the start of each line selected (or remove all spaces at the start of the line in the case of an outdent on a line starting with fewer than four spaces).
+
+## Inserting Links and Images
+
+New to v1.1.0 is a set of a dialogs for inputs links and images as opposed to simply inserting a generic Markdown snippet. Now you are greeted with a basic dialog in which you can put in the URL and optionally the display text or alt text, depending on which button is clicked.
+
+![Marky Marked Dialog](./images/marky-marked-dialog.png)
+
 ## API
 
 #### Accessing Markdown and HTML
@@ -135,6 +145,15 @@ document.querySelector('.marky-editor')._marky.heading(); // Assumes 0, AKA remo
 
 Again an array representing the new starting and ending position is returned.
 
+New to v1.1.0 you can now programmatically insert link and image snippets like so,
+
+```javascript
+document.querySelector('.marky-editor')._marky.link([0, 0], 'http://github.com/patrickfatrick/marky-marked', 'Marky Marked');
+document.querySelector('.marky-editor')._marky.image([0, 0], 'http://i.imgur.com/VlVsP.gif', 'Chuck Chardonnay');
+```
+
+As before the first argument is an array representing the selection to use. The second is the URL to the link or the image. The third argument is the display text in the case of `link()` and the alt text in the case of `image()`. This method returns the new selection.
+
 The full list of formatting methods is
 
 ```javascript
@@ -148,6 +167,8 @@ link()
 image()
 unorderedList()
 orderedList()
+indent()
+outdent()
 ```
 
 **NOTE:** These methods behave exactly like the toolbar buttons. They do not always apply the formatting and instead act more like toggles, with the exception of `link()` and `image()` which always insert the relevant Markdown snippet.
@@ -208,7 +229,6 @@ You may need to install the karma and its plugins globally if you don't already 
 
 ## What's the plan?
 
-- Explore a nicer modal-based link and url entry.
 - Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.
 
 ## License

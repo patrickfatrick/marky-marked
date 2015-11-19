@@ -31,7 +31,7 @@ module.exports = function (karma) {
 				}],
 				istanbul({
 					instrumenter: isparta,
-					ignore: ['test/**', '**/node_modules/**']
+					ignore: ['**/shims.js', 'test/**', '**/node_modules/**']
 				})
 			],
 			extensions: ['.js']

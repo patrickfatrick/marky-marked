@@ -1,8 +1,8 @@
 import {Marky} from './Marky';
 import {Element} from './Element';
-import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, UndoButton, RedoButton} from './Buttons';
+import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton} from './Buttons';
 import {HeadingSelect} from './Selects';
-import {LinkDialog} from './Dialogs';
+import {LinkDialog, ImageDialog} from './Dialogs';
 import {markyblur, markyfocus, markyselect, update, markychange} from './custom-events';
 
 /**
@@ -19,9 +19,9 @@ export default function (tag = 'marky-mark') {
 		let id = 'editor-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
-		
+
 		let dialogs = new Element('div', 'Dialogs');
-		dialogs.addClass(['marky-dialogs', id]);	
+		dialogs.addClass(['marky-dialogs', id]);
 
 		let textarea = new Element('textarea', 'Editor');
 		textarea.addClass(['marky-editor', id]);
@@ -31,21 +31,35 @@ export default function (tag = 'marky-mark') {
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
+		let linkDialog = new LinkDialog('div', 'Link Dialog', id, textarea);
+		linkDialog.element.style.visibility = 'hidden';
+
+		let imageDialog = new ImageDialog('div', 'Image Dialog', id, textarea);
+		imageDialog.element.style.visibility = 'hidden';
+
 		let headingSelect = new HeadingSelect('select', 'Heading', id, textarea);
 		let boldButton = new BoldButton('button', 'Bold', id, textarea);
 		let italicButton = new ItalicButton('button', 'Italic', id, textarea);
 		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id, textarea);
 		let codeButton = new CodeButton('button', 'Code', id, textarea);
 		let blockquoteButton = new BlockquoteButton('button', 'Blockquote', id, textarea);
-		let linkButton = new LinkButton('button', 'Link', id, textarea);
-		let imageButton = new ImageButton('button', 'Image', id, textarea);
-		let unorderedListButton = new UnorderedListButton('button', 'Unordered-List', id, textarea);
-		let orderedListButton = new OrderedListButton('button', 'Ordered-List', id, textarea);
+		let linkButton = new LinkButton('button', 'Link', id, linkDialog);
+		linkButton.listen('click', function () {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+		});
+		let imageButton = new ImageButton('button', 'Image', id, imageDialog);
+		imageButton.listen('click', function () {
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
+		});
+		let unorderedListButton = new UnorderedListButton('button', 'Unordered List', id, textarea);
+		let orderedListButton = new OrderedListButton('button', 'Ordered List', id, textarea);
+		let indentButton = new IndentButton('button', 'Indent', id, textarea);
+		let outdentButton = new OutdentButton('button', 'Outdent', id, textarea);
 		let undoButton = new UndoButton('button', 'Undo', id, textarea);
 		let redoButton = new RedoButton('button', 'Redo', id, textarea);
 
-		let linkDialog = new LinkDialog('div', 'Link-Dialog', id, textarea);
-		
 		let separatorA = new Element('span');
 		separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
@@ -78,11 +92,14 @@ export default function (tag = 'marky-mark') {
 		separatorC.appendTo(toolbar.element);
 		unorderedListButton.appendTo(toolbar.element);
 		orderedListButton.appendTo(toolbar.element);
+		indentButton.appendTo(toolbar.element);
+		outdentButton.appendTo(toolbar.element);
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
+		imageDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
@@ -117,6 +134,10 @@ export default function (tag = 'marky-mark') {
 		});
 
 		textarea.listen('focus', function (e) {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
 			return e.target.dispatchEvent(markyfocus);
 		});
 

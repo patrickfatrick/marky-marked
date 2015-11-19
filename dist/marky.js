@@ -1319,9 +1319,9 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.RedoButton = exports.UndoButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = undefined;
+exports.RedoButton = exports.UndoButton = exports.OutdentButton = exports.IndentButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = undefined;
 
-var _Element12 = require('./Element');
+var _Element14 = require('./Element');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1349,7 +1349,7 @@ var BoldButton = exports.BoldButton = (function (_Element) {
 
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', _this).call(_this, [_this.title, id]);
 		var editor = _this.parent.element;
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(_this.element);
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this).call(_this, 'mousedown', function (e) {
@@ -1365,7 +1365,7 @@ var BoldButton = exports.BoldButton = (function (_Element) {
 	}
 
 	return BoldButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var ItalicButton = exports.ItalicButton = (function (_Element2) {
 	_inherits(ItalicButton, _Element2);
@@ -1377,7 +1377,7 @@ var ItalicButton = exports.ItalicButton = (function (_Element2) {
 
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', _this2).call(_this2, [_this2.title, id]);
 		var editor = _this2.parent.element;
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(_this2.element);
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this2).call(_this2, 'mousedown', function (e) {
@@ -1393,7 +1393,7 @@ var ItalicButton = exports.ItalicButton = (function (_Element2) {
 	}
 
 	return ItalicButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var StrikethroughButton = exports.StrikethroughButton = (function (_Element3) {
 	_inherits(StrikethroughButton, _Element3);
@@ -1404,7 +1404,7 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element3) {
 		var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(StrikethroughButton).call(this, type || 'button', title || 'Strikethrough', id, parent));
 
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', _this3).call(_this3, [_this3.title, id]);
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		var editor = _this3.parent.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(_this3.element);
@@ -1421,7 +1421,7 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element3) {
 	}
 
 	return StrikethroughButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var CodeButton = exports.CodeButton = (function (_Element4) {
 	_inherits(CodeButton, _Element4);
@@ -1432,7 +1432,7 @@ var CodeButton = exports.CodeButton = (function (_Element4) {
 		var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(CodeButton).call(this, type || 'button', title || 'Code', id, parent));
 
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', _this4).call(_this4, [_this4.title, id]);
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		var editor = _this4.parent.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(_this4.element);
@@ -1449,7 +1449,7 @@ var CodeButton = exports.CodeButton = (function (_Element4) {
 	}
 
 	return CodeButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var BlockquoteButton = exports.BlockquoteButton = (function (_Element5) {
 	_inherits(BlockquoteButton, _Element5);
@@ -1460,7 +1460,7 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element5) {
 		var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(BlockquoteButton).call(this, type || 'button', title || 'Blockquote', id, parent));
 
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', _this5).call(_this5, [_this5.title, id]);
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		var editor = _this5.parent.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(_this5.element);
@@ -1477,7 +1477,7 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element5) {
 	}
 
 	return BlockquoteButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var LinkButton = exports.LinkButton = (function (_Element6) {
 	_inherits(LinkButton, _Element6);
@@ -1488,24 +1488,24 @@ var LinkButton = exports.LinkButton = (function (_Element6) {
 		var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkButton).call(this, type || 'button', title || 'Link', id, parent));
 
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', _this6).call(_this6, [_this6.title, id]);
-		var icon = new _Element12.Element('i');
-		var editor = _this6.parent.element;
+		var icon = new _Element14.Element('i');
+		var dialog = _this6.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(_this6.element);
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'mousedown', function (e) {
 			e.preventDefault();
-			editor.focus();
 		});
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'click', function (e) {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.link([editor.selectionStart, editor.selectionEnd]);
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
 		});
 		return _this6;
 	}
 
 	return LinkButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var ImageButton = exports.ImageButton = (function (_Element7) {
 	_inherits(ImageButton, _Element7);
@@ -1516,24 +1516,24 @@ var ImageButton = exports.ImageButton = (function (_Element7) {
 		var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageButton).call(this, type || 'button', title || 'Image', id, parent));
 
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', _this7).call(_this7, [_this7.title, id]);
-		var icon = new _Element12.Element('i');
-		var editor = _this7.parent.element;
+		var icon = new _Element14.Element('i');
+		var dialog = _this7.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(_this7.element);
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'mousedown', function (e) {
 			e.preventDefault();
-			editor.focus();
 		});
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.image([editor.selectionStart, editor.selectionEnd]);
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
 		});
 		return _this7;
 	}
 
 	return ImageButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var UnorderedListButton = exports.UnorderedListButton = (function (_Element8) {
 	_inherits(UnorderedListButton, _Element8);
@@ -1541,10 +1541,10 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element8) {
 	function UnorderedListButton(type, title, id, parent) {
 		_classCallCheck(this, UnorderedListButton);
 
-		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(UnorderedListButton).call(this, type || 'button', title || 'Unordered-List', id, parent));
+		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(UnorderedListButton).call(this, type || 'button', title || 'Unordered List', id, parent));
 
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', _this8).call(_this8, [_this8.title, id]);
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		var editor = _this8.parent.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(_this8.element);
@@ -1561,7 +1561,7 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element8) {
 	}
 
 	return UnorderedListButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 var OrderedListButton = exports.OrderedListButton = (function (_Element9) {
 	_inherits(OrderedListButton, _Element9);
@@ -1569,10 +1569,10 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element9) {
 	function OrderedListButton(type, title, id, parent) {
 		_classCallCheck(this, OrderedListButton);
 
-		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(OrderedListButton).call(this, type || 'button', title || 'Ordered-List', id, parent));
+		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(OrderedListButton).call(this, type || 'button', title || 'Ordered List', id, parent));
 
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', _this9).call(_this9, [_this9.title, id]);
-		var icon = new _Element12.Element('i');
+		var icon = new _Element14.Element('i');
 		var editor = _this9.parent.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(_this9.element);
@@ -1589,65 +1589,121 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element9) {
 	}
 
 	return OrderedListButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
-var UndoButton = exports.UndoButton = (function (_Element10) {
-	_inherits(UndoButton, _Element10);
+var IndentButton = exports.IndentButton = (function (_Element10) {
+	_inherits(IndentButton, _Element10);
 
-	function UndoButton(type, title, id, parent) {
-		_classCallCheck(this, UndoButton);
+	function IndentButton(type, title, id, parent) {
+		_classCallCheck(this, IndentButton);
 
-		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(UndoButton).call(this, type || 'button', title || 'Undo', id, parent));
+		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(IndentButton).call(this, type || 'button', title || 'Indent', id, parent));
 
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this10).call(_this10, [_this10.title, id]);
-		var icon = new _Element12.Element('i');
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'addClass', _this10).call(_this10, [_this10.title, id]);
+		var icon = new _Element14.Element('i');
 		var editor = _this10.parent.element;
-		icon.addClass(['fa', 'fa-step-backward']);
+		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(_this10.element);
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this10).call(_this10, 'mousedown', function (e) {
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this10).call(_this10, 'mousedown', function (e) {
 			e.preventDefault();
 			editor.focus();
 		});
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this10).call(_this10, 'click', function (e) {
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this10).call(_this10, 'click', function (e) {
 			e.preventDefault();
-			if (_this10.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.indent([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this10;
 	}
 
-	return UndoButton;
-})(_Element12.Element);
+	return IndentButton;
+})(_Element14.Element);
 
-var RedoButton = exports.RedoButton = (function (_Element11) {
-	_inherits(RedoButton, _Element11);
+var OutdentButton = exports.OutdentButton = (function (_Element11) {
+	_inherits(OutdentButton, _Element11);
 
-	function RedoButton(type, title, id, parent) {
-		_classCallCheck(this, RedoButton);
+	function OutdentButton(type, title, id, parent) {
+		_classCallCheck(this, OutdentButton);
 
-		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(RedoButton).call(this, type || 'button', title || 'Redo', id, parent));
+		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(OutdentButton).call(this, type || 'button', title || 'Outdent', id, parent));
 
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this11).call(_this11, [_this11.title, id]);
-		var icon = new _Element12.Element('i');
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'addClass', _this11).call(_this11, [_this11.title, id]);
+		var icon = new _Element14.Element('i');
 		var editor = _this11.parent.element;
-		icon.addClass(['fa', 'fa-step-forward']);
+		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(_this11.element);
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this11).call(_this11, 'mousedown', function (e) {
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this11).call(_this11, 'mousedown', function (e) {
 			e.preventDefault();
 			editor.focus();
 		});
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this11).call(_this11, 'click', function (e) {
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this11).call(_this11, 'click', function (e) {
 			e.preventDefault();
-			if (_this11.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.outdent([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this11;
 	}
 
+	return OutdentButton;
+})(_Element14.Element);
+
+var UndoButton = exports.UndoButton = (function (_Element12) {
+	_inherits(UndoButton, _Element12);
+
+	function UndoButton(type, title, id, parent) {
+		_classCallCheck(this, UndoButton);
+
+		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(UndoButton).call(this, type || 'button', title || 'Undo', id, parent));
+
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this12).call(_this12, [_this12.title, id]);
+		var icon = new _Element14.Element('i');
+		var editor = _this12.parent.element;
+		icon.addClass(['fa', 'fa-step-backward']);
+		icon.appendTo(_this12.element);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+		});
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'click', function (e) {
+			e.preventDefault();
+			if (_this12.element.classList.contains('disabled')) return;
+			editor.focus();
+			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
+		});
+		return _this12;
+	}
+
+	return UndoButton;
+})(_Element14.Element);
+
+var RedoButton = exports.RedoButton = (function (_Element13) {
+	_inherits(RedoButton, _Element13);
+
+	function RedoButton(type, title, id, parent) {
+		_classCallCheck(this, RedoButton);
+
+		var _this13 = _possibleConstructorReturn(this, Object.getPrototypeOf(RedoButton).call(this, type || 'button', title || 'Redo', id, parent));
+
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this13).call(_this13, [_this13.title, id]);
+		var icon = new _Element14.Element('i');
+		var editor = _this13.parent.element;
+		icon.addClass(['fa', 'fa-step-forward']);
+		icon.appendTo(_this13.element);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+		});
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'click', function (e) {
+			e.preventDefault();
+			if (_this13.element.classList.contains('disabled')) return;
+			editor.focus();
+			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+		});
+		return _this13;
+	}
+
 	return RedoButton;
-})(_Element12.Element);
+})(_Element14.Element);
 
 },{"./Element":6}],5:[function(require,module,exports){
 'use strict';
@@ -1657,9 +1713,9 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.LinkDialog = undefined;
+exports.ImageDialog = exports.LinkDialog = undefined;
 
-var _Element2 = require('./Element');
+var _Element3 = require('./Element');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1668,7 +1724,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Creates HTML button elements
+ * Creates dialog (modal) elements
  * @class
  * @requires Element
  * @param {String}			type		tag name for the element
@@ -1683,21 +1739,29 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 	function LinkDialog(type, title, id, parent) {
 		_classCallCheck(this, LinkDialog);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkDialog).call(this, type || 'div', title || 'Link-Dialog', id, parent));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkDialog).call(this, type || 'div', title || 'Link Dialog', id, parent));
 
-		_get(Object.getPrototypeOf(LinkDialog.prototype), 'addClass', _this).call(_this, [_this.title, id]);
+		_get(Object.getPrototypeOf(LinkDialog.prototype), 'addClass', _this).call(_this, [_this.title, id, 'dialog']);
+		var element = _this.element;
 		var editor = _this.parent.element;
 
-		var linkForm = new _Element2.Element('form', 'Link-Form');
+		var linkForm = new _Element3.Element('form', 'Link-Form');
+		linkForm.assign('id', id + '-link-form');
 
-		var linkUrlInput = new _Element2.Element('input', 'Link-Url');
+		var linkUrlInput = new _Element3.Element('input', 'Link-Url');
+		linkUrlInput.addClass(['link-url-input']);
 		linkUrlInput.assign('type', 'text');
+		linkUrlInput.assign('name', id + '-link-url-input');
+		linkUrlInput.assign('placeholder', 'http://url.com');
 
-		var linkDisplayInput = new _Element2.Element('input', 'Link-Display');
+		var linkDisplayInput = new _Element3.Element('input', 'Link-Display');
+		linkDisplayInput.addClass(['link-display-input']);
 		linkDisplayInput.assign('type', 'text');
+		linkDisplayInput.assign('name', id + '-link-display-input');
+		linkDisplayInput.assign('placeholder', 'Display text');
 
-		var insertButton = new _Element2.Element('button', 'Insert-Link');
-		insertButton.addClass(['insert']);
+		var insertButton = new _Element3.Element('button', 'Insert Link');
+		insertButton.addClass(['insert-link']);
 		insertButton.assign('textContent', 'Insert');
 
 		linkForm.appendTo(_this.element);
@@ -1705,17 +1769,84 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 		linkDisplayInput.appendTo(linkForm.element);
 		insertButton.appendTo(linkForm.element);
 
-		linkForm.listen('blur', function () {
-			this.element.style.display = 'none';
+		linkForm.listen('submit', function (e) {
+			e.preventDefault();
+			editor.focus();
+		});
+		insertButton.listen('click', function (e) {
+			e.preventDefault;
+			editor.focus();
+			var url = linkUrlInput.element.value ? linkUrlInput.element.value : 'http://url.com';
+			var display = linkDisplayInput.element.value ? linkDisplayInput.element.value : url;
+			linkUrlInput.element.value = '';
+			linkDisplayInput.element.value = '';
+			element.style.visibility = 'hidden';
+			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
 		return _this;
 	}
 
 	return LinkDialog;
-})(_Element2.Element);
+})(_Element3.Element);
+
+var ImageDialog = exports.ImageDialog = (function (_Element2) {
+	_inherits(ImageDialog, _Element2);
+
+	function ImageDialog(type, title, id, parent) {
+		_classCallCheck(this, ImageDialog);
+
+		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageDialog).call(this, type || 'div', title || 'Image Dialog', id, parent));
+
+		_get(Object.getPrototypeOf(ImageDialog.prototype), 'addClass', _this2).call(_this2, [_this2.title, id, 'dialog']);
+		var element = _this2.element;
+		var editor = _this2.parent.element;
+
+		var imageForm = new _Element3.Element('form', 'Image-Form');
+		imageForm.assign('id', id + '-image-form');
+
+		var imageSourceInput = new _Element3.Element('input', 'Image-Source');
+		imageSourceInput.addClass(['image-source-input']);
+		imageSourceInput.assign('type', 'text');
+		imageSourceInput.assign('name', id + '-image-source-input');
+		imageSourceInput.assign('placeholder', 'http://imagesource.com/image.jpg');
+
+		var imageAltInput = new _Element3.Element('input', 'Image-Alt');
+		imageAltInput.addClass(['image-alt-input']);
+		imageAltInput.assign('type', 'text');
+		imageAltInput.assign('name', id + '-image-display-input');
+		imageAltInput.assign('placeholder', 'Alt text');
+
+		var insertButton = new _Element3.Element('button', 'Insert Image');
+		insertButton.addClass(['insert-image']);
+		insertButton.assign('textContent', 'Insert');
+
+		imageForm.appendTo(_this2.element);
+		imageSourceInput.appendTo(imageForm.element);
+		imageAltInput.appendTo(imageForm.element);
+		insertButton.appendTo(imageForm.element);
+
+		imageForm.listen('submit', function (e) {
+			e.preventDefault();
+			editor.focus();
+		});
+		insertButton.listen('click', function (e) {
+			e.preventDefault;
+			editor.focus();
+			var source = imageSourceInput.element.value ? imageSourceInput.element.value : 'http://imagesource.com/image.jpg';
+			var alt = imageAltInput.element.value ? imageAltInput.element.value : source;
+			imageSourceInput.element.value = '';
+			imageAltInput.element.value = '';
+			element.style.visibility = 'hidden';
+			return editor._marky.image([editor.selectionStart, editor.selectionEnd], source, alt);
+		});
+		return _this2;
+	}
+
+	return ImageDialog;
+})(_Element3.Element);
 
 },{"./Element":6}],6:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -1751,22 +1882,22 @@ var Element = exports.Element = (function () {
 	}
 
 	_createClass(Element, [{
-		key: "register",
+		key: 'register',
 		value: function register() {
 			return document.createElement(this.type);
 		}
 	}, {
-		key: "assign",
+		key: 'assign',
 		value: function assign(prop, value) {
 			return this.element[prop] = value;
 		}
 	}, {
-		key: "appendTo",
+		key: 'appendTo',
 		value: function appendTo(container) {
 			return container.appendChild(this.element);
 		}
 	}, {
-		key: "addClass",
+		key: 'addClass',
 		value: function addClass(classNames) {
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
@@ -1776,7 +1907,7 @@ var Element = exports.Element = (function () {
 				for (var _iterator = classNames[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var className = _step.value;
 
-					this.element.classList.add(className.toLowerCase());
+					this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
 				}
 			} catch (err) {
 				_didIteratorError = true;
@@ -1796,7 +1927,7 @@ var Element = exports.Element = (function () {
 			return;
 		}
 	}, {
-		key: "removeClass",
+		key: 'removeClass',
 		value: function removeClass(classNames) {
 			var _iteratorNormalCompletion2 = true;
 			var _didIteratorError2 = false;
@@ -1806,7 +1937,7 @@ var Element = exports.Element = (function () {
 				for (var _iterator2 = classNames[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 					var className = _step2.value;
 
-					this.element.classList.remove(className.toLowerCase());
+					this.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
 				}
 			} catch (err) {
 				_didIteratorError2 = true;
@@ -1826,7 +1957,7 @@ var Element = exports.Element = (function () {
 			return;
 		}
 	}, {
-		key: "listen",
+		key: 'listen',
 		value: function listen(evt, cb) {
 			return this.element.addEventListener(evt, cb);
 		}
@@ -1857,6 +1988,10 @@ var _prototypes = require('./prototypes');
 
 var _prototypes2 = _interopRequireDefault(_prototypes);
 
+var _shims = require('./shims');
+
+var _shims2 = _interopRequireDefault(_shims);
+
 var _mark = require('./mark');
 
 var _mark2 = _interopRequireDefault(_mark);
@@ -1875,6 +2010,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+(0, _shims2.default)();
 (0, _prototypes2.default)();
 
 var Marky = exports.Marky = (function () {
@@ -2221,10 +2357,12 @@ var Marky = exports.Marky = (function () {
 	}, {
 		key: 'link',
 		value: function link(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+			var url = arguments.length <= 1 || arguments[1] === undefined ? 'http://url.com' : arguments[1];
+			var display = arguments.length <= 2 || arguments[2] === undefined ? 'http://url.com' : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
 
 			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var mark = '[DISPLAY TEXT](http://url.com)';
+			var mark = '[' + display + '](' + url + ')';
 			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = linkify.value;
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
@@ -2246,10 +2384,12 @@ var Marky = exports.Marky = (function () {
 	}, {
 		key: 'image',
 		value: function image(indices) {
-			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+			var source = arguments.length <= 1 || arguments[1] === undefined ? 'http://imagesource.com/image.jpg' : arguments[1];
+			var alt = arguments.length <= 2 || arguments[2] === undefined ? 'http://imagesource.com/image.jpg' : arguments[2];
+			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
 
 			indices = indices || [editor.selectionStart, editor.selectionEnd];
-			var mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
+			var mark = '![' + alt + '](' + source + ')';
 			var imageify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = imageify.value;
 			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
@@ -2307,12 +2447,60 @@ var Marky = exports.Marky = (function () {
 			editor.dispatchEvent(_customEvents.update);
 			return [listify.range[0], listify.range[1]];
 		}
+
+		/**
+   * implements an indent on a selection
+   * @requires handlers/indentHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the indent is implemented
+   */
+
+	}, {
+		key: 'indent',
+		value: function indent(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'in');
+			editor.value = indentify.value;
+			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [indentify.range[0], indentify.range[1]];
+		}
+
+		/**
+   * implements an outdent on a selection
+   * @requires handlers/indentHandler
+   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {HTMLElement} editor  the marky marked editor
+   * @returns {Array}       the new selection after the outdent is implemented
+   */
+
+	}, {
+		key: 'outdent',
+		value: function outdent(indices) {
+			var editor = arguments.length <= 1 || arguments[1] === undefined ? this.editor : arguments[1];
+
+			indices = indices || [editor.selectionStart, editor.selectionEnd];
+			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'out');
+			editor.value = indentify.value;
+			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
+			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			var html = editor._marky.state[editor._marky.index].html;
+			editor.nextSibling.value = html;
+			editor.dispatchEvent(_customEvents.update);
+			return [indentify.range[0], indentify.range[1]];
+		}
 	}]);
 
 	return Marky;
 })();
 
-},{"./custom-events":10,"./dispatcher":11,"./handlers":12,"./mark":13,"./prototypes":15}],8:[function(require,module,exports){
+},{"./custom-events":10,"./dispatcher":11,"./handlers":12,"./mark":13,"./prototypes":15,"./shims":16}],8:[function(require,module,exports){
 'use strict';
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -2528,6 +2716,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.inlineHandler = inlineHandler;
 exports.blockHandler = blockHandler;
 exports.listHandler = listHandler;
+exports.indentHandler = indentHandler;
 exports.insertHandler = insertHandler;
 /**
  * Handles wrapping format strings around a selection
@@ -2598,7 +2787,7 @@ function blockHandler(string, indices, mark) {
 }
 
 /**
- * Handles adding/removing format strings to groups os lines
+ * Handles adding/removing format strings to groups of lines
  * @param   {String} string  the entire string to use
  * @param   {Array}  indices the starting and ending positions to wrap
  * @param   {String} type    ul or ol
@@ -2621,6 +2810,48 @@ function listHandler(string, indices, type) {
 			}
 			return newLines.push(newLine);
 		}
+		newLine = mark + line.substring(0, line.length);
+		return newLines.push(newLine);
+	});
+	var joined = newLines.join('\r\n');
+	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
+	return { value: value, range: [start, start + joined.replace(/\n/gm, '').length] };
+}
+
+/**
+ * Handles adding/removing indentation to groups of lines
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} type    in or out
+ * @returns {Object} the new string, the updated indices
+ */
+function indentHandler(string, indices, type) {
+	var start = string.lineStart(indices[0]);
+	var end = string.lineEnd(indices[1]);
+	var lines = string.substring(start, end).splitLines();
+	var newLines = [];
+	var value = undefined;
+	lines.forEach(function (line) {
+		var mark = '    ';
+		var newLine = undefined;
+		//		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
+		//			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
+		//			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+		//			if (currentFormat.trim() !== mark.trim()) {
+		//				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+		//			}
+		//			return newLines.push(newLine);
+		//		}
+		if (type === 'out') {
+			//			if (line.indexOf(mark, 0) === 0) {
+			//				newLine = line.substring(mark.length, line.length);
+			//			} else {
+			//				newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+			//			}
+			newLine = line.indexOf(mark, 0) === 0 ? line.substring(mark.length, line.length) : line.substring(line.search(/[~*`_[!#>-]|[a-zA-Z0-9]|\r|\n|$/gm), line.length);
+			return newLines.push(newLine);
+		}
+
 		newLine = mark + line.substring(0, line.length);
 		return newLines.push(newLine);
 	});
@@ -2673,20 +2904,34 @@ exports.default = function () {
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
+		var linkDialog = new _Dialogs.LinkDialog('div', 'Link Dialog', id, textarea);
+		linkDialog.element.style.visibility = 'hidden';
+
+		var imageDialog = new _Dialogs.ImageDialog('div', 'Image Dialog', id, textarea);
+		imageDialog.element.style.visibility = 'hidden';
+
 		var headingSelect = new _Selects.HeadingSelect('select', 'Heading', id, textarea);
 		var boldButton = new _Buttons.BoldButton('button', 'Bold', id, textarea);
 		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id, textarea);
 		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
 		var codeButton = new _Buttons.CodeButton('button', 'Code', id, textarea);
 		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id, textarea);
-		var linkButton = new _Buttons.LinkButton('button', 'Link', id, textarea);
-		var imageButton = new _Buttons.ImageButton('button', 'Image', id, textarea);
-		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered-List', id, textarea);
-		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered-List', id, textarea);
+		var linkButton = new _Buttons.LinkButton('button', 'Link', id, linkDialog);
+		linkButton.listen('click', function () {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+		});
+		var imageButton = new _Buttons.ImageButton('button', 'Image', id, imageDialog);
+		imageButton.listen('click', function () {
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
+		});
+		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered List', id, textarea);
+		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered List', id, textarea);
+		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, textarea);
+		var outdentButton = new _Buttons.OutdentButton('button', 'Outdent', id, textarea);
 		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
-
-		var linkDialog = new _Dialogs.LinkDialog('div', 'Link-Dialog', id, textarea);
 
 		var separatorA = new _Element.Element('span');
 		separatorA.assign('textContent', '|');
@@ -2720,11 +2965,14 @@ exports.default = function () {
 		separatorC.appendTo(toolbar.element);
 		unorderedListButton.appendTo(toolbar.element);
 		orderedListButton.appendTo(toolbar.element);
+		indentButton.appendTo(toolbar.element);
+		outdentButton.appendTo(toolbar.element);
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
+		imageDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
 			this._marky.update(e.target.value, this._marky.state, this._marky.index);
@@ -2759,6 +3007,10 @@ exports.default = function () {
 		});
 
 		textarea.listen('focus', function (e) {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
 			return e.target.dispatchEvent(_customEvents.markyfocus);
 		});
 	});
@@ -2885,6 +3137,216 @@ exports.default = function () {
 
 		return this.indexOfMatch(/(\r|\n|$)/gm, index);
 	};
+};
+
+},{}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+exports.default = function () {
+
+	if ('document' in self) {
+
+		// Full polyfill for browsers with no classList support
+		if (!('classList' in document.createElement('_'))) {
+
+			(function (view) {
+				'use strict';
+
+				if (!('Element' in view)) return;
+
+				var classListProp = 'classList',
+				    protoProp = 'prototype',
+				    elemCtrProto = view.Element[protoProp],
+				    objCtr = Object,
+				    strTrim = String[protoProp].trim || function () {
+					return this.replace(/^\s+|\s+$/g, '');
+				},
+				    arrIndexOf = Array[protoProp].indexOf || function (item) {
+					var i = 0,
+					    len = this.length;
+					for (; i < len; i++) {
+						if (i in this && this[i] === item) {
+							return i;
+						}
+					}
+					return -1;
+				}
+				// Vendors: please allow content code to instantiate DOMExceptions
+
+				,
+				    DOMEx = function DOMEx(type, message) {
+					this.name = type;
+					this.code = DOMException[type];
+					this.message = message;
+				},
+				    checkTokenAndGetIndex = function checkTokenAndGetIndex(classList, token) {
+					if (token === '') {
+						throw new DOMEx('SYNTAX_ERR', 'An invalid or illegal string was specified');
+					}
+					if (/\s/.test(token)) {
+						throw new DOMEx('INVALID_CHARACTER_ERR', 'String contains an invalid character');
+					}
+					return arrIndexOf.call(classList, token);
+				},
+				    ClassList = function ClassList(elem) {
+					var trimmedClasses = strTrim.call(elem.getAttribute('class') || ''),
+					    classes = trimmedClasses ? trimmedClasses.split(/\s+/) : [],
+					    i = 0,
+					    len = classes.length;
+					for (; i < len; i++) {
+						this.push(classes[i]);
+					}
+					this._updateClassName = function () {
+						elem.setAttribute('class', this.toString());
+					};
+				},
+				    classListProto = ClassList[protoProp] = [],
+				    classListGetter = function classListGetter() {
+					return new ClassList(this);
+				};
+				// Most DOMException implementations don't allow calling DOMException's toString()
+				// on non-DOMExceptions. Error's toString() is sufficient here.
+				DOMEx[protoProp] = Error[protoProp];
+				classListProto.item = function (i) {
+					return this[i] || null;
+				};
+				classListProto.contains = function (token) {
+					token += '';
+					return checkTokenAndGetIndex(this, token) !== -1;
+				};
+				classListProto.add = function () {
+					var tokens = arguments,
+					    i = 0,
+					    l = tokens.length,
+					    token,
+					    updated = false;
+					do {
+						token = tokens[i] + '';
+						if (checkTokenAndGetIndex(this, token) === -1) {
+							this.push(token);
+							updated = true;
+						}
+					} while (++i < l);
+
+					if (updated) {
+						this._updateClassName();
+					}
+				};
+				classListProto.remove = function () {
+					var tokens = arguments,
+					    i = 0,
+					    l = tokens.length,
+					    token,
+					    updated = false,
+					    index;
+					do {
+						token = tokens[i] + '';
+						index = checkTokenAndGetIndex(this, token);
+						while (index !== -1) {
+							this.splice(index, 1);
+							updated = true;
+							index = checkTokenAndGetIndex(this, token);
+						}
+					} while (++i < l);
+
+					if (updated) {
+						this._updateClassName();
+					}
+				};
+				classListProto.toggle = function (token, force) {
+					token += '';
+
+					var result = this.contains(token),
+					    method = result ? force !== true && 'remove' : force !== false && 'add';
+
+					if (method) {
+						this[method](token);
+					}
+
+					if (force === true || force === false) {
+						return force;
+					} else {
+						return !result;
+					}
+				};
+				classListProto.toString = function () {
+					return this.join(' ');
+				};
+
+				if (objCtr.defineProperty) {
+					var classListPropDesc = {
+						get: classListGetter,
+						enumerable: true,
+						configurable: true
+					};
+					try {
+						objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+					} catch (ex) {
+						// IE 8 doesn't support enumerable:true
+						if (ex.number === -0x7FF5EC54) {
+							classListPropDesc.enumerable = false;
+							objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+						}
+					}
+				} else if (objCtr[protoProp].__defineGetter__) {
+					elemCtrProto.__defineGetter__(classListProp, classListGetter);
+				}
+			})(self);
+		} else {
+			// There is full or partial native classList support, so just check if we need
+			// to normalize the add/remove and toggle APIs.
+
+			(function () {
+				'use strict';
+
+				var testElement = document.createElement('_');
+
+				testElement.classList.add('c1', 'c2');
+
+				// Polyfill for IE 10/11 and Firefox <26, where classList.add and
+				// classList.remove exist but support only one argument at a time.
+				if (!testElement.classList.contains('c2')) {
+					var createMethod = function createMethod(method) {
+						var original = DOMTokenList.prototype[method];
+
+						DOMTokenList.prototype[method] = function (token) {
+							var i,
+							    len = arguments.length;
+
+							for (i = 0; i < len; i++) {
+								token = arguments[i];
+								original.call(this, token);
+							}
+						};
+					};
+					createMethod('add');
+					createMethod('remove');
+				}
+
+				testElement.classList.toggle('c3', false);
+
+				// Polyfill for IE 10 and Firefox <24, where classList.toggle does not
+				// support the second argument.
+				if (testElement.classList.contains('c3')) {
+					var _toggle = DOMTokenList.prototype.toggle;
+
+					DOMTokenList.prototype.toggle = function (token, force) {
+						if (1 in arguments && !this.contains(token) === !force) {
+							return force;
+						} else {
+							return _toggle.call(this, token);
+						}
+					};
+				}
+
+				testElement = null;
+			})();
+		}
+	}
 };
 
 },{}]},{},[1])(1)

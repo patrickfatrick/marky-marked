@@ -8,7 +8,7 @@
 	button {
 		@include no-outline;
 		@include side-margins(2px, 2px);
-		font-size: 1rem;
+		font-size: 0.8rem;
 		cursor: pointer;
 		border: 1px solid $gray;
 		padding: 3px;
@@ -57,10 +57,53 @@
 		}
 	}
 	.separator {
-		@include side-padding(5px, 5px);
+		@include side-padding(2px, 2px);
 		color: $gray;
 		@media all and (min-width: 1200px) {
-			@include side-padding(10px, 10px);
+			@include side-padding(5px, 5px);
+		}
+	}
+	.marky-dialogs {
+		position: relative;
+		.dialog {
+			position: absolute;
+			background: $white;
+			padding: 1rem;
+			margin: 0.7rem;
+			border: 1px solid $gray;
+			box-shadow: $boxShadowB 0 10px 15px, $boxShadowB 0 5px 10px;
+			margin-top: -50px;
+			opacity: 0;
+			-webkit-transition: all 200ms ease-out;
+			-moz-transition: all 200ms ease-out;
+			-o-transition: all 200ms ease-out;
+			transition: all 200ms ease-out;
+			&.toggled {
+				margin-top: 0.7rem;
+				opacity: 1;
+			}
+			input {
+				@include no-outline;
+				border: 1px solid $gray;
+				font-size: 1rem;
+				margin-left: 0.2rem;
+				margin-right: 0.2rem;
+				&:focus {
+					border: 1px solid $deepBlue;
+				}
+			}
+			button {
+				color: $white;
+				background-color: $deepBlue;
+				margin-left: 0.2rem;
+				&:active {
+					background: -webkit-linear-gradient($deepBlue * 0.7, $deepBlue);
+					background: -moz-linear-gradient($deepBlue * 0.7, $deepBlue);
+					background: -ms-linear-gradient($deepBlue * 0.7, $deepBlue);
+					background: -o-linear-gradient($deepBlue * 0.7, $deepBlue);
+					background: linear-gradient($deepBlue * 0.7, $deepBlue);
+				}
+			}
 		}
 	}
 }

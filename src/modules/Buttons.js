@@ -116,17 +116,17 @@ export class LinkButton extends Element {
 		super(type || 'button', title || 'Link', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let dialog = this.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			editor.focus();
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.link([editor.selectionStart, editor.selectionEnd]);
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
 		});
 	}
 }
@@ -136,25 +136,24 @@ export class ImageButton extends Element {
 		super(type || 'button', title || 'Image', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let dialog = this.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
 		super.listen('mousedown', e => {
 			e.preventDefault();
-			editor.focus();
-
 		});
 		super.listen('click', e => {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.image([editor.selectionStart, editor.selectionEnd]);
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
 		});
 	}
 }
 
 export class UnorderedListButton extends Element {
 	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Unordered-List', id, parent);
+		super(type || 'button', title || 'Unordered List', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -174,7 +173,7 @@ export class UnorderedListButton extends Element {
 
 export class OrderedListButton extends Element {
 	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Ordered-List', id, parent);
+		super(type || 'button', title || 'Ordered List', id, parent);
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
@@ -188,6 +187,46 @@ export class OrderedListButton extends Element {
 			e.preventDefault();
 			editor.focus();
 			return editor._marky.orderedList([editor.selectionStart, editor.selectionEnd]);
+		});
+	}
+}
+
+export class IndentButton extends Element {
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Indent', id, parent);
+		super.addClass([this.title, id]);
+		let icon = new Element('i');
+		let editor = this.parent.element;
+		icon.addClass(['fa', 'fa-indent']);
+		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.indent([editor.selectionStart, editor.selectionEnd]);
+		});
+	}
+}
+
+export class OutdentButton extends Element {
+	constructor (type, title, id, parent) {
+		super(type || 'button', title || 'Outdent', id, parent);
+		super.addClass([this.title, id]);
+		let icon = new Element('i');
+		let editor = this.parent.element;
+		icon.addClass(['fa', 'fa-outdent']);
+		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+		});
+		super.listen('click', e => {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.outdent([editor.selectionStart, editor.selectionEnd]);
 		});
 	}
 }

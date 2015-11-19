@@ -67,7 +67,7 @@ export function blockHandler (string, indices, mark) {
 }
 
 /**
- * Handles adding/removing format strings to groups os lines
+ * Handles adding/removing format strings to groups of lines
  * @param   {String} string  the entire string to use
  * @param   {Array}  indices the starting and ending positions to wrap
  * @param   {String} type    ul or ol
@@ -90,6 +90,48 @@ export function listHandler (string, indices, type) {
 			}
 			return newLines.push(newLine);
 		}
+		newLine = mark + line.substring(0, line.length);
+		return newLines.push(newLine);
+	});
+	let joined = newLines.join('\r\n');
+	value = string.substring(0, start) + newLines.join('\r\n') + string.substring(end, string.length);
+	return {value: value, range: [start, start + joined.replace(/\n/gm, '').length]};
+}
+
+/**
+ * Handles adding/removing indentation to groups of lines
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} type    in or out
+ * @returns {Object} the new string, the updated indices
+ */
+export function indentHandler (string, indices, type) {
+	const start = string.lineStart(indices[0]);
+	const end = string.lineEnd(indices[1]);
+	const lines = string.substring(start, end).splitLines();
+	let newLines = [];
+	let value;
+	lines.forEach((line) => {
+		let mark = '    ';
+		let newLine;
+//		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
+//			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
+//			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+//			if (currentFormat.trim() !== mark.trim()) {
+//				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+//			}
+//			return newLines.push(newLine);
+//		}
+		if (type === 'out') {
+//			if (line.indexOf(mark, 0) === 0) {
+//				newLine = line.substring(mark.length, line.length);
+//			} else {
+//				newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
+//			}
+			newLine = (line.indexOf(mark, 0) === 0) ? line.substring(mark.length, line.length) : line.substring(line.search(/[~*`_[!#>-]|[a-zA-Z0-9]|\r|\n|$/gm), line.length);
+			return newLines.push(newLine);
+		}
+
 		newLine = mark + line.substring(0, line.length);
 		return newLines.push(newLine);
 	});

@@ -7,11 +7,13 @@
  */
 
 import prototypes from './prototypes';
+import shims from './shims';
 import mark from './mark';
 import * as dispatcher from './dispatcher';
 import {update, markychange} from './custom-events';
-import {inlineHandler, blockHandler, insertHandler, listHandler} from './handlers';
+import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers';
 
+shims();
 prototypes();
 
 export class Marky {
@@ -268,9 +270,9 @@ export class Marky {
 	 * @param   {HTMLElement} editor  the marky marked editor
 	 * @returns {Array}       the new selection after the snippet is inserted
 	 */
-	link (indices, editor = this.editor) {
+	link (indices, url = 'http://url.com', display = 'http://url.com', editor = this.editor) {
 		indices = indices || [editor.selectionStart, editor.selectionEnd];
-		const mark = '[DISPLAY TEXT](http://url.com)';
+		const mark = '[' + display + '](' + url + ')';
 		let linkify = insertHandler(editor.value, indices, mark);
 		editor.value = linkify.value;
 		editor.setSelectionRange(linkify.range[0], linkify.range[1]);
@@ -288,9 +290,9 @@ export class Marky {
 	 * @param   {HTMLElement} editor  the marky marked editor
 	 * @returns {Array}       the new selection after the snippet is inserted
 	 */
-	image (indices, editor = this.editor) {
+	image (indices, source = 'http://imagesource.com/image.jpg', alt = 'http://imagesource.com/image.jpg', editor = this.editor) {
 		indices = indices || [editor.selectionStart, editor.selectionEnd];
-		const mark = '![ALT TEXT](http://imagesource.com/image.jpg)';
+		const mark = '![' + alt + '](' + source + ')';
 		let imageify = insertHandler(editor.value, indices, mark);
 		editor.value = imageify.value;
 		editor.setSelectionRange(imageify.range[0], imageify.range[1]);
@@ -337,6 +339,44 @@ export class Marky {
 		editor.nextSibling.value = html;
 		editor.dispatchEvent(update);
 		return [listify.range[0], listify.range[1]];
+	}
+
+	/**
+	 * implements an indent on a selection
+	 * @requires handlers/indentHandler
+	 * @param   {Array}       indices starting and ending positions for the selection
+	 * @param   {HTMLElement} editor  the marky marked editor
+	 * @returns {Array}       the new selection after the indent is implemented
+	 */
+	indent (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let indentify = indentHandler(editor.value, indices, 'in');
+		editor.value = indentify.value;
+		editor.setSelectionRange(indentify.range[0], indentify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [indentify.range[0], indentify.range[1]];
+	}
+
+	/**
+	 * implements an outdent on a selection
+	 * @requires handlers/indentHandler
+	 * @param   {Array}       indices starting and ending positions for the selection
+	 * @param   {HTMLElement} editor  the marky marked editor
+	 * @returns {Array}       the new selection after the outdent is implemented
+	 */
+	outdent (indices, editor = this.editor) {
+		indices = indices || [editor.selectionStart, editor.selectionEnd];
+		let indentify = indentHandler(editor.value, indices, 'out');
+		editor.value = indentify.value;
+		editor.setSelectionRange(indentify.range[0], indentify.range[1]);
+		editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+		let html = editor._marky.state[editor._marky.index].html;
+		editor.nextSibling.value = html;
+		editor.dispatchEvent(update);
+		return [indentify.range[0], indentify.range[1]];
 	}
 
 }

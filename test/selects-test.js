@@ -1,7 +1,7 @@
 import chai from 'chai';
 
 chai.should();
-describe('toolbar buttons', () => {
+describe('toolbar selects', () => {
 	it('calls the heading-1 method', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');

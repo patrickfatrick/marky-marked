@@ -30,14 +30,14 @@ export class Element {
 
 	addClass(classNames) {
 		for (let className of classNames) {
-			this.element.classList.add(className.toLowerCase());
+			this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
 		}
 		return;
 	}
 
 	removeClass(classNames) {
 		for (let className of classNames) {
-			this.element.classList.remove(className.toLowerCase());
+			this.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
 		}
 		return;
 	}

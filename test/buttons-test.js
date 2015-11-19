@@ -42,23 +42,23 @@ describe('toolbar buttons', () => {
 		document.querySelector('.blockquote').click();
 		output.value.should.equal('<blockquote>\n<p>Some text</p>\n</blockquote>\n');
 	});
-	it('calls the link method', () => {
-		const editor = document.querySelector('.marky-editor');
-		editor.value = 'Some text';
-		editor.setSelectionRange(0, 9);
-		document.querySelector('.link').click();
-		editor.value.should.equal('Some text[DISPLAY TEXT](http://url.com)');
-		editor.selectionStart.should.equal(9);
-		editor.selectionEnd.should.equal(editor.value.length);
-	});
-	it('calls the image method', () => {
+	it('controls the link dialog', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
 		document.querySelector('.image').click();
-		editor.value.should.equal('Some text![ALT TEXT](http://imagesource.com/image.jpg)');
-		editor.selectionStart.should.equal(9);
-		editor.selectionEnd.should.equal(editor.value.length);
+		document.querySelector('.link').click();
+		document.querySelector('.link-dialog').style.visibility.should.equal('visible');
+		document.querySelector('.image-dialog').style.visibility.should.equal('hidden');
+	});
+	it('controls the image dialog', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = 'Some text';
+		editor.setSelectionRange(0, 9);
+		document.querySelector('.link').click();
+		document.querySelector('.image').click();
+		document.querySelector('.image-dialog').style.visibility.should.equal('visible');
+		document.querySelector('.link-dialog').style.visibility.should.equal('hidden');
 	});
 	it('calls the unorderedList method', () => {
 		const editor = document.querySelector('.marky-editor');
@@ -73,6 +73,20 @@ describe('toolbar buttons', () => {
 		editor.setSelectionRange(0, 26);
 		document.querySelector('.ordered-list').click();
 		editor.value.should.equal('1. Some text\n2. Some other text');
+	});
+	it('calls the indent method', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = '- Some text\r\n- Some other text';
+		editor.setSelectionRange(0, 30);
+		document.querySelector('.indent').click();
+		editor.value.should.equal('    - Some text\n    - Some other text');
+	});
+	it('calls the outdent method', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = '    - Some text\r\n    - Some other text';
+		editor.setSelectionRange(0, 38);
+		document.querySelector('.outdent').click();
+		editor.value.should.equal('- Some text\n- Some other text');
 	});
 	it('calls the undo method', () => {
 		const editor = document.querySelector('.marky-editor');

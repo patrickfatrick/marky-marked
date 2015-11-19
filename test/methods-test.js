@@ -124,8 +124,17 @@ describe('marky methods', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
+		editor._marky.link([0, 9], 'http://google.com', 'Google');
+		editor.value.should.equal('Some text[Google](http://google.com)');
+		editor.selectionStart.should.equal(9);
+		editor.selectionEnd.should.equal(editor.value.length);
+	});
+	it('inserts a default link snippet', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = 'Some text';
+		editor.setSelectionRange(0, 9);
 		editor._marky.link();
-		editor.value.should.equal('Some text[DISPLAY TEXT](http://url.com)');
+		editor.value.should.equal('Some text[http://url.com](http://url.com)');
 		editor.selectionStart.should.equal(9);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
@@ -133,24 +142,47 @@ describe('marky methods', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		editor._marky.image();
-		editor.value.should.equal('Some text![ALT TEXT](http://imagesource.com/image.jpg)');
+		editor._marky.image([0, 9], 'http://i.imgur.com/VlVsP.gif', 'Chuck Chardonnay');
+		editor.value.should.equal('Some text![Chuck Chardonnay](http://i.imgur.com/VlVsP.gif)');
 		editor.selectionStart.should.equal(9);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
-	it('implement an unordered list', () => {
+	it('inserts aa default image snippet', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = 'Some text';
+		editor.setSelectionRange(0, 9);
+		editor._marky.image();
+		editor.value.should.equal('Some text![http://imagesource.com/image.jpg](http://imagesource.com/image.jpg)');
+		editor.selectionStart.should.equal(9);
+		editor.selectionEnd.should.equal(editor.value.length);
+	});
+	it('implements an unordered list', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text\r\nSome other text';
 		editor.setSelectionRange(0, 26);
 		editor._marky.unorderedList();
 		editor.value.should.equal('- Some text\n- Some other text');
 	});
-	it('implement an ordered list', () => {
+	it('implements an ordered list', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text\r\nSome other text';
 		editor.setSelectionRange(0, 26);
 		editor._marky.orderedList();
 		editor.value.should.equal('1. Some text\n2. Some other text');
+	});
+	it('implements an indent', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = '- Some text\r\n- Some other text';
+		editor.setSelectionRange(0, 30);
+		editor._marky.indent();
+		editor.value.should.equal('    - Some text\n    - Some other text');
+	});
+	it('implements an outdent', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = '    - Some text\r\n    - Some other text';
+		editor.setSelectionRange(0, 38);
+		editor._marky.outdent();
+		editor.value.should.equal('- Some text\n- Some other text');
 	});
 	it('undoes state', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
