@@ -5,7 +5,7 @@
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],
-	"description": "An in-browser editor so sweet you'll be feeling good vibrations.",
+	"description": "An in-browser content editor so sweet you'll be feeling good vibrations.",
 	"moduleType": [
 		"globals",
 		"node"

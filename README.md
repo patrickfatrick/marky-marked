@@ -1,6 +1,6 @@
 # Marky Marked
 
-_An in-browser editor so sweet you'll be feeling good vibrations._
+_An in-browser content editor so sweet you'll be feeling good vibrations._
 [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
@@ -129,8 +129,9 @@ markyselect // Emitted whenever the text selection in the editor changes.
 The various toolbar controls are exposed for easy use, and with the exception of the heading method all follow the same guidelines and return the same thing.
 
 ```javascript
-document.querySelector('.marky-editor')._marky.bold([0, 5]); // Takes an array of the starting and ending indices to apply the format to
-document.querySelector('.marky-editor')._marky.bold(); // If no argument is passed the currently selected text is assumed
+var editor = document.querySelector('.marky-editor');
+editor._marky.bold([0, 5]); // Takes an array of the starting and ending indices to apply the format to
+editor._marky.bold(); // If no argument is passed the currently selected text is assumed
 ```
 
 This will return the newly selected text after the formatting has been applied.
@@ -138,9 +139,9 @@ This will return the newly selected text after the formatting has been applied.
 For the heading method you should also pass in the level of heading, 1 to toggle an `h1`, 2 for `h2`, etc.
 
 ```javascript
-document.querySelector('.marky-editor')._marky.heading(1, [0, 5]); // Also takes an array for the text to apply the format to
-document.querySelector('.marky-editor')._marky.heading(4); // If no second argument is passed the currently selected text is assumed
-document.querySelector('.marky-editor')._marky.heading(); // Assumes 0, AKA remove all headings from the text
+editor._marky.heading(1, [0, 5]); // Also takes an array for the text to apply the format to
+editor._marky.heading(4); // If no second argument is passed the currently selected text is assumed
+editor._marky.heading(); // Assumes 0, AKA remove all headings from the text
 ```
 
 Again an array representing the new starting and ending position is returned.
@@ -148,8 +149,8 @@ Again an array representing the new starting and ending position is returned.
 New to v1.1.0 you can now programmatically insert link and image snippets like so,
 
 ```javascript
-document.querySelector('.marky-editor')._marky.link([0, 0], 'http://github.com/patrickfatrick/marky-marked', 'Marky Marked');
-document.querySelector('.marky-editor')._marky.image([0, 0], 'http://i.imgur.com/VlVsP.gif', 'Chuck Chardonnay');
+editor._marky.link([0, 0], 'http://github.com/patrickfatrick/marky-marked', 'Marky Marked');
+editor._marky.image([0, 0], 'http://i.imgur.com/VlVsP.gif', 'Chuck Chardonnay');
 ```
 
 As before the first argument is an array representing the selection to use. The second is the URL to the link or the image. The third argument is the display text in the case of `link()` and the alt text in the case of `image()`. This method returns the new selection.
@@ -178,8 +179,8 @@ outdent()
 You can manually undo and redo like so, optionally passing in the number of states to undo or redo by as an argument. If no argument is passed Marky Marked will default to 5 as if the button was pushed.
 
 ```javascript
-document.querySelector('.marky-editor')._marky.undo(20);
-document.querySelector('.marky-editor')._marky.redo(13);
+editor._marky.undo(20);
+editor._marky.redo(13);
 ```
 
 The new state index will be returned.
@@ -189,7 +190,7 @@ The new state index will be returned.
 You can set the text selection in the editor like so, passing in an array for the start and end positions. If no argument is passed Marky Marked will default to [0, 0];
 
 ```javascript
-document.querySelector('.marky-editor')._marky.setSelection([5, 7]);
+editor._marky.setSelection([5, 7]);
 ```
 
 This method returns the array that was passed in.
@@ -199,8 +200,8 @@ This method returns the array that was passed in.
 You can expand the current text selection forward or backward in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will default to 0;
 
 ```javascript
-document.querySelector('.marky-editor')._marky.expandSelectionForward(3);
-document.querySelector('.marky-editor')._marky.expandSelectionBackward(20);
+editor._marky.expandSelectionForward(3);
+editor._marky.expandSelectionBackward(20);
 ```
 
 This method returns the new starting and ending positions for the selection as an array.
@@ -210,8 +211,8 @@ This method returns the new starting and ending positions for the selection as a
 You can also move the cursor in the editor like so, passing in the number of characters to move. If no argument is passed Marky Marked will default to 0.
 
 ```javascript
-document.querySelector('.marky-editor')._marky.moveCursorForward(3);
-document.querySelector('.marky-editor')._marky.moveCursorBackward(20);
+editor._marky.moveCursorForward(3);
+editor._marky.moveCursorBackward(20);
 ```
 
 This method returns the new cursor position in the editor.

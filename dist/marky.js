@@ -1899,61 +1899,21 @@ var Element = exports.Element = (function () {
 	}, {
 		key: 'addClass',
 		value: function addClass(classNames) {
-			var _iteratorNormalCompletion = true;
-			var _didIteratorError = false;
-			var _iteratorError = undefined;
+			var _this = this;
 
-			try {
-				for (var _iterator = classNames[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-					var className = _step.value;
-
-					this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
-				}
-			} catch (err) {
-				_didIteratorError = true;
-				_iteratorError = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion && _iterator.return) {
-						_iterator.return();
-					}
-				} finally {
-					if (_didIteratorError) {
-						throw _iteratorError;
-					}
-				}
-			}
-
+			classNames.forEach(function (className) {
+				_this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
+			});
 			return;
 		}
 	}, {
 		key: 'removeClass',
 		value: function removeClass(classNames) {
-			var _iteratorNormalCompletion2 = true;
-			var _didIteratorError2 = false;
-			var _iteratorError2 = undefined;
+			var _this2 = this;
 
-			try {
-				for (var _iterator2 = classNames[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-					var className = _step2.value;
-
-					this.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
-				}
-			} catch (err) {
-				_didIteratorError2 = true;
-				_iteratorError2 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion2 && _iterator2.return) {
-						_iterator2.return();
-					}
-				} finally {
-					if (_didIteratorError2) {
-						throw _iteratorError2;
-					}
-				}
-			}
-
+			classNames.forEach(function (className) {
+				_this2.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
+			});
 			return;
 		}
 	}, {
@@ -2834,24 +2794,10 @@ function indentHandler(string, indices, type) {
 	lines.forEach(function (line) {
 		var mark = '    ';
 		var newLine = undefined;
-		//		if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
-		//			let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm));
-		//			newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-		//			if (currentFormat.trim() !== mark.trim()) {
-		//				newLine = mark + line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-		//			}
-		//			return newLines.push(newLine);
-		//		}
 		if (type === 'out') {
-			//			if (line.indexOf(mark, 0) === 0) {
-			//				newLine = line.substring(mark.length, line.length);
-			//			} else {
-			//				newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length);
-			//			}
 			newLine = line.indexOf(mark, 0) === 0 ? line.substring(mark.length, line.length) : line.substring(line.search(/[~*`_[!#>-]|[a-zA-Z0-9]|\r|\n|$/gm), line.length);
 			return newLines.push(newLine);
 		}
-
 		newLine = mark + line.substring(0, line.length);
 		return newLines.push(newLine);
 	});
@@ -2928,8 +2874,8 @@ exports.default = function () {
 		});
 		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered List', id, textarea);
 		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered List', id, textarea);
-		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, textarea);
 		var outdentButton = new _Buttons.OutdentButton('button', 'Outdent', id, textarea);
+		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, textarea);
 		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
 
@@ -2965,8 +2911,8 @@ exports.default = function () {
 		separatorC.appendTo(toolbar.element);
 		unorderedListButton.appendTo(toolbar.element);
 		orderedListButton.appendTo(toolbar.element);
-		indentButton.appendTo(toolbar.element);
 		outdentButton.appendTo(toolbar.element);
+		indentButton.appendTo(toolbar.element);
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);

@@ -29,16 +29,16 @@ export class Element {
 	}
 
 	addClass(classNames) {
-		for (let className of classNames) {
+		classNames.forEach(className => {
 			this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
-		}
+		});
 		return;
 	}
 
 	removeClass(classNames) {
-		for (let className of classNames) {
+		classNames.forEach(className => {
 			this.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
-		}
+		});
 		return;
 	}
 

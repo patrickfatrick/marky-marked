@@ -4,7 +4,7 @@ var isparta = require('isparta');
 module.exports = function (karma) {
 	karma.set({
 		basePath: '',
-		files: ['node_modules/babel-polyfill/dist/polyfill.js', 'test/test_helper.js', 'src/**.js', 'test/**/*-test.js'],
+		files: ['test/test_helper.js', 'src/**.js', 'test/**/*-test.js'],
 		frameworks: ['browserify', 'mocha', 'chai'],
 		plugins: [
 			'karma-browserify',

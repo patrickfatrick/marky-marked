@@ -55,8 +55,8 @@ export default function (tag = 'marky-mark') {
 		});
 		let unorderedListButton = new UnorderedListButton('button', 'Unordered List', id, textarea);
 		let orderedListButton = new OrderedListButton('button', 'Ordered List', id, textarea);
-		let indentButton = new IndentButton('button', 'Indent', id, textarea);
 		let outdentButton = new OutdentButton('button', 'Outdent', id, textarea);
+		let indentButton = new IndentButton('button', 'Indent', id, textarea);
 		let undoButton = new UndoButton('button', 'Undo', id, textarea);
 		let redoButton = new RedoButton('button', 'Redo', id, textarea);
 
@@ -92,8 +92,8 @@ export default function (tag = 'marky-mark') {
 		separatorC.appendTo(toolbar.element);
 		unorderedListButton.appendTo(toolbar.element);
 		orderedListButton.appendTo(toolbar.element);
-		indentButton.appendTo(toolbar.element);
 		outdentButton.appendTo(toolbar.element);
+		indentButton.appendTo(toolbar.element);
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
