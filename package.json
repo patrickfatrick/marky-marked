@@ -1,6 +1,6 @@
 {
   "name": "marky-marked",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "An in-browser content editor so sweet you'll be feeling good vibrations.",
   "main": "index.js",
   "format": "es6",
