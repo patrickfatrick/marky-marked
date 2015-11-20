@@ -1783,6 +1783,10 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 			element.style.visibility = 'hidden';
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
+		_this.parent.listen('click', function () {
+			_get(Object.getPrototypeOf(LinkDialog.prototype), 'removeClass', _this).call(_this, ['toggled']);
+			return element.style.visibility = 'hidden';
+		});
 		return _this;
 	}
 
@@ -2948,11 +2952,15 @@ exports.default = function () {
 		});
 
 		textarea.listen('focus', function (e) {
+			return e.target.dispatchEvent(_customEvents.markyfocus);
+		});
+
+		textarea.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
-			return e.target.dispatchEvent(_customEvents.markyfocus);
+			return;
 		});
 	});
 };

@@ -55,6 +55,10 @@ export class LinkDialog extends Element {
 			element.style.visibility = 'hidden';
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
+		this.parent.listen('click', () => {
+			super.removeClass(['toggled']);
+			return element.style.visibility = 'hidden';
+		});
 	}
 }
 
@@ -89,11 +93,11 @@ export class ImageDialog extends Element {
 		imageAltInput.appendTo(imageForm.element);
 		insertButton.appendTo(imageForm.element);
 
-		imageForm.listen('submit', function (e) {
+		imageForm.listen('submit', e => {
 			e.preventDefault();
 			editor.focus();
 		});
-		insertButton.listen('click', function (e) {
+		insertButton.listen('click', e => {
 			e.preventDefault;
 			editor.focus();
 			let source = imageSourceInput.element.value ? imageSourceInput.element.value : 'http://imagesource.com/image.jpg';

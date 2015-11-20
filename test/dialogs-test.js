@@ -14,7 +14,6 @@ describe('toolbar dialogs', () => {
 		alt.value = 'Chuck Chardonnay';
 		document.querySelector('.insert-image').click();
 
-
 		output.value.should.equal('<p>Some text<img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n');
 	});
 
@@ -28,7 +27,6 @@ describe('toolbar dialogs', () => {
 		source.value = 'http://google.com';
 		alt.value = 'Google';
 		document.querySelector('.insert-link').click();
-
 
 		output.value.should.equal('<p>Some text<a href="http://google.com">Google</a></p>\n');
 	});

@@ -134,11 +134,15 @@ export default function (tag = 'marky-mark') {
 		});
 
 		textarea.listen('focus', function (e) {
+			return e.target.dispatchEvent(markyfocus);
+		});
+		
+		textarea.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
-			return e.target.dispatchEvent(markyfocus);
+			return;
 		});
 
 	});
