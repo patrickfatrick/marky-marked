@@ -30,7 +30,7 @@
 		&:focus {
 			border-color: $deepBlue;
 		}
-		@media all and (min-width: 1200px) {
+		@media all and (min-width: 768px) {
 			font-size: 1rem;
 		}
 	}

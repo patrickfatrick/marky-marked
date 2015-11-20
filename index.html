@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Marky Marked</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="./dist/marky-mark.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
@@ -17,13 +18,15 @@
 		margin-top: 20px;
 	}
 	.container {
-		width: 97%;
-		float: left;
+		box-sizing: border-box;
+		width: 100%;
+		display: inline-block;
 		padding-left: 10px;
 		padding-right: 10px;
 	}
 	.html-container {
-		width: 97%;
+		box-sizing: border-box;
+		width: 100%;
 		height: auto;
 		padding-top: 3rem;
 		padding-left: 10px;
@@ -33,7 +36,7 @@
 		clear: both;
 	}
 	h1.heading {
-		font-size: 2.5rem;
+		font-size: 2rem;
 		font-family: Cardo, serif;
 		margin-left: 20px;
 	}
@@ -47,16 +50,19 @@
 		margin-left: 20px;
 	}
 	textarea.marky-editor {
-		width: 96%;
+		box-sizing: border-box;
+		width: 100%;
 		height: 250px;
 	}
 	#output {
+		box-sizing: border-box;
 		height: 290px;
 		border: 1px solid #919191;
 		padding: 0.7rem;
 		overflow: scroll;
 	}
 	#html-output {
+		box-sizing: border-box;
 		border: 1px solid #919191;
 		min-height: 500px;
 		padding: 2rem;
@@ -75,11 +81,17 @@
 		background-color: #f9f2f4;
 	}
 	@media all and (min-width: 768px) {
-		.container {
-			width: 48%;
+		textarea.marky-editor,
+		#output {
+			width: 100%;
 		}
-		textarea.marky-editor {
-			width: 95%;
+		h1.heading {
+			font-size: 2.5rem;
+		}
+	}
+	@media all and (min-width: 1100px) {
+		.container {
+			width: 49.8%;
 		}
 	}
 </style>
@@ -132,7 +144,7 @@
 			htmlOutput.innerHTML = '';
 			htmlOutput.insertAdjacentHTML('afterbegin', output.value);
 		});
-		editor.value = '# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax.\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
+		editor.value = '# Marky Marked\r\n\n**Thanks for checking out Marky Marked!**\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax. Supported in all modern desktop browsers as well as IE11 (earlier versions are _not supported_).\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
 		editor._marky.update(editor.value);
 		editor.dispatchEvent(markychange);
 	});

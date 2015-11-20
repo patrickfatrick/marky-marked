@@ -19,12 +19,14 @@ Because it's all Markdown the markup that comes out of it is well-formatted and 
 
 On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#undoredo) below).
 
-## Dependencies
+## Dependencies & Support
 
-Marky Marked has two dependencies to run, both of which are included in the /dist files:
+Marky Marked has two dependencies, both of which are included in the /dist files:
 
 - [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.
-- Optional dependency: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.
+- Optional: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.
+
+Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it light, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
 
 ## Install
 
