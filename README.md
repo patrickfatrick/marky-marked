@@ -24,7 +24,7 @@ On top of all of that because it's built with immutable states Marky Marked come
 Marky Marked has two dependencies, both of which are included in the /dist files:
 
 - [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.
-- Optional: [Font Awesome](http://fontawesome.io/), only if you use the included stylesheet.
+- Optional: [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.
 
 Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it light, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
 

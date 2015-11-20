@@ -7,13 +7,11 @@
  */
 
 import prototypes from './prototypes';
-import shims from './shims';
 import mark from './mark';
 import * as dispatcher from './dispatcher';
 import {update, markychange} from './custom-events';
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers';
 
-shims();
 prototypes();
 
 export class Marky {
