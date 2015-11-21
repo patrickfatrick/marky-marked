@@ -1,6 +1,5 @@
 import chai from 'chai';
 import {indentHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
 
 chai.should();
 describe('indent handling', () => {
