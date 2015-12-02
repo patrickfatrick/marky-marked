@@ -61,19 +61,19 @@ export default function (tag = 'marky-mark') {
 		let redoButton = new RedoButton('button', 'Redo', id, textarea);
 
 		let separatorA = new Element('span');
-		separatorA.assign('textContent', '|');
+		//separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
 
 		let separatorB = new Element('span');
-		separatorB.assign('textContent', '|');
+		//separatorB.assign('textContent', '|');
 		separatorB.addClass(['separator']);
 
 		let separatorC = new Element('span');
-		separatorC.assign('textContent', '|');
+		//separatorC.assign('textContent', '|');
 		separatorC.addClass(['separator']);
 
 		let separatorD = new Element('span');
-		separatorD.assign('textContent', '|');
+		//separatorD.assign('textContent', '|');
 		separatorD.addClass(['separator']);
 
 		toolbar.appendTo(container);

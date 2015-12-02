@@ -2829,19 +2829,19 @@ exports.default = function () {
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
 
 		var separatorA = new _Element.Element('span');
-		separatorA.assign('textContent', '|');
+		//separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
 
 		var separatorB = new _Element.Element('span');
-		separatorB.assign('textContent', '|');
+		//separatorB.assign('textContent', '|');
 		separatorB.addClass(['separator']);
 
 		var separatorC = new _Element.Element('span');
-		separatorC.assign('textContent', '|');
+		//separatorC.assign('textContent', '|');
 		separatorC.addClass(['separator']);
 
 		var separatorD = new _Element.Element('span');
-		separatorD.assign('textContent', '|');
+		//separatorD.assign('textContent', '|');
 		separatorD.addClass(['separator']);
 
 		toolbar.appendTo(container);

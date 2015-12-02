@@ -1,150 +1,151 @@
 @import 'variables';
 @import 'mixins';
 .marky-toolbar {
-	min-width: 100%;
-	text-align: left;
-	margin-bottom: 0.3rem;
-	button {
-		@include no-outline;
-		@include side-margins(0, 0);
-		font-size: 0.8rem;
-		max-width: 1.8rem;
-		line-height: 0.8rem;
-		cursor: pointer;
-		border: 1px solid $gray;
-		border-left: none;
-		padding: 7px;
-		border-radius: 0;
-		box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
-		min-width: 1.5rem;
-		min-height: 1.5rem;
-		text-align: center;
-		background-color: white;
-		color: $black;
-		&.disabled, 
-		&:active {
-			color: $gray;
-			background: -webkit-linear-gradient($white * 0.7, $white);
-			background: -moz-linear-gradient($white * 0.7, $white);
-			background: -ms-linear-gradient($white * 0.7, $white);
-			background: -o-linear-gradient($white * 0.7, $white);
-			background: linear-gradient($white * 0.7, $white);
-		}
-		&:focus {
-			border-color: $deepBlue;
-		}
-		@media all and (min-width: 768px) {
-			font-size: 1rem;
-		}
-	}
-	.separator + button {
-		border-left: 1px solid $gray;
-		border-radius: 4px 0 0 4px;
-	}
-	button:nth-child(7),
-	button:nth-child(10),
-	button:nth-child(15),
-	button:nth-child(18) {
-		border-radius: 0 4px 4px 0;
-	}
-	button:nth-child(5),
-	button:nth-child(6),
-	button:nth-child(9),
-	button:nth-child(12),
-	button:nth-child(13),
-	button:nth-child(14),
-	button:nth-child(15) {
-		padding-left: 5px;
-		padding-right: 5px;
-	}
-	select {
-		@include no-outline;
-		@include side-margins(2px, 2px);
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		font-size: 1rem;
-		outline: none;
-		border: 1px solid gray;
-		padding-left: 0.3rem;
-		border-radius: 4px;
-		box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
-		min-width: 5.2rem;
-		min-height: 1.6rem;
-		text-align: center;
-		background-color: white;
-		color: black;
-		text-align: left;
-		line-height: 1.2rem;
-		&:focus {
-			border-color: $deepBlue;
-		}
-		@media all and (min-width: 1200px) {
-			min-width: 6rem;
-			padding-left: 0.6rem;
-		}
-	}
-	.separator {
-		@include side-padding(2px, 2px);
-		color: $gray;
-	}
-	.marky-dialogs {
-		position: relative;
-		.dialog {
-			position: absolute;
-			background: $white;
-			padding: 1rem;
-			margin: 0.7rem;
-			border: 1px solid $gray;
-			box-shadow: $boxShadowB 0 10px 15px, $boxShadowB 0 5px 10px;
-			margin-top: -50px;
-			opacity: 0;
-			-webkit-transition: all 200ms ease-out;
-			-moz-transition: all 200ms ease-out;
-			-o-transition: all 200ms ease-out;
-			transition: all 200ms ease-out;
-			&.toggled {
-				margin-top: 0.7rem;
-				opacity: 1;
-			}
-			input {
-				@include no-outline;
-				border-bottom: 3px solid $gray;
-				font-size: 1rem;
-				margin-left: 0.2rem;
-				margin-right: 0.2rem;
-				-webkit-transition: all 200ms ease-out;
-				-moz-transition: all 200ms ease-out;
-				-o-transition: all 200ms ease-out;
-				transition: all 200ms ease-out;
-				&:focus {
-					border-color: $deepBlue;
-				}
-			}
-			button {
-				color: $white;
-				background-color: $deepBlue;
-				margin-left: 0.2rem;
-				border: 1px solid $gray;
-				border-radius: 4px;
-				max-width: none;
-				&:active {
-					background: -webkit-linear-gradient($deepBlue * 0.7, $deepBlue);
-					background: -moz-linear-gradient($deepBlue * 0.7, $deepBlue);
-					background: -ms-linear-gradient($deepBlue * 0.7, $deepBlue);
-					background: -o-linear-gradient($deepBlue * 0.7, $deepBlue);
-					background: linear-gradient($deepBlue * 0.7, $deepBlue);
-				}
-			}
-		}
-	}
+  min-width: 100%;
+  text-align: left;
+  margin-bottom: 0.3rem;
+  button {
+    @include no-outline;
+    @include side-margins(0, 0);
+    font-size: 0.8rem;
+    max-width: 1.8rem;
+    line-height: 0.8rem;
+    cursor: pointer;
+    border: 1px solid $gray;
+    border-left: none;
+    padding: 7px;
+    border-radius: 0;
+    box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    text-align: center;
+    background-color: white;
+    color: $lightGray;
+    &.disabled,
+    &:active {
+      color: $gray;
+      background: -webkit-linear-gradient($white * 0.7, $white);
+      background: -moz-linear-gradient($white * 0.7, $white);
+      background: -ms-linear-gradient($white * 0.7, $white);
+      background: -o-linear-gradient($white * 0.7, $white);
+      background: linear-gradient($white * 0.7, $white);
+    }
+    &:focus {
+      border-color: $deepBlue;
+    }
+    @media all and (min-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+  .separator + button {
+    border-left: 1px solid $gray;
+    border-radius: 4px 0 0 4px;
+  }
+  button:nth-child(7),
+  button:nth-child(10),
+  button:nth-child(15),
+  button:nth-child(18) {
+    border-radius: 0 4px 4px 0;
+  }
+  button:nth-child(5),
+  button:nth-child(6),
+  button:nth-child(9),
+  button:nth-child(12),
+  button:nth-child(13),
+  button:nth-child(14),
+  button:nth-child(15) {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  select {
+    @include no-outline;
+    @include side-margins(2px, 2px);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid gray;
+    padding-left: 0.3rem;
+    border-radius: 4px;
+    box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
+    min-width: 5.2rem;
+    min-height: 1.6rem;
+    text-align: center;
+    background-color: $white;
+    color: $lightGray;
+    text-align: left;
+    line-height: 1.2rem;
+    &:focus {
+      border-color: $deepBlue;
+    }
+    @media all and (min-width: 1200px) {
+      min-width: 6rem;
+      padding-left: 0.6rem;
+    }
+  }
+  .separator {
+    @include side-padding(6px, 6px);
+    color: $gray;
+  }
+  .marky-dialogs {
+    position: relative;
+    .dialog {
+      position: absolute;
+      background: $white;
+      padding: 1rem;
+      margin: 0.7rem;
+      border: 1px solid $gray;
+      box-shadow: $boxShadowB 0 10px 15px, $boxShadowB 0 5px 10px;
+      margin-top: -50px;
+      opacity: 0;
+      -webkit-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      -o-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+      &.toggled {
+        margin-top: 0.7rem;
+        opacity: 1;
+      }
+      input {
+        @include no-outline;
+        border-bottom: 3px solid $gray;
+        font-size: 1rem;
+        margin-left: 0.2rem;
+        margin-right: 0.2rem;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 200ms ease-out;
+        &:focus {
+          border-color: $deepBlue;
+        }
+      }
+      button {
+        color: $white;
+        background-color: $deepBlue;
+        margin-left: 0.2rem;
+        border: 1px solid $gray;
+        border-radius: 4px;
+        max-width: none;
+        &:active {
+          background: -webkit-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -moz-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -ms-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -o-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: linear-gradient($deepBlue * 0.7, $deepBlue);
+        }
+      }
+    }
+  }
 }
+
 .marky-editor {
-	@include no-outline;
-	font-size: 1rem;
-	border: 2px solid $gray;
-	transition: border-color 200ms ease-out;
-	padding: 8px 12px;
-	&:focus {
-		border-color: $deepBlue;
-	}
+  @include no-outline;
+  font-size: 1rem;
+  border: 2px solid $gray;
+  transition: border-color 200ms ease-out;
+  padding: 8px 12px;
+  &:focus {
+    border-color: $deepBlue;
+  }
 }
