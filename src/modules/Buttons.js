@@ -18,10 +18,6 @@ export class BoldButton extends Element {
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -38,11 +34,6 @@ export class ItalicButton extends Element {
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -59,10 +50,6 @@ export class StrikethroughButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -79,10 +66,6 @@ export class CodeButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -99,10 +82,6 @@ export class BlockquoteButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -119,9 +98,6 @@ export class LinkButton extends Element {
 		let dialog = this.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			dialog.classList.toggle('toggled');
@@ -139,9 +115,6 @@ export class ImageButton extends Element {
 		let dialog = this.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			dialog.classList.toggle('toggled');
@@ -159,10 +132,6 @@ export class UnorderedListButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -179,10 +148,6 @@ export class OrderedListButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -199,10 +164,6 @@ export class IndentButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -219,10 +180,6 @@ export class OutdentButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -239,10 +196,6 @@ export class UndoButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-backward']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
@@ -260,10 +213,6 @@ export class RedoButton extends Element {
 		let editor = this.parent.element;
 		icon.addClass(['fa', 'fa-step-forward']);
 		icon.appendTo(this.element);
-		super.listen('mousedown', e => {
-			e.preventDefault();
-			editor.focus();
-		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;

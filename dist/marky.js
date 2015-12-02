@@ -1352,10 +1352,6 @@ var BoldButton = exports.BoldButton = (function (_Element) {
 		var icon = new _Element14.Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(_this.element);
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this).call(_this, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this).call(_this, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1380,10 +1376,6 @@ var ItalicButton = exports.ItalicButton = (function (_Element2) {
 		var icon = new _Element14.Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(_this2.element);
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this2).call(_this2, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this2).call(_this2, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1408,10 +1400,6 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element3) {
 		var editor = _this3.parent.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(_this3.element);
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this3).call(_this3, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this3).call(_this3, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1436,10 +1424,6 @@ var CodeButton = exports.CodeButton = (function (_Element4) {
 		var editor = _this4.parent.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(_this4.element);
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this4).call(_this4, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this4).call(_this4, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1464,10 +1448,6 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element5) {
 		var editor = _this5.parent.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(_this5.element);
-		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this5).call(_this5, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this5).call(_this5, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1492,9 +1472,6 @@ var LinkButton = exports.LinkButton = (function (_Element6) {
 		var dialog = _this6.parent.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(_this6.element);
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'mousedown', function (e) {
-			e.preventDefault();
-		});
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'click', function (e) {
 			e.preventDefault();
 			dialog.classList.toggle('toggled');
@@ -1520,9 +1497,6 @@ var ImageButton = exports.ImageButton = (function (_Element7) {
 		var dialog = _this7.parent.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(_this7.element);
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'mousedown', function (e) {
-			e.preventDefault();
-		});
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
 			e.preventDefault();
 			dialog.classList.toggle('toggled');
@@ -1548,10 +1522,6 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element8) {
 		var editor = _this8.parent.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(_this8.element);
-		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this8).call(_this8, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this8).call(_this8, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1576,10 +1546,6 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element9) {
 		var editor = _this9.parent.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(_this9.element);
-		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this9).call(_this9, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this9).call(_this9, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1604,10 +1570,6 @@ var IndentButton = exports.IndentButton = (function (_Element10) {
 		var editor = _this10.parent.element;
 		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(_this10.element);
-		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this10).call(_this10, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this10).call(_this10, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1632,10 +1594,6 @@ var OutdentButton = exports.OutdentButton = (function (_Element11) {
 		var editor = _this11.parent.element;
 		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(_this11.element);
-		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this11).call(_this11, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this11).call(_this11, 'click', function (e) {
 			e.preventDefault();
 			editor.focus();
@@ -1660,10 +1618,6 @@ var UndoButton = exports.UndoButton = (function (_Element12) {
 		var editor = _this12.parent.element;
 		icon.addClass(['fa', 'fa-step-backward']);
 		icon.appendTo(_this12.element);
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'click', function (e) {
 			e.preventDefault();
 			if (_this12.element.classList.contains('disabled')) return;
@@ -1689,10 +1643,6 @@ var RedoButton = exports.RedoButton = (function (_Element13) {
 		var editor = _this13.parent.element;
 		icon.addClass(['fa', 'fa-step-forward']);
 		icon.appendTo(_this13.element);
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'mousedown', function (e) {
-			e.preventDefault();
-			editor.focus();
-		});
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'click', function (e) {
 			e.preventDefault();
 			if (_this13.element.classList.contains('disabled')) return;
