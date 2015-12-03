@@ -1474,6 +1474,7 @@ var LinkButton = exports.LinkButton = (function (_Element6) {
 		icon.appendTo(_this6.element);
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'click', function (e) {
 			e.preventDefault();
+			_this6.element.blur();
 			dialog.classList.toggle('toggled');
 			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
 			return dialog.style.visibility = 'hidden';
@@ -1499,6 +1500,7 @@ var ImageButton = exports.ImageButton = (function (_Element7) {
 		icon.appendTo(_this7.element);
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
 			e.preventDefault();
+			_this7.element.blur();
 			dialog.classList.toggle('toggled');
 			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
 			return dialog.style.visibility = 'hidden';
@@ -1731,6 +1733,7 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 			linkUrlInput.element.value = '';
 			linkDisplayInput.element.value = '';
 			element.style.visibility = 'hidden';
+			_get(Object.getPrototypeOf(LinkDialog.prototype), 'removeClass', _this).call(_this, ['toggled']);
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
 		_this.parent.listen('click', function () {
@@ -1791,7 +1794,12 @@ var ImageDialog = exports.ImageDialog = (function (_Element2) {
 			imageSourceInput.element.value = '';
 			imageAltInput.element.value = '';
 			element.style.visibility = 'hidden';
+			_get(Object.getPrototypeOf(ImageDialog.prototype), 'removeClass', _this2).call(_this2, ['toggled']);
 			return editor._marky.image([editor.selectionStart, editor.selectionEnd], source, alt);
+		});
+		_this2.parent.listen('click', function () {
+			_get(Object.getPrototypeOf(ImageDialog.prototype), 'removeClass', _this2).call(_this2, ['toggled']);
+			return element.style.visibility = 'hidden';
 		});
 		return _this2;
 	}
@@ -1927,7 +1935,7 @@ var Marky = exports.Marky = (function () {
 		_classCallCheck(this, Marky);
 
 		this.mark = _mark2.default;
-		this.state = [{ markdown: '', html: '' }];
+		this.state = [{ markdown: '', html: '', selection: [0, 0] }];
 		this.index = 0;
 		this.editor = editor;
 	}
@@ -1943,10 +1951,11 @@ var Marky = exports.Marky = (function () {
 	_createClass(Marky, [{
 		key: 'update',
 		value: function update(markdown) {
-			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
-			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
+			var selection = arguments.length <= 1 || arguments[1] === undefined ? [0, 0] : arguments[1];
+			var state = arguments.length <= 2 || arguments[2] === undefined ? this.state : arguments[2];
+			var index = arguments.length <= 3 || arguments[3] === undefined ? this.index : arguments[3];
 
-			var action = dispatcher.update(markdown, state, index);
+			var action = dispatcher.update(markdown, selection, state, index);
 			this.state = action.state;
 			this.index = action.index;
 		}
@@ -1974,6 +1983,7 @@ var Marky = exports.Marky = (function () {
 			var action = dispatcher.undo(num, state, index);
 			this.index = action.index;
 			editor.value = action.state.markdown;
+			editor.setSelectionRange(action.state.selection[0], action.state.selection[1]);
 			editor.nextSibling.value = action.state.html;
 			editor.dispatchEvent(_customEvents.markychange);
 			return this.index;
@@ -2002,6 +2012,7 @@ var Marky = exports.Marky = (function () {
 			var action = dispatcher.redo(num, state, index);
 			this.index = action.index;
 			editor.value = action.state.markdown;
+			editor.setSelectionRange(action.state.selection[0], action.state.selection[1]);
 			editor.nextSibling.value = action.state.html;
 			editor.dispatchEvent(_customEvents.markychange);
 			return this.index;
@@ -2119,7 +2130,7 @@ var Marky = exports.Marky = (function () {
 			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [boldify.range[0], boldify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2143,7 +2154,7 @@ var Marky = exports.Marky = (function () {
 			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [italicize.range[0], italicize.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2167,7 +2178,7 @@ var Marky = exports.Marky = (function () {
 			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [strikitize.range[0], strikitize.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2191,7 +2202,7 @@ var Marky = exports.Marky = (function () {
 			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [codify.range[0], codify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2215,7 +2226,7 @@ var Marky = exports.Marky = (function () {
 			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '> ');
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [quotify.range[0], quotify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2248,7 +2259,7 @@ var Marky = exports.Marky = (function () {
 			var headingify = (0, _handlers.blockHandler)(editor.value, indices, mark + space);
 			editor.value = headingify.value;
 			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [headingify.range[0], headingify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2275,7 +2286,7 @@ var Marky = exports.Marky = (function () {
 			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = linkify.value;
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [linkify.range[0], linkify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2302,7 +2313,7 @@ var Marky = exports.Marky = (function () {
 			var imageify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = imageify.value;
 			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [imageify.range[0], imageify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2326,7 +2337,7 @@ var Marky = exports.Marky = (function () {
 			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ul');
 			editor.value = listify.value;
 			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2350,7 +2361,7 @@ var Marky = exports.Marky = (function () {
 			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ol');
 			editor.value = listify.value;
 			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2374,7 +2385,7 @@ var Marky = exports.Marky = (function () {
 			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'in');
 			editor.value = indentify.value;
 			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2398,7 +2409,7 @@ var Marky = exports.Marky = (function () {
 			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'out');
 			editor.value = indentify.value;
 			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-			editor._marky.update(editor.value, editor._marky.state, editor._marky.index);
+			editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
 			editor.dispatchEvent(_customEvents.update);
@@ -2584,10 +2595,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param   {Number} stateIndex the current state index
  * @returns {Object} the newly active state
  */
-function update(markdown, state, stateIndex) {
+function update(markdown, selection, state, stateIndex) {
   var html = (0, _marked2.default)(markdown).toString() || '';
   var newState = (0, _operation2.default)(state, stateIndex, function () {
-    return { markdown: markdown, html: html };
+    return { markdown: markdown, html: html, selection: selection };
   });
   return newState;
 }
@@ -2870,7 +2881,7 @@ exports.default = function () {
 		imageDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
-			this._marky.update(e.target.value, this._marky.state, this._marky.index);
+			this._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(_customEvents.markychange);
 		}, false);
 

@@ -100,6 +100,7 @@ export class LinkButton extends Element {
 		icon.appendTo(this.element);
 		super.listen('click', e => {
 			e.preventDefault();
+			this.element.blur();
 			dialog.classList.toggle('toggled');
 			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
 			return dialog.style.visibility = 'hidden';
@@ -117,6 +118,7 @@ export class ImageButton extends Element {
 		icon.appendTo(this.element);
 		super.listen('click', e => {
 			e.preventDefault();
+			this.element.blur();
 			dialog.classList.toggle('toggled');
 			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
 			return dialog.style.visibility = 'hidden';

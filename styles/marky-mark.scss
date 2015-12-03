@@ -13,7 +13,7 @@
     cursor: pointer;
     border: 1px solid $gray;
     border-left: none;
-    padding: 7px;
+    padding: 6px;
     border-radius: 0;
     box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
     min-width: 1.5rem;
@@ -120,11 +120,16 @@
         border-radius: 4px;
         max-width: none;
         &:active {
+        	color: $white !important;
           background: -webkit-linear-gradient($deepBlue * 0.7, $deepBlue);
           background: -moz-linear-gradient($deepBlue * 0.7, $deepBlue);
           background: -ms-linear-gradient($deepBlue * 0.7, $deepBlue);
           background: -o-linear-gradient($deepBlue * 0.7, $deepBlue);
           background: linear-gradient($deepBlue * 0.7, $deepBlue);
+        }
+        &:focus {
+        	background-color: $white;
+        	color: $lightGray;
         }
       }
     }

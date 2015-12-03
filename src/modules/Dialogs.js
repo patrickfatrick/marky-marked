@@ -41,11 +41,11 @@ export class LinkDialog extends Element {
 		linkDisplayInput.appendTo(linkForm.element);
 		insertButton.appendTo(linkForm.element);
 
-		linkForm.listen('submit', function (e) {
+		linkForm.listen('submit', e => {
 			e.preventDefault();
 			editor.focus();
 		});
-		insertButton.listen('click', function (e) {
+		insertButton.listen('click', e => {
 			e.preventDefault;
 			editor.focus();
 			let url = linkUrlInput.element.value ? linkUrlInput.element.value : 'http://url.com';
@@ -53,6 +53,7 @@ export class LinkDialog extends Element {
 			linkUrlInput.element.value = '';
 			linkDisplayInput.element.value = '';
 			element.style.visibility = 'hidden';
+			super.removeClass(['toggled']);
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
 		this.parent.listen('click', () => {
@@ -105,7 +106,12 @@ export class ImageDialog extends Element {
 			imageSourceInput.element.value = '';
 			imageAltInput.element.value = '';
 			element.style.visibility = 'hidden';
+			super.removeClass(['toggled']);
 			return editor._marky.image([editor.selectionStart, editor.selectionEnd], source, alt);
+		});
+		this.parent.listen('click', () => {
+			super.removeClass(['toggled']);
+			return element.style.visibility = 'hidden';
 		});
 	}
 }

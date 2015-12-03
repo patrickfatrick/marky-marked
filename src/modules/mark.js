@@ -102,7 +102,7 @@ export default function (tag = 'marky-mark') {
 		imageDialog.appendTo(dialogs.element);
 
 		textarea.listen('update', function (e) {
-			this._marky.update(e.target.value, this._marky.state, this._marky.index);
+			this._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(markychange);
 		}, false);
 

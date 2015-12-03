@@ -10,10 +10,10 @@ import operation from './operation';
  * @param   {Number} stateIndex the current state index
  * @returns {Object} the newly active state
  */
-export function update (markdown, state, stateIndex) {
+export function update (markdown, selection, state, stateIndex) {
 	let html = marked(markdown).toString() || '';
 	let newState = operation(state, stateIndex, () => {
-		return {markdown: markdown, html: html};
+		return {markdown: markdown, html: html, selection: selection};
 	});
 	return newState;
 }

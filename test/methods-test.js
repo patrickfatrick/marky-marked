@@ -187,28 +187,28 @@ describe('marky methods', () => {
 	it('undoes state', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
 		const editor = container.children[1];
-		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const state = [{markdown: '', html: '', selection: [0, 0]},{markdown: 'Some text', html: '<p>Some text</p>', selection: [0, 0]}];
 		const index = 1;
 		editor._marky.undo(1, state, index).should.equal(0);
 	});
 	it('does not undo state if state is at 0 index', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
 		const editor = container.children[1];
-		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const state = [{markdown: '', html: '', selection: [0, 0]},{markdown: 'Some text', html: '<p>Some text</p>', selection: [0, 0]}];
 		const index = 0;
 		editor._marky.undo(1, state, index).should.equal(0);
 	});
 	it('redoes state', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
 		const editor = container.children[1];
-		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const state = [{markdown: '', html: '', selection: [0, 0]},{markdown: 'Some text', html: '<p>Some text</p>', selection: [0, 0]}];
 		const index = 0;
 		editor._marky.redo(1, state, index).should.equal(1);
 	});
 	it('does not redo state if state is at last index', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
 		const editor = container.children[1];
-		const state = [{markdown: '', html: ''},{markdown: 'Some text', html: '<p>Some text</p>'}];
+		const state = [{markdown: '', html: '', selection: [0, 0]},{markdown: 'Some text', html: '<p>Some text</p>', selection: [0, 0]}];
 		const index = 1;
 		editor._marky.redo(1, state, index).should.equal(1);
 	});
