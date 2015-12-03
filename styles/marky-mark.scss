@@ -8,7 +8,7 @@
     @include no-outline;
     @include side-margins(0, 0);
     font-size: 0.8rem;
-    max-width: 1.8rem;
+    max-width: 2rem;
     line-height: 0.8rem;
     cursor: pointer;
     border: 1px solid $gray;
@@ -23,7 +23,7 @@
     color: $lightGray;
     &.disabled,
     &:active {
-      color: $gray;
+      color: $gray !important;
       background: -webkit-linear-gradient($white * 0.7, $white);
       background: -moz-linear-gradient($white * 0.7, $white);
       background: -ms-linear-gradient($white * 0.7, $white);
@@ -31,7 +31,8 @@
       background: linear-gradient($white * 0.7, $white);
     }
     &:focus {
-      border-color: $deepBlue;
+      background-color: $deepBlue;
+      color: $white;
     }
     @media all and (min-width: 768px) {
       font-size: 1rem;
@@ -46,16 +47,6 @@
   button:nth-child(15),
   button:nth-child(18) {
     border-radius: 0 4px 4px 0;
-  }
-  button:nth-child(5),
-  button:nth-child(6),
-  button:nth-child(9),
-  button:nth-child(12),
-  button:nth-child(13),
-  button:nth-child(14),
-  button:nth-child(15) {
-    padding-left: 5px;
-    padding-right: 5px;
   }
   select {
     @include no-outline;
@@ -76,7 +67,8 @@
     text-align: left;
     line-height: 1.2rem;
     &:focus {
-      border-color: $deepBlue;
+      background-color: $deepBlue;
+      color: $white;
     }
     @media all and (min-width: 1200px) {
       min-width: 6rem;
