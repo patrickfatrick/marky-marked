@@ -1,6 +1,6 @@
 # Marky Marked
 
-_An in-browser content editor so sweet you'll be feeling good vibrations._
+_A <textarea> so sweet you'll be feeling good vibrations._
 [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
