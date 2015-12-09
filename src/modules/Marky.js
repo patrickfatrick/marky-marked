@@ -30,6 +30,7 @@ export class Marky {
 	 * @param {Number} index    current state index
 	 */
 	update (markdown, selection = [0, 0], state = this.state, index = this.index) {
+		markdown = markdown.replace(/\</g, '&lt;');
 		const action = dispatcher.update(markdown, selection, state, index);
 		this.state = action.state;
 		this.index = action.index;

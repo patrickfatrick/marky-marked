@@ -60,7 +60,6 @@ export class LinkDialog extends Element {
 			super.removeClass(['toggled']);
 			return element.style.visibility = 'hidden';
 		});
-		console.log('poop')
 	}
 }
 

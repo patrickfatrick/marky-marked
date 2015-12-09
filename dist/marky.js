@@ -1955,6 +1955,7 @@ var Marky = exports.Marky = (function () {
 			var state = arguments.length <= 2 || arguments[2] === undefined ? this.state : arguments[2];
 			var index = arguments.length <= 3 || arguments[3] === undefined ? this.index : arguments[3];
 
+			markdown = markdown.replace(/\</g, '&lt;');
 			var action = dispatcher.update(markdown, selection, state, index);
 			this.state = action.state;
 			this.index = action.index;
@@ -2840,19 +2841,15 @@ exports.default = function () {
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
 
 		var separatorA = new _Element.Element('span');
-		//separatorA.assign('textContent', '|');
 		separatorA.addClass(['separator']);
 
 		var separatorB = new _Element.Element('span');
-		//separatorB.assign('textContent', '|');
 		separatorB.addClass(['separator']);
 
 		var separatorC = new _Element.Element('span');
-		//separatorC.assign('textContent', '|');
 		separatorC.addClass(['separator']);
 
 		var separatorD = new _Element.Element('span');
-		//separatorD.assign('textContent', '|');
 		separatorD.addClass(['separator']);
 
 		toolbar.appendTo(container);
