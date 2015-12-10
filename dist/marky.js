@@ -1955,7 +1955,6 @@ var Marky = exports.Marky = (function () {
 			var state = arguments.length <= 2 || arguments[2] === undefined ? this.state : arguments[2];
 			var index = arguments.length <= 3 || arguments[3] === undefined ? this.index : arguments[3];
 
-			markdown = markdown.replace(/\</g, '&lt;');
 			var action = dispatcher.update(markdown, selection, state, index);
 			this.state = action.state;
 			this.index = action.index;

@@ -18,7 +18,8 @@
     "semi": [
       2,
       "always"
-    ]
+    ],
+    "no-console": 1
   },
   "globals": {
     "it": true,
