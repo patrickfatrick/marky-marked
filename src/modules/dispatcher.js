@@ -11,7 +11,10 @@ import operation from './operation';
  * @returns {Object} the newly active state
  */
 export function update (markdown, selection, state, stateIndex) {
-	let html = marked(markdown).toString() || '';
+	let markedOptions = {
+		sanitize: true
+	};
+	let html = marked(markdown, markedOptions).toString() || '';
 	let newState = operation(state, stateIndex, () => {
 		return {markdown: markdown, html: html, selection: selection};
 	});

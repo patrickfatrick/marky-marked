@@ -2596,7 +2596,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {Object} the newly active state
  */
 function update(markdown, selection, state, stateIndex) {
-  var html = (0, _marked2.default)(markdown).toString() || '';
+  var markedOptions = {
+    sanitize: true
+  };
+  var html = (0, _marked2.default)(markdown, markedOptions).toString() || '';
   var newState = (0, _operation2.default)(state, stateIndex, function () {
     return { markdown: markdown, html: html, selection: selection };
   });
