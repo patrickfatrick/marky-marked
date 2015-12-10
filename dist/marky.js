@@ -1618,7 +1618,7 @@ var UndoButton = exports.UndoButton = (function (_Element12) {
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this12).call(_this12, [_this12.title, id]);
 		var icon = new _Element14.Element('i');
 		var editor = _this12.parent.element;
-		icon.addClass(['fa', 'fa-step-backward']);
+		icon.addClass(['fa', 'fa-backward']);
 		icon.appendTo(_this12.element);
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'click', function (e) {
 			e.preventDefault();
@@ -1643,7 +1643,7 @@ var RedoButton = exports.RedoButton = (function (_Element13) {
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this13).call(_this13, [_this13.title, id]);
 		var icon = new _Element14.Element('i');
 		var editor = _this13.parent.element;
-		icon.addClass(['fa', 'fa-step-forward']);
+		icon.addClass(['fa', 'fa-forward']);
 		icon.appendTo(_this13.element);
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'click', function (e) {
 			e.preventDefault();

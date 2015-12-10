@@ -196,7 +196,7 @@ export class UndoButton extends Element {
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
-		icon.addClass(['fa', 'fa-step-backward']);
+		icon.addClass(['fa', 'fa-backward']);
 		icon.appendTo(this.element);
 		super.listen('click', e => {
 			e.preventDefault();
@@ -213,7 +213,7 @@ export class RedoButton extends Element {
 		super.addClass([this.title, id]);
 		let icon = new Element('i');
 		let editor = this.parent.element;
-		icon.addClass(['fa', 'fa-step-forward']);
+		icon.addClass(['fa', 'fa-forward']);
 		icon.appendTo(this.element);
 		super.listen('click', e => {
 			e.preventDefault();
