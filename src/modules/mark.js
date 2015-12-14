@@ -21,11 +21,11 @@ export default function (tag = 'marky-mark') {
 		let dialogs = new Element('div', 'Dialogs');
 		dialogs.addClass(['marky-dialogs', id]);
 
-		let textarea = new Element('textarea', 'Editor');
+		let textarea = new Element('textarea', 'Marky Marked Editor');
 		textarea.addClass(['marky-editor', id]);
 		textarea.assign('_marky', new Marky(textarea.element));
 
-		let input = new Element('input', 'Output');
+		let input = new Element('input', 'Marky Marked Output');
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
