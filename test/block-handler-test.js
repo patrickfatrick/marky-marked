@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {blockHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
+import {markyupdate} from '../src/modules/custom-events';
 
 chai.should();
 describe('block handling', () => {
@@ -138,7 +138,7 @@ describe('block handling', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = '## Some text';
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		output.value.should.contain('<h2 id="some-text">Some text</h2>');
 	});

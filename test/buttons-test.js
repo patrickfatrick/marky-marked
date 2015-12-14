@@ -2,6 +2,17 @@ import chai from 'chai';
 
 chai.should();
 describe('toolbar buttons', () => {
+	it('controls the heading dialog', () => {
+		const editor = document.querySelector('.marky-editor');
+		editor.value = 'Some text';
+		editor.setSelectionRange(0, 9);
+		document.querySelector('.image').click();
+		document.querySelector('.link').click();
+		document.querySelector('.heading').click();
+		document.querySelector('.heading-dialog').style.visibility.should.equal('visible');
+		document.querySelector('.link-dialog').style.visibility.should.equal('hidden');
+		document.querySelector('.image-dialog').style.visibility.should.equal('hidden');
+	});
 	it('calls the bold method', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');

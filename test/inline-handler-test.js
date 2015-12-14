@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {inlineHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
+import {markyupdate} from '../src/modules/custom-events';
 
 chai.should();
 describe('inline handling', () => {
@@ -89,7 +89,7 @@ describe('inline handling', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = '**Some text**';
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		output.value.should.contain('<p><strong>Some text</strong></p>');
 	});

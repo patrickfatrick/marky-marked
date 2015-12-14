@@ -4,14 +4,14 @@
  * @param {String}			type		tag name for the element
  * @param {String}			title		title for the element
  * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
+ * @param {HTMLElement}	relevant	element this element should have access to
  */
 export class Element {
-	constructor(type, title = null, id = null, parent = null) {
+	constructor(type, title = null, id = null, relevant = null) {
 		this.title = title;
 		this.type = type;
 		this.id = id;
-		this.parent = parent;
+		this.relevant = relevant;
 		this.element = this.register();
 		if (this.title) this.element.title = this.title;
 	}

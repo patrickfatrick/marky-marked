@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {update, markychange, markyfocus, markyblur, markyselect} from '../src/modules/custom-events';
+import {markyupdate, markychange, markyfocus, markyblur, markyselect} from '../src/modules/custom-events';
 
 chai.should();
 
@@ -7,10 +7,10 @@ describe('custom events', () => {
 	it('creates an update event', () => {
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
-		editor.addEventListener('update', function () {
+		editor.addEventListener('markyupdate', function () {
 			dispatched++;
 		});
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		dispatched.should.equal(1);
 	});
@@ -93,23 +93,23 @@ describe('custom events', () => {
 
 		dispatched.should.equal(1);
 	});
-	it('dispatches markychange on update', () => {
+	it('dispatches markychange on markyupdate', () => {
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
 		editor.addEventListener('markychange', function () {
 			dispatched++;
 		});
-		var update;
-		update = document.createEvent('HTMLEvents');
-		update.initEvent('update', true, true, window);
-		editor.dispatchEvent(update);
+		var markyupdate;
+		markyupdate = document.createEvent('HTMLEvents');
+		markyupdate.initEvent('markyupdate', true, true, window);
+		editor.dispatchEvent(markyupdate);
 
 		dispatched.should.equal(1);
 	});
 	it('dispatches update on input', () => {
 		const editor = document.querySelector('.marky-editor');
 		let dispatched = 0;
-		editor.addEventListener('update', function () {
+		editor.addEventListener('markyupdate', function () {
 			dispatched++;
 		});
 		var input;

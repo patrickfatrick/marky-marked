@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {listHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
+import {markyupdate} from '../src/modules/custom-events';
 
 chai.should();
 describe('list handling', () => {
@@ -137,7 +137,7 @@ describe('list handling', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = '- Some text\r\n- Some other text';
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		output.value.should.contain('<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>');
 	});

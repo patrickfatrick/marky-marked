@@ -15,8 +15,7 @@ describe('mark', () => {
 	});
 	it('creates a bunch of toolbar controls', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];
-		container.children[0].children[0].tagName.toLowerCase().should.equal('select');
-		container.children[0].children[0].children[0].tagName.toLowerCase().should.equal('option');
+		container.children[0].children[0].classList.should.have.property('0', 'heading');
 		container.children[0].children[1].classList.should.have.property('0', 'separator');
 		container.children[0].children[2].classList.should.have.property('0', 'bold');
 		container.children[0].children[3].classList.should.have.property('0', 'italic');

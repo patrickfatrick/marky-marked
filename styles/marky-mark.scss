@@ -4,6 +4,7 @@
   min-width: 100%;
   text-align: left;
   margin-bottom: 0.3rem;
+  margin-left: 0.3rem;
   button {
     @include no-outline;
     @include side-margins(0, 0);
@@ -21,6 +22,7 @@
     text-align: center;
     background-color: white;
     color: $lightGray;
+    &.active,
     &.disabled,
     &:active {
       color: $gray !important;
@@ -48,38 +50,19 @@
   button:nth-child(18) {
     border-radius: 0 4px 4px 0;
   }
+  button.heading {
+    border-left: 1px solid $gray;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 3rem;
+    width: 3rem;
+    border-radius: 4px;
+  }
   button.undo {
     padding-left: 4px;
   }
   button.redo {
     padding-right: 4px;
-  }
-  select {
-    @include no-outline;
-    @include side-margins(2px, 2px);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1rem;
-    outline: none;
-    border: 1px solid gray;
-    padding-left: 0.3rem;
-    border-radius: 4px;
-    box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
-    min-width: 5.2rem;
-    min-height: 1.6rem;
-    text-align: center;
-    background-color: $white;
-    color: $lightGray;
-    text-align: left;
-    line-height: 1.2rem;
-    &:focus {
-      background-color: $deepBlue;
-      color: $white;
-    }
-    @media all and (min-width: 1200px) {
-      min-width: 6rem;
-      padding-left: 0.6rem;
-    }
   }
   .separator {
     @include side-padding(6px, 6px);
@@ -103,6 +86,20 @@
       &.toggled {
         margin-top: 0.7rem;
         opacity: 1;
+      }
+      &.heading-dialog {
+        margin-left: 0;
+        padding: 0;
+        &.toggled {
+          margin-top: -3px;
+        }
+        ul {
+          width: 2.9rem;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          text-align: center;
+        }
       }
       input {
         @include no-outline;
@@ -136,6 +133,33 @@
         &:focus {
         	background-color: $white;
         	color: $lightGray;
+        }
+      }
+      .heading-button {
+        color: $lightGray;
+        background-color: $white;
+        margin-left: 0;
+        box-shadow: none;
+        width: 2.9rem;
+        border: none;
+        border-radius: 0;
+        &:hover,
+        &:focus {
+          background-color: $deepBlue;
+          color: $white;
+        }
+        &:active {
+          color: $white !important;
+          background: -webkit-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -moz-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -ms-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: -o-linear-gradient($deepBlue * 0.7, $deepBlue);
+          background: linear-gradient($deepBlue * 0.7, $deepBlue);
+        }
+        &[title = "Remove Heading"]:hover,
+        &[title = "Remove Heading"]:focus {
+          background-color: $fireTruck;
+          color: $white;
         }
       }
     }

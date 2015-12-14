@@ -1311,7 +1311,7 @@ var _Marky = require('./modules/Marky');
 var marky = new _Marky.Marky();
 exports.default = marky;
 
-},{"./modules/Marky":7}],4:[function(require,module,exports){
+},{"./modules/Marky":8}],4:[function(require,module,exports){
 'use strict';
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -1319,9 +1319,9 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.RedoButton = exports.UndoButton = exports.OutdentButton = exports.IndentButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = undefined;
+exports.RedoButton = exports.UndoButton = exports.OutdentButton = exports.IndentButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = exports.HeadingButton = undefined;
 
-var _Element14 = require('./Element');
+var _Element15 = require('./Element');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1336,169 +1336,216 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {String}			type		tag name for the element
  * @param {String}			title		title for the element
  * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
+ * @param {HTMLElement}	relevant	element this element should have access to
  */
 
-var BoldButton = exports.BoldButton = (function (_Element) {
-	_inherits(BoldButton, _Element);
+var HeadingButton = exports.HeadingButton = (function (_Element) {
+	_inherits(HeadingButton, _Element);
 
-	function BoldButton(type, title, id, parent) {
-		_classCallCheck(this, BoldButton);
+	function HeadingButton(type, title, id, relevant) {
+		_classCallCheck(this, HeadingButton);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BoldButton).call(this, type || 'button', title || 'Bold', id, parent));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeadingButton).call(this, type || 'button', title || 'Headings', id, relevant));
 
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', _this).call(_this, [_this.title, id]);
-		var editor = _this.parent.element;
-		var icon = new _Element14.Element('i');
-		icon.addClass(['fa', 'fa-bold']);
+		_get(Object.getPrototypeOf(HeadingButton.prototype), 'addClass', _this).call(_this, [_this.title, id]);
+		_get(Object.getPrototypeOf(HeadingButton.prototype), 'assign', _this).call(_this, 'value', title);
+		var icon = new _Element15.Element('i');
+		var dialog = _this.relevant.element;
+		icon.addClass(['fa', 'fa-header']);
 		icon.appendTo(_this.element);
-		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this).call(_this, 'click', function (e) {
+		_get(Object.getPrototypeOf(HeadingButton.prototype), 'listen', _this).call(_this, 'click', function (e) {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.bold([editor.selectionStart, editor.selectionEnd]);
-		});
-		return _this;
-	}
-
-	return BoldButton;
-})(_Element14.Element);
-
-var ItalicButton = exports.ItalicButton = (function (_Element2) {
-	_inherits(ItalicButton, _Element2);
-
-	function ItalicButton(type, title, id, parent) {
-		_classCallCheck(this, ItalicButton);
-
-		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ItalicButton).call(this, type || 'button', title || 'Italic', id, parent));
-
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', _this2).call(_this2, [_this2.title, id]);
-		var editor = _this2.parent.element;
-		var icon = new _Element14.Element('i');
-		icon.addClass(['fa', 'fa-italic']);
-		icon.appendTo(_this2.element);
-		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this2).call(_this2, 'click', function (e) {
-			e.preventDefault();
-			editor.focus();
-			return editor._marky.italic([editor.selectionStart, editor.selectionEnd]);
-		});
-		return _this2;
-	}
-
-	return ItalicButton;
-})(_Element14.Element);
-
-var StrikethroughButton = exports.StrikethroughButton = (function (_Element3) {
-	_inherits(StrikethroughButton, _Element3);
-
-	function StrikethroughButton(type, title, id, parent) {
-		_classCallCheck(this, StrikethroughButton);
-
-		var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(StrikethroughButton).call(this, type || 'button', title || 'Strikethrough', id, parent));
-
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', _this3).call(_this3, [_this3.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this3.parent.element;
-		icon.addClass(['fa', 'fa-strikethrough']);
-		icon.appendTo(_this3.element);
-		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this3).call(_this3, 'click', function (e) {
-			e.preventDefault();
-			editor.focus();
-			return editor._marky.strikethrough([editor.selectionStart, editor.selectionEnd]);
-		});
-		return _this3;
-	}
-
-	return StrikethroughButton;
-})(_Element14.Element);
-
-var CodeButton = exports.CodeButton = (function (_Element4) {
-	_inherits(CodeButton, _Element4);
-
-	function CodeButton(type, title, id, parent) {
-		_classCallCheck(this, CodeButton);
-
-		var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(CodeButton).call(this, type || 'button', title || 'Code', id, parent));
-
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', _this4).call(_this4, [_this4.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this4.parent.element;
-		icon.addClass(['fa', 'fa-code']);
-		icon.appendTo(_this4.element);
-		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this4).call(_this4, 'click', function (e) {
-			e.preventDefault();
-			editor.focus();
-			return editor._marky.code([editor.selectionStart, editor.selectionEnd]);
-		});
-		return _this4;
-	}
-
-	return CodeButton;
-})(_Element14.Element);
-
-var BlockquoteButton = exports.BlockquoteButton = (function (_Element5) {
-	_inherits(BlockquoteButton, _Element5);
-
-	function BlockquoteButton(type, title, id, parent) {
-		_classCallCheck(this, BlockquoteButton);
-
-		var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(BlockquoteButton).call(this, type || 'button', title || 'Blockquote', id, parent));
-
-		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', _this5).call(_this5, [_this5.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this5.parent.element;
-		icon.addClass(['fa', 'fa-quote-right']);
-		icon.appendTo(_this5.element);
-		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this5).call(_this5, 'click', function (e) {
-			e.preventDefault();
-			editor.focus();
-			return editor._marky.blockquote([editor.selectionStart, editor.selectionEnd]);
-		});
-		return _this5;
-	}
-
-	return BlockquoteButton;
-})(_Element14.Element);
-
-var LinkButton = exports.LinkButton = (function (_Element6) {
-	_inherits(LinkButton, _Element6);
-
-	function LinkButton(type, title, id, parent) {
-		_classCallCheck(this, LinkButton);
-
-		var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkButton).call(this, type || 'button', title || 'Link', id, parent));
-
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', _this6).call(_this6, [_this6.title, id]);
-		var icon = new _Element14.Element('i');
-		var dialog = _this6.parent.element;
-		icon.addClass(['fa', 'fa-link']);
-		icon.appendTo(_this6.element);
-		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this6).call(_this6, 'click', function (e) {
-			e.preventDefault();
-			_this6.element.blur();
+			_this.element.blur();
 			dialog.classList.toggle('toggled');
 			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
 			return dialog.style.visibility = 'hidden';
 		});
+		return _this;
+	}
+
+	return HeadingButton;
+})(_Element15.Element);
+
+var BoldButton = exports.BoldButton = (function (_Element2) {
+	_inherits(BoldButton, _Element2);
+
+	function BoldButton(type, title, id, relevant) {
+		_classCallCheck(this, BoldButton);
+
+		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(BoldButton).call(this, type || 'button', title || 'Bold', id, relevant));
+
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', _this2).call(_this2, [_this2.title, id]);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'assign', _this2).call(_this2, 'value', title);
+		var editor = _this2.relevant.element;
+		var icon = new _Element15.Element('i');
+		icon.addClass(['fa', 'fa-bold']);
+		icon.appendTo(_this2.element);
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this2).call(_this2, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', _this2).call(_this2, ['active']);
+		});
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this2).call(_this2, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(BoldButton.prototype), 'removeClass', _this2).call(_this2, ['active']);
+		});
+		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this2).call(_this2, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.bold([editor.selectionStart, editor.selectionEnd]);
+		});
+		return _this2;
+	}
+
+	return BoldButton;
+})(_Element15.Element);
+
+var ItalicButton = exports.ItalicButton = (function (_Element3) {
+	_inherits(ItalicButton, _Element3);
+
+	function ItalicButton(type, title, id, relevant) {
+		_classCallCheck(this, ItalicButton);
+
+		var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ItalicButton).call(this, type || 'button', title || 'Italic', id, relevant));
+
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', _this3).call(_this3, [_this3.title, id]);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'assign', _this3).call(_this3, 'value', title);
+		var editor = _this3.relevant.element;
+		var icon = new _Element15.Element('i');
+		icon.addClass(['fa', 'fa-italic']);
+		icon.appendTo(_this3.element);
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this3).call(_this3, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', _this3).call(_this3, ['active']);
+		});
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this3).call(_this3, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(ItalicButton.prototype), 'removeClass', _this3).call(_this3, ['active']);
+		});
+		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this3).call(_this3, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.italic([editor.selectionStart, editor.selectionEnd]);
+		});
+		return _this3;
+	}
+
+	return ItalicButton;
+})(_Element15.Element);
+
+var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
+	_inherits(StrikethroughButton, _Element4);
+
+	function StrikethroughButton(type, title, id, relevant) {
+		_classCallCheck(this, StrikethroughButton);
+
+		var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(StrikethroughButton).call(this, type || 'button', title || 'Strikethrough', id, relevant));
+
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', _this4).call(_this4, [_this4.title, id]);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'assign', _this4).call(_this4, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this4.relevant.element;
+		icon.addClass(['fa', 'fa-strikethrough']);
+		icon.appendTo(_this4.element);
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this4).call(_this4, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', _this4).call(_this4, ['active']);
+		});
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this4).call(_this4, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(StrikethroughButton.prototype), 'removeClass', _this4).call(_this4, ['active']);
+		});
+		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'listen', _this4).call(_this4, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.strikethrough([editor.selectionStart, editor.selectionEnd]);
+		});
+		return _this4;
+	}
+
+	return StrikethroughButton;
+})(_Element15.Element);
+
+var CodeButton = exports.CodeButton = (function (_Element5) {
+	_inherits(CodeButton, _Element5);
+
+	function CodeButton(type, title, id, relevant) {
+		_classCallCheck(this, CodeButton);
+
+		var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(CodeButton).call(this, type || 'button', title || 'Code', id, relevant));
+
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', _this5).call(_this5, [_this5.title, id]);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'assign', _this5).call(_this5, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this5.relevant.element;
+		icon.addClass(['fa', 'fa-code']);
+		icon.appendTo(_this5.element);
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this5).call(_this5, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', _this5).call(_this5, ['active']);
+		});
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this5).call(_this5, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(CodeButton.prototype), 'removeClass', _this5).call(_this5, ['active']);
+		});
+		_get(Object.getPrototypeOf(CodeButton.prototype), 'listen', _this5).call(_this5, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.code([editor.selectionStart, editor.selectionEnd]);
+		});
+		return _this5;
+	}
+
+	return CodeButton;
+})(_Element15.Element);
+
+var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
+	_inherits(BlockquoteButton, _Element6);
+
+	function BlockquoteButton(type, title, id, relevant) {
+		_classCallCheck(this, BlockquoteButton);
+
+		var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(BlockquoteButton).call(this, type || 'button', title || 'Blockquote', id, relevant));
+
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', _this6).call(_this6, [_this6.title, id]);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'assign', _this6).call(_this6, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this6.relevant.element;
+		icon.addClass(['fa', 'fa-quote-right']);
+		icon.appendTo(_this6.element);
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this6).call(_this6, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', _this6).call(_this6, ['active']);
+		});
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this6).call(_this6, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(BlockquoteButton.prototype), 'removeClass', _this6).call(_this6, ['active']);
+		});
+		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'listen', _this6).call(_this6, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.blockquote([editor.selectionStart, editor.selectionEnd]);
+		});
 		return _this6;
 	}
 
-	return LinkButton;
-})(_Element14.Element);
+	return BlockquoteButton;
+})(_Element15.Element);
 
-var ImageButton = exports.ImageButton = (function (_Element7) {
-	_inherits(ImageButton, _Element7);
+var LinkButton = exports.LinkButton = (function (_Element7) {
+	_inherits(LinkButton, _Element7);
 
-	function ImageButton(type, title, id, parent) {
-		_classCallCheck(this, ImageButton);
+	function LinkButton(type, title, id, relevant) {
+		_classCallCheck(this, LinkButton);
 
-		var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageButton).call(this, type || 'button', title || 'Image', id, parent));
+		var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkButton).call(this, type || 'button', title || 'Link', id, relevant));
 
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', _this7).call(_this7, [_this7.title, id]);
-		var icon = new _Element14.Element('i');
-		var dialog = _this7.parent.element;
-		icon.addClass(['fa', 'fa-file-image-o']);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', _this7).call(_this7, [_this7.title, id]);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'assign', _this7).call(_this7, 'value', title);
+		var icon = new _Element15.Element('i');
+		var dialog = _this7.relevant.element;
+		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(_this7.element);
-		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
 			e.preventDefault();
 			_this7.element.blur();
 			dialog.classList.toggle('toggled');
@@ -1508,154 +1555,235 @@ var ImageButton = exports.ImageButton = (function (_Element7) {
 		return _this7;
 	}
 
-	return ImageButton;
-})(_Element14.Element);
+	return LinkButton;
+})(_Element15.Element);
 
-var UnorderedListButton = exports.UnorderedListButton = (function (_Element8) {
-	_inherits(UnorderedListButton, _Element8);
+var ImageButton = exports.ImageButton = (function (_Element8) {
+	_inherits(ImageButton, _Element8);
 
-	function UnorderedListButton(type, title, id, parent) {
-		_classCallCheck(this, UnorderedListButton);
+	function ImageButton(type, title, id, relevant) {
+		_classCallCheck(this, ImageButton);
 
-		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(UnorderedListButton).call(this, type || 'button', title || 'Unordered List', id, parent));
+		var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageButton).call(this, type || 'button', title || 'Image', id, relevant));
 
-		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', _this8).call(_this8, [_this8.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this8.parent.element;
-		icon.addClass(['fa', 'fa-list-ul']);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', _this8).call(_this8, [_this8.title, id]);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'assign', _this8).call(_this8, 'value', title);
+		var icon = new _Element15.Element('i');
+		var dialog = _this8.relevant.element;
+		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(_this8.element);
-		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this8).call(_this8, 'click', function (e) {
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this8).call(_this8, 'click', function (e) {
 			e.preventDefault();
-			editor.focus();
-			return editor._marky.unorderedList([editor.selectionStart, editor.selectionEnd]);
+			_this8.element.blur();
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
 		});
 		return _this8;
 	}
 
-	return UnorderedListButton;
-})(_Element14.Element);
+	return ImageButton;
+})(_Element15.Element);
 
-var OrderedListButton = exports.OrderedListButton = (function (_Element9) {
-	_inherits(OrderedListButton, _Element9);
+var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
+	_inherits(UnorderedListButton, _Element9);
 
-	function OrderedListButton(type, title, id, parent) {
-		_classCallCheck(this, OrderedListButton);
+	function UnorderedListButton(type, title, id, relevant) {
+		_classCallCheck(this, UnorderedListButton);
 
-		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(OrderedListButton).call(this, type || 'button', title || 'Ordered List', id, parent));
+		var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(UnorderedListButton).call(this, type || 'button', title || 'Unordered List', id, relevant));
 
-		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', _this9).call(_this9, [_this9.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this9.parent.element;
-		icon.addClass(['fa', 'fa-list-ol']);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', _this9).call(_this9, [_this9.title, id]);
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'assign', _this9).call(_this9, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this9.relevant.element;
+		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(_this9.element);
-		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this9).call(_this9, 'click', function (e) {
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this9).call(_this9, 'mousedown', function (e) {
 			e.preventDefault();
 			editor.focus();
-			return editor._marky.orderedList([editor.selectionStart, editor.selectionEnd]);
+			return _get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', _this9).call(_this9, ['active']);
+		});
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this9).call(_this9, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(UnorderedListButton.prototype), 'removeClass', _this9).call(_this9, ['active']);
+		});
+		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'listen', _this9).call(_this9, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.unorderedList([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this9;
 	}
 
-	return OrderedListButton;
-})(_Element14.Element);
+	return UnorderedListButton;
+})(_Element15.Element);
 
-var IndentButton = exports.IndentButton = (function (_Element10) {
-	_inherits(IndentButton, _Element10);
+var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
+	_inherits(OrderedListButton, _Element10);
 
-	function IndentButton(type, title, id, parent) {
-		_classCallCheck(this, IndentButton);
+	function OrderedListButton(type, title, id, relevant) {
+		_classCallCheck(this, OrderedListButton);
 
-		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(IndentButton).call(this, type || 'button', title || 'Indent', id, parent));
+		var _this10 = _possibleConstructorReturn(this, Object.getPrototypeOf(OrderedListButton).call(this, type || 'button', title || 'Ordered List', id, relevant));
 
-		_get(Object.getPrototypeOf(IndentButton.prototype), 'addClass', _this10).call(_this10, [_this10.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this10.parent.element;
-		icon.addClass(['fa', 'fa-indent']);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', _this10).call(_this10, [_this10.title, id]);
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'assign', _this10).call(_this10, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this10.relevant.element;
+		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(_this10.element);
-		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this10).call(_this10, 'click', function (e) {
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this10).call(_this10, 'mousedown', function (e) {
 			e.preventDefault();
 			editor.focus();
-			return editor._marky.indent([editor.selectionStart, editor.selectionEnd]);
+			return _get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', _this10).call(_this10, ['active']);
+		});
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this10).call(_this10, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(OrderedListButton.prototype), 'removeClass', _this10).call(_this10, ['active']);
+		});
+		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'listen', _this10).call(_this10, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.orderedList([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this10;
 	}
 
-	return IndentButton;
-})(_Element14.Element);
+	return OrderedListButton;
+})(_Element15.Element);
 
-var OutdentButton = exports.OutdentButton = (function (_Element11) {
-	_inherits(OutdentButton, _Element11);
+var IndentButton = exports.IndentButton = (function (_Element11) {
+	_inherits(IndentButton, _Element11);
 
-	function OutdentButton(type, title, id, parent) {
-		_classCallCheck(this, OutdentButton);
+	function IndentButton(type, title, id, relevant) {
+		_classCallCheck(this, IndentButton);
 
-		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(OutdentButton).call(this, type || 'button', title || 'Outdent', id, parent));
+		var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(IndentButton).call(this, type || 'button', title || 'Indent', id, relevant));
 
-		_get(Object.getPrototypeOf(OutdentButton.prototype), 'addClass', _this11).call(_this11, [_this11.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this11.parent.element;
-		icon.addClass(['fa', 'fa-outdent']);
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'addClass', _this11).call(_this11, [_this11.title, id]);
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'assign', _this11).call(_this11, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this11.relevant.element;
+		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(_this11.element);
-		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this11).call(_this11, 'click', function (e) {
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this11).call(_this11, 'mousedown', function (e) {
 			e.preventDefault();
 			editor.focus();
-			return editor._marky.outdent([editor.selectionStart, editor.selectionEnd]);
+			return _get(Object.getPrototypeOf(IndentButton.prototype), 'addClass', _this11).call(_this11, ['active']);
+		});
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this11).call(_this11, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(IndentButton.prototype), 'removeClass', _this11).call(_this11, ['active']);
+		});
+		_get(Object.getPrototypeOf(IndentButton.prototype), 'listen', _this11).call(_this11, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.indent([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this11;
 	}
 
-	return OutdentButton;
-})(_Element14.Element);
+	return IndentButton;
+})(_Element15.Element);
 
-var UndoButton = exports.UndoButton = (function (_Element12) {
-	_inherits(UndoButton, _Element12);
+var OutdentButton = exports.OutdentButton = (function (_Element12) {
+	_inherits(OutdentButton, _Element12);
 
-	function UndoButton(type, title, id, parent) {
-		_classCallCheck(this, UndoButton);
+	function OutdentButton(type, title, id, relevant) {
+		_classCallCheck(this, OutdentButton);
 
-		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(UndoButton).call(this, type || 'button', title || 'Undo', id, parent));
+		var _this12 = _possibleConstructorReturn(this, Object.getPrototypeOf(OutdentButton).call(this, type || 'button', title || 'Outdent', id, relevant));
 
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this12).call(_this12, [_this12.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this12.parent.element;
-		icon.addClass(['fa', 'fa-backward']);
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'addClass', _this12).call(_this12, [_this12.title, id]);
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'assign', _this12).call(_this12, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this12.relevant.element;
+		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(_this12.element);
-		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this12).call(_this12, 'click', function (e) {
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this12).call(_this12, 'mousedown', function (e) {
 			e.preventDefault();
-			if (_this12.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
+			return _get(Object.getPrototypeOf(OutdentButton.prototype), 'addClass', _this12).call(_this12, ['active']);
+		});
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this12).call(_this12, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(OutdentButton.prototype), 'removeClass', _this12).call(_this12, ['active']);
+		});
+		_get(Object.getPrototypeOf(OutdentButton.prototype), 'listen', _this12).call(_this12, 'click', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return editor._marky.outdent([editor.selectionStart, editor.selectionEnd]);
 		});
 		return _this12;
 	}
 
-	return UndoButton;
-})(_Element14.Element);
+	return OutdentButton;
+})(_Element15.Element);
 
-var RedoButton = exports.RedoButton = (function (_Element13) {
-	_inherits(RedoButton, _Element13);
+var UndoButton = exports.UndoButton = (function (_Element13) {
+	_inherits(UndoButton, _Element13);
 
-	function RedoButton(type, title, id, parent) {
-		_classCallCheck(this, RedoButton);
+	function UndoButton(type, title, id, relevant) {
+		_classCallCheck(this, UndoButton);
 
-		var _this13 = _possibleConstructorReturn(this, Object.getPrototypeOf(RedoButton).call(this, type || 'button', title || 'Redo', id, parent));
+		var _this13 = _possibleConstructorReturn(this, Object.getPrototypeOf(UndoButton).call(this, type || 'button', title || 'Undo', id, relevant));
 
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this13).call(_this13, [_this13.title, id]);
-		var icon = new _Element14.Element('i');
-		var editor = _this13.parent.element;
-		icon.addClass(['fa', 'fa-forward']);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this13).call(_this13, [_this13.title, id]);
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'assign', _this13).call(_this13, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this13.relevant.element;
+		icon.addClass(['fa', 'fa-backward']);
 		icon.appendTo(_this13.element);
-		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this13).call(_this13, 'click', function (e) {
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this13).call(_this13, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this13).call(_this13, ['active']);
+		});
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this13).call(_this13, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(UndoButton.prototype), 'removeClass', _this13).call(_this13, ['active']);
+		});
+		_get(Object.getPrototypeOf(UndoButton.prototype), 'listen', _this13).call(_this13, 'click', function (e) {
 			e.preventDefault();
 			if (_this13.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
 		});
 		return _this13;
 	}
 
+	return UndoButton;
+})(_Element15.Element);
+
+var RedoButton = exports.RedoButton = (function (_Element14) {
+	_inherits(RedoButton, _Element14);
+
+	function RedoButton(type, title, id, relevant) {
+		_classCallCheck(this, RedoButton);
+
+		var _this14 = _possibleConstructorReturn(this, Object.getPrototypeOf(RedoButton).call(this, type || 'button', title || 'Redo', id, relevant));
+
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this14).call(_this14, [_this14.title, id]);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'assign', _this14).call(_this14, 'value', title);
+		var icon = new _Element15.Element('i');
+		var editor = _this14.relevant.element;
+		icon.addClass(['fa', 'fa-forward']);
+		icon.appendTo(_this14.element);
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this14).call(_this14, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this14).call(_this14, ['active']);
+		});
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this14).call(_this14, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(RedoButton.prototype), 'removeClass', _this14).call(_this14, ['active']);
+		});
+		_get(Object.getPrototypeOf(RedoButton.prototype), 'listen', _this14).call(_this14, 'click', function (e) {
+			e.preventDefault();
+			if (_this14.element.classList.contains('disabled')) return;
+			editor.focus();
+			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+		});
+		return _this14;
+	}
+
 	return RedoButton;
-})(_Element14.Element);
+})(_Element15.Element);
 
 },{"./Element":6}],5:[function(require,module,exports){
 'use strict';
@@ -1665,9 +1793,11 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.ImageDialog = exports.LinkDialog = undefined;
+exports.HeadingDialog = exports.ImageDialog = exports.LinkDialog = undefined;
 
-var _Element3 = require('./Element');
+var _Element4 = require('./Element');
+
+var _ListItems = require('./ListItems');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1682,37 +1812,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {String}			type		tag name for the element
  * @param {String}			title		title for the element
  * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
+ * @param {HTMLElement}	relevant	element this element should have access to
  */
 
 var LinkDialog = exports.LinkDialog = (function (_Element) {
 	_inherits(LinkDialog, _Element);
 
-	function LinkDialog(type, title, id, parent) {
+	function LinkDialog(type, title, id, relevant) {
 		_classCallCheck(this, LinkDialog);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkDialog).call(this, type || 'div', title || 'Link Dialog', id, parent));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LinkDialog).call(this, type || 'div', title || 'Link Dialog', id, relevant));
 
 		_get(Object.getPrototypeOf(LinkDialog.prototype), 'addClass', _this).call(_this, [_this.title, id, 'dialog']);
 		var element = _this.element;
-		var editor = _this.parent.element;
+		var editor = _this.relevant.element;
 
-		var linkForm = new _Element3.Element('form', 'Link-Form');
+		var linkForm = new _Element4.Element('form', 'Link-Form');
 		linkForm.assign('id', id + '-link-form');
 
-		var linkUrlInput = new _Element3.Element('input', 'Link-Url');
+		var linkUrlInput = new _Element4.Element('input', 'Link-Url');
 		linkUrlInput.addClass(['link-url-input']);
 		linkUrlInput.assign('type', 'text');
 		linkUrlInput.assign('name', id + '-link-url-input');
 		linkUrlInput.assign('placeholder', 'http://url.com');
 
-		var linkDisplayInput = new _Element3.Element('input', 'Link-Display');
+		var linkDisplayInput = new _Element4.Element('input', 'Link-Display');
 		linkDisplayInput.addClass(['link-display-input']);
 		linkDisplayInput.assign('type', 'text');
 		linkDisplayInput.assign('name', id + '-link-display-input');
 		linkDisplayInput.assign('placeholder', 'Display text');
 
-		var insertButton = new _Element3.Element('button', 'Insert Link');
+		var insertButton = new _Element4.Element('button', 'Insert Link');
 		insertButton.addClass(['insert-link']);
 		insertButton.assign('textContent', 'Insert');
 
@@ -1736,7 +1866,7 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 			_get(Object.getPrototypeOf(LinkDialog.prototype), 'removeClass', _this).call(_this, ['toggled']);
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
-		_this.parent.listen('click', function () {
+		_this.relevant.listen('click', function () {
 			_get(Object.getPrototypeOf(LinkDialog.prototype), 'removeClass', _this).call(_this, ['toggled']);
 			return element.style.visibility = 'hidden';
 		});
@@ -1744,36 +1874,36 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 	}
 
 	return LinkDialog;
-})(_Element3.Element);
+})(_Element4.Element);
 
 var ImageDialog = exports.ImageDialog = (function (_Element2) {
 	_inherits(ImageDialog, _Element2);
 
-	function ImageDialog(type, title, id, parent) {
+	function ImageDialog(type, title, id, relevant) {
 		_classCallCheck(this, ImageDialog);
 
-		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageDialog).call(this, type || 'div', title || 'Image Dialog', id, parent));
+		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageDialog).call(this, type || 'div', title || 'Image Dialog', id, relevant));
 
 		_get(Object.getPrototypeOf(ImageDialog.prototype), 'addClass', _this2).call(_this2, [_this2.title, id, 'dialog']);
 		var element = _this2.element;
-		var editor = _this2.parent.element;
+		var editor = _this2.relevant.element;
 
-		var imageForm = new _Element3.Element('form', 'Image-Form');
+		var imageForm = new _Element4.Element('form', 'Image-Form');
 		imageForm.assign('id', id + '-image-form');
 
-		var imageSourceInput = new _Element3.Element('input', 'Image-Source');
+		var imageSourceInput = new _Element4.Element('input', 'Image-Source');
 		imageSourceInput.addClass(['image-source-input']);
 		imageSourceInput.assign('type', 'text');
 		imageSourceInput.assign('name', id + '-image-source-input');
 		imageSourceInput.assign('placeholder', 'http://imagesource.com/image.jpg');
 
-		var imageAltInput = new _Element3.Element('input', 'Image-Alt');
+		var imageAltInput = new _Element4.Element('input', 'Image-Alt');
 		imageAltInput.addClass(['image-alt-input']);
 		imageAltInput.assign('type', 'text');
 		imageAltInput.assign('name', id + '-image-display-input');
 		imageAltInput.assign('placeholder', 'Alt text');
 
-		var insertButton = new _Element3.Element('button', 'Insert Image');
+		var insertButton = new _Element4.Element('button', 'Insert Image');
 		insertButton.addClass(['insert-image']);
 		insertButton.assign('textContent', 'Insert');
 
@@ -1797,7 +1927,7 @@ var ImageDialog = exports.ImageDialog = (function (_Element2) {
 			_get(Object.getPrototypeOf(ImageDialog.prototype), 'removeClass', _this2).call(_this2, ['toggled']);
 			return editor._marky.image([editor.selectionStart, editor.selectionEnd], source, alt);
 		});
-		_this2.parent.listen('click', function () {
+		_this2.relevant.listen('click', function () {
 			_get(Object.getPrototypeOf(ImageDialog.prototype), 'removeClass', _this2).call(_this2, ['toggled']);
 			return element.style.visibility = 'hidden';
 		});
@@ -1805,9 +1935,57 @@ var ImageDialog = exports.ImageDialog = (function (_Element2) {
 	}
 
 	return ImageDialog;
-})(_Element3.Element);
+})(_Element4.Element);
 
-},{"./Element":6}],6:[function(require,module,exports){
+var HeadingDialog = exports.HeadingDialog = (function (_Element3) {
+	_inherits(HeadingDialog, _Element3);
+
+	function HeadingDialog(type, title, id, relevant) {
+		_classCallCheck(this, HeadingDialog);
+
+		var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(HeadingDialog).call(this, type || 'div', title || 'Heading Dialog', id, relevant));
+
+		_get(Object.getPrototypeOf(HeadingDialog.prototype), 'addClass', _this3).call(_this3, [_this3.title, id, 'dialog']);
+		var element = _this3.element;
+		var editor = _this3.relevant.element;
+
+		var headingList = new _Element4.Element('ul', 'Heading-List');
+		headingList.assign('id', id + '-heading-list');
+
+		var option1 = new _ListItems.HeadingItem('li', 'Heading 1', '1');
+		var option2 = new _ListItems.HeadingItem('li', 'Heading 2', '2');
+		var option3 = new _ListItems.HeadingItem('li', 'Heading 3', '3');
+		var option4 = new _ListItems.HeadingItem('li', 'Heading 4', '4');
+		var option5 = new _ListItems.HeadingItem('li', 'Heading 5', '5');
+		var option6 = new _ListItems.HeadingItem('li', 'Heading 6', '6');
+		var remove = new _ListItems.HeadingItem('li', 'Remove Heading', '0', 'fa-remove');
+
+		headingList.appendTo(element);
+		option1.appendTo(headingList.element);
+		option2.appendTo(headingList.element);
+		option3.appendTo(headingList.element);
+		option4.appendTo(headingList.element);
+		option5.appendTo(headingList.element);
+		option6.appendTo(headingList.element);
+		remove.appendTo(headingList.element);
+
+		Array.prototype.forEach.call(headingList.element.children, function (el) {
+			el.children[0].addEventListener('click', function (e) {
+				e.preventDefault();
+				var value = parseInt(e.target.value);
+				editor.focus();
+				_get(Object.getPrototypeOf(HeadingDialog.prototype), 'removeClass', _this3).call(_this3, ['toggled']);
+				element.style.visibility = 'hidden';
+				return editor._marky.heading(value, [editor.selectionStart, editor.selectionEnd]);
+			});
+		});
+		return _this3;
+	}
+
+	return HeadingDialog;
+})(_Element4.Element);
+
+},{"./Element":6,"./ListItems":7}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1824,21 +2002,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @param {String}			type		tag name for the element
  * @param {String}			title		title for the element
  * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
+ * @param {HTMLElement}	relevant	element this element should have access to
  */
 
 var Element = exports.Element = (function () {
 	function Element(type) {
 		var title = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 		var id = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
-		var parent = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+		var relevant = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 
 		_classCallCheck(this, Element);
 
 		this.title = title;
 		this.type = type;
 		this.id = id;
-		this.parent = parent;
+		this.relevant = relevant;
 		this.element = this.register();
 		if (this.title) this.element.title = this.title;
 	}
@@ -1889,17 +2067,69 @@ var Element = exports.Element = (function () {
 })();
 
 },{}],7:[function(require,module,exports){
-'use strict'
+'use strict';
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.HeadingItem = undefined;
+
+var _Element2 = require('./Element');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
- * Marky Mark
- * Author: Patrick Fricano
- * https://www.github.com/patrickfatrick/marky-marked
+ * Creates HTML option elements
+ * @class
+ * @requires Element
+ * @param {String}	type		tag name for the element
+ * @param {String}	title		title for the element
+ * @param {String} 	value		a value to assign the element
  */
 
-;
+var HeadingItem = exports.HeadingItem = (function (_Element) {
+	_inherits(HeadingItem, _Element);
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	function HeadingItem(type, title, value) {
+		var iconClass = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+		_classCallCheck(this, HeadingItem);
+
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeadingItem).call(this, type || 'li', title));
+
+		_get(Object.getPrototypeOf(HeadingItem.prototype), 'addClass', _this).call(_this, [_this.title.replace(' ', '-')]);
+		_get(Object.getPrototypeOf(HeadingItem.prototype), 'assign', _this).call(_this, 'value', value);
+		var button = new _Element2.Element('button', title);
+		button.assign('value', value);
+		button.addClass(['heading-button']);
+		button.appendTo(_this.element);
+		if (iconClass) {
+			var icon = new _Element2.Element('i');
+			icon.addClass(['fa', iconClass]);
+			icon.appendTo(button.element);
+		} else {
+			button.assign('textContent', value);
+		}
+		return _this;
+	}
+
+	return HeadingItem;
+})(_Element2.Element);
+
+},{"./Element":6}],8:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Marky Mark
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Author: Patrick Fricano
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * https://www.github.com/patrickfatrick/marky-marked
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -1973,7 +2203,7 @@ var Marky = exports.Marky = (function () {
 	}, {
 		key: 'undo',
 		value: function undo() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
 			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
 			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
@@ -2002,7 +2232,7 @@ var Marky = exports.Marky = (function () {
 	}, {
 		key: 'redo',
 		value: function redo() {
-			var num = arguments.length <= 0 || arguments[0] === undefined ? 5 : arguments[0];
+			var num = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 			var state = arguments.length <= 1 || arguments[1] === undefined ? this.state : arguments[1];
 			var index = arguments.length <= 2 || arguments[2] === undefined ? this.index : arguments[2];
 			var editor = arguments.length <= 3 || arguments[3] === undefined ? this.editor : arguments[3];
@@ -2130,10 +2360,9 @@ var Marky = exports.Marky = (function () {
 			var boldify = (0, _handlers.inlineHandler)(editor.value, indices, '**');
 			editor.value = boldify.value;
 			editor.setSelectionRange(boldify.range[0], boldify.range[1]);
-			editor._marky.update(editor.value, [boldify.range[0], boldify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [boldify.range[0], boldify.range[1]];
 		}
 
@@ -2154,10 +2383,9 @@ var Marky = exports.Marky = (function () {
 			var italicize = (0, _handlers.inlineHandler)(editor.value, indices, '_');
 			editor.value = italicize.value;
 			editor.setSelectionRange(italicize.range[0], italicize.range[1]);
-			editor._marky.update(editor.value, [italicize.range[0], italicize.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [italicize.range[0], italicize.range[1]];
 		}
 
@@ -2178,10 +2406,9 @@ var Marky = exports.Marky = (function () {
 			var strikitize = (0, _handlers.inlineHandler)(editor.value, indices, '~~');
 			editor.value = strikitize.value;
 			editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
-			editor._marky.update(editor.value, [strikitize.range[0], strikitize.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [strikitize.range[0], strikitize.range[1]];
 		}
 
@@ -2202,10 +2429,9 @@ var Marky = exports.Marky = (function () {
 			var codify = (0, _handlers.inlineHandler)(editor.value, indices, '`');
 			editor.value = codify.value;
 			editor.setSelectionRange(codify.range[0], codify.range[1]);
-			editor._marky.update(editor.value, [codify.range[0], codify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [codify.range[0], codify.range[1]];
 		}
 
@@ -2226,10 +2452,9 @@ var Marky = exports.Marky = (function () {
 			var quotify = (0, _handlers.blockHandler)(editor.value, indices, '> ');
 			editor.value = quotify.value;
 			editor.setSelectionRange(quotify.range[0], quotify.range[1]);
-			editor._marky.update(editor.value, [quotify.range[0], quotify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [quotify.range[0], quotify.range[1]];
 		}
 
@@ -2259,10 +2484,9 @@ var Marky = exports.Marky = (function () {
 			var headingify = (0, _handlers.blockHandler)(editor.value, indices, mark + space);
 			editor.value = headingify.value;
 			editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-			editor._marky.update(editor.value, [headingify.range[0], headingify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [headingify.range[0], headingify.range[1]];
 		}
 
@@ -2286,10 +2510,9 @@ var Marky = exports.Marky = (function () {
 			var linkify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = linkify.value;
 			editor.setSelectionRange(linkify.range[0], linkify.range[1]);
-			editor._marky.update(editor.value, [linkify.range[0], linkify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [linkify.range[0], linkify.range[1]];
 		}
 
@@ -2313,10 +2536,9 @@ var Marky = exports.Marky = (function () {
 			var imageify = (0, _handlers.insertHandler)(editor.value, indices, mark);
 			editor.value = imageify.value;
 			editor.setSelectionRange(imageify.range[0], imageify.range[1]);
-			editor._marky.update(editor.value, [imageify.range[0], imageify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [imageify.range[0], imageify.range[1]];
 		}
 
@@ -2337,10 +2559,9 @@ var Marky = exports.Marky = (function () {
 			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ul');
 			editor.value = listify.value;
 			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [listify.range[0], listify.range[1]];
 		}
 
@@ -2361,10 +2582,9 @@ var Marky = exports.Marky = (function () {
 			var listify = (0, _handlers.listHandler)(editor.value, indices, 'ol');
 			editor.value = listify.value;
 			editor.setSelectionRange(listify.range[0], listify.range[1]);
-			editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [listify.range[0], listify.range[1]];
 		}
 
@@ -2385,10 +2605,9 @@ var Marky = exports.Marky = (function () {
 			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'in');
 			editor.value = indentify.value;
 			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-			editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [indentify.range[0], indentify.range[1]];
 		}
 
@@ -2409,10 +2628,9 @@ var Marky = exports.Marky = (function () {
 			var indentify = (0, _handlers.indentHandler)(editor.value, indices, 'out');
 			editor.value = indentify.value;
 			editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-			editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 			var html = editor._marky.state[editor._marky.index].html;
 			editor.nextSibling.value = html;
-			editor.dispatchEvent(_customEvents.update);
+			editor.dispatchEvent(_customEvents.markyupdate);
 			return [indentify.range[0], indentify.range[1]];
 		}
 	}]);
@@ -2420,123 +2638,7 @@ var Marky = exports.Marky = (function () {
 	return Marky;
 })();
 
-},{"./custom-events":10,"./dispatcher":11,"./handlers":12,"./mark":13,"./prototypes":15}],8:[function(require,module,exports){
-'use strict';
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.HeadingOption = undefined;
-
-var _Element2 = require('./Element');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * Creates HTML option elements
- * @class
- * @requires Element
- * @param {String}	type		tag name for the element
- * @param {String}	title		title for the element
- * @param {String} 	value		a value to assign the element
- */
-
-var HeadingOption = exports.HeadingOption = (function (_Element) {
-  _inherits(HeadingOption, _Element);
-
-  function HeadingOption(type, title, value) {
-    _classCallCheck(this, HeadingOption);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeadingOption).call(this, type || 'option', title));
-
-    _get(Object.getPrototypeOf(HeadingOption.prototype), 'addClass', _this).call(_this, [_this.title.replace(' ', '-')]);
-    _get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', _this).call(_this, 'value', value);
-    _get(Object.getPrototypeOf(HeadingOption.prototype), 'assign', _this).call(_this, 'textContent', _this.title);
-    return _this;
-  }
-
-  return HeadingOption;
-})(_Element2.Element);
-
-},{"./Element":6}],9:[function(require,module,exports){
-'use strict';
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.HeadingSelect = undefined;
-
-var _Element2 = require('./Element');
-
-var _Options = require('./Options');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * Creates HTML select elements
- * @class
- * @requires Element
- * @param {String}			type		tag name for the element
- * @param {String}			title		title for the element
- * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
- */
-
-var HeadingSelect = exports.HeadingSelect = (function (_Element) {
-	_inherits(HeadingSelect, _Element);
-
-	function HeadingSelect(type, title, id, parent) {
-		_classCallCheck(this, HeadingSelect);
-
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeadingSelect).call(this, type || 'select', title || 'Heading', id, parent));
-
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'addClass', _this).call(_this, [_this.title, id]);
-		var editor = parent.element;
-		_get(Object.getPrototypeOf(HeadingSelect.prototype), 'listen', _this).call(_this, 'change', function () {
-			var selected = _this.element.selectedIndex;
-			var value = parseInt(_this.element.options[selected].value);
-			editor.focus();
-			_this.element.selectedIndex = 0;
-			return editor._marky.heading(value, [editor.selectionStart, editor.selectionEnd]);
-		});
-
-		var optionPlaceholder = new _Options.HeadingOption('option', 'Headings', '');
-		optionPlaceholder.assign('value', '');
-		var remove = new _Options.HeadingOption('option', 'Remove', '0');
-		var option1 = new _Options.HeadingOption('option', 'Heading 1', '1');
-		var option2 = new _Options.HeadingOption('option', 'Heading 2', '2');
-		var option3 = new _Options.HeadingOption('option', 'Heading 3', '3');
-		var option4 = new _Options.HeadingOption('option', 'Heading 4', '4');
-		var option5 = new _Options.HeadingOption('option', 'Heading 5', '5');
-		var option6 = new _Options.HeadingOption('option', 'Heading 6', '6');
-
-		optionPlaceholder.appendTo(_this.element);
-		remove.appendTo(_this.element);
-		option1.appendTo(_this.element);
-		option2.appendTo(_this.element);
-		option3.appendTo(_this.element);
-		option4.appendTo(_this.element);
-		option5.appendTo(_this.element);
-		option6.appendTo(_this.element);
-		return _this;
-	}
-
-	return HeadingSelect;
-})(_Element2.Element);
-
-},{"./Element":6,"./Options":8}],10:[function(require,module,exports){
+},{"./custom-events":9,"./dispatcher":10,"./handlers":11,"./mark":12,"./prototypes":14}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2563,10 +2665,10 @@ Object.defineProperty(exports, "__esModule", {
 var markyblur = exports.markyblur = new CustomEvent('markyblur');
 var markyfocus = exports.markyfocus = new CustomEvent('markyfocus');
 var markyselect = exports.markyselect = new CustomEvent('markyselect');
-var update = exports.update = new CustomEvent('update');
+var markyupdate = exports.markyupdate = new CustomEvent('markyupdate');
 var markychange = exports.markychange = new CustomEvent('markychange');
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2630,7 +2732,7 @@ function redo(num, state, stateIndex) {
   return { state: state[stateIndex], index: stateIndex };
 }
 
-},{"./operation":14,"marked":2}],12:[function(require,module,exports){
+},{"./operation":13,"marked":2}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2784,7 +2886,7 @@ function insertHandler(string, indices, mark) {
 	return { value: value, range: [end, end + mark.length] };
 }
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2813,13 +2915,22 @@ exports.default = function () {
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
+		var headingDialog = new _Dialogs.HeadingDialog('div', 'Heading Dialog', id, textarea);
+		headingDialog.element.style.visibility = 'hidden';
+
 		var linkDialog = new _Dialogs.LinkDialog('div', 'Link Dialog', id, textarea);
 		linkDialog.element.style.visibility = 'hidden';
 
 		var imageDialog = new _Dialogs.ImageDialog('div', 'Image Dialog', id, textarea);
 		imageDialog.element.style.visibility = 'hidden';
 
-		var headingSelect = new _Selects.HeadingSelect('select', 'Heading', id, textarea);
+		var headingButton = new _Buttons.HeadingButton('button', 'Heading', id, headingDialog);
+		headingButton.listen('click', function () {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
+		});
 		var boldButton = new _Buttons.BoldButton('button', 'Bold', id, textarea);
 		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id, textarea);
 		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
@@ -2829,11 +2940,15 @@ exports.default = function () {
 		linkButton.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 		});
 		var imageButton = new _Buttons.ImageButton('button', 'Image', id, imageDialog);
 		imageButton.listen('click', function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 		});
 		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered List', id, textarea);
 		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered List', id, textarea);
@@ -2857,7 +2972,7 @@ exports.default = function () {
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
 		input.appendTo(container);
-		headingSelect.appendTo(toolbar.element);
+		headingButton.appendTo(toolbar.element);
 		separatorA.appendTo(toolbar.element);
 		boldButton.appendTo(toolbar.element);
 		italicButton.appendTo(toolbar.element);
@@ -2878,8 +2993,9 @@ exports.default = function () {
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
 		imageDialog.appendTo(dialogs.element);
+		headingDialog.appendTo(dialogs.element);
 
-		textarea.listen('update', function (e) {
+		textarea.listen('markyupdate', function (e) {
 			this._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(_customEvents.markychange);
 		}, false);
@@ -2900,7 +3016,7 @@ exports.default = function () {
 		}, false);
 
 		textarea.listen('input', function (e) {
-			return e.target.dispatchEvent(_customEvents.update);
+			return e.target.dispatchEvent(_customEvents.markyupdate);
 		}, false);
 
 		textarea.listen('select', function (e) {
@@ -2920,6 +3036,8 @@ exports.default = function () {
 			imageDialog.removeClass(['toggled']);
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 			return;
 		});
 	});
@@ -2931,13 +3049,11 @@ var _Element = require('./Element');
 
 var _Buttons = require('./Buttons');
 
-var _Selects = require('./Selects');
-
 var _Dialogs = require('./Dialogs');
 
 var _customEvents = require('./custom-events');
 
-},{"./Buttons":4,"./Dialogs":5,"./Element":6,"./Marky":7,"./Selects":9,"./custom-events":10}],14:[function(require,module,exports){
+},{"./Buttons":4,"./Dialogs":5,"./Element":6,"./Marky":8,"./custom-events":9}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2956,7 +3072,7 @@ exports.default = function (state, stateIndex, fn) {
 	return { state: state, index: stateIndex };
 };
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

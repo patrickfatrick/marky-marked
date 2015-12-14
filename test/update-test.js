@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {update} from '../src/modules/custom-events';
+import {markyupdate} from '../src/modules/custom-events';
 import * as dispatcher from '../src/modules/dispatcher';
 
 chai.should();
@@ -55,7 +55,7 @@ describe('update', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		output.value.should.contain('<p>Some text</p>');
 	});

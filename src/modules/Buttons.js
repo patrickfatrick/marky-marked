@@ -7,17 +7,45 @@ import {Element} from './Element';
  * @param {String}			type		tag name for the element
  * @param {String}			title		title for the element
  * @param {String}			id			editor ID to associate with the element
- * @param {HTMLElement}	parent	element this element should have access to
+ * @param {HTMLElement}	relevant	element this element should have access to
  */
 
-export class BoldButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Bold', id, parent);
+export class HeadingButton extends Element {
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Headings', id, relevant);
 		super.addClass([this.title, id]);
-		let editor = this.parent.element;
+		super.assign('value', title);
+		let icon = new Element('i');
+		let dialog = this.relevant.element;
+		icon.addClass(['fa', 'fa-header']);
+		icon.appendTo(this.element);
+		super.listen('click', e => {
+			e.preventDefault();
+			this.element.blur();
+			dialog.classList.toggle('toggled');
+			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			return dialog.style.visibility = 'hidden';
+		});
+	}
+}
+
+export class BoldButton extends Element {
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Bold', id, relevant);
+		super.addClass([this.title, id]);
+		super.assign('value', title);
+		let editor = this.relevant.element;
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -27,13 +55,22 @@ export class BoldButton extends Element {
 }
 
 export class ItalicButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Italic', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Italic', id, relevant);
 		super.addClass([this.title, id]);
-		let editor = this.parent.element;
+		super.assign('value', title);
+		let editor = this.relevant.element;
 		let icon = new Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -43,13 +80,22 @@ export class ItalicButton extends Element {
 }
 
 export class StrikethroughButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Strikethrough', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Strikethrough', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -59,13 +105,22 @@ export class StrikethroughButton extends Element {
 }
 
 export class CodeButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Code', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Code', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -75,13 +130,22 @@ export class CodeButton extends Element {
 }
 
 export class BlockquoteButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Blockquote', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Blockquote', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -91,11 +155,12 @@ export class BlockquoteButton extends Element {
 }
 
 export class LinkButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Link', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Link', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let dialog = this.parent.element;
+		let dialog = this.relevant.element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
 		super.listen('click', e => {
@@ -109,11 +174,12 @@ export class LinkButton extends Element {
 }
 
 export class ImageButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Image', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Image', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let dialog = this.parent.element;
+		let dialog = this.relevant.element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
 		super.listen('click', e => {
@@ -127,13 +193,22 @@ export class ImageButton extends Element {
 }
 
 export class UnorderedListButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Unordered List', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Unordered List', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -143,13 +218,22 @@ export class UnorderedListButton extends Element {
 }
 
 export class OrderedListButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Ordered List', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Ordered List', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -159,13 +243,22 @@ export class OrderedListButton extends Element {
 }
 
 export class IndentButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Indent', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Indent', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -175,13 +268,22 @@ export class IndentButton extends Element {
 }
 
 export class OutdentButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Outdent', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Outdent', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			editor.focus();
@@ -191,13 +293,22 @@ export class OutdentButton extends Element {
 }
 
 export class UndoButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Undo', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Undo', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-backward']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
@@ -208,13 +319,22 @@ export class UndoButton extends Element {
 }
 
 export class RedoButton extends Element {
-	constructor (type, title, id, parent) {
-		super(type || 'button', title || 'Redo', id, parent);
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Redo', id, relevant);
 		super.addClass([this.title, id]);
+		super.assign('value', title);
 		let icon = new Element('i');
-		let editor = this.parent.element;
+		let editor = this.relevant.element;
 		icon.addClass(['fa', 'fa-forward']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;

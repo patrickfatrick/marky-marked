@@ -19,5 +19,5 @@
 export var markyblur = new CustomEvent('markyblur');
 export var markyfocus = new CustomEvent('markyfocus');
 export var markyselect = new CustomEvent('markyselect');
-export var update = new CustomEvent('update');
+export var markyupdate = new CustomEvent('markyupdate');
 export var markychange = new CustomEvent('markychange');

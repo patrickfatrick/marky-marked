@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {insertHandler} from '../src/modules/handlers';
-import {update} from '../src/modules/custom-events';
+import {markyupdate} from '../src/modules/custom-events';
 
 chai.should();
 describe('insert handling', () => {
@@ -18,7 +18,7 @@ describe('insert handling', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text ![Image](http://imagesource.com/image.jpg)';
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 
 		output.value.should.contain('<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>');
 	});

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Marky Mark
  * Author: Patrick Fricano
@@ -9,7 +7,7 @@
 import prototypes from './prototypes';
 import mark from './mark';
 import * as dispatcher from './dispatcher';
-import {update, markychange} from './custom-events';
+import {markyupdate, markychange} from './custom-events';
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers';
 
 prototypes();
@@ -44,7 +42,7 @@ export class Marky {
 	 * @param   {HTMLElement} editor the marky marked editor
 	 * @returns {Number}      the new index
 	 */
-	undo (num = 5, state = this.state, index = this.index, editor = this.editor) {
+	undo (num = 1, state = this.state, index = this.index, editor = this.editor) {
 		if (index === 0) return index;
 
 		const action = dispatcher.undo(num, state, index);
@@ -65,7 +63,7 @@ export class Marky {
 	 * @param   {HTMLElement} editor the marky marked editor
 	 * @returns {Number}      the new index
 	 */
-	redo (num = 5, state = this.state, index = this.index, editor = this.editor) {
+	redo (num = 1, state = this.state, index = this.index, editor = this.editor) {
 		if (index === state.length - 1) return index;
 
 		const action = dispatcher.redo(num, state, index);
@@ -154,10 +152,9 @@ export class Marky {
 		let boldify = inlineHandler(editor.value, indices, '**');
 		editor.value = boldify.value;
 		editor.setSelectionRange(boldify.range[0], boldify.range[1]);
-		editor._marky.update(editor.value, [boldify.range[0], boldify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [boldify.range[0], boldify.range[1]];
 	}
 
@@ -173,10 +170,9 @@ export class Marky {
 		let italicize = inlineHandler(editor.value, indices, '_');
 		editor.value = italicize.value;
 		editor.setSelectionRange(italicize.range[0], italicize.range[1]);
-		editor._marky.update(editor.value, [italicize.range[0], italicize.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [italicize.range[0], italicize.range[1]];
 	}
 
@@ -192,10 +188,9 @@ export class Marky {
 		let strikitize = inlineHandler(editor.value, indices, '~~');
 		editor.value = strikitize.value;
 		editor.setSelectionRange(strikitize.range[0], strikitize.range[1]);
-		editor._marky.update(editor.value, [strikitize.range[0], strikitize.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [strikitize.range[0], strikitize.range[1]];
 	}
 
@@ -211,10 +206,9 @@ export class Marky {
 		let codify = inlineHandler(editor.value, indices, '`');
 		editor.value = codify.value;
 		editor.setSelectionRange(codify.range[0], codify.range[1]);
-		editor._marky.update(editor.value, [codify.range[0], codify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [codify.range[0], codify.range[1]];
 	}
 
@@ -230,10 +224,9 @@ export class Marky {
 		let quotify = blockHandler(editor.value, indices, '> ');
 		editor.value = quotify.value;
 		editor.setSelectionRange(quotify.range[0], quotify.range[1]);
-		editor._marky.update(editor.value, [quotify.range[0], quotify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [quotify.range[0], quotify.range[1]];
 	}
 
@@ -256,10 +249,9 @@ export class Marky {
 		let headingify = blockHandler(editor.value, indices, mark + space);
 		editor.value = headingify.value;
 		editor.setSelectionRange(headingify.range[0], headingify.range[1]);
-		editor._marky.update(editor.value, [headingify.range[0], headingify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [headingify.range[0], headingify.range[1]];
 	}
 
@@ -276,10 +268,9 @@ export class Marky {
 		let linkify = insertHandler(editor.value, indices, mark);
 		editor.value = linkify.value;
 		editor.setSelectionRange(linkify.range[0], linkify.range[1]);
-		editor._marky.update(editor.value, [linkify.range[0], linkify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [linkify.range[0], linkify.range[1]];
 	}
 
@@ -296,10 +287,9 @@ export class Marky {
 		let imageify = insertHandler(editor.value, indices, mark);
 		editor.value = imageify.value;
 		editor.setSelectionRange(imageify.range[0], imageify.range[1]);
-		editor._marky.update(editor.value, [imageify.range[0], imageify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [imageify.range[0], imageify.range[1]];
 	}
 
@@ -315,10 +305,9 @@ export class Marky {
 		let listify = listHandler(editor.value, indices, 'ul');
 		editor.value = listify.value;
 		editor.setSelectionRange(listify.range[0], listify.range[1]);
-		editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [listify.range[0], listify.range[1]];
 	}
 
@@ -334,10 +323,9 @@ export class Marky {
 		let listify = listHandler(editor.value, indices, 'ol');
 		editor.value = listify.value;
 		editor.setSelectionRange(listify.range[0], listify.range[1]);
-		editor._marky.update(editor.value, [listify.range[0], listify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [listify.range[0], listify.range[1]];
 	}
 
@@ -353,10 +341,9 @@ export class Marky {
 		let indentify = indentHandler(editor.value, indices, 'in');
 		editor.value = indentify.value;
 		editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-		editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [indentify.range[0], indentify.range[1]];
 	}
 
@@ -372,10 +359,9 @@ export class Marky {
 		let indentify = indentHandler(editor.value, indices, 'out');
 		editor.value = indentify.value;
 		editor.setSelectionRange(indentify.range[0], indentify.range[1]);
-		editor._marky.update(editor.value, [indentify.range[0], indentify.range[1]], editor._marky.state, editor._marky.index);
 		let html = editor._marky.state[editor._marky.index].html;
 		editor.nextSibling.value = html;
-		editor.dispatchEvent(update);
+		editor.dispatchEvent(markyupdate);
 		return [indentify.range[0], indentify.range[1]];
 	}
 

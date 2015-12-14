@@ -1,6 +1,7 @@
 # Marky Marked
 
 _A `<textarea>` so sweet you'll be feeling good vibrations._
+
 [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
@@ -13,13 +14,22 @@ _A `<textarea>` so sweet you'll be feeling good vibrations._
 
 ## What is it?
 
-Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. It's very much based on some of the ideas in Basecamp's [Trix](http://trix-editor.org/) editor, but with more of a Markdown flavor and a smaller footprint. Marky Marked's minified file is less than 50KB including dependency.
+Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. Marky Marked's minified file is less than 60KB including dependency.
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easy to parse. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup. Marky Marked also sanitizes the markup so you don't need to worry about HTML in the input.
 
 On top of all of that because it's built with immutable states Marky Marked comes with undo and redo (but see the caveat in the [undo/redo section](#undoredo) below).
 
 Click the links here to learn more about [Markdown syntax](https://help.github.com/articles/markdown-basics/) and [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) (which Marky Marked uses).
+
+## Changelog
+
+#### v1.2
+
+- Headings selection is no longer done in a <select> element, but is instead a dialog with a <ul>. This was done to make the experience easier to style and make it consistent between browsers. 
+- The update event has been replaced with the more consistently named "markyupdate" event.
+- Some work with accessibility.
+- Bug fixes.
 
 ## Dependencies & Support
 
@@ -121,7 +131,7 @@ Here's the list of possibilities
 
 
 ```javascript
-update // Emitted when any forward-progress change happens to the state (not including undo/redo).
+markyupdate // Emitted when any forward-progress change happens to the state (not including undo/redo).
 markychange // Emitted when any change happens to the state (including undo/redo).
 markyfocus // Emitted whenever the editor gains focus.
 markyblur // Emitted whenever the editor loses focus.
@@ -145,7 +155,7 @@ For the heading method you should also pass in the level of heading, 1 to toggle
 ```javascript
 editor._marky.heading(1, [0, 5]); // Also takes an array for the text to apply the format to
 editor._marky.heading(4); // If no second argument is passed the currently selected text is assumed
-editor._marky.heading(); // Assumes 0, AKA remove all headings from the text
+editor._marky.heading(); // Assumes 0, which removes all headings from the selected text
 ```
 
 Again an array representing the new starting and ending position is returned.
@@ -221,7 +231,7 @@ editor._marky.moveCursorBackward(20);
 
 This method returns the new cursor position in the editor.
 
-## Testing
+## Building & Testing
 
 Marky Marked uses a combination of Karma, Mocha, Chai, and Istanbul for tests. To run the tests,
 
@@ -232,9 +242,22 @@ $npm test
 
 You may need to install the karma and its plugins globally if you don't already have them. You can also test in other browsers by adding them to karma.conf.js. Chrome, Firefox, and Safari launchers are plugged but not included in the list of browsers by default.
 
+To run ESLint and build the distribution files:
+
+```bash
+$gulp
+```
+
+To build the stylesheet:
+
+```bash
+$gulp styles
+```
+
 ## What's the plan?
 
-- Explore detection so you can have visual cues in the toolbar of what formats are applied where the cursor is.
+- Ability to customize instances, particularly with some or all of marked's options.
+- Possible updates to undoing and redoing state by prioritizing formatting changes over user input (the idea being to always undo or redo to any toolbar action, overriding the index provided in the undo/redo methods). This would be an option as well.
 
 ## License
 

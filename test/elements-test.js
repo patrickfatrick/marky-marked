@@ -1,8 +1,7 @@
 import chai from 'chai';
 import {Element} from '../src/modules/Element';
 import {BoldButton, ItalicButton} from '../src/modules/Buttons';
-import {HeadingSelect} from '../src/modules/Selects';
-import {HeadingOption} from '../src/modules/Options';
+import {HeadingItem} from '../src/modules/ListItems';
 
 chai.should();
 
@@ -32,22 +31,13 @@ describe('Element', () => {
 		element.title.should.equal('Italic');
 		element.id.should.equal('italic');
 	});
-	it('creates a select', () => {
-		const editor = document.querySelector('.marky-editor');
-		let element = new HeadingSelect('select', 'Headings', 'headings', editor);
+	it('creates a list item', () => {
+		let element = new HeadingItem('li', 'Heading 1', '1');
 
 		element.should.be.an.instanceof(Element);
-		element.should.be.an.instanceof(HeadingSelect);
-		element.title.should.equal('Headings');
-		element.id.should.equal('headings');
-	});
-	it('creates an option', () => {
-		let element = new HeadingOption('option', 'Heading 1', 'heading-1');
-
-		element.should.be.an.instanceof(Element);
-		element.should.be.an.instanceof(HeadingOption);
+		element.should.be.an.instanceof(HeadingItem);
 		element.title.should.equal('Heading 1');
-		element.element.textContent.should.equal('Heading 1');
-		element.element.value.should.equal('heading-1');
+		element.element.textContent.should.equal('1');
+		element.element.value.should.equal(1);
 	});
 });

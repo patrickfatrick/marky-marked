@@ -1,14 +1,12 @@
 import {Marky} from './Marky';
 import {Element} from './Element';
-import {BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton} from './Buttons';
-import {HeadingSelect} from './Selects';
-import {LinkDialog, ImageDialog} from './Dialogs';
-import {markyblur, markyfocus, markyselect, update, markychange} from './custom-events';
+import {HeadingButton, BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton} from './Buttons';
+import {LinkDialog, ImageDialog, HeadingDialog} from './Dialogs';
+import {markyblur, markyfocus, markyselect, markyupdate, markychange} from './custom-events';
 
 /**
  * Register and append the DOM elements needed and set the event listeners
  * @param 	{String}	tag name to be used for initialization
- * @returns {Object} a Marky Mark instance
  */
 export default function (tag = 'marky-mark') {
 
@@ -31,13 +29,22 @@ export default function (tag = 'marky-mark') {
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
+		let headingDialog = new HeadingDialog('div', 'Heading Dialog', id, textarea);
+		headingDialog.element.style.visibility = 'hidden';
+
 		let linkDialog = new LinkDialog('div', 'Link Dialog', id, textarea);
 		linkDialog.element.style.visibility = 'hidden';
 
 		let imageDialog = new ImageDialog('div', 'Image Dialog', id, textarea);
 		imageDialog.element.style.visibility = 'hidden';
 
-		let headingSelect = new HeadingSelect('select', 'Heading', id, textarea);
+		let headingButton = new HeadingButton('button', 'Heading', id, headingDialog);
+		headingButton.listen('click', function () {
+			imageDialog.element.style.visibility = 'hidden';
+			imageDialog.removeClass(['toggled']);
+			linkDialog.element.style.visibility = 'hidden';
+			linkDialog.removeClass(['toggled']);
+		});
 		let boldButton = new BoldButton('button', 'Bold', id, textarea);
 		let italicButton = new ItalicButton('button', 'Italic', id, textarea);
 		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id, textarea);
@@ -47,11 +54,15 @@ export default function (tag = 'marky-mark') {
 		linkButton.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 		});
 		let imageButton = new ImageButton('button', 'Image', id, imageDialog);
 		imageButton.listen('click', function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 		});
 		let unorderedListButton = new UnorderedListButton('button', 'Unordered List', id, textarea);
 		let orderedListButton = new OrderedListButton('button', 'Ordered List', id, textarea);
@@ -75,7 +86,7 @@ export default function (tag = 'marky-mark') {
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
 		input.appendTo(container);
-		headingSelect.appendTo(toolbar.element);
+		headingButton.appendTo(toolbar.element);
 		separatorA.appendTo(toolbar.element);
 		boldButton.appendTo(toolbar.element);
 		italicButton.appendTo(toolbar.element);
@@ -96,8 +107,9 @@ export default function (tag = 'marky-mark') {
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
 		imageDialog.appendTo(dialogs.element);
+		headingDialog.appendTo(dialogs.element);
 
-		textarea.listen('update', function (e) {
+		textarea.listen('markyupdate', function (e) {
 			this._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(markychange);
 		}, false);
@@ -118,7 +130,7 @@ export default function (tag = 'marky-mark') {
 		}, false);
 
 		textarea.listen('input', function (e) {
-			return e.target.dispatchEvent(update);
+			return e.target.dispatchEvent(markyupdate);
 		}, false);
 
 		textarea.listen('select', function (e) {
@@ -138,6 +150,8 @@ export default function (tag = 'marky-mark') {
 			imageDialog.removeClass(['toggled']);
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
+			headingDialog.element.style.visibility = 'hidden';
+			headingDialog.removeClass(['toggled']);
 			return;
 		});
 

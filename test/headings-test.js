@@ -1,18 +1,14 @@
 import chai from 'chai';
 
 chai.should();
-describe('toolbar selects', () => {
+describe('headings', () => {
 	it('calls the heading-1 method', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		var heading = document.querySelector('.heading');
-		heading.selectedIndex = 2;
-		var change;
-		change = document.createEvent('HTMLEvents');
-		change.initEvent('change', true, true, window);
-		heading.dispatchEvent(change);
+		var heading1 = document.querySelector('.heading-1').children[0];
+		heading1.click();
 
 		output.value.should.equal('<h1 id="some-text">Some text</h1>\n');
 	});
@@ -21,12 +17,8 @@ describe('toolbar selects', () => {
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		var heading = document.querySelector('.heading');
-		heading.selectedIndex = 3;
-		var change;
-		change = document.createEvent('HTMLEvents');
-		change.initEvent('change', true, true, window);
-		heading.dispatchEvent(change);
+		var heading2 = document.querySelector('.heading-2').children[0];
+		heading2.click();
 
 		output.value.should.equal('<h2 id="some-text">Some text</h2>\n');
 	});
@@ -35,12 +27,8 @@ describe('toolbar selects', () => {
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		var heading = document.querySelector('.heading');
-		heading.selectedIndex = 7;
-		var change;
-		change = document.createEvent('HTMLEvents');
-		change.initEvent('change', true, true, window);
-		heading.dispatchEvent(change);
+		var heading6 = document.querySelector('.heading-6').children[0];
+		heading6.click();
 
 		output.value.should.equal('<h6 id="some-text">Some text</h6>\n');
 	});
@@ -49,12 +37,8 @@ describe('toolbar selects', () => {
 		const output = document.querySelector('.marky-output');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		var heading = document.querySelector('.heading');
-		heading.selectedIndex = 1;
-		var change;
-		change = document.createEvent('HTMLEvents');
-		change.initEvent('change', true, true, window);
-		heading.dispatchEvent(change);
+		var removeHeading = document.querySelector('.remove-heading').children[0];
+		removeHeading.click();
 
 		output.value.should.equal('<p>Some text</p>\n');
 	});
