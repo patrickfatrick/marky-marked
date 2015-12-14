@@ -161,6 +161,14 @@
           background-color: $fireTruck;
           color: $white;
         }
+        &[title = "Remove Heading"]:active {
+          color: $white !important;
+          background: -webkit-linear-gradient($fireTruck * 0.7, $fireTruck);
+          background: -moz-linear-gradient($fireTruck * 0.7, $fireTruck);
+          background: -ms-linear-gradient($fireTruck * 0.7, $fireTruck);
+          background: -o-linear-gradient($fireTruck * 0.7, $fireTruck);
+          background: linear-gradient($fireTruck * 0.7, $fireTruck);
+        }
       }
     }
   }
