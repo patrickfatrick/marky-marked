@@ -1,7 +1,6 @@
 # Marky Marked
 
 _A `<textarea>` so sweet you'll be feeling good vibrations._
-
 [http://patrickfatrick.github.io/marky-marked/](http://patrickfatrick.github.io/marky-marked/)
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
@@ -26,7 +25,7 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 #### v1.2
 
-- Headings selection is no longer done in a <select> element, but is instead a dialog with a <ul>. This was done to make the experience easier to style and make it consistent between browsers. 
+- Headings selection is no longer done in a `<select>` element, but is instead a dialog with a `<ul>`. This was done to make the experience easier to style and make it consistent between browsers. 
 - The update event has been replaced with the more consistently named "markyupdate" event.
 - Some work with accessibility.
 - Bug fixes.

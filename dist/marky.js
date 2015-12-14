@@ -2907,11 +2907,11 @@ exports.default = function () {
 		var dialogs = new _Element.Element('div', 'Dialogs');
 		dialogs.addClass(['marky-dialogs', id]);
 
-		var textarea = new _Element.Element('textarea', 'Editor');
+		var textarea = new _Element.Element('textarea', 'Marky Marked Editor');
 		textarea.addClass(['marky-editor', id]);
 		textarea.assign('_marky', new _Marky.Marky(textarea.element));
 
-		var input = new _Element.Element('input', 'Output');
+		var input = new _Element.Element('input', 'Marky Marked Output');
 		input.assign('type', 'hidden');
 		input.addClass(['marky-output', id]);
 
