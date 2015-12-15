@@ -10,7 +10,7 @@ export default function (state, stateIndex, fn) {
 	let newVersion = fn();
 	state.push(newVersion);
 	stateIndex++;
-	if (stateIndex > 499) {
+	if (stateIndex > 999) {
 		state.shift();
 		stateIndex--;
 	}

@@ -3065,7 +3065,7 @@ exports.default = function (state, stateIndex, fn) {
 	var newVersion = fn();
 	state.push(newVersion);
 	stateIndex++;
-	if (stateIndex > 499) {
+	if (stateIndex > 999) {
 		state.shift();
 		stateIndex--;
 	}

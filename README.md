@@ -83,9 +83,9 @@ If you do use the stylesheet that comes with, you will need to install [Font Awe
 
 ## Undo/Redo
 
-Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 500 states, after which it starts clearing out the oldest states as states are created. So it's not infinite.
+Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 1000 states, after which it starts clearing out the oldest states as new states are created. So it's not infinite.
 
-The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 100 user-facing states at any given time that reflect 500 changes (keep in mind that typing a single character counts as a change).
+The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 200 user-facing states at any given time that reflect 1000 changes (keep in mind that typing a single character counts as a change).
 
 But if you undo to a previous state and then create a new state by typing or adding a format from the toolbar, the timeline erases those states after the one you went back to. Just like in most any file editor.
 
@@ -257,6 +257,7 @@ $gulp styles
 
 - Ability to customize instances, particularly with some or all of marked's options.
 - Possible updates to undoing and redoing state by prioritizing formatting changes over user input (the idea being to always undo or redo to any toolbar action, overriding the index provided in the undo/redo methods). This would be an option as well.
+- On a smaller note, probably a few improvements to link and image inserting, autopopulating the currently selected text into the dialog.
 
 ## License
 
