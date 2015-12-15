@@ -36,19 +36,19 @@ describe('update', () => {
 		newState.index.should.equal(2);
 	});
 
-	it('removes old states when there are 500 of them', () => {
+	it('removes old states when there are 1000 of them', () => {
 		const initialState = [
 			{markdown: '', html: '', selection: [0, 0]},
 			{markdown: 'Some text', html: '<p>Some text</p>', selection: [9, 9]}
 		];
-		const stateIndex = 499;
+		const stateIndex = 999;
 		let newState = dispatcher.update('', [0, 0], initialState, stateIndex);
 
 		newState.state.length.should.equal(2);
 		newState.state[1].markdown.should.be.empty;
 		newState.state[1].html.should.be.empty;
 		newState.state[0].markdown.should.equal('Some text');
-		newState.index.should.equal(499);
+		newState.index.should.equal(999);
 	});
 
 	it('is triggered by an update event', () => {
