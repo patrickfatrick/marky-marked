@@ -14,6 +14,16 @@ describe('insert handling', () => {
 		boldify.range.should.contain.members([10, 41]);
 	});
 
+	it('inserts and selects the inserted markdown with a current selection', () => {
+		let string = 'Some text ';
+		let indices = [0, 10];
+
+		let boldify = insertHandler(string, indices, '[DISPLAY TEXT](https://url.com)');
+
+		boldify.value.should.equal('[DISPLAY TEXT](https://url.com)');
+		boldify.range.should.contain.members([0, 31]);
+	});
+
 	it('converts to HTML', () => {
 		const editor = document.querySelector('.marky-editor');
 		const output = document.querySelector('.marky-output');

@@ -30,6 +30,7 @@ describe('mark', () => {
 		container.children[0].children[14].classList.should.have.property('0', 'indent');
 		container.children[0].children[16].classList.should.have.property('0', 'undo');
 		container.children[0].children[17].classList.should.have.property('0', 'redo');
+		container.children[0].children[19].classList.should.have.property('0', 'fullscreen');
 	});
 	it('initializes on marky-mark tags by default', () => {
 		const container = document.getElementsByTagName('marky-mark')[0];

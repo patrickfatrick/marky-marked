@@ -1,5 +1,17 @@
 @import 'variables';
 @import 'mixins';
+
+[id^="editor-"].fullscreen-toggled {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: $white;
+  z-index: 1000;
+}
 .marky-toolbar {
   min-width: 100%;
   text-align: left;
@@ -16,7 +28,7 @@
     border-left: none;
     padding: 6px;
     border-radius: 0;
-    box-shadow: $boxShadowB 0 1px 1px, $boxShadowB 0 1px 5px;
+    box-shadow: $boxShadowA 0 1px 1px, $boxShadowB 0 1px 5px;
     min-width: 1.5rem;
     min-height: 1.5rem;
     text-align: center;
@@ -50,6 +62,26 @@
   button:nth-child(18) {
     border-radius: 0 4px 4px 0;
   }
+  button.fullscreen {
+    border-radius: 4px;
+    &.fullscreen-toggled {
+      background-color: $orchid;
+      color: $white;
+      &:focus {
+        background-color: $deepBlue;
+        color: $white;
+      }
+      .active,
+      &:active {
+        color: $white !important;
+        background: -webkit-linear-gradient($orchid * 0.7, $orchid);
+        background: -moz-linear-gradient($orchid * 0.7, $orchid);
+        background: -ms-linear-gradient($orchid * 0.7, $orchid);
+        background: -o-linear-gradient($orchid * 0.7, $orchid);
+        background: linear-gradient($orchid * 0.7, $orchid);
+      }
+    }
+  }
   button.heading {
     border-left: 1px solid $gray;
     padding-left: 1rem;
@@ -76,7 +108,7 @@
       padding: 1rem;
       margin: 0.7rem;
       border: 1px solid $gray;
-      box-shadow: $boxShadowB 0 10px 15px, $boxShadowB 0 5px 10px;
+      box-shadow: $boxShadowA 0 10px 15px, $boxShadowB 0 5px 10px;
       margin-top: -50px;
       opacity: 0;
       -webkit-transition: all 200ms ease-out;
@@ -182,5 +214,10 @@
   padding: 8px 12px;
   &:focus {
     border-color: $deepBlue;
+  }
+  &.fullscreen-toggled {
+    width: 100%;
+    height: 90%;
+    box-shadow: $boxShadowA 0 19px 60px, $boxShadowB 0 15px 20px;
   }
 }

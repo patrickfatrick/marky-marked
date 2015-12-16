@@ -124,9 +124,9 @@ describe('marky methods', () => {
 		const editor = document.querySelector('.marky-editor');
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
-		editor._marky.link([0, 9], 'http://google.com', 'Google');
-		editor.value.should.equal('Some text[Google](http://google.com)');
-		editor.selectionStart.should.equal(9);
+		editor._marky.link([0, 9], 'http://google.com', 'Some text');
+		editor.value.should.equal('[Some text](http://google.com)');
+		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('inserts a default link snippet', () => {
@@ -134,8 +134,8 @@ describe('marky methods', () => {
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
 		editor._marky.link();
-		editor.value.should.equal('Some text[http://url.com](http://url.com)');
-		editor.selectionStart.should.equal(9);
+		editor.value.should.equal('[http://url.com](http://url.com)');
+		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('inserts an image snippet', () => {
@@ -143,8 +143,8 @@ describe('marky methods', () => {
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
 		editor._marky.image([0, 9], 'http://i.imgur.com/VlVsP.gif', 'Chuck Chardonnay');
-		editor.value.should.equal('Some text![Chuck Chardonnay](http://i.imgur.com/VlVsP.gif)');
-		editor.selectionStart.should.equal(9);
+		editor.value.should.equal('![Chuck Chardonnay](http://i.imgur.com/VlVsP.gif)');
+		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('inserts aa default image snippet', () => {
@@ -152,8 +152,8 @@ describe('marky methods', () => {
 		editor.value = 'Some text';
 		editor.setSelectionRange(0, 9);
 		editor._marky.image();
-		editor.value.should.equal('Some text![http://imagesource.com/image.jpg](http://imagesource.com/image.jpg)');
-		editor.selectionStart.should.equal(9);
+		editor.value.should.equal('![http://imagesource.com/image.jpg](http://imagesource.com/image.jpg)');
+		editor.selectionStart.should.equal(0);
 		editor.selectionEnd.should.equal(editor.value.length);
 	});
 	it('implements an unordered list', () => {

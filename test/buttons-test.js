@@ -177,4 +177,22 @@ describe('toolbar buttons', () => {
 		editor.value.should.equal('');
 		output.value.should.equal('');
 	});
+	it('turns on fullscreen', () => {
+		const container = document.querySelector('marky-mark');
+		const editor = document.querySelector('.marky-editor');
+		
+		document.querySelector('.fullscreen').click();
+
+		container.classList.contains('fullscreen-toggled').should.be.true;
+		editor.classList.contains('fullscreen-toggled').should.be.true;
+	});
+	it('turns off fullscreen', () => {
+		const container = document.querySelector('marky-mark');
+		const editor = document.querySelector('.marky-editor');
+		
+		document.querySelector('.fullscreen').click();
+
+		container.classList.contains('fullscreen-toggled').should.be.false;
+		editor.classList.contains('fullscreen-toggled').should.be.false;
+	});
 });

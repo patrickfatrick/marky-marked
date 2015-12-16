@@ -134,9 +134,10 @@ export function indentHandler (string, indices, type) {
  * @returns {Object} the new string, the updated indices
  */
 export function insertHandler (string, indices, mark) {
+	const start = indices[0];
 	const end = indices[1];
 	let value;
-	value = string.substring(0, end) + mark + string.substring(end, string.length);
+	value = string.substring(0, start) + mark + string.substring(end, string.length);
 
-	return {value: value, range: [end, end + mark.length]};
+	return {value: value, range: [start, start + mark.length]};
 }

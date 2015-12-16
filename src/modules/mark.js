@@ -1,6 +1,6 @@
 import {Marky} from './Marky';
 import {Element} from './Element';
-import {HeadingButton, BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton} from './Buttons';
+import {HeadingButton, BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton, FullscreenButton} from './Buttons';
 import {LinkDialog, ImageDialog, HeadingDialog} from './Dialogs';
 import {markyblur, markyfocus, markyselect, markyupdate, markychange} from './custom-events';
 
@@ -50,14 +50,14 @@ export default function (tag = 'marky-mark') {
 		let strikethroughButton = new StrikethroughButton('button', 'Strikethrough', id, textarea);
 		let codeButton = new CodeButton('button', 'Code', id, textarea);
 		let blockquoteButton = new BlockquoteButton('button', 'Blockquote', id, textarea);
-		let linkButton = new LinkButton('button', 'Link', id, linkDialog);
+		let linkButton = new LinkButton('button', 'Link', id, [linkDialog, textarea]);
 		linkButton.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			headingDialog.element.style.visibility = 'hidden';
 			headingDialog.removeClass(['toggled']);
 		});
-		let imageButton = new ImageButton('button', 'Image', id, imageDialog);
+		let imageButton = new ImageButton('button', 'Image', id, [imageDialog, textarea]);
 		imageButton.listen('click', function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
@@ -70,6 +70,7 @@ export default function (tag = 'marky-mark') {
 		let indentButton = new IndentButton('button', 'Indent', id, textarea);
 		let undoButton = new UndoButton('button', 'Undo', id, textarea);
 		let redoButton = new RedoButton('button', 'Redo', id, textarea);
+		let fullscreenButton = new FullscreenButton('button', 'Fullscreen', id, [container, textarea]);
 
 		let separatorA = new Element('span');
 		separatorA.addClass(['separator']);
@@ -82,6 +83,9 @@ export default function (tag = 'marky-mark') {
 
 		let separatorD = new Element('span');
 		separatorD.addClass(['separator']);
+
+		let separatorE = new Element('span');
+		separatorE.addClass(['separator']);
 
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
@@ -104,6 +108,8 @@ export default function (tag = 'marky-mark') {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
+		separatorE.appendTo(toolbar.element);
+		fullscreenButton.appendTo(toolbar.element);
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
 		imageDialog.appendTo(dialogs.element);

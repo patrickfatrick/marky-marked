@@ -1319,9 +1319,9 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.RedoButton = exports.UndoButton = exports.OutdentButton = exports.IndentButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = exports.HeadingButton = undefined;
+exports.FullscreenButton = exports.RedoButton = exports.UndoButton = exports.OutdentButton = exports.IndentButton = exports.OrderedListButton = exports.UnorderedListButton = exports.ImageButton = exports.LinkButton = exports.BlockquoteButton = exports.CodeButton = exports.StrikethroughButton = exports.ItalicButton = exports.BoldButton = exports.HeadingButton = undefined;
 
-var _Element15 = require('./Element');
+var _Element16 = require('./Element');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1349,7 +1349,7 @@ var HeadingButton = exports.HeadingButton = (function (_Element) {
 
 		_get(Object.getPrototypeOf(HeadingButton.prototype), 'addClass', _this).call(_this, [_this.title, id]);
 		_get(Object.getPrototypeOf(HeadingButton.prototype), 'assign', _this).call(_this, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var dialog = _this.relevant.element;
 		icon.addClass(['fa', 'fa-header']);
 		icon.appendTo(_this.element);
@@ -1364,7 +1364,7 @@ var HeadingButton = exports.HeadingButton = (function (_Element) {
 	}
 
 	return HeadingButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var BoldButton = exports.BoldButton = (function (_Element2) {
 	_inherits(BoldButton, _Element2);
@@ -1377,7 +1377,7 @@ var BoldButton = exports.BoldButton = (function (_Element2) {
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'addClass', _this2).call(_this2, [_this2.title, id]);
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'assign', _this2).call(_this2, 'value', title);
 		var editor = _this2.relevant.element;
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		icon.addClass(['fa', 'fa-bold']);
 		icon.appendTo(_this2.element);
 		_get(Object.getPrototypeOf(BoldButton.prototype), 'listen', _this2).call(_this2, 'mousedown', function (e) {
@@ -1397,7 +1397,7 @@ var BoldButton = exports.BoldButton = (function (_Element2) {
 	}
 
 	return BoldButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var ItalicButton = exports.ItalicButton = (function (_Element3) {
 	_inherits(ItalicButton, _Element3);
@@ -1410,7 +1410,7 @@ var ItalicButton = exports.ItalicButton = (function (_Element3) {
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'addClass', _this3).call(_this3, [_this3.title, id]);
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'assign', _this3).call(_this3, 'value', title);
 		var editor = _this3.relevant.element;
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		icon.addClass(['fa', 'fa-italic']);
 		icon.appendTo(_this3.element);
 		_get(Object.getPrototypeOf(ItalicButton.prototype), 'listen', _this3).call(_this3, 'mousedown', function (e) {
@@ -1430,7 +1430,7 @@ var ItalicButton = exports.ItalicButton = (function (_Element3) {
 	}
 
 	return ItalicButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
 	_inherits(StrikethroughButton, _Element4);
@@ -1442,7 +1442,7 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
 
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'addClass', _this4).call(_this4, [_this4.title, id]);
 		_get(Object.getPrototypeOf(StrikethroughButton.prototype), 'assign', _this4).call(_this4, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this4.relevant.element;
 		icon.addClass(['fa', 'fa-strikethrough']);
 		icon.appendTo(_this4.element);
@@ -1463,7 +1463,7 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
 	}
 
 	return StrikethroughButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var CodeButton = exports.CodeButton = (function (_Element5) {
 	_inherits(CodeButton, _Element5);
@@ -1475,7 +1475,7 @@ var CodeButton = exports.CodeButton = (function (_Element5) {
 
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'addClass', _this5).call(_this5, [_this5.title, id]);
 		_get(Object.getPrototypeOf(CodeButton.prototype), 'assign', _this5).call(_this5, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this5.relevant.element;
 		icon.addClass(['fa', 'fa-code']);
 		icon.appendTo(_this5.element);
@@ -1496,7 +1496,7 @@ var CodeButton = exports.CodeButton = (function (_Element5) {
 	}
 
 	return CodeButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
 	_inherits(BlockquoteButton, _Element6);
@@ -1508,7 +1508,7 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
 
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'addClass', _this6).call(_this6, [_this6.title, id]);
 		_get(Object.getPrototypeOf(BlockquoteButton.prototype), 'assign', _this6).call(_this6, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this6.relevant.element;
 		icon.addClass(['fa', 'fa-quote-right']);
 		icon.appendTo(_this6.element);
@@ -1529,7 +1529,7 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
 	}
 
 	return BlockquoteButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var LinkButton = exports.LinkButton = (function (_Element7) {
 	_inherits(LinkButton, _Element7);
@@ -1541,22 +1541,34 @@ var LinkButton = exports.LinkButton = (function (_Element7) {
 
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', _this7).call(_this7, [_this7.title, id]);
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'assign', _this7).call(_this7, 'value', title);
-		var icon = new _Element15.Element('i');
-		var dialog = _this7.relevant.element;
+		var icon = new _Element16.Element('i');
+		var dialog = _this7.relevant[0].element;
+		var editor = _this7.relevant[1].element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(_this7.element);
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this7).call(_this7, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(LinkButton.prototype), 'addClass', _this7).call(_this7, ['active']);
+		});
+		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this7).call(_this7, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(LinkButton.prototype), 'removeClass', _this7).call(_this7, ['active']);
+		});
 		_get(Object.getPrototypeOf(LinkButton.prototype), 'listen', _this7).call(_this7, 'click', function (e) {
 			e.preventDefault();
-			_this7.element.blur();
+			editor.focus();
 			dialog.classList.toggle('toggled');
-			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			if (dialog.style.visibility === 'hidden') {
+				dialog.children[0].children[1].value = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+				return dialog.style.visibility = 'visible';
+			}
 			return dialog.style.visibility = 'hidden';
 		});
 		return _this7;
 	}
 
 	return LinkButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var ImageButton = exports.ImageButton = (function (_Element8) {
 	_inherits(ImageButton, _Element8);
@@ -1568,22 +1580,34 @@ var ImageButton = exports.ImageButton = (function (_Element8) {
 
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', _this8).call(_this8, [_this8.title, id]);
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'assign', _this8).call(_this8, 'value', title);
-		var icon = new _Element15.Element('i');
-		var dialog = _this8.relevant.element;
+		var icon = new _Element16.Element('i');
+		var dialog = _this8.relevant[0].element;
+		var editor = _this8.relevant[1].element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(_this8.element);
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this8).call(_this8, 'mousedown', function (e) {
+			e.preventDefault();
+			editor.focus();
+			return _get(Object.getPrototypeOf(ImageButton.prototype), 'addClass', _this8).call(_this8, ['active']);
+		});
+		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this8).call(_this8, 'mouseup', function () {
+			return _get(Object.getPrototypeOf(ImageButton.prototype), 'removeClass', _this8).call(_this8, ['active']);
+		});
 		_get(Object.getPrototypeOf(ImageButton.prototype), 'listen', _this8).call(_this8, 'click', function (e) {
 			e.preventDefault();
-			_this8.element.blur();
+			editor.focus();
 			dialog.classList.toggle('toggled');
-			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			if (dialog.style.visibility === 'hidden') {
+				dialog.children[0].children[1].value = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+				return dialog.style.visibility = 'visible';
+			}
 			return dialog.style.visibility = 'hidden';
 		});
 		return _this8;
 	}
 
 	return ImageButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
 	_inherits(UnorderedListButton, _Element9);
@@ -1595,7 +1619,7 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
 
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'addClass', _this9).call(_this9, [_this9.title, id]);
 		_get(Object.getPrototypeOf(UnorderedListButton.prototype), 'assign', _this9).call(_this9, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this9.relevant.element;
 		icon.addClass(['fa', 'fa-list-ul']);
 		icon.appendTo(_this9.element);
@@ -1616,7 +1640,7 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
 	}
 
 	return UnorderedListButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
 	_inherits(OrderedListButton, _Element10);
@@ -1628,7 +1652,7 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
 
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'addClass', _this10).call(_this10, [_this10.title, id]);
 		_get(Object.getPrototypeOf(OrderedListButton.prototype), 'assign', _this10).call(_this10, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this10.relevant.element;
 		icon.addClass(['fa', 'fa-list-ol']);
 		icon.appendTo(_this10.element);
@@ -1649,7 +1673,7 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
 	}
 
 	return OrderedListButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var IndentButton = exports.IndentButton = (function (_Element11) {
 	_inherits(IndentButton, _Element11);
@@ -1661,7 +1685,7 @@ var IndentButton = exports.IndentButton = (function (_Element11) {
 
 		_get(Object.getPrototypeOf(IndentButton.prototype), 'addClass', _this11).call(_this11, [_this11.title, id]);
 		_get(Object.getPrototypeOf(IndentButton.prototype), 'assign', _this11).call(_this11, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this11.relevant.element;
 		icon.addClass(['fa', 'fa-indent']);
 		icon.appendTo(_this11.element);
@@ -1682,7 +1706,7 @@ var IndentButton = exports.IndentButton = (function (_Element11) {
 	}
 
 	return IndentButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var OutdentButton = exports.OutdentButton = (function (_Element12) {
 	_inherits(OutdentButton, _Element12);
@@ -1694,7 +1718,7 @@ var OutdentButton = exports.OutdentButton = (function (_Element12) {
 
 		_get(Object.getPrototypeOf(OutdentButton.prototype), 'addClass', _this12).call(_this12, [_this12.title, id]);
 		_get(Object.getPrototypeOf(OutdentButton.prototype), 'assign', _this12).call(_this12, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this12.relevant.element;
 		icon.addClass(['fa', 'fa-outdent']);
 		icon.appendTo(_this12.element);
@@ -1715,7 +1739,7 @@ var OutdentButton = exports.OutdentButton = (function (_Element12) {
 	}
 
 	return OutdentButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var UndoButton = exports.UndoButton = (function (_Element13) {
 	_inherits(UndoButton, _Element13);
@@ -1727,7 +1751,7 @@ var UndoButton = exports.UndoButton = (function (_Element13) {
 
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'addClass', _this13).call(_this13, [_this13.title, id]);
 		_get(Object.getPrototypeOf(UndoButton.prototype), 'assign', _this13).call(_this13, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this13.relevant.element;
 		icon.addClass(['fa', 'fa-backward']);
 		icon.appendTo(_this13.element);
@@ -1749,7 +1773,7 @@ var UndoButton = exports.UndoButton = (function (_Element13) {
 	}
 
 	return UndoButton;
-})(_Element15.Element);
+})(_Element16.Element);
 
 var RedoButton = exports.RedoButton = (function (_Element14) {
 	_inherits(RedoButton, _Element14);
@@ -1761,7 +1785,7 @@ var RedoButton = exports.RedoButton = (function (_Element14) {
 
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'addClass', _this14).call(_this14, [_this14.title, id]);
 		_get(Object.getPrototypeOf(RedoButton.prototype), 'assign', _this14).call(_this14, 'value', title);
-		var icon = new _Element15.Element('i');
+		var icon = new _Element16.Element('i');
 		var editor = _this14.relevant.element;
 		icon.addClass(['fa', 'fa-forward']);
 		icon.appendTo(_this14.element);
@@ -1783,7 +1807,38 @@ var RedoButton = exports.RedoButton = (function (_Element14) {
 	}
 
 	return RedoButton;
-})(_Element15.Element);
+})(_Element16.Element);
+
+var FullscreenButton = exports.FullscreenButton = (function (_Element15) {
+	_inherits(FullscreenButton, _Element15);
+
+	function FullscreenButton(type, title, id, relevant) {
+		_classCallCheck(this, FullscreenButton);
+
+		var _this15 = _possibleConstructorReturn(this, Object.getPrototypeOf(FullscreenButton).call(this, type || 'button', title || 'Image', id, relevant));
+
+		_get(Object.getPrototypeOf(FullscreenButton.prototype), 'addClass', _this15).call(_this15, [_this15.title, id]);
+		_get(Object.getPrototypeOf(FullscreenButton.prototype), 'assign', _this15).call(_this15, 'value', title);
+		var icon = new _Element16.Element('i');
+		var container = _this15.relevant[0];
+		var editor = _this15.relevant[1].element;
+		icon.addClass(['fa', 'fa-expand']);
+		icon.appendTo(_this15.element);
+		_get(Object.getPrototypeOf(FullscreenButton.prototype), 'listen', _this15).call(_this15, 'click', function (e) {
+			e.preventDefault();
+			_this15.element.blur();
+			container.classList.toggle('fullscreen-toggled');
+			editor.classList.toggle('fullscreen-toggled');
+			_this15.element.classList.toggle('fullscreen-toggled');
+			icon.element.classList.toggle('fa-expand');
+			icon.element.classList.toggle('fa-compress');
+			return;
+		});
+		return _this15;
+	}
+
+	return FullscreenButton;
+})(_Element16.Element);
 
 },{"./Element":6}],5:[function(require,module,exports){
 'use strict';
@@ -2879,11 +2934,12 @@ function indentHandler(string, indices, type) {
  * @returns {Object} the new string, the updated indices
  */
 function insertHandler(string, indices, mark) {
+	var start = indices[0];
 	var end = indices[1];
 	var value = undefined;
-	value = string.substring(0, end) + mark + string.substring(end, string.length);
+	value = string.substring(0, start) + mark + string.substring(end, string.length);
 
-	return { value: value, range: [end, end + mark.length] };
+	return { value: value, range: [start, start + mark.length] };
 }
 
 },{}],12:[function(require,module,exports){
@@ -2936,14 +2992,14 @@ exports.default = function () {
 		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
 		var codeButton = new _Buttons.CodeButton('button', 'Code', id, textarea);
 		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id, textarea);
-		var linkButton = new _Buttons.LinkButton('button', 'Link', id, linkDialog);
+		var linkButton = new _Buttons.LinkButton('button', 'Link', id, [linkDialog, textarea]);
 		linkButton.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			headingDialog.element.style.visibility = 'hidden';
 			headingDialog.removeClass(['toggled']);
 		});
-		var imageButton = new _Buttons.ImageButton('button', 'Image', id, imageDialog);
+		var imageButton = new _Buttons.ImageButton('button', 'Image', id, [imageDialog, textarea]);
 		imageButton.listen('click', function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
@@ -2956,6 +3012,7 @@ exports.default = function () {
 		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, textarea);
 		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
 		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
+		var fullscreenButton = new _Buttons.FullscreenButton('button', 'Fullscreen', id, [container, textarea]);
 
 		var separatorA = new _Element.Element('span');
 		separatorA.addClass(['separator']);
@@ -2968,6 +3025,9 @@ exports.default = function () {
 
 		var separatorD = new _Element.Element('span');
 		separatorD.addClass(['separator']);
+
+		var separatorE = new _Element.Element('span');
+		separatorE.addClass(['separator']);
 
 		toolbar.appendTo(container);
 		textarea.appendTo(container);
@@ -2990,6 +3050,8 @@ exports.default = function () {
 		separatorD.appendTo(toolbar.element);
 		undoButton.appendTo(toolbar.element);
 		redoButton.appendTo(toolbar.element);
+		separatorE.appendTo(toolbar.element);
+		fullscreenButton.appendTo(toolbar.element);
 		dialogs.appendTo(toolbar.element);
 		linkDialog.appendTo(dialogs.element);
 		imageDialog.appendTo(dialogs.element);

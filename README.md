@@ -23,6 +23,11 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 ## Changelog
 
+#### v1.3
+
+- Fullscreen. Hitting the new fullscreen button in the toolbar will toggle `fullscreen-toggled` classes on the container as well as the editor. With this you can make the Marky Marked editor fill the entire browser window. Of course, the included stylesheet already handles it all for you, if you're using it.
+- Link and image insertion now behaves a bit differently. If any text is selected in the editor this text will be autopopulated into the alt text or display text input in the dialog. Additionally, instead of always inserting the Markdown snippet after the selected text, Marky Marked will now replace the selected text with the snippet. Which makes more sense when allowing for the autopopulation.
+
 #### v1.2
 
 - Headings selection is no longer done in a `<select>` element, but is instead a dialog with a `<ul>`. This was done to make the experience easier to style and make it consistent between browsers. 
@@ -98,6 +103,40 @@ New to v1.1.0 are toolbar buttons for indenting and outdenting. These buttons wi
 New to v1.1.0 is a set of a dialogs for inputs links and images as opposed to simply inserting a generic Markdown snippet. Now you are greeted with a basic dialog in which you can put in the URL and optionally the display text or alt text, depending on which button is clicked.
 
 ![Marky Marked Dialog](./images/marky-marked-dialog.png)
+
+As of v1.3.0, if any text is selected in the editor the 'Display text' or 'Alt text' input in the dialog will be autopopulated with that text when calling the dialog. Upon inserting the link or image snippet, that selected text will be replaced with the snippet.
+
+## Fullscreen
+
+New to v1.3.0 is the ability to use fullscreen. This is accomplished by toggling `fullscreen-toggled` on the container and the editor (as well as the button itself), when the new fullscreen button is hit.
+
+The included stylesheet handles the CSS changes already, but something like this should work, if you're not using the stylesheet.
+
+```css
+[id^="editor-"].fullscreen-toggled {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: $white;
+  z-index: 1000;
+}
+.marky-editor.fullscreen-toggled {
+  width: 100%;
+  height: 90%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 19px 60px, rgba(0, 0, 0, 0.22) 0 15px 20px;
+}
+button.fullscreen.fullscreen-toggled {
+	/* some styles to show the setting is toggled */
+}
+```
+
+This is what I use in the demo site.
+
+![Marky Marked Fullscreen](./images/marky-marked-fullscreen.png)
 
 ## API
 
@@ -257,7 +296,6 @@ $gulp styles
 
 - Ability to customize instances, particularly with some or all of marked's options.
 - Possible updates to undoing and redoing state by prioritizing formatting changes over user input (the idea being to always undo or redo to any toolbar action, overriding the index provided in the undo/redo methods). This would be an option as well.
-- On a smaller note, probably a few improvements to link and image inserting, autopopulating the currently selected text into the dialog.
 
 ## License
 

@@ -160,14 +160,26 @@ export class LinkButton extends Element {
 		super.addClass([this.title, id]);
 		super.assign('value', title);
 		let icon = new Element('i');
-		let dialog = this.relevant.element;
+		let dialog = this.relevant[0].element;
+		let editor = this.relevant[1].element;
 		icon.addClass(['fa', 'fa-link']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
-			this.element.blur();
+			editor.focus();
 			dialog.classList.toggle('toggled');
-			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			if (dialog.style.visibility === 'hidden') {
+				dialog.children[0].children[1].value = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+				return dialog.style.visibility = 'visible';
+			}
 			return dialog.style.visibility = 'hidden';
 		});
 	}
@@ -179,14 +191,26 @@ export class ImageButton extends Element {
 		super.addClass([this.title, id]);
 		super.assign('value', title);
 		let icon = new Element('i');
-		let dialog = this.relevant.element;
+		let dialog = this.relevant[0].element;
+		let editor = this.relevant[1].element;
 		icon.addClass(['fa', 'fa-file-image-o']);
 		icon.appendTo(this.element);
+		super.listen('mousedown', e => {
+			e.preventDefault();
+			editor.focus();
+			return super.addClass(['active']);
+		});
+		super.listen('mouseup', () => {
+			return super.removeClass(['active']);
+		});
 		super.listen('click', e => {
 			e.preventDefault();
-			this.element.blur();
+			editor.focus();
 			dialog.classList.toggle('toggled');
-			if (dialog.style.visibility === 'hidden') return dialog.style.visibility = 'visible';
+			if (dialog.style.visibility === 'hidden') {
+				dialog.children[0].children[1].value = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+				return dialog.style.visibility = 'visible';
+			}
 			return dialog.style.visibility = 'hidden';
 		});
 	}
@@ -340,6 +364,29 @@ export class RedoButton extends Element {
 			if (this.element.classList.contains('disabled')) return;
 			editor.focus();
 			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+		});
+	}
+}
+
+export class FullscreenButton extends Element {
+	constructor (type, title, id, relevant) {
+		super(type || 'button', title || 'Image', id, relevant);
+		super.addClass([this.title, id]);
+		super.assign('value', title);
+		let icon = new Element('i');
+		let container = this.relevant[0];
+		let editor = this.relevant[1].element;
+		icon.addClass(['fa', 'fa-expand']);
+		icon.appendTo(this.element);
+		super.listen('click', e => {
+			e.preventDefault();
+			this.element.blur();
+			container.classList.toggle('fullscreen-toggled');
+			editor.classList.toggle('fullscreen-toggled');
+			this.element.classList.toggle('fullscreen-toggled');
+			icon.element.classList.toggle('fa-expand');
+			icon.element.classList.toggle('fa-compress');
+			return;
 		});
 	}
 }
