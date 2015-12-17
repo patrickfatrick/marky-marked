@@ -212,6 +212,7 @@
   border: 2px solid $gray;
   transition: border-color 200ms ease-out;
   padding: 8px 12px;
+  resize: vertical;
   &:focus {
     border-color: $deepBlue;
   }
