@@ -23,6 +23,10 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 ## Changelog
 
+#### v1.3.4
+
+Resizing is now turned off by default for the textarea in the stylesheet.
+
 #### v1.3
 
 - Fullscreen. Hitting the new fullscreen button in the toolbar will toggle `fullscreen-toggled` classes on the container as well as the editor. With this you can make the Marky Marked editor fill the entire browser window. Of course, the included stylesheet already handles it all for you, if you're using it.
