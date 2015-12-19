@@ -337,7 +337,7 @@ export class UndoButton extends Element {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.undo(1, editor._marky.state, editor._marky.index);
 		});
 	}
 }
@@ -363,7 +363,7 @@ export class RedoButton extends Element {
 			e.preventDefault();
 			if (this.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.redo(1, editor._marky.state, editor._marky.index);
 		});
 	}
 }

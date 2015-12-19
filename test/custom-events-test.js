@@ -106,17 +106,4 @@ describe('custom events', () => {
 
 		dispatched.should.equal(1);
 	});
-	it('dispatches update on input', () => {
-		const editor = document.querySelector('.marky-editor');
-		let dispatched = 0;
-		editor.addEventListener('markyupdate', function () {
-			dispatched++;
-		});
-		var input;
-		input = document.createEvent('HTMLEvents');
-		input.initEvent('input', true, true, window);
-		editor.dispatchEvent(input);
-
-		dispatched.should.equal(1);
-	});
 });

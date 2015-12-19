@@ -115,8 +115,8 @@ describe('toolbar buttons', () => {
 		];
 		editor._marky.index = 5;
 		document.querySelector('.undo').click();
-		editor.value.should.be.empty;
-		output.value.should.be.empty;
+		editor.value.should.equal('Some really funny awesome text');
+		output.value.should.equal('<p>Some really funny awesome text</p>');
 	});
 	it('does not call the undo method if disabled', () => {
 		const editor = document.querySelector('.marky-editor');
@@ -132,7 +132,7 @@ describe('toolbar buttons', () => {
 			{markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>', selection: [0, 0]},
 			{markdown: 'Some really super funny awesome crazy text', html: '<p>Some super really funny awesome crazy text</p>', selection: [0, 0]}
 		];
-		editor._marky.index = 5;
+		editor._marky.index = 6;
 		document.querySelector('.undo').classList.add('disabled');
 		document.querySelector('.undo').click();
 		editor.value.should.equal('Some really super funny awesome crazy text');
@@ -154,8 +154,8 @@ describe('toolbar buttons', () => {
 		];
 		editor._marky.index = 0;
 		document.querySelector('.redo').click();
-		editor.value.should.equal('Some really funny awesome crazy text');
-		output.value.should.equal('<p>Some really funny awesome crazy text</p>');
+		editor.value.should.equal('Some text');
+		output.value.should.equal('<p>Some text</p>');
 	});
 	it('does not call the redo method if disabled', () => {
 		const editor = document.querySelector('.marky-editor');

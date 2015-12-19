@@ -1767,7 +1767,7 @@ var UndoButton = exports.UndoButton = (function (_Element13) {
 			e.preventDefault();
 			if (_this13.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.undo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.undo(1, editor._marky.state, editor._marky.index);
 		});
 		return _this13;
 	}
@@ -1801,7 +1801,7 @@ var RedoButton = exports.RedoButton = (function (_Element14) {
 			e.preventDefault();
 			if (_this14.element.classList.contains('disabled')) return;
 			editor.focus();
-			return editor._marky.redo(5, editor._marky.state, editor._marky.index);
+			return editor._marky.redo(1, editor._marky.state, editor._marky.index);
 		});
 		return _this14;
 	}
@@ -2953,31 +2953,31 @@ exports.default = function () {
 	var tag = arguments.length <= 0 || arguments[0] === undefined ? 'marky-mark' : arguments[0];
 
 	var containers = document.getElementsByTagName(tag);
-	Array.prototype.forEach.call(containers, function (container, i) {
+	return Array.prototype.forEach.call(containers, function (container, i) {
 		if (container.children.length) return;
 		var toolbar = new _Element.Element('div', 'Toolbar');
-		var id = 'editor-' + i;
+		var id = 'marky-mark-' + i;
 		container.id = id;
 		toolbar.addClass(['marky-toolbar', id]);
 
 		var dialogs = new _Element.Element('div', 'Dialogs');
 		dialogs.addClass(['marky-dialogs', id]);
 
-		var textarea = new _Element.Element('textarea', 'Marky Marked Editor');
-		textarea.addClass(['marky-editor', id]);
-		textarea.assign('_marky', new _Marky.Marky(textarea.element));
+		var markyEditor = new _Element.Element('textarea', 'Marky Marked Editor');
+		markyEditor.addClass(['marky-editor', id]);
+		markyEditor.assign('_marky', new _Marky.Marky(markyEditor.element));
 
-		var input = new _Element.Element('input', 'Marky Marked Output');
-		input.assign('type', 'hidden');
-		input.addClass(['marky-output', id]);
+		var markyOutput = new _Element.Element('input', 'Marky Marked Output');
+		markyOutput.assign('type', 'hidden');
+		markyOutput.addClass(['marky-output', id]);
 
-		var headingDialog = new _Dialogs.HeadingDialog('div', 'Heading Dialog', id, textarea);
+		var headingDialog = new _Dialogs.HeadingDialog('div', 'Heading Dialog', id, markyEditor);
 		headingDialog.element.style.visibility = 'hidden';
 
-		var linkDialog = new _Dialogs.LinkDialog('div', 'Link Dialog', id, textarea);
+		var linkDialog = new _Dialogs.LinkDialog('div', 'Link Dialog', id, markyEditor);
 		linkDialog.element.style.visibility = 'hidden';
 
-		var imageDialog = new _Dialogs.ImageDialog('div', 'Image Dialog', id, textarea);
+		var imageDialog = new _Dialogs.ImageDialog('div', 'Image Dialog', id, markyEditor);
 		imageDialog.element.style.visibility = 'hidden';
 
 		var headingButton = new _Buttons.HeadingButton('button', 'Heading', id, headingDialog);
@@ -2987,32 +2987,32 @@ exports.default = function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
 		});
-		var boldButton = new _Buttons.BoldButton('button', 'Bold', id, textarea);
-		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id, textarea);
-		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, textarea);
-		var codeButton = new _Buttons.CodeButton('button', 'Code', id, textarea);
-		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id, textarea);
-		var linkButton = new _Buttons.LinkButton('button', 'Link', id, [linkDialog, textarea]);
+		var boldButton = new _Buttons.BoldButton('button', 'Bold', id, markyEditor);
+		var italicButton = new _Buttons.ItalicButton('button', 'Italic', id, markyEditor);
+		var strikethroughButton = new _Buttons.StrikethroughButton('button', 'Strikethrough', id, markyEditor);
+		var codeButton = new _Buttons.CodeButton('button', 'Code', id, markyEditor);
+		var blockquoteButton = new _Buttons.BlockquoteButton('button', 'Blockquote', id, markyEditor);
+		var linkButton = new _Buttons.LinkButton('button', 'Link', id, [linkDialog, markyEditor]);
 		linkButton.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			headingDialog.element.style.visibility = 'hidden';
 			headingDialog.removeClass(['toggled']);
 		});
-		var imageButton = new _Buttons.ImageButton('button', 'Image', id, [imageDialog, textarea]);
+		var imageButton = new _Buttons.ImageButton('button', 'Image', id, [imageDialog, markyEditor]);
 		imageButton.listen('click', function () {
 			linkDialog.element.style.visibility = 'hidden';
 			linkDialog.removeClass(['toggled']);
 			headingDialog.element.style.visibility = 'hidden';
 			headingDialog.removeClass(['toggled']);
 		});
-		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered List', id, textarea);
-		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered List', id, textarea);
-		var outdentButton = new _Buttons.OutdentButton('button', 'Outdent', id, textarea);
-		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, textarea);
-		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, textarea);
-		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, textarea);
-		var fullscreenButton = new _Buttons.FullscreenButton('button', 'Fullscreen', id, [container, textarea]);
+		var unorderedListButton = new _Buttons.UnorderedListButton('button', 'Unordered List', id, markyEditor);
+		var orderedListButton = new _Buttons.OrderedListButton('button', 'Ordered List', id, markyEditor);
+		var outdentButton = new _Buttons.OutdentButton('button', 'Outdent', id, markyEditor);
+		var indentButton = new _Buttons.IndentButton('button', 'Indent', id, markyEditor);
+		var undoButton = new _Buttons.UndoButton('button', 'Undo', id, markyEditor);
+		var redoButton = new _Buttons.RedoButton('button', 'Redo', id, markyEditor);
+		var fullscreenButton = new _Buttons.FullscreenButton('button', 'Fullscreen', id, [container, markyEditor]);
 
 		var separatorA = new _Element.Element('span');
 		separatorA.addClass(['separator']);
@@ -3030,8 +3030,8 @@ exports.default = function () {
 		separatorE.addClass(['separator']);
 
 		toolbar.appendTo(container);
-		textarea.appendTo(container);
-		input.appendTo(container);
+		markyEditor.appendTo(container);
+		markyOutput.appendTo(container);
 		headingButton.appendTo(toolbar.element);
 		separatorA.appendTo(toolbar.element);
 		boldButton.appendTo(toolbar.element);
@@ -3057,12 +3057,12 @@ exports.default = function () {
 		imageDialog.appendTo(dialogs.element);
 		headingDialog.appendTo(dialogs.element);
 
-		textarea.listen('markyupdate', function (e) {
+		markyEditor.listen('markyupdate', function (e) {
 			this._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], this._marky.state, this._marky.index);
 			return e.target.dispatchEvent(_customEvents.markychange);
 		}, false);
 
-		textarea.listen('markychange', function (e) {
+		markyEditor.listen('markychange', function (e) {
 			var html = this._marky.state[this._marky.index].html;
 			if (this._marky.index === 0) {
 				undoButton.addClass(['disabled']);
@@ -3077,23 +3077,128 @@ exports.default = function () {
 			return e.target.nextSibling.value = html;
 		}, false);
 
-		textarea.listen('input', function (e) {
+		/**
+   * Listen for input events, set timeout to update state, clear timeout from previous input
+   */
+		markyEditor.listen('input', function (e) {
+			window.clearTimeout(timeoutID);
+			timeoutID = window.setTimeout(function () {
+				return e.target.dispatchEvent(_customEvents.markyupdate);
+			}, 1000);
+		}, false);
+
+		/**
+   * Listen for change events (requires loss of focus) and update state
+   */
+		markyEditor.listen('change', function (e) {
 			return e.target.dispatchEvent(_customEvents.markyupdate);
 		}, false);
 
-		textarea.listen('select', function (e) {
+		/**
+   * Listen for pasting into the editor and update state
+   */
+		markyEditor.listen('paste', function (e) {
+			setTimeout(function () {
+				return e.target.dispatchEvent(_customEvents.markyupdate);
+			}, 0);
+		}, false);
+
+		/**
+   * Listen for cutting from the editor and update state
+   */
+		markyEditor.listen('cut', function (e) {
+			setTimeout(function () {
+				return e.target.dispatchEvent(_customEvents.markyupdate);
+			}, 0);
+		}, false);
+
+		var deleteSelection = 0;
+
+		/**
+   * Listen for keydown events, if key is delete key, set deleteSelection to length of selection
+   */
+		markyEditor.listen('keydown', function (e) {
+			if (e.which === 8) return deleteSelection = e.target.selectionEnd - e.target.selectionStart;
+		});
+
+		var keyMap = []; // Used for determining whether or not to update state on space keyup
+		var punctuations = [46, // period
+		44, // comma
+		63, // question mark
+		33, // exclamation point
+		58, // colon
+		59, // semi-colon
+		47, // back slash
+		92, // forward slash
+		38, // ampersand
+		124, // vertical pipe
+		32 // space
+		];
+
+		/**
+   * Listen for keyup events, if key is space or period, update state and clear input timeout.
+   * If key is delete key and it's a bulk selection, set deleteSelection to 0, clear input timeout, and update state.
+   */
+		markyEditor.listen('keypress', function (e) {
+			keyMap.push(e.which);
+			if (keyMap.length > 2) keyMap.shift();
+			//if (e.which === 32 && (keyMap[0] === 32 || keyMap[0] === 190)) return window.clearTimeout(timeoutID);
+			var _iteratorNormalCompletion = true;
+			var _didIteratorError = false;
+			var _iteratorError = undefined;
+
+			try {
+				for (var _iterator = punctuations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					var punctuation = _step.value;
+
+					if (e.which === 32 && keyMap[0] === punctuation) {
+						return window.clearTimeout(timeoutID);
+					}
+					if (e.which === punctuation) {
+						window.clearTimeout(timeoutID);
+						return e.target.dispatchEvent(_customEvents.markyupdate);
+					}
+				}
+			} catch (err) {
+				_didIteratorError = true;
+				_iteratorError = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion && _iterator.return) {
+						_iterator.return();
+					}
+				} finally {
+					if (_didIteratorError) {
+						throw _iteratorError;
+					}
+				}
+			}
+		});
+
+		/**
+   * Listen for keyup events, if key is delete and it's a bulk selection, update state and clear input timeout.
+   */
+		markyEditor.listen('keyup', function (e) {
+			if (e.which === 8 && deleteSelection > 0) {
+				window.clearTimeout(timeoutID);
+				deleteSelection = 0;
+				return e.target.dispatchEvent(_customEvents.markyupdate);
+			}
+		});
+
+		markyEditor.listen('select', function (e) {
 			return e.target.dispatchEvent(_customEvents.markyselect);
 		});
 
-		textarea.listen('blur', function (e) {
+		markyEditor.listen('blur', function (e) {
 			return e.target.dispatchEvent(_customEvents.markyblur);
 		});
 
-		textarea.listen('focus', function (e) {
+		markyEditor.listen('focus', function (e) {
 			return e.target.dispatchEvent(_customEvents.markyfocus);
 		});
 
-		textarea.listen('click', function () {
+		markyEditor.listen('click', function () {
 			imageDialog.element.style.visibility = 'hidden';
 			imageDialog.removeClass(['toggled']);
 			linkDialog.element.style.visibility = 'hidden';
@@ -3114,6 +3219,13 @@ var _Buttons = require('./Buttons');
 var _Dialogs = require('./Dialogs');
 
 var _customEvents = require('./custom-events');
+
+var timeoutID = undefined; //Used later for input events
+
+/**
+ * Register and append the DOM elements needed and set the event listeners
+ * @param 	{String}	tag name to be used for initialization
+ */
 
 },{"./Buttons":4,"./Dialogs":5,"./Element":6,"./Marky":8,"./custom-events":9}],13:[function(require,module,exports){
 "use strict";

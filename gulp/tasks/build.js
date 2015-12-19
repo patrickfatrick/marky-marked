@@ -11,7 +11,7 @@ bundler.transform(config.transform);
 gulp.task('build', bundle);
 
 function bundle() {
-  return bundler.bundle()
+	return bundler.bundle()
   // log errors if they happen
   .on('error', gutil.log.bind(gutil, 'Browserify Error'))
   .pipe(source(config.outputName))

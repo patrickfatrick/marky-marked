@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins';
 
-[id^="editor-"].fullscreen-toggled {
+[id ^= "marky-mark-"].fullscreen-toggled {
   width: 100%;
   height: 100%;
   position: fixed;

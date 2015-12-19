@@ -23,9 +23,39 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 ## Changelog
 
+#### v1.4
+
+State management is a lot smarter now. Instead of the previous behavior where a markyupdate event would fire on every input event (meaning, every time a character is added or removed), and undo/redos would just go back or forward 5 state, updates are now fired on the following events:
+
+- period input
+- comma input
+- question mark input
+- exclamation point input
+- colon input
+- semi-colon input
+- back slash input
+- forward slash input
+- ampersand input
+- vertical pipe input
+- space input (but not a space directly following any of the above punctuation or another space)
+- Deletion of a bulk selection (using the delete key)
+- Any toolbar button is used (aside from undo, redo, and fullscreen)
+- The editor's value is committed by uthe user, meaning focus has moved off of the editor
+- Lastly, if there's ever more than a one-second pause 
+
+This essentially makes all toolbar functionality push an update, but also any word input and deliberate deletion of more than one character.
+
+The main reasoning behind this change is to make the editor more performant. Rather than constantly writing state with every little change Marky Marked can be a bit more selective. I haven't run any benchmarks but by watching stats on my computer I noticed a drastic reduction in processor power needing to be used.
+
+The other added benefit is that now we have a lot more state that can be written, since we're writing state a lot less frequently.
+
+#### v1.3.5
+
+- Mostly clean up. Only potentially breaking change should be that I've changed the super generic id that's added to most elements from `editor-0` for instance to `marky-mark-0` (as an id for the container element, as a class for everything else).
+
 #### v1.3.4
 
-Resizing is now turned off by default for the textarea in the stylesheet.
+- Resizing is now turned off by default for the textarea in the stylesheet. This can be overridden, of course.
 
 #### v1.3
 
@@ -41,9 +71,9 @@ Resizing is now turned off by default for the textarea in the stylesheet.
 
 ## Dependencies & Support
 
-Marky Marked has two dependencies, both of which are included in the /dist files:
+Marky Marked has two dependencies:
 
-- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.
+- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
 - Optional: [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.
 
 Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it light, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
@@ -59,7 +89,7 @@ $git clone git:github.com/patrickfatrick/marky-marked.git
 
 ## Usage
 
-The easiest way to instantiate an editor is to simply add `<marky-mark></marky-mark>` to your markup and then call `marky.mark()`.
+The easiest way to instantiate an editor is to simply add a `<marky-mark></marky-mark>` container tag to your markup and then call `marky.mark()`.
 
 ```html
 <marky-mark></marky-mark>
@@ -82,7 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 ```
 
-From there Marky Marked should handle the rest. Note that the element you use should be empty. If it has any innerHTML Marky Marked will skip it. This is to ensure you can't initialize the same element more than once.
+From there Marky Marked should handle the rest. Note that the element you use should be empty. If it has any innerHTML Marky Marked will ignore it. This is to ensure you can't initialize the same element more than once.
+
+You can add as many editors as you'd like to any page, as long as they all use the same container tag. Marky Marked will assign each container an ID of `marky-mark-0`, `marky-mark-1`, etc., to make them easy to access. Most of the new elements in the container's subtree are assigned a matching class.
 
 ## Styling
 
@@ -94,7 +126,7 @@ If you do use the stylesheet that comes with, you will need to install [Font Awe
 
 Think of state as a snapshot of the data inside Marky Marked at any given time. Marky Marked stores up to 1000 states, after which it starts clearing out the oldest states as new states are created. So it's not infinite.
 
-The undo/redo buttons advance or go back five steps in the state timeline. So you effectively have 200 user-facing states at any given time that reflect 1000 changes (keep in mind that typing a single character counts as a change).
+The undo/redo buttons advance or go back one step in the state timeline.
 
 But if you undo to a previous state and then create a new state by typing or adding a format from the toolbar, the timeline erases those states after the one you went back to. Just like in most any file editor.
 

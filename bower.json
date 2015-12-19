@@ -1,18 +1,21 @@
 {
 	"name": "marky-marked",
 	"main": "index.js",
-	"version": "1.3.4",
+	"version": "1.4.0",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],
-	"description": "An in-browser content editor so sweet you'll be feeling good vibrations.",
+	"description": "A <textarea> so sweet you'll be feeling good vibrations.",
 	"moduleType": [
 		"globals",
 		"node"
 	],
 	"keywords": [
 		"Javascript",
-		"dates"
+		"textarea",
+		"Markdown",
+		"content editor",
+		"WYSIWYG"
 	],
 	"license": "MIT",
 	"homepage": "https://github.com/patrickfatrick/marky-marked",
