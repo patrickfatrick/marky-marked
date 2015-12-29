@@ -11,8 +11,8 @@ import {Element} from './Element';
 export class HeadingItem extends Element {
 	constructor (type, title, value, iconClass = null) {
 		super(type || 'li', title);
-		super.addClass([this.title.replace(' ', '-')]);
-		super.assign('value', value);
+		this.addClass([this.title.replace(' ', '-')]);
+		this.assign('value', value);
 		let button = new Element('button', title);
 		button.assign('value', value);
 		button.addClass(['heading-button']);

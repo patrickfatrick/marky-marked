@@ -14,7 +14,7 @@ import {HeadingItem} from './ListItems';
 export class LinkDialog extends Element {
 	constructor (type, title, id, relevant) {
 		super(type || 'div', title || 'Link Dialog', id, relevant);
-		super.addClass([this.title, id, 'dialog']);
+		this.addClass([this.title, id, 'dialog']);
 		let element = this.element;
 		let editor = this.relevant.element;
 
@@ -54,11 +54,11 @@ export class LinkDialog extends Element {
 			linkUrlInput.element.value = '';
 			linkDisplayInput.element.value = '';
 			element.style.visibility = 'hidden';
-			super.removeClass(['toggled']);
+			this.removeClass(['toggled']);
 			return editor._marky.link([editor.selectionStart, editor.selectionEnd], url, display);
 		});
 		this.relevant.listen('click', () => {
-			super.removeClass(['toggled']);
+			this.removeClass(['toggled']);
 			return element.style.visibility = 'hidden';
 		});
 	}
@@ -67,7 +67,7 @@ export class LinkDialog extends Element {
 export class ImageDialog extends Element {
 	constructor (type, title, id, relevant) {
 		super(type || 'div', title || 'Image Dialog', id, relevant);
-		super.addClass([this.title, id, 'dialog']);
+		this.addClass([this.title, id, 'dialog']);
 		let element = this.element;
 		let editor = this.relevant.element;
 
@@ -107,11 +107,11 @@ export class ImageDialog extends Element {
 			imageSourceInput.element.value = '';
 			imageAltInput.element.value = '';
 			element.style.visibility = 'hidden';
-			super.removeClass(['toggled']);
+			this.removeClass(['toggled']);
 			return editor._marky.image([editor.selectionStart, editor.selectionEnd], source, alt);
 		});
 		this.relevant.listen('click', () => {
-			super.removeClass(['toggled']);
+			this.removeClass(['toggled']);
 			return element.style.visibility = 'hidden';
 		});
 	}
@@ -120,7 +120,7 @@ export class ImageDialog extends Element {
 export class HeadingDialog extends Element {
 	constructor (type, title, id, relevant) {
 		super(type || 'div', title || 'Heading Dialog', id, relevant);
-		super.addClass([this.title, id, 'dialog']);
+		this.addClass([this.title, id, 'dialog']);
 		let element = this.element;
 		let editor = this.relevant.element;
 
@@ -149,7 +149,7 @@ export class HeadingDialog extends Element {
 				e.preventDefault();
 				let value = parseInt(e.target.value);
 				editor.focus();
-				super.removeClass(['toggled']);
+				this.removeClass(['toggled']);
 				element.style.visibility = 'hidden';
 				return editor._marky.heading(value, [editor.selectionStart, editor.selectionEnd]);
 			});

@@ -28,21 +28,19 @@ export class Element {
 		return container.appendChild(this.element);
 	}
 
-	addClass(classNames) {
-		classNames.forEach(className => {
+	addClass (classNames) {
+		return classNames.forEach(className => {
 			this.element.classList.add(className.replace(/[ ]/g, '-').toLowerCase());
 		});
-		return;
 	}
 
-	removeClass(classNames) {
-		classNames.forEach(className => {
+	removeClass (classNames) {
+		return classNames.forEach(className => {
 			this.element.classList.remove(className.replace(/[ ]/g, '-').toLowerCase());
 		});
-		return;
 	}
 
-	listen(evt, cb) {
+	listen (evt, cb) {
 		return this.element.addEventListener(evt, cb);
 	}
 }

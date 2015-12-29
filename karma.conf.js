@@ -5,7 +5,7 @@ module.exports = function (karma) {
 	karma.set({
 		basePath: '',
 		files: ['test/test_helper.js', 'src/**.js', 'test/**/*-test.js'],
-		frameworks: ['browserify', 'mocha', 'chai'],
+		frameworks: ['browserify', 'mocha', 'chai'], // 'mocha', 'chai'
 		plugins: [
 			'karma-browserify',
 			'karma-mocha',
@@ -32,12 +32,12 @@ module.exports = function (karma) {
 				}],
 				istanbul({
 					instrumenter: isparta,
-					ignore: ['**/shims.js', 'test/**', '**/node_modules/**']
+					ignore: ['test/**', '**/node_modules/**']
 				})
 			],
 			extensions: ['.js']
 		},
-		reporters: ['coverage', 'mocha'],
+		reporters: ['coverage',  'mocha'],
 		coverageReporter: {
 			reporters: [
 				{
