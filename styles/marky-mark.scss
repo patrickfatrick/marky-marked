@@ -28,15 +28,20 @@
     border-left: none;
     padding: 6px;
     border-radius: 0;
-    box-shadow: $boxShadowA 0 1px 1px, $boxShadowB 0 1px 5px;
     min-width: 1.5rem;
     min-height: 1.5rem;
     text-align: center;
     background-color: white;
     color: $lightGray;
+    transition: box-shadow 200ms ease-out;
+    &:hover {
+      box-shadow: $boxShadowA 0 1px 1px, $boxShadowB 0 1px 5px;
+      transition: unset;
+    }
     &.active,
     &.disabled,
     &:active {
+      box-shadow: none;
       color: $gray !important;
       background: -webkit-linear-gradient($white * 0.7, $white);
       background: -moz-linear-gradient($white * 0.7, $white);
