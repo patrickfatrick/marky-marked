@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Handles adding and removing state
  * @param   {Array}    state      the state timeline

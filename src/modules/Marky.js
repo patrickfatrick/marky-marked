@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Marky Mark
  * Author: Patrick Fricano

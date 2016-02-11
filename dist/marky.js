@@ -1337,7 +1337,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {HTMLElement}	relevant	element this element should have access to
  */
 
-var HeadingButton = exports.HeadingButton = (function (_Element) {
+var HeadingButton = exports.HeadingButton = function (_Element) {
 	_inherits(HeadingButton, _Element);
 
 	function HeadingButton(type, title, id, relevant) {
@@ -1362,9 +1362,9 @@ var HeadingButton = exports.HeadingButton = (function (_Element) {
 	}
 
 	return HeadingButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var BoldButton = exports.BoldButton = (function (_Element2) {
+var BoldButton = exports.BoldButton = function (_Element2) {
 	_inherits(BoldButton, _Element2);
 
 	function BoldButton(type, title, id, relevant) {
@@ -1395,9 +1395,9 @@ var BoldButton = exports.BoldButton = (function (_Element2) {
 	}
 
 	return BoldButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var ItalicButton = exports.ItalicButton = (function (_Element3) {
+var ItalicButton = exports.ItalicButton = function (_Element3) {
 	_inherits(ItalicButton, _Element3);
 
 	function ItalicButton(type, title, id, relevant) {
@@ -1428,9 +1428,9 @@ var ItalicButton = exports.ItalicButton = (function (_Element3) {
 	}
 
 	return ItalicButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
+var StrikethroughButton = exports.StrikethroughButton = function (_Element4) {
 	_inherits(StrikethroughButton, _Element4);
 
 	function StrikethroughButton(type, title, id, relevant) {
@@ -1461,9 +1461,9 @@ var StrikethroughButton = exports.StrikethroughButton = (function (_Element4) {
 	}
 
 	return StrikethroughButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var CodeButton = exports.CodeButton = (function (_Element5) {
+var CodeButton = exports.CodeButton = function (_Element5) {
 	_inherits(CodeButton, _Element5);
 
 	function CodeButton(type, title, id, relevant) {
@@ -1494,9 +1494,9 @@ var CodeButton = exports.CodeButton = (function (_Element5) {
 	}
 
 	return CodeButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
+var BlockquoteButton = exports.BlockquoteButton = function (_Element6) {
 	_inherits(BlockquoteButton, _Element6);
 
 	function BlockquoteButton(type, title, id, relevant) {
@@ -1527,9 +1527,9 @@ var BlockquoteButton = exports.BlockquoteButton = (function (_Element6) {
 	}
 
 	return BlockquoteButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var LinkButton = exports.LinkButton = (function (_Element7) {
+var LinkButton = exports.LinkButton = function (_Element7) {
 	_inherits(LinkButton, _Element7);
 
 	function LinkButton(type, title, id, relevant) {
@@ -1566,9 +1566,9 @@ var LinkButton = exports.LinkButton = (function (_Element7) {
 	}
 
 	return LinkButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var ImageButton = exports.ImageButton = (function (_Element8) {
+var ImageButton = exports.ImageButton = function (_Element8) {
 	_inherits(ImageButton, _Element8);
 
 	function ImageButton(type, title, id, relevant) {
@@ -1605,9 +1605,9 @@ var ImageButton = exports.ImageButton = (function (_Element8) {
 	}
 
 	return ImageButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
+var UnorderedListButton = exports.UnorderedListButton = function (_Element9) {
 	_inherits(UnorderedListButton, _Element9);
 
 	function UnorderedListButton(type, title, id, relevant) {
@@ -1638,9 +1638,9 @@ var UnorderedListButton = exports.UnorderedListButton = (function (_Element9) {
 	}
 
 	return UnorderedListButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
+var OrderedListButton = exports.OrderedListButton = function (_Element10) {
 	_inherits(OrderedListButton, _Element10);
 
 	function OrderedListButton(type, title, id, relevant) {
@@ -1671,9 +1671,9 @@ var OrderedListButton = exports.OrderedListButton = (function (_Element10) {
 	}
 
 	return OrderedListButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var IndentButton = exports.IndentButton = (function (_Element11) {
+var IndentButton = exports.IndentButton = function (_Element11) {
 	_inherits(IndentButton, _Element11);
 
 	function IndentButton(type, title, id, relevant) {
@@ -1704,9 +1704,9 @@ var IndentButton = exports.IndentButton = (function (_Element11) {
 	}
 
 	return IndentButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var OutdentButton = exports.OutdentButton = (function (_Element12) {
+var OutdentButton = exports.OutdentButton = function (_Element12) {
 	_inherits(OutdentButton, _Element12);
 
 	function OutdentButton(type, title, id, relevant) {
@@ -1737,9 +1737,9 @@ var OutdentButton = exports.OutdentButton = (function (_Element12) {
 	}
 
 	return OutdentButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var UndoButton = exports.UndoButton = (function (_Element13) {
+var UndoButton = exports.UndoButton = function (_Element13) {
 	_inherits(UndoButton, _Element13);
 
 	function UndoButton(type, title, id, relevant) {
@@ -1771,9 +1771,9 @@ var UndoButton = exports.UndoButton = (function (_Element13) {
 	}
 
 	return UndoButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var RedoButton = exports.RedoButton = (function (_Element14) {
+var RedoButton = exports.RedoButton = function (_Element14) {
 	_inherits(RedoButton, _Element14);
 
 	function RedoButton(type, title, id, relevant) {
@@ -1805,9 +1805,9 @@ var RedoButton = exports.RedoButton = (function (_Element14) {
 	}
 
 	return RedoButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
-var FullscreenButton = exports.FullscreenButton = (function (_Element15) {
+var FullscreenButton = exports.FullscreenButton = function (_Element15) {
 	_inherits(FullscreenButton, _Element15);
 
 	function FullscreenButton(type, title, id, relevant) {
@@ -1836,7 +1836,7 @@ var FullscreenButton = exports.FullscreenButton = (function (_Element15) {
 	}
 
 	return FullscreenButton;
-})(_Element16.Element);
+}(_Element16.Element);
 
 },{"./Element":6}],5:[function(require,module,exports){
 'use strict';
@@ -1866,7 +1866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {HTMLElement}	relevant	element this element should have access to
  */
 
-var LinkDialog = exports.LinkDialog = (function (_Element) {
+var LinkDialog = exports.LinkDialog = function (_Element) {
 	_inherits(LinkDialog, _Element);
 
 	function LinkDialog(type, title, id, relevant) {
@@ -1925,9 +1925,9 @@ var LinkDialog = exports.LinkDialog = (function (_Element) {
 	}
 
 	return LinkDialog;
-})(_Element4.Element);
+}(_Element4.Element);
 
-var ImageDialog = exports.ImageDialog = (function (_Element2) {
+var ImageDialog = exports.ImageDialog = function (_Element2) {
 	_inherits(ImageDialog, _Element2);
 
 	function ImageDialog(type, title, id, relevant) {
@@ -1986,9 +1986,9 @@ var ImageDialog = exports.ImageDialog = (function (_Element2) {
 	}
 
 	return ImageDialog;
-})(_Element4.Element);
+}(_Element4.Element);
 
-var HeadingDialog = exports.HeadingDialog = (function (_Element3) {
+var HeadingDialog = exports.HeadingDialog = function (_Element3) {
 	_inherits(HeadingDialog, _Element3);
 
 	function HeadingDialog(type, title, id, relevant) {
@@ -2034,18 +2034,10 @@ var HeadingDialog = exports.HeadingDialog = (function (_Element3) {
 	}
 
 	return HeadingDialog;
-})(_Element4.Element);
+}(_Element4.Element);
 
 },{"./Element":6,"./ListItems":7}],6:[function(require,module,exports){
 'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Creates an HTML element with some built-in shortcut methods
@@ -2056,7 +2048,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @param {HTMLElement}	relevant	element this element should have access to
  */
 
-var Element = exports.Element = (function () {
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Element = exports.Element = function () {
 	function Element(type) {
 		var title = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 		var id = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
@@ -2113,7 +2113,7 @@ var Element = exports.Element = (function () {
 	}]);
 
 	return Element;
-})();
+}();
 
 },{}],7:[function(require,module,exports){
 'use strict';
@@ -2140,7 +2140,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @param {String} 	value		a value to assign the element
  */
 
-var HeadingItem = exports.HeadingItem = (function (_Element) {
+var HeadingItem = exports.HeadingItem = function (_Element) {
 	_inherits(HeadingItem, _Element);
 
 	function HeadingItem(type, title, value) {
@@ -2167,21 +2167,23 @@ var HeadingItem = exports.HeadingItem = (function (_Element) {
 	}
 
 	return HeadingItem;
-})(_Element2.Element);
+}(_Element2.Element);
 
 },{"./Element":6}],8:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Marky Mark
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Author: Patrick Fricano
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * https://www.github.com/patrickfatrick/marky-marked
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
+/**
+ * Marky Mark
+ * Author: Patrick Fricano
+ * https://www.github.com/patrickfatrick/marky-marked
+ */
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.Marky = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _prototypes = require('./prototypes');
 
@@ -2207,7 +2209,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 (0, _prototypes2.default)();
 
-var Marky = exports.Marky = (function () {
+var Marky = exports.Marky = function () {
 	function Marky(editor) {
 		_classCallCheck(this, Marky);
 
@@ -2224,6 +2226,7 @@ var Marky = exports.Marky = (function () {
   * @param {Array}  state    the state timeline
   * @param {Number} index    current state index
   */
+
 
 	_createClass(Marky, [{
 		key: 'update',
@@ -2683,15 +2686,16 @@ var Marky = exports.Marky = (function () {
 	}]);
 
 	return Marky;
-})();
+}();
 
 },{"./custom-events":9,"./dispatcher":10,"./handlers":11,"./mark":12,"./prototypes":14}],9:[function(require,module,exports){
 'use strict';
 
+// Custom Event Polyfill for IE9+
+
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-// Custom Event Polyfill for IE9+
 (function () {
 	function CustomEvent(event, params) {
 		params = params || {
@@ -2782,6 +2786,14 @@ function redo(num, state, stateIndex) {
 },{"./operation":13,"marked":2}],11:[function(require,module,exports){
 'use strict';
 
+/**
+ * Handles wrapping format strings around a selection
+ * @param   {String} string  the entire string to use
+ * @param   {Array}  indices the starting and ending positions to wrap
+ * @param   {String} mark    the format string to use
+ * @returns {Object} the new string, the updated indices
+ */
+
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
@@ -2790,13 +2802,6 @@ exports.blockHandler = blockHandler;
 exports.listHandler = listHandler;
 exports.indentHandler = indentHandler;
 exports.insertHandler = insertHandler;
-/**
- * Handles wrapping format strings around a selection
- * @param   {String} string  the entire string to use
- * @param   {Array}  indices the starting and ending positions to wrap
- * @param   {String} mark    the format string to use
- * @returns {Object} the new string, the updated indices
- */
 function inlineHandler(string, indices, mark) {
 	var value = undefined;
 	var useMark = [mark, mark];
@@ -3198,7 +3203,15 @@ var timeoutID = undefined; //Used later for input events
  */
 
 },{"./Buttons":4,"./Dialogs":5,"./Element":6,"./Marky":8,"./custom-events":9}],13:[function(require,module,exports){
-"use strict";
+'use strict';
+
+/**
+ * Handles adding and removing state
+ * @param   {Array}    state      the state timeline
+ * @param   {Number}   stateIndex the current state index
+ * @param   {Function} fn         a function to call
+ * @returns {Object}   the new timeline
+ */
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -3217,7 +3230,7 @@ exports.default = function (state, stateIndex, fn) {
 };
 
 },{}],14:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true

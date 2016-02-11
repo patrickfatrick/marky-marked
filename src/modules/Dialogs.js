@@ -1,3 +1,5 @@
+'use strict';
+
 import {Element} from './Element';
 import {HeadingItem} from './ListItems';
 

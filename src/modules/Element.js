@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Creates an HTML element with some built-in shortcut methods
  * @class

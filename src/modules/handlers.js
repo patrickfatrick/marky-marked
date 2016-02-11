@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Handles wrapping format strings around a selection
  * @param   {String} string  the entire string to use

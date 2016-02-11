@@ -1,3 +1,5 @@
+'use strict';
+
 import {Marky} from './Marky';
 import {Element} from './Element';
 import {HeadingButton, BoldButton, ItalicButton, StrikethroughButton, CodeButton, BlockquoteButton, LinkButton, ImageButton, UnorderedListButton, OrderedListButton, IndentButton, OutdentButton, UndoButton, RedoButton, FullscreenButton} from './Buttons';

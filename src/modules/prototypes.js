@@ -1,3 +1,5 @@
+'use strict';
+
 export default function () {
 	/**
 	 * Finds the first index based on a regex match

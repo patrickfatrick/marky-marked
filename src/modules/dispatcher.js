@@ -1,3 +1,5 @@
+'use strict';
+
 import marked from 'marked';
 import operation from './operation';
 

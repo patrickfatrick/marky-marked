@@ -1,3 +1,5 @@
+'use strict';
+
 // Custom Event Polyfill for IE9+
 (function () {
 	function CustomEvent(event, params) {
