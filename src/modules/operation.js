@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /**
  * Handles adding and removing state
@@ -8,13 +8,13 @@
  * @returns {Object}   the new timeline
  */
 export default function (state, stateIndex, fn) {
-	state = state.slice(0, stateIndex + 1);
-	let newVersion = fn();
-	state.push(newVersion);
-	stateIndex++;
-	if (stateIndex > 999) {
-		state.shift();
-		stateIndex--;
-	}
-	return {state: state, index: stateIndex};
+  state = state.slice(0, stateIndex + 1)
+  let newVersion = fn()
+  state.push(newVersion)
+  stateIndex++
+  if (stateIndex > 999) {
+    state.shift()
+    stateIndex--
+  }
+  return {state: state, index: stateIndex}
 }

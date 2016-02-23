@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import marked from 'marked';
-import operation from './operation';
+import marked from 'marked'
+import operation from './operation'
 
 /**
  * updates the state
@@ -13,14 +13,14 @@ import operation from './operation';
  * @returns {Object} the newly active state
  */
 export function update (markdown, selection, state, stateIndex) {
-	let markedOptions = {
-		sanitize: true
-	};
-	let html = marked(markdown, markedOptions).toString() || '';
-	let newState = operation(state, stateIndex, () => {
-		return {markdown: markdown, html: html, selection: selection};
-	});
-	return newState;
+  let markedOptions = {
+    sanitize: true
+  }
+  let html = marked(markdown, markedOptions).toString() || ''
+  let newState = operation(state, stateIndex, () => {
+    return {markdown: markdown, html: html, selection: selection}
+  })
+  return newState
 }
 
 /**
@@ -31,8 +31,8 @@ export function update (markdown, selection, state, stateIndex) {
  * @returns {Object} the newly active state
  */
 export function undo (num, state, stateIndex) {
-	stateIndex = (stateIndex > (num - 1)) ? stateIndex - num : 0;
-	return {state: state[stateIndex], index: stateIndex};
+  stateIndex = (stateIndex > (num - 1)) ? stateIndex - num : 0
+  return {state: state[stateIndex], index: stateIndex}
 }
 
 /**
@@ -43,6 +43,6 @@ export function undo (num, state, stateIndex) {
  * @returns {Object} the newly active state
  */
 export function redo (num, state, stateIndex) {
-	stateIndex = (stateIndex < state.length - (num + 1)) ? stateIndex + num : state.length - 1;
-	return {state: state[stateIndex], index: stateIndex};
+  stateIndex = (stateIndex < state.length - (num + 1)) ? stateIndex + num : state.length - 1
+  return {state: state[stateIndex], index: stateIndex}
 }

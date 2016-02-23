@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
-import marky from './src/marky';
-module.exports = marky;
+import marky from './src/marky'
+module.exports = marky
