@@ -34,5 +34,4 @@ describe('insert handling', () => {
 
     output.value.should.contain('<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>')
   })
-
 })

@@ -1,5 +1,6 @@
 'use strict'
 
+import {indexOfMatch, splitLines, startOfLine, endOfLine} from './parsers'
 /**
  * Handles wrapping format strings around a selection
  * @param   {String} string  the entire string to use
@@ -11,30 +12,30 @@ export function inlineHandler (string, indices, mark) {
   let value
   let useMark = [mark, mark]
   if (string.indexOf(mark) !== -1) {
-    for (let index in indices) {
-      if (string.lastIndexOf(mark, indices[index]) === indices[index] - mark.length) {
-        string = string.substring(0, indices[index] - mark.length) + string.substring(indices[index], string.length)
-        if (index == 0) {
+    indices.forEach(function (n, i) {
+      if (string.lastIndexOf(mark, n) === n - mark.length) {
+        string = string.substring(0, n - mark.length) + string.substring(n, string.length)
+        if (i === 0) {
           indices[0] = indices[0] - mark.length
           indices[1] = indices[1] - mark.length
         } else {
           indices[1] = indices[1] - mark.length
         }
-        if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length
-        useMark[index] = ''
+        if (i === 1 && useMark[0]) indices[1] = indices[1] + mark.length
+        useMark[i] = ''
       }
-      if (string.indexOf(mark, indices[index]) == indices[index]) {
-        string = string.substring(0, indices[index]) + string.substring(indices[index] + mark.length, string.length)
-        if (index == 0 && (indices[0] != indices[1])) {
+      if (string.indexOf(mark, n) === n) {
+        string = string.substring(0, n) + string.substring(n + mark.length, string.length)
+        if (i === 0 && (indices[0] !== indices[1])) {
           indices[1] = indices[1] - mark.length
         }
-        if (index == 0 && (indices[0] === indices[1])) {
+        if (i === 0 && (indices[0] === indices[1])) {
           indices[0] = indices[0] - mark.length
         }
-        if (index == 1 && useMark[0]) indices[1] = indices[1] + mark.length
-        useMark[index] = ''
+        if (i === 1 && useMark[0]) indices[1] = indices[1] + mark.length
+        useMark[i] = ''
       }
-    }
+    })
   }
   value = string.substring(0, indices[0]) + useMark[0] + string.substring(indices[0], indices[1]) + useMark[1] + string.substring(indices[1], string.length)
   return {value: value, range: [indices[0] + useMark[0].length, indices[1] + useMark[1].length]}
@@ -51,9 +52,9 @@ export function blockHandler (string, indices, mark) {
   const start = indices[0]
   const end = indices[1]
   let value
-  let lineStart = string.lineStart(start)
-  let lineEnd = string.lineEnd(end)
-  if (string.indexOfMatch(/^[#>]/m, lineStart) === lineStart) {
+  let lineStart = startOfLine(string, start)
+  let lineEnd = endOfLine(string, end)
+  if (indexOfMatch(string, /^[#>]/m, lineStart) === lineStart) {
     let currentFormat = string.substring(lineStart, lineStart + string.substring(lineStart).search(/[0-9~*`_-]|\b|\n|$/gm))
     value = string.substring(0, lineStart) + string.substring(lineStart + string.substring(lineStart).search(/[0-9~*`_-]|\b|\n|$/gm), string.length)
     lineEnd = lineEnd - currentFormat.length
@@ -76,15 +77,15 @@ export function blockHandler (string, indices, mark) {
  * @returns {Object} the new string, the updated indices
  */
 export function listHandler (string, indices, type) {
-  const start = string.lineStart(indices[0])
-  const end = string.lineEnd(indices[1])
-  const lines = string.substring(start, end).splitLines()
+  const start = startOfLine(string, indices[0])
+  const end = endOfLine(string, indices[1])
+  const lines = splitLines(string.substring(start, end))
   let newLines = []
   let value
   lines.forEach((line, i) => {
     let mark = (type === 'ul') ? '-' + ' ' : (i + 1) + '.' + ' '
     let newLine
-    if (line.indexOfMatch(/^[0-9#>-]/m, 0) === 0) {
+    if (indexOfMatch(line, /^[0-9#>-]/m, 0) === 0) {
       let currentFormat = line.substring(0, 0 + line.substring(0).search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm))
       newLine = line.substring(line.search(/[~*`_[!]|[a-zA-Z]|\r|\n|$/gm), line.length)
       if (currentFormat.trim() !== mark.trim()) {
@@ -108,9 +109,9 @@ export function listHandler (string, indices, type) {
  * @returns {Object} the new string, the updated indices
  */
 export function indentHandler (string, indices, type) {
-  const start = string.lineStart(indices[0])
-  const end = string.lineEnd(indices[1])
-  const lines = string.substring(start, end).splitLines()
+  const start = startOfLine(string, indices[0])
+  const end = endOfLine(string, indices[1])
+  const lines = splitLines(string.substring(start, end))
   let newLines = []
   let value
   lines.forEach((line) => {

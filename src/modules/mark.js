@@ -14,10 +14,21 @@ let timeoutID // Used later for input events
  */
 export default function (tag = 'marky-mark') {
   let containers = document.getElementsByTagName(tag)
+  let idArr = []
   return Array.prototype.forEach.call(containers, (container, i) => {
-    if (container.children.length) return
+    let idIndex = i
+    if (container.children.length) {
+      if (container.getAttribute('id')) idArr.push(parseInt(container.getAttribute('id').split('-')[2]))
+      return
+    }
     let toolbar = new Element('div', 'Toolbar')
-    let id = 'marky-mark-' + i
+
+    if (idArr.length) {
+      idArr.sort()
+      idIndex = idArr[idArr.length - 1] + 1
+    }
+
+    let id = 'marky-mark-' + idIndex
     container.id = id
     toolbar.addClass(['marky-toolbar', id])
 
@@ -26,7 +37,7 @@ export default function (tag = 'marky-mark') {
 
     let markyEditor = new Element('textarea', 'Marky Marked Editor')
     markyEditor.addClass(['marky-editor', id])
-    markyEditor.assign('_marky', new Marky(markyEditor.element))
+    markyEditor.assign('_marky', new Marky(markyEditor.element, container))
 
     let markyOutput = new Element('input', 'Marky Marked Output')
     markyOutput.assign('type', 'hidden')

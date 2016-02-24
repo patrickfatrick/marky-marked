@@ -22,6 +22,12 @@ describe('marky', () => {
 
     editor._marky.index.should.be.a('number')
   })
+  it('has a destroy method', () => {
+    const container = document.getElementsByTagName('marky-mark')[0]
+    const editor = container.children[1]
+
+    editor._marky.destroy.should.be.an.instanceof(Function)
+  })
   it('has an update method', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
     const editor = container.children[1]

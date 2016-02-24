@@ -9,6 +9,8 @@ _A `<textarea>` so sweet you'll be feeling good vibrations._
 [![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/marky-marked/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/marky-marked/master/dependencies/npm)
 [![MIT License][license-image]][license-url]
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ![Marky Marked](./images/marky-marked.png)
 
 ## What is it?
@@ -22,6 +24,11 @@ On top of all of that because it's built with immutable states Marky Marked come
 Click the links here to learn more about [Markdown syntax](https://help.github.com/articles/markdown-basics/) and [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) (which Marky Marked uses).
 
 ## Changelog
+
+#### v1.5
+
+- Under the hood: Switched to standardjs
+- New `destroy()` method for removing editors from the DOM if need be. See below. 
 
 #### v1.4
 
@@ -305,9 +312,17 @@ editor._marky.moveCursorBackward(20);
 
 This method returns the new cursor position in the editor.
 
+#### Destroying editors
+
+This will completely remove the element (meaning, the custom tag that was used to instantiate Marky Marked, `<marky-mark></marky-mark>`, including the toolbar, editor and the hidden input storing the HTML string) from the DOM along with all of its event listeners.
+
+```javascript
+editor._marky.destroy()
+```
+
 ## Building & Testing
 
-Marky Marked uses a combination of Karma, Mocha, Chai, and Istanbul for tests. To run the tests,
+Marky Marked uses a combination of Karma, Mocha, Chai, and Isparta for tests. To run the tests,
 
 ```bash
 $npm install

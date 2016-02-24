@@ -1,9 +1,21 @@
-/* global describe it */
+/* global describe it assert */
 
 import chai from 'chai'
+import mark from '../src/modules/mark'
 
 chai.should()
 describe('marky methods', () => {
+  it('destroys everything', () => {
+    const editor = document.querySelector('.marky-editor')
+    editor._marky.destroy()
+    assert.isNull(document.getElementById('marky-mark-0'))
+
+    const newContainer = document.createElement('marky-mark')
+    document.body.appendChild(newContainer)
+    mark()
+
+    document.getElementsByTagName('marky-mark')[2].getAttribute('id').should.equal('marky-mark-3')
+  })
   it('updates the state', () => {
     const editor = document.querySelector('.marky-editor')
     editor.value = 'Some text'

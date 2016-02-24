@@ -6,22 +6,27 @@
  * https://www.github.com/patrickfatrick/marky-marked
  */
 
-import prototypes from './prototypes'
 import mark from './mark'
 import * as dispatcher from './dispatcher'
 import {markyupdate, markychange} from './custom-events'
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers'
 
-prototypes()
-
 export class Marky {
-  constructor (editor) {
+  constructor (editor, container) {
     this.mark = mark
     this.state = [{markdown: '', html: '', selection: [0, 0]}]
     this.index = 0
     this.editor = editor
+    this.container = container
   }
 
+  /**
+   * Removes the container and all descendants from the DOM
+   * @param  {container} container the container used to invoke `mark()`
+   */
+  destroy (container = this.container) {
+    container.remove()
+  }
   /**
    * Handles updating the state on forward-progress changes
    * @requires dispatcher/update
