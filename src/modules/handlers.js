@@ -1,6 +1,7 @@
 'use strict'
 
 import {indexOfMatch, splitLines, startOfLine, endOfLine} from './parsers'
+
 /**
  * Handles wrapping format strings around a selection
  * @param   {String} string  the entire string to use

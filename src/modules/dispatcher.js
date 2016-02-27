@@ -1,12 +1,12 @@
 'use strict'
 
 import marked from 'marked'
-import operation from './operation'
+import pushState from './push-state'
 
 /**
  * updates the state
  * @external marked
- * @requires operation
+ * @requires pushState
  * @param   {String} markdown   markdown blob
  * @param   {Array}  state      the state timeline
  * @param   {Number} stateIndex the current state index
@@ -17,7 +17,7 @@ export function update (markdown, selection, state, stateIndex) {
     sanitize: true
   }
   let html = marked(markdown, markedOptions).toString() || ''
-  let newState = operation(state, stateIndex, () => {
+  let newState = pushState(state, stateIndex, () => {
     return {markdown: markdown, html: html, selection: selection}
   })
   return newState

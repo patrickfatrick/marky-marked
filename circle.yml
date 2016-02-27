@@ -4,10 +4,10 @@ machine:
 dependencies:
   pre:
     - npm cache clear
-    - npm install npm@'>=3.3.6' -g
+    - npm install npm@'>=3.7.2' -g
 test:
   post:
-    - cat ./coverage/**/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+    - cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
 general:
   artifacts:
     - ./coverage

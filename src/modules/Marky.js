@@ -1,24 +1,18 @@
 'use strict'
 
-/**
- * Marky Mark
- * Author: Patrick Fricano
- * https://www.github.com/patrickfatrick/marky-marked
- */
-
 import mark from './mark'
 import * as dispatcher from './dispatcher'
 import {markyupdate, markychange} from './custom-events'
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers'
 
-export class Marky {
-  constructor (editor, container) {
+export var Marky = {
+  init (editor, container) {
     this.mark = mark
     this.state = [{markdown: '', html: '', selection: [0, 0]}]
     this.index = 0
     this.editor = editor
     this.container = container
-  }
+  },
 
   /**
    * Removes the container and all descendants from the DOM
@@ -26,7 +20,8 @@ export class Marky {
    */
   destroy (container = this.container) {
     container.remove()
-  }
+  },
+
   /**
    * Handles updating the state on forward-progress changes
    * @requires dispatcher/update
@@ -38,7 +33,7 @@ export class Marky {
     const action = dispatcher.update(markdown, selection, state, index)
     this.state = action.state
     this.index = action.index
-  }
+  },
 
   /**
    * Handles moving backward in state
@@ -59,7 +54,7 @@ export class Marky {
     editor.nextSibling.value = action.state.html
     editor.dispatchEvent(markychange)
     return this.index
-  }
+  },
 
   /**
    * Handles moving forward in state
@@ -80,7 +75,7 @@ export class Marky {
     editor.nextSibling.value = action.state.html
     editor.dispatchEvent(markychange)
     return this.index
-  }
+  },
 
   /**
    * Setsa the selection indices in the editor
@@ -91,7 +86,7 @@ export class Marky {
   setSelection (arr = [0, 0], editor = this.editor) {
     editor.setSelectionRange(arr[0], arr[1])
     return arr
-  }
+  },
 
   /**
    * expands the selection to the right
@@ -105,7 +100,7 @@ export class Marky {
 
     editor.setSelectionRange(start, end)
     return [start, end]
-  }
+  },
 
   /**
    * expands the selection to the left
@@ -119,7 +114,7 @@ export class Marky {
 
     editor.setSelectionRange(start, end)
     return [start, end]
-  }
+  },
 
   /**
    * expands the cursor to the right
@@ -132,7 +127,7 @@ export class Marky {
 
     editor.setSelectionRange(start, start)
     return start
-  }
+  },
 
   /**
    * expands the cursor to the left
@@ -145,7 +140,7 @@ export class Marky {
 
     editor.setSelectionRange(start, start)
     return start
-  }
+  },
 
   /**
    * implements a bold on a selection
@@ -163,7 +158,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [boldify.range[0], boldify.range[1]]
-  }
+  },
 
   /**
    * implements an italic on a selection
@@ -181,7 +176,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [italicize.range[0], italicize.range[1]]
-  }
+  },
 
   /**
    * implements a strikethrough on a selection
@@ -199,7 +194,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [strikitize.range[0], strikitize.range[1]]
-  }
+  },
 
   /**
    * implements a code on a selection
@@ -217,7 +212,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [codify.range[0], codify.range[1]]
-  }
+  },
 
   /**
    * implements a blockquote on a selection
@@ -235,7 +230,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [quotify.range[0], quotify.range[1]]
-  }
+  },
 
   /**
    * implements a heading on a selection
@@ -260,7 +255,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [headingify.range[0], headingify.range[1]]
-  }
+  },
 
   /**
    * inserts a link snippet at the end of a selection
@@ -279,7 +274,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [linkify.range[0], linkify.range[1]]
-  }
+  },
 
   /**
    * inserts an image snippet at the end of a selection
@@ -298,7 +293,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [imageify.range[0], imageify.range[1]]
-  }
+  },
 
   /**
    * implements an unordered list on a selection
@@ -316,7 +311,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [listify.range[0], listify.range[1]]
-  }
+  },
 
   /**
    * implements an ordered list on a selection
@@ -334,7 +329,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [listify.range[0], listify.range[1]]
-  }
+  },
 
   /**
    * implements an indent on a selection
@@ -352,7 +347,7 @@ export class Marky {
     editor.nextSibling.value = html
     editor.dispatchEvent(markyupdate)
     return [indentify.range[0], indentify.range[1]]
-  }
+  },
 
   /**
    * implements an outdent on a selection
