@@ -5,7 +5,7 @@ import {Element} from './Element'
 import {Button} from './Button'
 import {LinkDialog, ImageDialog, HeadingDialog} from './Dialogs'
 import {Separator} from './Separator'
-import {markyblur, markyfocus, markyselect, markyupdate, markychange} from './custom-events'
+import {markyblur, markyfocus, markyselect, markyupdate} from './custom-events'
 
 let timeoutID // Used later for input events
 
@@ -130,7 +130,7 @@ export default function (tag = 'marky-mark') {
     headingButton.dialog = headingDialog.element
     headingButton.listen('click', (e) => {
       e.preventDefault()
-      e.target.blur()
+      e.currentTarget.blur()
       headingButton.dialog.classList.toggle('toggled')
       imageDialog.element.style.visibility = 'hidden'
       imageDialog.removeClass('toggled')
@@ -148,11 +148,11 @@ export default function (tag = 'marky-mark') {
     boldButton.editor = markyEditor.element
     boldButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       boldButton.editor.focus()
     })
     boldButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     boldButton.listen('click', (e) => {
       e.preventDefault()
@@ -165,11 +165,11 @@ export default function (tag = 'marky-mark') {
     italicButton.editor = markyEditor.element
     italicButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       italicButton.editor.focus()
     })
     italicButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     italicButton.listen('click', (e) => {
       e.preventDefault()
@@ -182,11 +182,11 @@ export default function (tag = 'marky-mark') {
     strikethroughButton.editor = markyEditor.element
     strikethroughButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       strikethroughButton.editor.focus()
     })
     strikethroughButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     strikethroughButton.listen('click', (e) => {
       e.preventDefault()
@@ -199,11 +199,11 @@ export default function (tag = 'marky-mark') {
     codeButton.editor = markyEditor.element
     codeButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       codeButton.editor.focus()
     })
     codeButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     codeButton.listen('click', (e) => {
       e.preventDefault()
@@ -216,11 +216,11 @@ export default function (tag = 'marky-mark') {
     blockquoteButton.editor = markyEditor.element
     blockquoteButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       blockquoteButton.editor.focus()
     })
     blockquoteButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     blockquoteButton.listen('click', (e) => {
       e.preventDefault()
@@ -234,11 +234,11 @@ export default function (tag = 'marky-mark') {
     linkButton.dialog = linkDialog.element
     linkButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       linkButton.editor.focus()
     })
     linkButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     linkButton.listen('click', (e) => {
       e.preventDefault()
@@ -262,11 +262,11 @@ export default function (tag = 'marky-mark') {
     imageButton.dialog = imageDialog.element
     imageButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       imageButton.editor.focus()
     })
     imageButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     imageButton.listen('click', (e) => {
       e.preventDefault()
@@ -289,11 +289,11 @@ export default function (tag = 'marky-mark') {
     unorderedListButton.editor = markyEditor.element
     unorderedListButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       unorderedListButton.editor.focus()
     })
     unorderedListButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     unorderedListButton.listen('click', (e) => {
       e.preventDefault()
@@ -306,11 +306,11 @@ export default function (tag = 'marky-mark') {
     orderedListButton.editor = markyEditor.element
     orderedListButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       orderedListButton.editor.focus()
     })
     orderedListButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     orderedListButton.listen('click', (e) => {
       e.preventDefault()
@@ -323,11 +323,11 @@ export default function (tag = 'marky-mark') {
     outdentButton.editor = markyEditor.element
     outdentButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       outdentButton.editor.focus()
     })
     outdentButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     outdentButton.listen('click', (e) => {
       e.preventDefault()
@@ -340,11 +340,11 @@ export default function (tag = 'marky-mark') {
     indentButton.editor = markyEditor.element
     indentButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       indentButton.editor.focus()
     })
     indentButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     indentButton.listen('click', (e) => {
       e.preventDefault()
@@ -357,11 +357,11 @@ export default function (tag = 'marky-mark') {
     undoButton.editor = markyEditor.element
     undoButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       undoButton.editor.focus()
     })
     undoButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     undoButton.listen('click', (e) => {
       e.preventDefault()
@@ -375,11 +375,11 @@ export default function (tag = 'marky-mark') {
     redoButton.editor = markyEditor.element
     redoButton.listen('mousedown', (e) => {
       e.preventDefault()
-      e.target.classList.add('active')
+      e.currentTarget.classList.add('active')
       redoButton.editor.focus()
     })
     redoButton.listen('mouseup', (e) => {
-      e.target.classList.remove('active')
+      e.currentTarget.classList.remove('active')
     })
     redoButton.listen('click', (e) => {
       e.preventDefault()
@@ -393,8 +393,8 @@ export default function (tag = 'marky-mark') {
     fullscreenButton.editor = markyEditor.element
     fullscreenButton.listen('click', (e) => {
       e.preventDefault()
-      e.target.blur()
-      e.target.classList.toggle('fullscreen-toggled')
+      e.currentTarget.blur()
+      e.currentTarget.classList.toggle('fullscreen-toggled')
       container.classList.toggle('fullscreen-toggled')
       fullscreenButton.editor.classList.toggle('fullscreen-toggled')
       fullscreenButton.icon.element.classList.toggle('fa-expand')
@@ -457,23 +457,22 @@ export default function (tag = 'marky-mark') {
      */
 
     markyEditor.listen('markyupdate', (e) => {
-      e.target._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], e.target._marky.state, e.target._marky.index)
-      e.target.dispatchEvent(markychange)
+      e.currentTarget._marky.update(e.currentTarget.value, [e.currentTarget.selectionStart, e.currentTarget.selectionEnd], e.currentTarget._marky.state, e.currentTarget._marky.index)
     }, false)
 
     markyEditor.listen('markychange', (e) => {
-      let html = e.target._marky.state[e.target._marky.index].html
-      if (e.target._marky.index === 0) {
+      let html = e.currentTarget._marky.state[e.currentTarget._marky.index].html
+      if (e.currentTarget._marky.index === 0) {
         undoButton.addClass('disabled')
       } else {
         undoButton.removeClass('disabled')
       }
-      if (e.target._marky.index === e.target._marky.state.length - 1) {
+      if (e.currentTarget._marky.index === e.currentTarget._marky.state.length - 1) {
         redoButton.addClass('disabled')
       } else {
         redoButton.removeClass('disabled')
       }
-      e.target.nextSibling.value = html
+      e.currentTarget.nextSibling.value = html
     }, false)
 
     /**
@@ -482,7 +481,7 @@ export default function (tag = 'marky-mark') {
     markyEditor.listen('input', (e) => {
       window.clearTimeout(timeoutID)
       timeoutID = window.setTimeout(() => {
-        e.target.dispatchEvent(markyupdate)
+        e.currentTarget.dispatchEvent(markyupdate)
       }, 1000)
     }, false)
 
@@ -490,7 +489,7 @@ export default function (tag = 'marky-mark') {
      * Listen for change events (requires loss of focus) and update state
      */
     markyEditor.listen('change', (e) => {
-      e.target.dispatchEvent(markyupdate)
+      e.currentTarget.dispatchEvent(markyupdate)
     }, false)
 
     /**
@@ -498,7 +497,7 @@ export default function (tag = 'marky-mark') {
      */
     markyEditor.listen('paste', (e) => {
       setTimeout(() => {
-        e.target.dispatchEvent(markyupdate)
+        e.currentTarget.dispatchEvent(markyupdate)
       }, 0)
     }, false)
 
@@ -507,7 +506,7 @@ export default function (tag = 'marky-mark') {
      */
     markyEditor.listen('cut', (e) => {
       setTimeout(() => {
-        e.target.dispatchEvent(markyupdate)
+        e.currentTarget.dispatchEvent(markyupdate)
       }, 0)
     }, false)
 
@@ -519,7 +518,7 @@ export default function (tag = 'marky-mark') {
      * set deleteSelection to length of selection
      */
     markyEditor.listen('keydown', (e) => {
-      if (e.which === 8) deleteSelection = e.target.selectionEnd - e.target.selectionStart
+      if (e.which === 8) deleteSelection = e.currentTarget.selectionEnd - e.currentTarget.selectionStart
     })
 
     let keyMap = [] // Used for determining whether or not to update state on space keyup
@@ -551,7 +550,7 @@ export default function (tag = 'marky-mark') {
         }
         if (e.which === punctuation) {
           window.clearTimeout(timeoutID)
-          return e.target.dispatchEvent(markyupdate)
+          return e.currentTarget.dispatchEvent(markyupdate)
         }
       })
     })
@@ -565,20 +564,20 @@ export default function (tag = 'marky-mark') {
       if (e.which === 8 && deleteSelection > 0) {
         window.clearTimeout(timeoutID)
         deleteSelection = 0
-        e.target.dispatchEvent(markyupdate)
+        e.currentTarget.dispatchEvent(markyupdate)
       }
     })
 
     markyEditor.listen('select', (e) => {
-      e.target.dispatchEvent(markyselect)
+      e.currentTarget.dispatchEvent(markyselect)
     })
 
     markyEditor.listen('blur', (e) => {
-      e.target.dispatchEvent(markyblur)
+      e.currentTarget.dispatchEvent(markyblur)
     })
 
     markyEditor.listen('focus', (e) => {
-      e.target.dispatchEvent(markyfocus)
+      e.currentTarget.dispatchEvent(markyfocus)
     })
 
     markyEditor.listen('click', () => {

@@ -144,5 +144,4 @@ describe('block handling', () => {
 
     output.value.should.contain('<h2 id="some-text">Some text</h2>')
   })
-
 })

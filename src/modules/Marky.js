@@ -29,10 +29,12 @@ export var Marky = {
    * @param {Array}  state    the state timeline
    * @param {Number} index    current state index
    */
-  update (markdown, selection = [0, 0], state = this.state, index = this.index) {
+  update (markdown, selection = [0, 0], state = this.state, index = this.index, editor = this.editor) {
     const action = dispatcher.update(markdown, selection, state, index)
     this.state = action.state
     this.index = action.index
+    editor.dispatchEvent(markychange)
+    return this.index
   },
 
   /**

@@ -1655,10 +1655,13 @@ var Marky = exports.Marky = {
     var selection = arguments.length <= 1 || arguments[1] === undefined ? [0, 0] : arguments[1];
     var state = arguments.length <= 2 || arguments[2] === undefined ? this.state : arguments[2];
     var index = arguments.length <= 3 || arguments[3] === undefined ? this.index : arguments[3];
+    var editor = arguments.length <= 4 || arguments[4] === undefined ? this.editor : arguments[4];
 
     var action = dispatcher.update(markdown, selection, state, index);
     this.state = action.state;
     this.index = action.index;
+    editor.dispatchEvent(_customEvents.markychange);
+    return this.index;
   },
 
 
@@ -2468,7 +2471,7 @@ exports.default = function () {
     headingButton.dialog = headingDialog.element;
     headingButton.listen('click', function (e) {
       e.preventDefault();
-      e.target.blur();
+      e.currentTarget.blur();
       headingButton.dialog.classList.toggle('toggled');
       imageDialog.element.style.visibility = 'hidden';
       imageDialog.removeClass('toggled');
@@ -2486,11 +2489,11 @@ exports.default = function () {
     boldButton.editor = markyEditor.element;
     boldButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       boldButton.editor.focus();
     });
     boldButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     boldButton.listen('click', function (e) {
       e.preventDefault();
@@ -2503,11 +2506,11 @@ exports.default = function () {
     italicButton.editor = markyEditor.element;
     italicButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       italicButton.editor.focus();
     });
     italicButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     italicButton.listen('click', function (e) {
       e.preventDefault();
@@ -2520,11 +2523,11 @@ exports.default = function () {
     strikethroughButton.editor = markyEditor.element;
     strikethroughButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       strikethroughButton.editor.focus();
     });
     strikethroughButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     strikethroughButton.listen('click', function (e) {
       e.preventDefault();
@@ -2537,11 +2540,11 @@ exports.default = function () {
     codeButton.editor = markyEditor.element;
     codeButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       codeButton.editor.focus();
     });
     codeButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     codeButton.listen('click', function (e) {
       e.preventDefault();
@@ -2554,11 +2557,11 @@ exports.default = function () {
     blockquoteButton.editor = markyEditor.element;
     blockquoteButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       blockquoteButton.editor.focus();
     });
     blockquoteButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     blockquoteButton.listen('click', function (e) {
       e.preventDefault();
@@ -2572,11 +2575,11 @@ exports.default = function () {
     linkButton.dialog = linkDialog.element;
     linkButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       linkButton.editor.focus();
     });
     linkButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     linkButton.listen('click', function (e) {
       e.preventDefault();
@@ -2600,11 +2603,11 @@ exports.default = function () {
     imageButton.dialog = imageDialog.element;
     imageButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       imageButton.editor.focus();
     });
     imageButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     imageButton.listen('click', function (e) {
       e.preventDefault();
@@ -2627,11 +2630,11 @@ exports.default = function () {
     unorderedListButton.editor = markyEditor.element;
     unorderedListButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       unorderedListButton.editor.focus();
     });
     unorderedListButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     unorderedListButton.listen('click', function (e) {
       e.preventDefault();
@@ -2644,11 +2647,11 @@ exports.default = function () {
     orderedListButton.editor = markyEditor.element;
     orderedListButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       orderedListButton.editor.focus();
     });
     orderedListButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     orderedListButton.listen('click', function (e) {
       e.preventDefault();
@@ -2661,11 +2664,11 @@ exports.default = function () {
     outdentButton.editor = markyEditor.element;
     outdentButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       outdentButton.editor.focus();
     });
     outdentButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     outdentButton.listen('click', function (e) {
       e.preventDefault();
@@ -2678,11 +2681,11 @@ exports.default = function () {
     indentButton.editor = markyEditor.element;
     indentButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       indentButton.editor.focus();
     });
     indentButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     indentButton.listen('click', function (e) {
       e.preventDefault();
@@ -2695,11 +2698,11 @@ exports.default = function () {
     undoButton.editor = markyEditor.element;
     undoButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       undoButton.editor.focus();
     });
     undoButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     undoButton.listen('click', function (e) {
       e.preventDefault();
@@ -2713,11 +2716,11 @@ exports.default = function () {
     redoButton.editor = markyEditor.element;
     redoButton.listen('mousedown', function (e) {
       e.preventDefault();
-      e.target.classList.add('active');
+      e.currentTarget.classList.add('active');
       redoButton.editor.focus();
     });
     redoButton.listen('mouseup', function (e) {
-      e.target.classList.remove('active');
+      e.currentTarget.classList.remove('active');
     });
     redoButton.listen('click', function (e) {
       e.preventDefault();
@@ -2731,8 +2734,8 @@ exports.default = function () {
     fullscreenButton.editor = markyEditor.element;
     fullscreenButton.listen('click', function (e) {
       e.preventDefault();
-      e.target.blur();
-      e.target.classList.toggle('fullscreen-toggled');
+      e.currentTarget.blur();
+      e.currentTarget.classList.toggle('fullscreen-toggled');
       container.classList.toggle('fullscreen-toggled');
       fullscreenButton.editor.classList.toggle('fullscreen-toggled');
       fullscreenButton.icon.element.classList.toggle('fa-expand');
@@ -2795,23 +2798,22 @@ exports.default = function () {
      */
 
     markyEditor.listen('markyupdate', function (e) {
-      e.target._marky.update(e.target.value, [e.target.selectionStart, e.target.selectionEnd], e.target._marky.state, e.target._marky.index);
-      e.target.dispatchEvent(_customEvents.markychange);
+      e.currentTarget._marky.update(e.currentTarget.value, [e.currentTarget.selectionStart, e.currentTarget.selectionEnd], e.currentTarget._marky.state, e.currentTarget._marky.index);
     }, false);
 
     markyEditor.listen('markychange', function (e) {
-      var html = e.target._marky.state[e.target._marky.index].html;
-      if (e.target._marky.index === 0) {
+      var html = e.currentTarget._marky.state[e.currentTarget._marky.index].html;
+      if (e.currentTarget._marky.index === 0) {
         undoButton.addClass('disabled');
       } else {
         undoButton.removeClass('disabled');
       }
-      if (e.target._marky.index === e.target._marky.state.length - 1) {
+      if (e.currentTarget._marky.index === e.currentTarget._marky.state.length - 1) {
         redoButton.addClass('disabled');
       } else {
         redoButton.removeClass('disabled');
       }
-      e.target.nextSibling.value = html;
+      e.currentTarget.nextSibling.value = html;
     }, false);
 
     /**
@@ -2820,7 +2822,7 @@ exports.default = function () {
     markyEditor.listen('input', function (e) {
       window.clearTimeout(timeoutID);
       timeoutID = window.setTimeout(function () {
-        e.target.dispatchEvent(_customEvents.markyupdate);
+        e.currentTarget.dispatchEvent(_customEvents.markyupdate);
       }, 1000);
     }, false);
 
@@ -2828,7 +2830,7 @@ exports.default = function () {
      * Listen for change events (requires loss of focus) and update state
      */
     markyEditor.listen('change', function (e) {
-      e.target.dispatchEvent(_customEvents.markyupdate);
+      e.currentTarget.dispatchEvent(_customEvents.markyupdate);
     }, false);
 
     /**
@@ -2836,7 +2838,7 @@ exports.default = function () {
      */
     markyEditor.listen('paste', function (e) {
       setTimeout(function () {
-        e.target.dispatchEvent(_customEvents.markyupdate);
+        e.currentTarget.dispatchEvent(_customEvents.markyupdate);
       }, 0);
     }, false);
 
@@ -2845,7 +2847,7 @@ exports.default = function () {
      */
     markyEditor.listen('cut', function (e) {
       setTimeout(function () {
-        e.target.dispatchEvent(_customEvents.markyupdate);
+        e.currentTarget.dispatchEvent(_customEvents.markyupdate);
       }, 0);
     }, false);
 
@@ -2857,7 +2859,7 @@ exports.default = function () {
      * set deleteSelection to length of selection
      */
     markyEditor.listen('keydown', function (e) {
-      if (e.which === 8) deleteSelection = e.target.selectionEnd - e.target.selectionStart;
+      if (e.which === 8) deleteSelection = e.currentTarget.selectionEnd - e.currentTarget.selectionStart;
     });
 
     var keyMap = []; // Used for determining whether or not to update state on space keyup
@@ -2888,7 +2890,7 @@ exports.default = function () {
         }
         if (e.which === punctuation) {
           window.clearTimeout(timeoutID);
-          return e.target.dispatchEvent(_customEvents.markyupdate);
+          return e.currentTarget.dispatchEvent(_customEvents.markyupdate);
         }
       });
     });
@@ -2902,20 +2904,20 @@ exports.default = function () {
       if (e.which === 8 && deleteSelection > 0) {
         window.clearTimeout(timeoutID);
         deleteSelection = 0;
-        e.target.dispatchEvent(_customEvents.markyupdate);
+        e.currentTarget.dispatchEvent(_customEvents.markyupdate);
       }
     });
 
     markyEditor.listen('select', function (e) {
-      e.target.dispatchEvent(_customEvents.markyselect);
+      e.currentTarget.dispatchEvent(_customEvents.markyselect);
     });
 
     markyEditor.listen('blur', function (e) {
-      e.target.dispatchEvent(_customEvents.markyblur);
+      e.currentTarget.dispatchEvent(_customEvents.markyblur);
     });
 
     markyEditor.listen('focus', function (e) {
-      e.target.dispatchEvent(_customEvents.markyfocus);
+      e.currentTarget.dispatchEvent(_customEvents.markyfocus);
     });
 
     markyEditor.listen('click', function () {
