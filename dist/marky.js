@@ -1640,7 +1640,9 @@ var Marky = exports.Marky = {
   destroy: function destroy() {
     var container = arguments.length <= 0 || arguments[0] === undefined ? this.container : arguments[0];
 
-    container.remove();
+    if (container.parentNode) {
+      container.parentNode.removeChild(container);
+    }
   },
 
 
@@ -2407,64 +2409,70 @@ exports.default = function () {
      * Create and register dialogs and set listeners
      */
 
+    function formSubmit(e) {
+      e.preventDefault();
+      markyEditor.element.focus();
+    }
+
     var headingDialog = Object.create(_Dialogs.HeadingDialog);
     headingDialog.init('Heading Dialog', id);
     headingDialog.element.style.visibility = 'hidden';
-    headingDialog.editor = markyEditor.element;
     headingDialog.options.forEach(function (option) {
       option.listen('click', function (e) {
         e.preventDefault();
         var value = parseInt(e.target.value);
-        headingDialog.editor.focus();
+        markyEditor.element.focus();
         headingDialog.removeClass('toggled');
         headingDialog.element.style.visibility = 'hidden';
-        headingDialog.editor._marky.heading(value, [headingDialog.editor.selectionStart, headingDialog.editor.selectionEnd]);
+        markyEditor.element._marky.heading(value, [markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
       });
     });
 
     var linkDialog = Object.create(_Dialogs.LinkDialog);
     linkDialog.init('Link Dialog', id);
     linkDialog.element.style.visibility = 'hidden';
-    linkDialog.editor = markyEditor.element;
-    linkDialog.linkForm.listen('submit', function (e) {
-      e.preventDefault();
-      linkDialog.editor.focus();
-    });
+    linkDialog.linkForm.listen('submit', formSubmit);
     linkDialog.insertButton.listen('click', function (e) {
       e.preventDefault;
-      linkDialog.editor.focus();
+      markyEditor.element.focus();
       var url = linkDialog.linkUrlInput.element.value ? linkDialog.linkUrlInput.element.value : 'http://url.com';
       var display = linkDialog.linkDisplayInput.element.value ? linkDialog.linkDisplayInput.element.value : url;
       linkDialog.linkUrlInput.element.value = '';
       linkDialog.linkDisplayInput.element.value = '';
       linkDialog.element.style.visibility = 'hidden';
       linkDialog.removeClass('toggled');
-      linkDialog.editor._marky.link([linkDialog.editor.selectionStart, linkDialog.editor.selectionEnd], url, display);
+      markyEditor.element._marky.link([markyEditor.element.selectionStart, markyEditor.element.selectionEnd], url, display);
     });
 
     var imageDialog = Object.create(_Dialogs.ImageDialog);
     imageDialog.init('Image Dialog', id);
     imageDialog.element.style.visibility = 'hidden';
-    imageDialog.editor = markyEditor.element;
-    imageDialog.imageForm.listen('submit', function (e) {
-      e.preventDefault();
-      imageDialog.editor.focus();
-    });
+    imageDialog.imageForm.listen('submit', formSubmit);
     imageDialog.insertButton.listen('click', function (e) {
       e.preventDefault;
-      imageDialog.editor.focus();
+      markyEditor.element.focus();
       var source = imageDialog.imageSourceInput.element.value ? imageDialog.imageSourceInput.element.value : 'http://imagesource.com/image.jpg';
       var alt = imageDialog.imageAltInput.element.value ? imageDialog.imageAltInput.element.value : source;
       imageDialog.imageSourceInput.element.value = '';
       imageDialog.imageAltInput.element.value = '';
       imageDialog.element.style.visibility = 'hidden';
       imageDialog.removeClass('toggled');
-      imageDialog.editor._marky.image([imageDialog.editor.selectionStart, imageDialog.editor.selectionEnd], source, alt);
+      markyEditor.element._marky.image([markyEditor.element.selectionStart, markyEditor.element.selectionEnd], source, alt);
     });
 
     /**
      * Create and register toolbar buttons and set listeners
      */
+
+    function buttonMousedown(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('active');
+      markyEditor.element.focus();
+    }
+
+    function buttonMouseup(e) {
+      e.currentTarget.classList.remove('active');
+    }
 
     var headingButton = Object.create(_Button.Button);
     headingButton.init('Heading', id, 'fa', 'fa-header');
@@ -2486,111 +2494,69 @@ exports.default = function () {
 
     var boldButton = Object.create(_Button.Button);
     boldButton.init('Bold', id, 'fa', 'fa-bold');
-    boldButton.editor = markyEditor.element;
-    boldButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      boldButton.editor.focus();
-    });
-    boldButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    boldButton.listen('mousedown', buttonMousedown);
+    boldButton.listen('mouseup', buttonMouseup);
     boldButton.listen('click', function (e) {
       e.preventDefault();
-      boldButton.editor.focus();
-      boldButton.editor._marky.bold([boldButton.editor.selectionStart, boldButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.bold([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var italicButton = Object.create(_Button.Button);
     italicButton.init('Italic', id, 'fa', 'fa-italic');
-    italicButton.editor = markyEditor.element;
-    italicButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      italicButton.editor.focus();
-    });
-    italicButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    italicButton.listen('mousedown', buttonMousedown);
+    italicButton.listen('mouseup', buttonMouseup);
     italicButton.listen('click', function (e) {
       e.preventDefault();
-      italicButton.editor.focus();
-      italicButton.editor._marky.italic([italicButton.editor.selectionStart, italicButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.italic([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var strikethroughButton = Object.create(_Button.Button);
     strikethroughButton.init('Strikethrough', id, 'fa', 'fa-strikethrough');
-    strikethroughButton.editor = markyEditor.element;
-    strikethroughButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      strikethroughButton.editor.focus();
-    });
-    strikethroughButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    strikethroughButton.listen('mousedown', buttonMousedown);
+    strikethroughButton.listen('mouseup', buttonMouseup);
     strikethroughButton.listen('click', function (e) {
       e.preventDefault();
-      strikethroughButton.editor.focus();
-      strikethroughButton.editor._marky.strikethrough([strikethroughButton.editor.selectionStart, strikethroughButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.strikethrough([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var codeButton = Object.create(_Button.Button);
     codeButton.init('Code', id, 'fa', 'fa-code');
-    codeButton.editor = markyEditor.element;
-    codeButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      codeButton.editor.focus();
-    });
-    codeButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    codeButton.listen('mousedown', buttonMousedown);
+    codeButton.listen('mouseup', buttonMouseup);
     codeButton.listen('click', function (e) {
       e.preventDefault();
-      codeButton.editor.focus();
-      codeButton.editor._marky.code([codeButton.editor.selectionStart, codeButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.code([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var blockquoteButton = Object.create(_Button.Button);
     blockquoteButton.init('Blockquote', id, 'fa', 'fa-quote-right');
-    blockquoteButton.editor = markyEditor.element;
-    blockquoteButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      blockquoteButton.editor.focus();
-    });
-    blockquoteButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    blockquoteButton.listen('mousedown', buttonMousedown);
+    blockquoteButton.listen('mouseup', buttonMouseup);
     blockquoteButton.listen('click', function (e) {
       e.preventDefault();
-      blockquoteButton.editor.focus();
-      blockquoteButton.editor._marky.blockquote([blockquoteButton.editor.selectionStart, blockquoteButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.blockquote([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var linkButton = Object.create(_Button.Button);
     linkButton.init('Link', id, 'fa', 'fa-link');
-    linkButton.editor = markyEditor.element;
     linkButton.dialog = linkDialog.element;
-    linkButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      linkButton.editor.focus();
-    });
-    linkButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    linkButton.listen('mousedown', buttonMousedown);
+    linkButton.listen('mouseup', buttonMouseup);
     linkButton.listen('click', function (e) {
       e.preventDefault();
-      linkButton.editor.focus();
+      markyEditor.element.focus();
       linkButton.dialog.classList.toggle('toggled');
       imageDialog.element.style.visibility = 'hidden';
       imageDialog.removeClass('toggled');
       headingDialog.element.style.visibility = 'hidden';
       headingDialog.removeClass('toggled');
       if (linkButton.dialog.style.visibility === 'hidden') {
-        linkButton.dialog.children[0].children[1].value = linkButton.editor.value.substring(linkButton.editor.selectionStart, linkButton.editor.selectionEnd);
+        linkButton.dialog.children[0].children[1].value = markyEditor.element.value.substring(markyEditor.element.selectionStart, markyEditor.element.selectionEnd);
         linkButton.dialog.style.visibility = 'visible';
         return;
       }
@@ -2599,26 +2565,19 @@ exports.default = function () {
 
     var imageButton = Object.create(_Button.Button);
     imageButton.init('Image', id, 'fa', 'fa-file-image-o');
-    imageButton.editor = markyEditor.element;
     imageButton.dialog = imageDialog.element;
-    imageButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      imageButton.editor.focus();
-    });
-    imageButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    imageButton.listen('mousedown', buttonMousedown);
+    imageButton.listen('mouseup', buttonMouseup);
     imageButton.listen('click', function (e) {
       e.preventDefault();
-      imageButton.editor.focus();
+      markyEditor.element.focus();
       imageButton.dialog.classList.toggle('toggled');
       linkDialog.element.style.visibility = 'hidden';
       linkDialog.removeClass('toggled');
       headingDialog.element.style.visibility = 'hidden';
       headingDialog.removeClass('toggled');
       if (imageButton.dialog.style.visibility === 'hidden') {
-        imageButton.dialog.children[0].children[1].value = imageButton.editor.value.substring(imageButton.editor.selectionStart, imageButton.editor.selectionEnd);
+        imageButton.dialog.children[0].children[1].value = markyEditor.element.value.substring(markyEditor.element.selectionStart, markyEditor.element.selectionEnd);
         imageButton.dialog.style.visibility = 'visible';
         return;
       }
@@ -2627,117 +2586,74 @@ exports.default = function () {
 
     var unorderedListButton = Object.create(_Button.Button);
     unorderedListButton.init('Unordered List', id, 'fa', 'fa-list-ul');
-    unorderedListButton.editor = markyEditor.element;
-    unorderedListButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      unorderedListButton.editor.focus();
-    });
-    unorderedListButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    unorderedListButton.listen('mousedown', buttonMousedown);
+    unorderedListButton.listen('mouseup', buttonMouseup);
     unorderedListButton.listen('click', function (e) {
       e.preventDefault();
-      unorderedListButton.editor.focus();
-      unorderedListButton.editor._marky.unorderedList([unorderedListButton.editor.selectionStart, unorderedListButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.unorderedList([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var orderedListButton = Object.create(_Button.Button);
     orderedListButton.init('Ordered List', id, 'fa', 'fa-list-ol');
-    orderedListButton.editor = markyEditor.element;
-    orderedListButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      orderedListButton.editor.focus();
-    });
-    orderedListButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    orderedListButton.listen('mousedown', buttonMousedown);
+    orderedListButton.listen('mouseup', buttonMouseup);
     orderedListButton.listen('click', function (e) {
       e.preventDefault();
-      orderedListButton.editor.focus();
-      orderedListButton.editor._marky.orderedList([orderedListButton.editor.selectionStart, orderedListButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.orderedList([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var outdentButton = Object.create(_Button.Button);
     outdentButton.init('Outdent', id, 'fa', 'fa-outdent');
-    outdentButton.editor = markyEditor.element;
-    outdentButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      outdentButton.editor.focus();
-    });
-    outdentButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    outdentButton.listen('mousedown', buttonMousedown);
+    outdentButton.listen('mouseup', buttonMouseup);
     outdentButton.listen('click', function (e) {
       e.preventDefault();
-      outdentButton.editor.focus();
-      outdentButton.editor._marky.outdent([outdentButton.editor.selectionStart, outdentButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.outdent([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var indentButton = Object.create(_Button.Button);
     indentButton.init('Indent', id, 'fa', 'fa-indent');
-    indentButton.editor = markyEditor.element;
-    indentButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      indentButton.editor.focus();
-    });
-    indentButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    indentButton.listen('mousedown', buttonMousedown);
+    indentButton.listen('mouseup', buttonMouseup);
     indentButton.listen('click', function (e) {
       e.preventDefault();
-      indentButton.editor.focus();
-      indentButton.editor._marky.indent([indentButton.editor.selectionStart, indentButton.editor.selectionEnd]);
+      markyEditor.element.focus();
+      markyEditor.element._marky.indent([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
     });
 
     var undoButton = Object.create(_Button.Button);
     undoButton.init('Undo', id, 'fa', 'fa-backward');
-    undoButton.editor = markyEditor.element;
-    undoButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      undoButton.editor.focus();
-    });
-    undoButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    undoButton.listen('mousedown', buttonMousedown);
+    undoButton.listen('mouseup', buttonMouseup);
     undoButton.listen('click', function (e) {
       e.preventDefault();
       if (undoButton.element.classList.contains('disabled')) return;
-      undoButton.editor.focus();
-      undoButton.editor._marky.undo(1, undoButton.editor._marky.state, undoButton.editor._marky.index);
+      markyEditor.element.focus();
+      markyEditor.element._marky.undo(1, markyEditor.element._marky.state, markyEditor.element._marky.index);
     });
 
     var redoButton = Object.create(_Button.Button);
     redoButton.init('Redo', id, 'fa', 'fa-forward');
-    redoButton.editor = markyEditor.element;
-    redoButton.listen('mousedown', function (e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('active');
-      redoButton.editor.focus();
-    });
-    redoButton.listen('mouseup', function (e) {
-      e.currentTarget.classList.remove('active');
-    });
+    redoButton.listen('mousedown', buttonMousedown);
+    redoButton.listen('mouseup', buttonMouseup);
     redoButton.listen('click', function (e) {
       e.preventDefault();
       if (redoButton.element.classList.contains('disabled')) return;
-      redoButton.editor.focus();
-      redoButton.editor._marky.redo(1, redoButton.editor._marky.state, redoButton.editor._marky.index);
+      markyEditor.element.focus();
+      markyEditor.element._marky.redo(1, markyEditor.element._marky.state, markyEditor.element._marky.index);
     });
 
     var fullscreenButton = Object.create(_Button.Button);
     fullscreenButton.init('Fullscreen', id, 'fa', 'fa-expand');
-    fullscreenButton.editor = markyEditor.element;
     fullscreenButton.listen('click', function (e) {
       e.preventDefault();
       e.currentTarget.blur();
       e.currentTarget.classList.toggle('fullscreen-toggled');
       container.classList.toggle('fullscreen-toggled');
-      fullscreenButton.editor.classList.toggle('fullscreen-toggled');
+      markyEditor.element.classList.toggle('fullscreen-toggled');
       fullscreenButton.icon.element.classList.toggle('fa-expand');
       fullscreenButton.icon.element.classList.toggle('fa-compress');
     });
