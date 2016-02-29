@@ -5,12 +5,11 @@ module.exports = function (karma) {
   karma.set({
     basePath: '',
     files: ['test/test_helper.js', 'src/**.js', 'test/**/*-test.js'],
-    frameworks: ['browserify', 'mocha', 'chai', 'chai-as-promised'], // 'mocha', 'chai'
+    frameworks: ['browserify', 'mocha', 'chai'], // 'mocha', 'chai'
     plugins: [
       'karma-browserify',
       'karma-mocha',
       'karma-chai',
-      'karma-chai-plugins',
       'karma-coverage',
       'karma-mocha-reporter',
       'karma-phantomjs-launcher',

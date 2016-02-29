@@ -52,15 +52,15 @@ export default function (tag = 'marky-mark') {
     markyEditor.init('textarea', 'Marky Marked Editor')
     markyEditor.addClass('marky-editor', id)
 
-    let marky = Object.create(Marky)
-    marky.init(markyEditor.element, container)
-
-    markyEditor.assign('_marky', marky)
-
     let markyOutput = Object.create(Element)
     markyOutput.init('input', 'Marky Marked Output')
     markyOutput.assign('type', 'hidden')
     markyOutput.addClass('marky-output', id)
+
+    let marky = Object.create(Marky)
+    marky.init(container, markyEditor.element, markyOutput.element)
+
+    markyEditor.assign('_marky', marky)
 
     /**
      * Create and register dialogs and set listeners
@@ -386,7 +386,7 @@ export default function (tag = 'marky-mark') {
       } else {
         redoButton.removeClass('disabled')
       }
-      e.currentTarget.nextSibling.value = html
+      e.currentTarget._marky.updateOutput(html)
     }, false)
 
     /**
@@ -395,7 +395,7 @@ export default function (tag = 'marky-mark') {
     markyEditor.listen('input', (e) => {
       window.clearTimeout(timeoutID)
       timeoutID = window.setTimeout(() => {
-        e.currentTarget.dispatchEvent(markyupdate)
+        e.target.dispatchEvent(markyupdate)
       }, 1000)
     }, false)
 
