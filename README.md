@@ -83,7 +83,7 @@ Marky Marked has two dependencies:
 - [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
 - Optional: [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.
 
-Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it light, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
+Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it lean, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
 
 ## Install
 
@@ -100,11 +100,12 @@ The easiest way to instantiate an editor is to simply add a `<marky-mark></marky
 
 ```html
 <marky-mark></marky-mark>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		marky.mark();
-	});
-</script>
+```
+
+```javascript
+import marky from 'marky-marked'
+
+marky.mark();
 ```
 
 You can also use any element as the container but you'll have to reference the container element in your Javascript.
@@ -113,9 +114,7 @@ You can also use any element as the container but you'll have to reference the c
 <mark-wahlberg></mark-wahlberg>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-	marky.mark(document.getElementsByTagName('mark-wahlberg'));
-});
+	marky.mark('mark-wahlberg');
 </script>
 ```
 
@@ -346,7 +345,6 @@ $gulp styles
 ## What's the plan?
 
 - Ability to customize instances, particularly with some or all of marked's options.
-- Possible updates to undoing and redoing state by prioritizing formatting changes over user input (the idea being to always undo or redo to any toolbar action, overriding the index provided in the undo/redo methods). This would be an option as well.
 
 ## License
 
@@ -356,4 +354,4 @@ Marky Marked is freely distributable under the terms of the [MIT license](./LICE
 [license-url]: LICENSE
 
 
-_Each Marky Marked release is linted with ESLint and tested with a combination of Karma, Mocha, Chai, and Istanbul._
+_Each Marky Marked release is linted with StandardJS and tested with a combination of Karma, Mocha, Chai, and Isparta._
