@@ -6,12 +6,13 @@ import {markyupdate, markychange} from './custom-events'
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers'
 
 export var Marky = {
-  init (editor, container) {
+  init (container = null, editor = null, output = null) {
     this.mark = mark
     this.state = [{markdown: '', html: '', selection: [0, 0]}]
     this.index = 0
     this.editor = editor
     this.container = container
+    this.output = output
   },
 
   /**
@@ -40,6 +41,25 @@ export var Marky = {
   },
 
   /**
+   * Handles updating the editor's value and selection range
+   * @param  {Object} handled value = string; range = start and end of selection
+   * @param  {HTMLElement} editor  the marky marked editor
+   */
+  updateEditor (markdown, range, editor = this.editor) {
+    editor.value = markdown
+    editor.setSelectionRange(range[0], range[1])
+  },
+
+  /**
+   * Handles updating the hidden input's value
+   * @param  {String} html   an HTML string
+   * @param  {HTMLElement} output the hidden input storing the HTML string
+   */
+  updateOutput (html, output = this.output) {
+    output.value = html
+  },
+
+  /**
    * Handles moving backward in state
    * @requires dispatcher/undo
    * @param   {Number}      num    number of states to move back
@@ -53,9 +73,7 @@ export var Marky = {
 
     const action = dispatcher.undo(num, state, index)
     this.index = action.index
-    editor.value = action.state.markdown
-    editor.setSelectionRange(action.state.selection[0], action.state.selection[1])
-    editor.nextSibling.value = action.state.html
+    this.updateEditor(action.state.markdown, action.state.selection, editor)
     editor.dispatchEvent(markychange)
     return this.index
   },
@@ -74,9 +92,7 @@ export var Marky = {
 
     const action = dispatcher.redo(num, state, index)
     this.index = action.index
-    editor.value = action.state.markdown
-    editor.setSelectionRange(action.state.selection[0], action.state.selection[1])
-    editor.nextSibling.value = action.state.html
+    this.updateEditor(action.state.markdown, action.state.selection, editor)
     editor.dispatchEvent(markychange)
     return this.index
   },
@@ -156,10 +172,7 @@ export var Marky = {
   bold (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let boldify = inlineHandler(editor.value, indices, '**')
-    editor.value = boldify.value
-    editor.setSelectionRange(boldify.range[0], boldify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(boldify.value, boldify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [boldify.range[0], boldify.range[1]]
   },
@@ -174,10 +187,7 @@ export var Marky = {
   italic (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let italicize = inlineHandler(editor.value, indices, '_')
-    editor.value = italicize.value
-    editor.setSelectionRange(italicize.range[0], italicize.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(italicize.value, italicize.range, editor)
     editor.dispatchEvent(markyupdate)
     return [italicize.range[0], italicize.range[1]]
   },
@@ -192,10 +202,7 @@ export var Marky = {
   strikethrough (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let strikitize = inlineHandler(editor.value, indices, '~~')
-    editor.value = strikitize.value
-    editor.setSelectionRange(strikitize.range[0], strikitize.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(strikitize.value, strikitize.range, editor)
     editor.dispatchEvent(markyupdate)
     return [strikitize.range[0], strikitize.range[1]]
   },
@@ -210,10 +217,7 @@ export var Marky = {
   code (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let codify = inlineHandler(editor.value, indices, '`')
-    editor.value = codify.value
-    editor.setSelectionRange(codify.range[0], codify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(codify.value, codify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [codify.range[0], codify.range[1]]
   },
@@ -228,10 +232,7 @@ export var Marky = {
   blockquote (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let quotify = blockHandler(editor.value, indices, '> ')
-    editor.value = quotify.value
-    editor.setSelectionRange(quotify.range[0], quotify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(quotify.value, quotify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [quotify.range[0], quotify.range[1]]
   },
@@ -253,10 +254,7 @@ export var Marky = {
     mark = markArr.join('')
     let space = mark ? ' ' : ''
     let headingify = blockHandler(editor.value, indices, mark + space)
-    editor.value = headingify.value
-    editor.setSelectionRange(headingify.range[0], headingify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(headingify.value, headingify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [headingify.range[0], headingify.range[1]]
   },
@@ -272,10 +270,7 @@ export var Marky = {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     const mark = '[' + display + '](' + url + ')'
     let linkify = insertHandler(editor.value, indices, mark)
-    editor.value = linkify.value
-    editor.setSelectionRange(linkify.range[0], linkify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(linkify.value, linkify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [linkify.range[0], linkify.range[1]]
   },
@@ -291,10 +286,7 @@ export var Marky = {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     const mark = '![' + alt + '](' + source + ')'
     let imageify = insertHandler(editor.value, indices, mark)
-    editor.value = imageify.value
-    editor.setSelectionRange(imageify.range[0], imageify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(imageify.value, imageify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [imageify.range[0], imageify.range[1]]
   },
@@ -309,10 +301,7 @@ export var Marky = {
   unorderedList (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let listify = listHandler(editor.value, indices, 'ul')
-    editor.value = listify.value
-    editor.setSelectionRange(listify.range[0], listify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(listify.value, listify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [listify.range[0], listify.range[1]]
   },
@@ -327,10 +316,7 @@ export var Marky = {
   orderedList (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let listify = listHandler(editor.value, indices, 'ol')
-    editor.value = listify.value
-    editor.setSelectionRange(listify.range[0], listify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(listify.value, listify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [listify.range[0], listify.range[1]]
   },
@@ -345,10 +331,7 @@ export var Marky = {
   indent (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let indentify = indentHandler(editor.value, indices, 'in')
-    editor.value = indentify.value
-    editor.setSelectionRange(indentify.range[0], indentify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(indentify.value, indentify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [indentify.range[0], indentify.range[1]]
   },
@@ -363,10 +346,7 @@ export var Marky = {
   outdent (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let indentify = indentHandler(editor.value, indices, 'out')
-    editor.value = indentify.value
-    editor.setSelectionRange(indentify.range[0], indentify.range[1])
-    let html = editor._marky.state[editor._marky.index].html
-    editor.nextSibling.value = html
+    this.updateEditor(indentify.value, indentify.range, editor)
     editor.dispatchEvent(markyupdate)
     return [indentify.range[0], indentify.range[1]]
   }
