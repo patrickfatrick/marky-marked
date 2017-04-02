@@ -1,10 +1,23 @@
 machine:
   node:
-    version: 5
+    version: 7.6
+  environment:
+    YARN_VERSION: 0.21.3
+    PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 dependencies:
   pre:
-    - npm cache clear
-    - npm install npm@'>=3.7.2' -g
+    - |
+      if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
+        echo "Download and install Yarn."
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+      else
+        echo "The correct version of Yarn is already installed."
+      fi
+  override:
+    - yarn install
+  cache_directories:
+    - ~/.yarn
+    - ~/.cache/yarn
 test:
   post:
     - cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
