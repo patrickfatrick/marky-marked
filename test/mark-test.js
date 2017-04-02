@@ -32,7 +32,7 @@ describe('mark', () => {
     assert.propertyVal(container.children[0].children[17].classList, '0', 'redo')
     assert.propertyVal(container.children[0].children[19].classList, '0', 'fullscreen')
   })
-  it('initializes on marky-mark tags by default', () => {
+  it('initializes on marky-mark elements by default', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
     const anotherContainer = document.getElementsByTagName('funky-bunch')[0]
     assert.isUndefined(anotherContainer.children[0])
@@ -42,6 +42,43 @@ describe('mark', () => {
     assert.propertyVal(container.children[1].classList, '0', 'marky-editor')
     assert.strictEqual(container.children[2].type, 'hidden')
     assert.propertyVal(container.children[2].classList, '0', 'marky-output')
+  })
+  it('initializes on an array of empty elements passed in', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    assert.doesNotThrow(() => mark([container]), TypeError)
+
+    document.body.removeChild(container)
+  })
+  it('initializes on a NodeList passed in', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    assert.doesNotThrow(() => mark(document.querySelectorAll('mark-wahlberg')), TypeError)
+
+    document.body.removeChild(container)
+  })
+  it('initializes on an HTMLCollection passed in', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    assert.doesNotThrow(() => mark(document.getElementsByTagName('mark-wahlberg')), TypeError)
+
+    document.body.removeChild(container)
+  })
+  it('throws a TypeError if an array or HTMLCollection is not passed in', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    assert.throws(() => mark(container), TypeError)
+
+    document.body.removeChild(container)
+  })
+  it('throws a TypeError if an array of non-HTMLElements is passed in', () => {
+    const containers = ['marky-mark', 'funky-bunch', 'mark-wahlberg']
+
+    assert.throws(() => mark(containers), TypeError)
   })
   it('initializes on multiple elements', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
@@ -60,9 +97,11 @@ describe('mark', () => {
   it('checks that the element is empty', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
     const anotherContainer = document.createElement('marky-mark')
+
     document.body.appendChild(anotherContainer)
     mark()
-    assert.strictEqual(container.children.length, 3)
+
+    assert.lengthOf(container.children, 3)
     assert.lengthOf(anotherContainer.children, 3)
   })
 })

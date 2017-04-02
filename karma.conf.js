@@ -4,6 +4,7 @@ module.exports = function (karma) {
   karma.set({
     basePath: '',
     files: [
+      'node_modules/babel-polyfill/browser.js',
       'test/index.js'
     ],
     frameworks: [ 'mocha', 'chai' ],

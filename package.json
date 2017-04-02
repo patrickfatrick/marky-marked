@@ -1,6 +1,6 @@
 {
   "name": "marky-marked",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A <textarea> so sweet you'll be feeling good vibrations.",
   "main": "dist/marky-marked.js",
   "format": "es6",

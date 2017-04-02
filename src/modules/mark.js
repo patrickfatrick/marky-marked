@@ -1,3 +1,4 @@
+/* global HTMLCollection HTMLElement NodeList */
 'use strict'
 
 import {Marky} from './Marky'
@@ -13,10 +14,22 @@ let timeoutID // Used later for input events
  * Register and append the DOM elements needed and set the event listeners
  * @param   {String}  tag name to be used for initialization
  */
-export default function (tag = 'marky-mark') {
-  let containers = document.getElementsByTagName(tag)
-  let idArr = []
+export default function (containers = document.getElementsByTagName('marky-mark')) {
+  if (
+    !(containers instanceof Array) &&
+    !(containers instanceof HTMLCollection) &&
+    !(containers instanceof NodeList)
+  ) {
+    throw new TypeError('`containers` argument should be an Array or HTMLCollection')
+  }
+
+  const idArr = []
+
   return Array.prototype.forEach.call(containers, (container, i) => {
+    if (!(container instanceof HTMLElement)) {
+      throw new TypeError('`containers` argument should only contain HTMLElements')
+    }
+
     let idIndex = i
 
     /**

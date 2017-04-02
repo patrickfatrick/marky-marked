@@ -785,7 +785,7 @@ Object.defineProperty(exports,'__esModule',{value:true});exports.inlineHandler=i
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,'__esModule',{value:true});var _create=__webpack_require__(0);var _create2=_interopRequireDefault(_create);exports.default=function(){var tag=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'marky-mark';var containers=document.getElementsByTagName(tag);var idArr=[];return Array.prototype.forEach.call(containers,function(container,i){var idIndex=i;/**
+/* global HTMLCollection HTMLElement NodeList */Object.defineProperty(exports,'__esModule',{value:true});var _create=__webpack_require__(0);var _create2=_interopRequireDefault(_create);exports.default=function(){var containers=arguments.length>0&&arguments[0]!==undefined?arguments[0]:document.getElementsByTagName('marky-mark');if(!(containers instanceof Array)&&!(containers instanceof HTMLCollection)&&!(containers instanceof NodeList)){throw new TypeError('`containers` argument should be an Array or HTMLCollection')}var idArr=[];return Array.prototype.forEach.call(containers,function(container,i){if(!(container instanceof HTMLElement)){throw new TypeError('`containers` argument should only contain HTMLElements')}var idIndex=i;/**
      * Ignore container if it's not empty
      */if(container.children.length){if(container.getAttribute('id'))idArr.push(parseInt(container.getAttribute('id').split('-')[2]));return}/**
      * Create and register main elements:

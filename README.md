@@ -25,6 +25,16 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 ## Changelog
 
+#### 2.0
+
+Not much has really changed, but there is a breaking change in that now `mark` should have elements directly passed in, rather than tag names. To migrate you really only need to switch your function call from `mark('funky-bunch')` to `mark(document.getElementsByTagName('funcky-bunch'))`.
+
+It accepts an array of elemtents, HTMLCollection, and NodeList. You cannot pass in an element directly; even if it's one element just wrap it in an array.
+
+`marky-mark` elements still are initialized by default.
+
+This change should make it a little more flexible and a little easier to work with in frameworks like React and Vue so you can now just pass in refs within your components.
+
 #### v1.5
 
 - Under the hood: Switched to standardjs
@@ -99,7 +109,7 @@ $git clone git:github.com/patrickfatrick/marky-marked.git
 The easiest way to instantiate an editor is to simply add a `<marky-mark></marky-mark>` container tag to your markup and then call `marky.mark()`.
 
 ```html
-<marky-mark></marky-mark>
+<marky-mark />
 ```
 
 ```javascript
@@ -108,13 +118,13 @@ import marky from 'marky-marked'
 marky.mark();
 ```
 
-You can also use any element as the container but you'll have to reference the container element in your Javascript.
+You can also use any elements as an array, NodeList, or HTMLCollection.
 
 ```html
-<mark-wahlberg></mark-wahlberg>
+<mark-wahlberg />
 
 <script>
-	marky.mark('mark-wahlberg');
+	marky.mark(document.getElementsByTagName('mark-wahlberg'));
 </script>
 ```
 
