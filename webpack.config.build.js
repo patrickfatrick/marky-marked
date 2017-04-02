@@ -10,6 +10,9 @@ module.exports = merge(base, {
   entry: [
     './index.js'
   ],
+  output: {
+    filename: 'marky-marked.js'
+  },
   module: {
     rules: [
       {
@@ -24,9 +27,6 @@ module.exports = merge(base, {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false
-    }),
     new ExtractTextPlugin('marky-marked.css'),
     new StylelintPlugin({
       files: [ 'styles/*.css' ]
