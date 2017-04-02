@@ -1,6 +1,16 @@
 {
-	"presets": [
-		"es2015",
-		"stage-2"
-	]
+  "presets": [ "env" ],
+  "plugins": [ "transform-runtime", "transform-object-rest-spread" ],
+  "env": {
+    "test": {
+      "presets": [
+        [ "env", {
+          "targets": { "browsers": [ "last 2 versions", "> 5%" ] }
+        }]
+      ],
+      "plugins": [ "transform-runtime", "transform-object-rest-spread", "istanbul" ]
+    }
+  },
+  "compact": true,
+  "minified": true
 }

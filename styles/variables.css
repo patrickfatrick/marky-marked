@@ -1,0 +1,16 @@
+:root {
+  --white: #fff;
+  --gray: #919191;
+  --lightGray: #666;
+  --black: #000;
+  --orchid: #da70d6;
+  --deepBlue: #00b0ff;
+  --fireTruck: #e84d49;
+  --boxShadowA: rgba(0, 0, 0, 0.3);
+  --boxShadowB: rgba(0, 0, 0, 0.22);
+
+  --no-outline: {
+    outline: none;
+    border: none;
+  };
+}

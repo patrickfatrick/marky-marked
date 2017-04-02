@@ -4,162 +4,163 @@
 <title>Marky Marked</title>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="./dist/marky-mark.css">
+<link rel="stylesheet" href="./dist/marky-marked.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400Italic,700,700Italic' rel='stylesheet' type='text/css'>
 <style>
-	body {
-		font-size: 1rem;
-		font-family: Open Sans, sans-serif;
-		margin: 50px auto 50px auto;
-		max-width: 1200px;
-	}
-	.markdown-container .container:nth-child(2) {
-		margin-top: 20px;
-	}
-	.container {
-		box-sizing: border-box;
-		width: 100%;
-		display: inline-block;
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-	.html-container {
-		box-sizing: border-box;
-		width: 100%;
-		height: auto;
-		padding-top: 3rem;
-		padding-left: 10px;
-		padding-right: 10px;
-		margin-left: auto;
-		margin-right: auto;
-		clear: both;
-	}
-	h1.heading {
-		font-size: 2rem;
-		font-family: Cardo, serif;
-		margin-left: 20px;
-	}
-	h1.heading a {
-		margin-left: 2rem;
-		color: #DA70D6;
-	}
-	h1.heading a:focus,
-	h1.heading a:hover {
-		color: #00B0FF;
-		outline: none;
-		border: none;
-	}
-	h2.heading {
-		font-size: 1.5rem;
-		font-family: Cardo, serif;
-		margin-left: 20px;
-	}
-	textarea.marky-editor {
-		box-sizing: border-box;
-		width: 100%;
-		height: 250px;
-		font-family: inherit;
-		line-height: 18px;
-	}
-	#output {
-		box-sizing: border-box;
-		height: 300px;
-		border: 1px solid #919191;
-		padding: 0.7rem;
-		overflow: scroll;
-	}
-	#html-output {
-		box-sizing: border-box;
-		border: 1px solid #919191;
-		min-height: 500px;
-		padding: 2rem;
-		box-shadow: rgba(0,0,0,0.3) 0 19px 60px,rgba(0,0,0,0.22) 0 15px 20px;
-	}
-	blockquote {
-		color: gray;
-		background-color: #ededed;
-		border-left: 5px solid gray;
-		padding-left: 10px;
-	}
-	code {
-		font-style: normal;
-		padding: 2px 4px;
-		font-size: 90%;
-		color: #c7254e;
-		background-color: #f9f2f4;
-	}
-	@media all and (min-width: 768px) {
-		textarea.marky-editor,
-		#output {
-			width: 100%;
-		}
-		h1.heading {
-			font-size: 2.5rem;
-		}
-	}
-	@media all and (min-width: 1150px) {
-		.container {
-			width: 49.8%;
-			float: left;
-		}
-	}
+  body {
+    font-size: 1rem;
+    font-family: Open Sans, sans-serif;
+    margin: 50px auto 50px auto;
+    max-width: 1200px;
+  }
+  .markdown-container .container:nth-child(2) {
+    margin-top: 20px;
+  }
+  .container {
+    box-sizing: border-box;
+    width: 100%;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .html-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding-top: 3rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+  }
+  h1.heading {
+    font-size: 2rem;
+    font-family: Cardo, serif;
+    margin-left: 20px;
+  }
+  h1.heading a {
+    margin-left: 2rem;
+    color: #DA70D6;
+  }
+  h1.heading a:focus,
+  h1.heading a:hover {
+    color: #00B0FF;
+    outline: none;
+    border: none;
+  }
+  h2.heading {
+    font-size: 1.5rem;
+    font-family: Cardo, serif;
+    margin-left: 20px;
+  }
+  textarea.marky-editor {
+    box-sizing: border-box;
+    width: 100%;
+    height: 250px;
+    font-family: inherit;
+    line-height: 18px;
+  }
+  #output {
+    box-sizing: border-box;
+    height: 300px;
+    border: 1px solid #919191;
+    padding: 0.7rem;
+    overflow: scroll;
+  }
+  #html-output {
+    box-sizing: border-box;
+    border: 1px solid #919191;
+    min-height: 500px;
+    padding: 2rem;
+    box-shadow: rgba(0,0,0,0.3) 0 19px 60px,rgba(0,0,0,0.22) 0 15px 20px;
+  }
+  blockquote {
+    color: gray;
+    background-color: #ededed;
+    border-left: 5px solid gray;
+    padding-left: 10px;
+  }
+  code {
+    font-style: normal;
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+  }
+  @media all and (min-width: 768px) {
+    textarea.marky-editor,
+    #output {
+      width: 100%;
+    }
+    h1.heading {
+      font-size: 2.5rem;
+    }
+  }
+  @media all and (min-width: 1150px) {
+    .container {
+      width: 49.8%;
+      float: left;
+    }
+  }
 </style>
 </head>
 <body>
 <div class="markdown-container">
-	<div class="container">
-		<h1 class="heading">Marky Marked<a href="https://github.com/patrickfatrick/marky-marked" target="_blank"><i class="fa fa-github-alt"></i></a></h1>
-		<marky-mark></marky-mark>
-	</div>
-	<div class="container">
-		<h2 class="heading">Turns into HTML</h2>
-		<div id="output"></div>
-	</div>
+  <div class="container">
+    <h1 class="heading">Marky Marked<a href="https://github.com/patrickfatrick/marky-marked" target="_blank"><i class="fa fa-github-alt"></i></a></h1>
+    <marky-mark></marky-mark>
+  </div>
+  <div class="container">
+    <h2 class="heading">Turns into HTML</h2>
+    <div id="output"></div>
+  </div>
 </div>
 <div class="html-container">
-	<h2 class="heading">Which turns into</h2>
-	<div id="html-output"></div>
+  <h2 class="heading">Which turns into</h2>
+  <div id="html-output"></div>
 </div>
-<script src="./dist/marky.min.js"></script>
+
+<script src="./dist/marky-marked.js"></script>
 <script>
+(function () {
+  function CustomEvent (event, params) {
+    params = params || {
+      bubbles: false,
+      cancelable: false,
+      detail: undefined
+    }
+    var evt = document.createEvent('CustomEvent')
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail)
+    return evt
+  }
 
-	(function () {
-		function CustomEvent(event, params) {
-			params = params || {
-				bubbles: false,
-				cancelable: false,
-				detail: undefined
-			};
-			var evt = document.createEvent('CustomEvent');
-			evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-			return evt;
-		}
+  CustomEvent.prototype = window.Event.prototype
 
-		CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent
+})()
 
-		window.CustomEvent = CustomEvent;
-	})();
+var markyupdate = new CustomEvent('markyupdate')
 
-	var markyupdate = new CustomEvent('markyupdate');
+document.addEventListener('DOMContentLoaded', function () {
+  marky.mark()
+  var editor = document.querySelector('textarea.marky-editor')
+  var output = document.querySelector('input.marky-output')
+  var htmlOutput = document.getElementById('html-output')
 
-	document.addEventListener('DOMContentLoaded', function () {
-		marky.mark();
-		var editor = document.querySelector('textarea.marky-editor');
-		var output = document.querySelector('input.marky-output');
-		var htmlOutput = document.getElementById('html-output');
+  editor.addEventListener('markychange', function (e) {
+    document.getElementById('output').textContent = output.value
+    htmlOutput.innerHTML = ''
+    htmlOutput.insertAdjacentHTML('afterbegin', output.value)
+  })
 
-		editor.addEventListener('markychange', function (e) {
-			document.getElementById('output').textContent = output.value;
-			htmlOutput.innerHTML = '';
-			htmlOutput.insertAdjacentHTML('afterbegin', output.value);
-		});
-		editor.value = '# Marky Marked\r\n\n_A `<textarea>` so sweet you\'ll be feeling good vibrations._\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax. Supported in all modern desktop browsers as well as IE11 (earlier versions are _not supported_).\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.';
-		// editor._marky.update(editor.value);
-		// editor.dispatchEvent(markychange);
-		editor.dispatchEvent(markyupdate)
-	});
+  editor.value = '# Marky Marked\r\n\n_A `<textarea>` so sweet you\'ll be feeling good vibrations._\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax. Supported in all modern desktop browsers as well as IE11 (earlier versions are _not supported_).\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.'
+  // editor._marky.update(editor.value)
+  // editor.dispatchEvent(markychange)
+  editor.dispatchEvent(markyupdate)
+})
 </script>
 </body>
 </html>

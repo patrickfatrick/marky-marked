@@ -1,10 +1,9 @@
 /* global describe it */
 
-import chai from 'chai'
+import { assert } from 'chai'
 import {inlineHandler} from '../src/modules/handlers'
 import {markyupdate} from '../src/modules/custom-events'
 
-chai.should()
 describe('inline handling', () => {
   it('adds a formatting string around a selection', () => {
     let string = 'Some text'
@@ -12,8 +11,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('**Some text**')
-    boldify.range.should.contain.members([2, 11])
+    assert.strictEqual(boldify.value, '**Some text**')
+    assert.includeMembers(boldify.range, [2, 11])
   })
 
   it('removes a formatting string around a selection if it already has it', () => {
@@ -22,8 +21,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('Some text')
-    boldify.range.should.contain.members([0, 9])
+    assert.strictEqual(boldify.value, 'Some text')
+    assert.includeMembers(boldify.range, [0, 9])
   })
 
   it('removes a formatting string inside a selection if it already has it', () => {
@@ -32,8 +31,8 @@ describe('inline handling', () => {
 
     let strikitize = inlineHandler(string, indices, '~~')
 
-    strikitize.value.should.equal('Some text')
-    strikitize.range.should.contain.members([0, 9])
+    assert.strictEqual(strikitize.value, 'Some text')
+    assert.includeMembers(strikitize.range, [0, 9])
   })
 
   it('ignores other formatting strings', () => {
@@ -42,8 +41,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('~~**Some text**~~')
-    boldify.range.should.contain.members([4, 13])
+    assert.strictEqual(boldify.value, '~~**Some text**~~')
+    assert.includeMembers(boldify.range, [4, 13])
   })
 
   it('ignores other formatting strings with removal', () => {
@@ -52,8 +51,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('~~Some text~~')
-    boldify.range.should.contain.members([2, 11])
+    assert.strictEqual(boldify.value, '~~Some text~~')
+    assert.includeMembers(boldify.range, [2, 11])
   })
 
   it('can be used in the middle of ranges already marked', () => {
@@ -62,8 +61,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('**Some** text')
-    boldify.range.should.contain.members([8, 13])
+    assert.strictEqual(boldify.value, '**Some** text')
+    assert.includeMembers(boldify.range, [8, 13])
   })
 
   it('sets selection range intuitively', () => {
@@ -72,8 +71,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('**Some** text')
-    boldify.range.should.contain.members([8, 13])
+    assert.strictEqual(boldify.value, '**Some** text')
+    assert.includeMembers(boldify.range, [8, 13])
   })
 
   it('removes marks around blank strings', () => {
@@ -82,8 +81,8 @@ describe('inline handling', () => {
 
     let boldify = inlineHandler(string, indices, '**')
 
-    boldify.value.should.equal('Some text')
-    boldify.range.should.contain.members([2, 2])
+    assert.strictEqual(boldify.value, 'Some text')
+    assert.includeMembers(boldify.range, [2, 2])
   })
 
   it('converts to HTML', () => {
@@ -92,6 +91,6 @@ describe('inline handling', () => {
     editor.value = '**Some text**'
     editor.dispatchEvent(markyupdate)
 
-    output.value.should.contain('<p><strong>Some text</strong></p>')
+    assert.include(output.value, '<p><strong>Some text</strong></p>')
   })
 })

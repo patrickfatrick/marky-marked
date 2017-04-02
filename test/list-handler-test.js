@@ -1,10 +1,9 @@
 /* global describe it */
 
-import chai from 'chai'
-import {listHandler} from '../src/modules/handlers'
-import {markyupdate} from '../src/modules/custom-events'
+import { assert } from 'chai'
+import { listHandler } from '../src/modules/handlers'
+import { markyupdate } from '../src/modules/custom-events'
 
-chai.should()
 describe('list handling', () => {
   it('adds a formatting string to the beginning of a line', () => {
     let string = 'Some text'
@@ -12,8 +11,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text')
-    listify.range.should.contain.members([0, 11])
+    assert.strictEqual(listify.value, '- Some text')
+    assert.includeMembers(listify.range, [0, 11])
   })
 
   it('does not matter where the selection is on that line', () => {
@@ -22,8 +21,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text')
-    listify.range.should.contain.members([0, 11])
+    assert.strictEqual(listify.value, '- Some text')
+    assert.includeMembers(listify.range, [0, 11])
   })
 
   it('works with multi-line selections', () => {
@@ -32,8 +31,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text\r\n- Some other text')
-    listify.range.should.contain.members([0, 29])
+    assert.strictEqual(listify.value, '- Some text\r\n- Some other text')
+    assert.includeMembers(listify.range, [0, 29])
   })
 
   it('ignores other lines around the selection', () => {
@@ -41,8 +40,8 @@ describe('list handling', () => {
     let indices = [11, 26]
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('Some text\r\n- Some other text')
-    listify.range.should.contain.members([11, 28])
+    assert.strictEqual(listify.value, 'Some text\r\n- Some other text')
+    assert.includeMembers(listify.range, [11, 28])
   })
 
   it('removes all other block or list formatting', () => {
@@ -51,8 +50,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text')
-    listify.range.should.contain.members([0, 11])
+    assert.strictEqual(listify.value, '- Some text')
+    assert.includeMembers(listify.range, [0, 11])
   })
 
   it('removes all other list formatting even if format string is directly touching text', () => {
@@ -61,8 +60,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text')
-    listify.range.should.contain.members([0, 11])
+    assert.strictEqual(listify.value, '- Some text')
+    assert.includeMembers(listify.range, [0, 11])
   })
 
   it('considers inline formats to be text', () => {
@@ -71,8 +70,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- **Some text**')
-    listify.range.should.contain.members([0, 15])
+    assert.strictEqual(listify.value, '- **Some text**')
+    assert.includeMembers(listify.range, [0, 15])
   })
 
   it('also considers inline formats to be text when removing other list formats', () => {
@@ -81,8 +80,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- **Some text**')
-    listify.range.should.contain.members([0, 15])
+    assert.strictEqual(listify.value, '- **Some text**')
+    assert.includeMembers(listify.range, [0, 15])
   })
 
   it('works on a blank line', () => {
@@ -91,8 +90,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- ')
-    listify.range.should.contain.members([0, 2])
+    assert.strictEqual(listify.value, '- ')
+    assert.includeMembers(listify.range, [0, 2])
   })
 
   it('removes other formatting on a blank line', () => {
@@ -101,8 +100,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- ')
-    listify.range.should.contain.members([0, 2])
+    assert.strictEqual(listify.value, '- ')
+    assert.includeMembers(listify.range, [0, 2])
   })
 
   it('adds formatting to several lines', () => {
@@ -111,8 +110,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text\r\n- Some other text\r\n- Even more text')
-    listify.range.should.contain.members([0, 46])
+    assert.strictEqual(listify.value, '- Some text\r\n- Some other text\r\n- Even more text')
+    assert.includeMembers(listify.range, [0, 46])
   })
 
   it('exchanges one unordered list for an ordered list', () => {
@@ -121,8 +120,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ol')
 
-    listify.value.should.equal('1. Some text\r\n2. Some other text\r\n3. Even more text')
-    listify.range.should.contain.members([0, 49])
+    assert.strictEqual(listify.value, '1. Some text\r\n2. Some other text\r\n3. Even more text')
+    assert.includeMembers(listify.range, [0, 49])
   })
 
   it('exchanges one ordered list for an unordered list', () => {
@@ -131,8 +130,8 @@ describe('list handling', () => {
 
     let listify = listHandler(string, indices, 'ul')
 
-    listify.value.should.equal('- Some text\r\n- Some other text\r\n- Even more text')
-    listify.range.should.contain.members([0, 46])
+    assert.strictEqual(listify.value, '- Some text\r\n- Some other text\r\n- Even more text')
+    assert.includeMembers(listify.range, [0, 46])
   })
 
   it('converts to HTML', () => {
@@ -141,6 +140,6 @@ describe('list handling', () => {
     editor.value = '- Some text\r\n- Some other text'
     editor.dispatchEvent(markyupdate)
 
-    output.value.should.contain('<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>')
+    assert.include(output.value, '<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>')
   })
 })

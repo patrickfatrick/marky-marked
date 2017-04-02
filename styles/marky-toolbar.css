@@ -1,0 +1,111 @@
+@import "variables";
+
+.marky-toolbar {
+  min-width: 100%;
+  text-align: left;
+  margin-bottom: 0.3rem;
+  margin-left: 0.3rem;
+
+  & button {
+    @apply --no-outline;
+
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 0.8rem;
+    max-width: 2rem;
+    line-height: 0.8rem;
+    cursor: pointer;
+    border: 1px solid var(--gray);
+    border-left: none;
+    padding: 6px;
+    border-radius: 0;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    text-align: center;
+    background-color: white;
+    color: var(--lightGray);
+    transition: box-shadow 200ms ease-out;
+
+    &:hover {
+      box-shadow: var(--boxShadowA) 0 1px 1px, var(--boxShadowB) 0 1px 5px;
+      transition: unset;
+    }
+
+    &.active,
+    &.disabled,
+    &:active {
+      box-shadow: none;
+      color: var(--gray) !important;
+      background: linear-gradient(var(--white) * 0.7, var(--white));
+    }
+
+    &:focus {
+      background-color: var(--deepBlue);
+      color: var(--white);
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+
+    @media (width >= 768px) {
+      font-size: 1rem;
+    }
+  }
+
+  & .separator + button {
+    border-left: 1px solid var(--gray);
+    border-radius: 4px 0 0 4px;
+  }
+
+  & button:nth-child(7),
+  & button:nth-child(10),
+  & button:nth-child(15),
+  & button:nth-child(18) {
+    border-radius: 0 4px 4px 0;
+  }
+
+  & button.fullscreen {
+    border-radius: 4px;
+
+    &.fullscreen-toggled {
+      background-color: var(--orchid);
+      color: var(--white);
+
+      &:focus {
+        background-color: var(--deepBlue);
+        color: var(--white);
+      }
+
+      & .active,
+      &:active {
+        color: var(--white) !important;
+        background: linear-gradient(var(--orchid) * 0.7, var(--orchid));
+      }
+    }
+  }
+
+  & button.heading {
+    border-left: 1px solid var(--gray);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 3rem;
+    width: 3rem;
+    border-radius: 4px;
+  }
+
+  & button.undo {
+    padding-left: 4px;
+  }
+
+  & button.redo {
+    padding-right: 4px;
+  }
+
+  & .separator {
+    padding-left: 6px;
+    padding-right: 6px;
+    color: var(--gray);
+  }
+}

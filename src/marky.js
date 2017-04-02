@@ -1,8 +1,9 @@
 'use strict'
 
-import {Marky} from './modules/Marky'
+import { Marky } from './modules/Marky'
+if (process.env.NODE_ENV === 'production') require('../styles/marky-marked.css')
 
-let marky = Object.create(Marky)
+const marky = Object.create(Marky)
 marky.init()
 
 export default marky

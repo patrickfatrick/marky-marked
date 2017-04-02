@@ -1,9 +1,8 @@
 /* global describe it */
 
-import chai from 'chai'
+import { assert } from 'chai'
 import * as dispatcher from '../src/modules/dispatcher'
 
-chai.should()
 describe('undo', () => {
   it('returns a previous state', () => {
     const initialState = [
@@ -15,11 +14,11 @@ describe('undo', () => {
       {markdown: 'Some really funny awesome crazy text', html: '<p>Some really funny awesome crazy text</p>', selection: [36, 36]}
     ]
     const stateIndex = 5
-    let newState = dispatcher.undo(5, initialState, stateIndex).state
+    let newState = dispatcher.undo(1, initialState, stateIndex).state
 
-    newState.markdown.should.be.empty
-    newState.html.should.be.empty
-    newState.selection.should.include.members([0, 0])
+    assert.strictEqual(newState.markdown, 'Some really funny awesome text')
+    assert.strictEqual(newState.html, '<p>Some really funny awesome text</p>')
+    assert.includeMembers(newState.selection, [0, 0])
   })
 
   it('returns a previous state from the middle of the stack', () => {
@@ -35,12 +34,12 @@ describe('undo', () => {
     const stateIndex = 5
     let newState = dispatcher.undo(5, initialState, stateIndex).state
 
-    newState.markdown.should.be.empty
-    newState.html.should.be.empty
-    newState.selection.should.include.members([0, 0])
+    assert.strictEqual(newState.markdown, '')
+    assert.strictEqual(newState.html, '')
+    assert.includeMembers(newState.selection, [0, 0])
   })
 
-  it('returns oldest state if it is less than 5', () => {
+  it('returns oldest state if it is less than specified', () => {
     const initialState = [
       {markdown: '', html: '', selection: [0, 0]},
       {markdown: 'Some text', html: '<p>Some text</p>', selection: [0, 0]},
@@ -50,8 +49,8 @@ describe('undo', () => {
     const stateIndex = 3
     let newState = dispatcher.undo(5, initialState, stateIndex).state
 
-    newState.markdown.should.be.empty
-    newState.html.should.be.empty
-    newState.selection.should.include.members([0, 0])
+    assert.strictEqual(newState.markdown, '')
+    assert.strictEqual(newState.html, '')
+    assert.includeMembers(newState.selection, [0, 0])
   })
 })

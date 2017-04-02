@@ -1,9 +1,8 @@
 /* global describe it */
 
-import chai from 'chai'
-import {indentHandler} from '../src/modules/handlers'
+import { assert } from 'chai'
+import { indentHandler } from '../src/modules/handlers'
 
-chai.should()
 describe('indent handling', () => {
   it('adds four spaces to the beginning of a line', () => {
     let string = 'Some text'
@@ -11,8 +10,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    Some text')
-    indentify.range.should.contain.members([0, 13])
+    assert.strictEqual(indentify.value, '    Some text')
+    assert.includeMembers(indentify.range, [0, 13])
   })
 
   it('does not matter where the selection is on that line', () => {
@@ -21,8 +20,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    Some text')
-    indentify.range.should.contain.members([0, 13])
+    assert.strictEqual(indentify.value, '    Some text')
+    assert.includeMembers(indentify.range, [0, 13])
   })
 
   it('works with multi-line selections', () => {
@@ -31,8 +30,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    Some text\r\n    Some other text')
-    indentify.range.should.contain.members([0, 33])
+    assert.strictEqual(indentify.value, '    Some text\r\n    Some other text')
+    assert.includeMembers(indentify.range, [0, 33])
   })
 
   it('ignores other lines around the selection', () => {
@@ -40,8 +39,8 @@ describe('indent handling', () => {
     let indices = [11, 26]
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('Some text\r\n    Some other text')
-    indentify.range.should.contain.members([11, 30])
+    assert.strictEqual(indentify.value, 'Some text\r\n    Some other text')
+    assert.includeMembers(indentify.range, [11, 30])
   })
 
   it('does not remove block or list formatting', () => {
@@ -50,8 +49,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    - Some text')
-    indentify.range.should.contain.members([0, 15])
+    assert.strictEqual(indentify.value, '    - Some text')
+    assert.includeMembers(indentify.range, [0, 15])
   })
 
   it('does not remove block or list formatting on outdent', () => {
@@ -60,8 +59,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('- Some text')
-    indentify.range.should.contain.members([0, 11])
+    assert.strictEqual(indentify.value, '- Some text')
+    assert.includeMembers(indentify.range, [0, 11])
   })
 
   it('considers inline formats to be text', () => {
@@ -70,8 +69,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    **Some text**')
-    indentify.range.should.contain.members([0, 17])
+    assert.strictEqual(indentify.value, '    **Some text**')
+    assert.includeMembers(indentify.range, [0, 17])
   })
 
   it('also considers inline formats to be text on outdent', () => {
@@ -80,8 +79,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('**Some text**')
-    indentify.range.should.contain.members([0, 13])
+    assert.strictEqual(indentify.value, '**Some text**')
+    assert.includeMembers(indentify.range, [0, 13])
   })
 
   it('works on a blank line', () => {
@@ -90,8 +89,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    ')
-    indentify.range.should.contain.members([0, 4])
+    assert.strictEqual(indentify.value, '    ')
+    assert.includeMembers(indentify.range, [0, 4])
   })
 
   it('outdents on lines with multiple indents', () => {
@@ -100,8 +99,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('    Some text')
-    indentify.range.should.contain.members([0, 13])
+    assert.strictEqual(indentify.value, '    Some text')
+    assert.includeMembers(indentify.range, [0, 13])
   })
 
   it('outdents on lines with less than a full indent', () => {
@@ -110,8 +109,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('Some text')
-    indentify.range.should.contain.members([0, 9])
+    assert.strictEqual(indentify.value, 'Some text')
+    assert.includeMembers(indentify.range, [0, 9])
   })
 
   it('outdents on lines with less than a full indent and an unordered list format string', () => {
@@ -120,8 +119,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('- Some text')
-    indentify.range.should.contain.members([0, 11])
+    assert.strictEqual(indentify.value, '- Some text')
+    assert.includeMembers(indentify.range, [0, 11])
   })
 
   it('outdents on lines with less than a full indent and an ordered list format string', () => {
@@ -130,8 +129,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('1. Some text')
-    indentify.range.should.contain.members([0, 12])
+    assert.strictEqual(indentify.value, '1. Some text')
+    assert.includeMembers(indentify.range, [0, 12])
   })
 
   it('indents several lines', () => {
@@ -140,8 +139,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'in')
 
-    indentify.value.should.equal('    - Some text\r\n    - Some other text\r\n    - Even more text')
-    indentify.range.should.contain.members([0, 58])
+    assert.strictEqual(indentify.value, '    - Some text\r\n    - Some other text\r\n    - Even more text')
+    assert.includeMembers(indentify.range, [0, 58])
   })
 
   it('outdents several lines', () => {
@@ -150,8 +149,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('1. Some text\r\n2. Some other text\r\n3. Even more text')
-    indentify.range.should.contain.members([0, 49])
+    assert.strictEqual(indentify.value, '1. Some text\r\n2. Some other text\r\n3. Even more text')
+    assert.includeMembers(indentify.range, [0, 49])
   })
 
   it('outdents several lines with less than a full indent on each line', () => {
@@ -160,8 +159,8 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('1. Some text\r\n2. Some other text\r\n3. Even more text')
-    indentify.range.should.contain.members([0, 49])
+    assert.strictEqual(indentify.value, '1. Some text\r\n2. Some other text\r\n3. Even more text')
+    assert.includeMembers(indentify.range, [0, 49])
   })
 
   it('outdents several lines with a mix of indents', () => {
@@ -170,7 +169,7 @@ describe('indent handling', () => {
 
     let indentify = indentHandler(string, indices, 'out')
 
-    indentify.value.should.equal('1. Some text\r\n2. Some other text\r\n3. Even more text')
-    indentify.range.should.contain.members([0, 49])
+    assert.strictEqual(indentify.value, '1. Some text\r\n2. Some other text\r\n3. Even more text')
+    assert.includeMembers(indentify.range, [0, 49])
   })
 })

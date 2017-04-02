@@ -1,10 +1,9 @@
 /* global describe it */
 
-import chai from 'chai'
-import {insertHandler} from '../src/modules/handlers'
-import {markyupdate} from '../src/modules/custom-events'
+import { assert } from 'chai'
+import { insertHandler } from '../src/modules/handlers'
+import { markyupdate } from '../src/modules/custom-events'
 
-chai.should()
 describe('insert handling', () => {
   it('inserts and selects the inserted markdown', () => {
     let string = 'Some text '
@@ -12,8 +11,8 @@ describe('insert handling', () => {
 
     let boldify = insertHandler(string, indices, '[DISPLAY TEXT](https://url.com)')
 
-    boldify.value.should.equal('Some text [DISPLAY TEXT](https://url.com)')
-    boldify.range.should.contain.members([10, 41])
+    assert.strictEqual(boldify.value, 'Some text [DISPLAY TEXT](https://url.com)')
+    assert.includeMembers(boldify.range, [10, 41])
   })
 
   it('inserts and selects the inserted markdown with a current selection', () => {
@@ -22,8 +21,8 @@ describe('insert handling', () => {
 
     let boldify = insertHandler(string, indices, '[DISPLAY TEXT](https://url.com)')
 
-    boldify.value.should.equal('[DISPLAY TEXT](https://url.com)')
-    boldify.range.should.contain.members([0, 31])
+    assert.strictEqual(boldify.value, '[DISPLAY TEXT](https://url.com)')
+    assert.includeMembers(boldify.range, [0, 31])
   })
 
   it('converts to HTML', () => {
@@ -32,6 +31,6 @@ describe('insert handling', () => {
     editor.value = 'Some text ![Image](http://imagesource.com/image.jpg)'
     editor.dispatchEvent(markyupdate)
 
-    output.value.should.contain('<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>')
+    assert.include(output.value, '<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>')
   })
 })

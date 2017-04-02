@@ -1,0 +1,22 @@
+@import "variables";
+
+.marky-editor {
+  @apply --no-outline;
+
+  font-size: 1rem;
+  border: 2px solid var(--gray);
+  transition: border-color 200ms ease-out;
+  padding: 8px 12px;
+  resize: none;
+
+  &:focus {
+    border-color: var(--deepBlue);
+  }
+
+  &.fullscreen-toggled {
+    width: 100% !important;
+    height: 90% !important;
+    resize: none;
+    box-shadow: var(--boxShadowA) 0 19px 60px, var(--boxShadowB) 0 15px 20px;
+  }
+}

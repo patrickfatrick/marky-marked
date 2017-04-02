@@ -1,8 +1,7 @@
 /* global describe it */
 
-import chai from 'chai'
+import { assert } from 'chai'
 
-chai.should()
 describe('toolbar dialogs', () => {
   it('calls the image method', () => {
     const editor = document.querySelector('.marky-editor')
@@ -15,7 +14,7 @@ describe('toolbar dialogs', () => {
     alt.value = 'Chuck Chardonnay'
     document.querySelector('.insert-image').click()
 
-    output.value.should.equal('<p><img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n')
+    assert.strictEqual(output.value, '<p><img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n')
   })
 
   it('calls the link method', () => {
@@ -29,6 +28,6 @@ describe('toolbar dialogs', () => {
     alt.value = 'Google'
     document.querySelector('.insert-link').click()
 
-    output.value.should.equal('<p><a href="http://google.com">Google</a></p>\n')
+    assert.strictEqual(output.value, '<p><a href="http://google.com">Google</a></p>\n')
   })
 })

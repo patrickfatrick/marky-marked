@@ -90,7 +90,7 @@ export default function (tag = 'marky-mark') {
     linkDialog.element.style.visibility = 'hidden'
     linkDialog.linkForm.listen('submit', formSubmit)
     linkDialog.insertButton.listen('click', (e) => {
-      e.preventDefault
+      e.preventDefault()
       markyEditor.element.focus()
       let url = linkDialog.linkUrlInput.element.value ? linkDialog.linkUrlInput.element.value : 'http://url.com'
       let display = linkDialog.linkDisplayInput.element.value ? linkDialog.linkDisplayInput.element.value : url
@@ -106,7 +106,7 @@ export default function (tag = 'marky-mark') {
     imageDialog.element.style.visibility = 'hidden'
     imageDialog.imageForm.listen('submit', formSubmit)
     imageDialog.insertButton.listen('click', (e) => {
-      e.preventDefault
+      e.preventDefault()
       markyEditor.element.focus()
       let source = imageDialog.imageSourceInput.element.value ? imageDialog.imageSourceInput.element.value : 'http://imagesource.com/image.jpg'
       let alt = imageDialog.imageAltInput.element.value ? imageDialog.imageAltInput.element.value : source
