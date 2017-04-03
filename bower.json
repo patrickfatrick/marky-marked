@@ -1,7 +1,7 @@
 {
 	"name": "marky-marked",
 	"main": "index.js",
-	"version": "1.5.4",
+	"version": "2.1.0",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],

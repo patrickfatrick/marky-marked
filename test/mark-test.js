@@ -67,6 +67,23 @@ describe('mark', () => {
 
     document.body.removeChild(container)
   })
+  it('returns an array of marky instances', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    assert.property(mark([container])[0], 'state')
+
+    document.body.removeChild(container)
+  })
+  it('assigns the marky instance to the editor', () => {
+    const container = document.createElement('mark-wahlberg')
+    document.body.appendChild(container)
+
+    mark([container])
+    assert.property(container.querySelector('.marky-editor'), '_marky')
+
+    document.body.removeChild(container)
+  })
   it('throws a TypeError if an array or HTMLCollection is not passed in', () => {
     const container = document.createElement('mark-wahlberg')
     document.body.appendChild(container)

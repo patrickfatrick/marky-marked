@@ -25,7 +25,10 @@ export default function (containers = document.getElementsByTagName('marky-mark'
 
   const idArr = []
 
-  return Array.prototype.forEach.call(containers, (container, i) => {
+  // Ultimately this is what is returned
+  const markies = []
+
+  Array.prototype.forEach.call(containers, (container, i) => {
     if (!(container instanceof HTMLElement)) {
       throw new TypeError('`containers` argument should only contain HTMLElements')
     }
@@ -74,6 +77,7 @@ export default function (containers = document.getElementsByTagName('marky-mark'
     marky.init(container, markyEditor.element, markyOutput.element)
 
     markyEditor.assign('_marky', marky)
+    markies.push(marky)
 
     /**
      * Create and register dialogs and set listeners
@@ -516,4 +520,6 @@ export default function (containers = document.getElementsByTagName('marky-mark'
       headingDialog.removeClass('toggled')
     })
   })
+
+  return markies
 }
