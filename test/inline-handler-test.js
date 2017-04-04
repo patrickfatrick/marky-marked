@@ -87,10 +87,9 @@ describe('inline handling', () => {
 
   it('converts to HTML', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = '**Some text**'
     editor.dispatchEvent(markyupdate)
 
-    assert.include(output.value, '<p><strong>Some text</strong></p>')
+    assert.include(editor._marky.html, '<p><strong>Some text</strong></p>')
   })
 })

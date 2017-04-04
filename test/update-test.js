@@ -53,10 +53,9 @@ describe('update', () => {
 
   it('is triggered by an update event', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.dispatchEvent(markyupdate)
 
-    assert.include(output.value, '<p>Some text</p>')
+    assert.include(editor._marky.html, '<p>Some text</p>')
   })
 })

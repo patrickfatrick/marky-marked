@@ -13,7 +13,7 @@
     border-color: var(--deepBlue);
   }
 
-  &.fullscreen-toggled {
+  &.marky-expanded {
     width: 100% !important;
     height: 90% !important;
     resize: none;

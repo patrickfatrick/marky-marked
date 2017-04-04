@@ -85,66 +85,59 @@ describe('marky methods', () => {
   })
   it('implements a bold', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.bold()
 
-    assert.strictEqual(output.value, '<p><strong>Some text</strong></p>\n')
+    assert.strictEqual(editor._marky.html, '<p><strong>Some text</strong></p>\n')
   })
   it('implements an italic', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.italic()
 
-    assert.strictEqual(output.value, '<p><em>Some text</em></p>\n')
+    assert.strictEqual(editor._marky.html, '<p><em>Some text</em></p>\n')
   })
   it('implements a strikethrough', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.strikethrough()
 
-    assert.strictEqual(output.value, '<p><del>Some text</del></p>\n')
+    assert.strictEqual(editor._marky.html, '<p><del>Some text</del></p>\n')
   })
   it('implements a code block', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.code()
 
-    assert.strictEqual(output.value, '<p><code>Some text</code></p>\n')
+    assert.strictEqual(editor._marky.html, '<p><code>Some text</code></p>\n')
   })
   it('implements a blockquote', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.blockquote()
 
-    assert.strictEqual(output.value, '<blockquote>\n<p>Some text</p>\n</blockquote>\n')
+    assert.strictEqual(editor._marky.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n')
   })
   it('implements a heading', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text'
     editor.setSelectionRange(0, 9)
     editor._marky.heading(1)
 
-    assert.strictEqual(output.value, '<h1 id="some-text">Some text</h1>\n')
+    assert.strictEqual(editor._marky.html, '<h1 id="some-text">Some text</h1>\n')
   })
   it('implements a heading with a default of 0', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = '# Some text'
     editor.setSelectionRange(2, 9)
     editor._marky.heading()
 
-    assert.strictEqual(output.value, '<p>Some text</p>\n')
+    assert.strictEqual(editor._marky.html, '<p>Some text</p>\n')
   })
   it('inserts a link snippet', () => {
     const editor = document.querySelector('.marky-editor')

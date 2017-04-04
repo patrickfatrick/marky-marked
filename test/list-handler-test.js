@@ -136,10 +136,9 @@ describe('list handling', () => {
 
   it('converts to HTML', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = '- Some text\r\n- Some other text'
     editor.dispatchEvent(markyupdate)
 
-    assert.include(output.value, '<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>')
+    assert.include(editor._marky.html, '<ul>\n<li>Some text</li>\n<li>Some other text</li>\n</ul>')
   })
 })

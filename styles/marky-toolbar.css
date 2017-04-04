@@ -11,6 +11,7 @@
 
     margin-left: 0;
     margin-right: 0;
+    margin-bottom: 0.3rem;
     font-size: 0.8rem;
     max-width: 2rem;
     line-height: 0.8rem;
@@ -22,7 +23,7 @@
     min-width: 1.5rem;
     min-height: 1.5rem;
     text-align: center;
-    background-color: white;
+    background-color: var(--white);
     color: var(--lightGray);
     transition: box-shadow 200ms ease-out;
 
@@ -66,10 +67,10 @@
     border-radius: 0 4px 4px 0;
   }
 
-  & button.fullscreen {
+  & button.expand {
     border-radius: 4px;
 
-    &.fullscreen-toggled {
+    &.marky-expanded {
       background-color: var(--orchid);
       color: var(--white);
 
@@ -107,5 +108,13 @@
     padding-left: 6px;
     padding-right: 6px;
     color: var(--gray);
+  }
+
+  & .separator:nth-child(11) {
+    display: block;
+
+    @media (width >= 600px) {
+      display: inline;
+    }
   }
 }

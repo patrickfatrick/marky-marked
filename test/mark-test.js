@@ -10,8 +10,6 @@ describe('mark', () => {
     assert.propertyVal(container.children[0].classList, '0', 'marky-toolbar')
     assert.strictEqual(container.children[1].tagName.toLowerCase(), 'textarea')
     assert.propertyVal(container.children[1].classList, '0', 'marky-editor')
-    assert.strictEqual(container.children[2].type, 'hidden')
-    assert.propertyVal(container.children[2].classList, '0', 'marky-output')
   })
   it('creates a bunch of toolbar controls', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
@@ -30,7 +28,7 @@ describe('mark', () => {
     assert.propertyVal(container.children[0].children[14].classList, '0', 'indent')
     assert.propertyVal(container.children[0].children[16].classList, '0', 'undo')
     assert.propertyVal(container.children[0].children[17].classList, '0', 'redo')
-    assert.propertyVal(container.children[0].children[19].classList, '0', 'fullscreen')
+    assert.propertyVal(container.children[0].children[19].classList, '0', 'expand')
   })
   it('initializes on marky-mark elements by default', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
@@ -40,8 +38,6 @@ describe('mark', () => {
     assert.propertyVal(container.children[0].classList, '0', 'marky-toolbar')
     assert.strictEqual(container.children[1].tagName.toLowerCase(), 'textarea')
     assert.propertyVal(container.children[1].classList, '0', 'marky-editor')
-    assert.strictEqual(container.children[2].type, 'hidden')
-    assert.propertyVal(container.children[2].classList, '0', 'marky-output')
   })
   it('initializes on an array of empty elements passed in', () => {
     const container = document.createElement('mark-wahlberg')
@@ -108,8 +104,6 @@ describe('mark', () => {
     assert.propertyVal(container.children[0].classList, '0', 'marky-toolbar')
     assert.strictEqual(container.children[1].tagName.toLowerCase(), 'textarea')
     assert.propertyVal(container.children[1].classList, '0', 'marky-editor')
-    assert.strictEqual(container.children[2].type, 'hidden')
-    assert.propertyVal(container.children[2].classList, '0', 'marky-output')
   })
   it('checks that the element is empty', () => {
     const container = document.getElementsByTagName('marky-mark')[0]
@@ -118,7 +112,7 @@ describe('mark', () => {
     document.body.appendChild(anotherContainer)
     mark()
 
-    assert.lengthOf(container.children, 3)
-    assert.lengthOf(anotherContainer.children, 3)
+    assert.lengthOf(container.children, 2)
+    assert.lengthOf(anotherContainer.children, 2)
   })
 })

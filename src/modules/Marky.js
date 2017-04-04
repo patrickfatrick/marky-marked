@@ -6,13 +6,14 @@ import {markyupdate, markychange} from './custom-events'
 import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers'
 
 export var Marky = {
-  init (container = null, editor = null, output = null) {
+  init (container = null, editor = null) {
     this.mark = mark
     this.state = [{markdown: '', html: '', selection: [0, 0]}]
     this.index = 0
     this.editor = editor
     this.container = container
-    this.output = output
+    this.markdown = ''
+    this.html = ''
   },
 
   /**
@@ -51,12 +52,19 @@ export var Marky = {
   },
 
   /**
-   * Handles updating the hidden input's value
-   * @param  {String} html   an HTML string
-   * @param  {HTMLElement} output the hidden input storing the HTML string
+   * Handles updating the markdown prop
+   * @param  {String} markdown   user-input markdown
    */
-  updateOutput (html, output = this.output) {
-    output.value = html
+  updateMarkdown (markdown) {
+    this.markdown = markdown
+  },
+
+  /**
+   * Handles updating the hidden input's value as well as html prop
+   * @param  {String} html   an HTML string
+   */
+  updateHTML (html) {
+    this.html = html
   },
 
   /**

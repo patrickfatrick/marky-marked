@@ -136,11 +136,10 @@ describe('block handling', () => {
   })
 
   it('converts to HTML', () => {
-    const output = document.querySelector('.marky-output')
     const editor = document.querySelector('.marky-editor')
     editor.value = '## Some text'
     editor.dispatchEvent(markyupdate)
 
-    assert.include(output.value, '<h2 id="some-text">Some text</h2>')
+    assert.include(editor._marky.html, '<h2 id="some-text">Some text</h2>')
   })
 })

@@ -68,13 +68,8 @@ export default function (containers = document.getElementsByTagName('marky-mark'
     markyEditor.init('textarea', 'Marky Marked Editor')
     markyEditor.addClass('marky-editor', id)
 
-    let markyOutput = Object.create(Element)
-    markyOutput.init('input', 'Marky Marked Output')
-    markyOutput.assign('type', 'hidden')
-    markyOutput.addClass('marky-output', id)
-
     let marky = Object.create(Marky)
-    marky.init(container, markyEditor.element, markyOutput.element)
+    marky.init(container, markyEditor.element)
 
     markyEditor.assign('_marky', marky)
     markies.push(marky)
@@ -320,16 +315,16 @@ export default function (containers = document.getElementsByTagName('marky-mark'
       markyEditor.element._marky.redo(1, markyEditor.element._marky.state, markyEditor.element._marky.index)
     })
 
-    let fullscreenButton = Object.create(Button)
-    fullscreenButton.init('Fullscreen', id, 'fa', 'fa-expand')
-    fullscreenButton.listen('click', (e) => {
+    let expandButton = Object.create(Button)
+    expandButton.init('Expand', id, 'fa', 'fa-expand')
+    expandButton.listen('click', (e) => {
       e.preventDefault()
       e.currentTarget.blur()
-      e.currentTarget.classList.toggle('fullscreen-toggled')
-      container.classList.toggle('fullscreen-toggled')
-      markyEditor.element.classList.toggle('fullscreen-toggled')
-      fullscreenButton.icon.element.classList.toggle('fa-expand')
-      fullscreenButton.icon.element.classList.toggle('fa-compress')
+      e.currentTarget.classList.toggle('marky-expanded')
+      container.classList.toggle('marky-expanded')
+      markyEditor.element.classList.toggle('marky-expanded')
+      expandButton.icon.element.classList.toggle('fa-expand')
+      expandButton.icon.element.classList.toggle('fa-compress')
     })
 
     /**
@@ -357,7 +352,6 @@ export default function (containers = document.getElementsByTagName('marky-mark'
 
     toolbar.appendTo(container)
     markyEditor.appendTo(container)
-    markyOutput.appendTo(container)
     headingButton.appendTo(toolbar.element)
     separatorA.appendTo(toolbar.element)
     boldButton.appendTo(toolbar.element)
@@ -377,7 +371,7 @@ export default function (containers = document.getElementsByTagName('marky-mark'
     undoButton.appendTo(toolbar.element)
     redoButton.appendTo(toolbar.element)
     separatorE.appendTo(toolbar.element)
-    fullscreenButton.appendTo(toolbar.element)
+    expandButton.appendTo(toolbar.element)
     dialogs.appendTo(toolbar.element)
     linkDialog.appendTo(dialogs.element)
     imageDialog.appendTo(dialogs.element)
@@ -392,7 +386,8 @@ export default function (containers = document.getElementsByTagName('marky-mark'
     }, false)
 
     markyEditor.listen('markychange', (e) => {
-      let html = e.currentTarget._marky.state[e.currentTarget._marky.index].html
+      const markdown = e.currentTarget._marky.state[e.currentTarget._marky.index].markdown
+      const html = e.currentTarget._marky.state[e.currentTarget._marky.index].html
       if (e.currentTarget._marky.index === 0) {
         undoButton.addClass('disabled')
       } else {
@@ -403,7 +398,8 @@ export default function (containers = document.getElementsByTagName('marky-mark'
       } else {
         redoButton.removeClass('disabled')
       }
-      e.currentTarget._marky.updateOutput(html)
+      e.currentTarget._marky.updateMarkdown(markdown)
+      e.currentTarget._marky.updateHTML(html)
     }, false)
 
     /**

@@ -27,10 +27,9 @@ describe('insert handling', () => {
 
   it('converts to HTML', () => {
     const editor = document.querySelector('.marky-editor')
-    const output = document.querySelector('.marky-output')
     editor.value = 'Some text ![Image](http://imagesource.com/image.jpg)'
     editor.dispatchEvent(markyupdate)
 
-    assert.include(output.value, '<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>')
+    assert.include(editor._marky.html, '<p>Some text <img src="http://imagesource.com/image.jpg" alt="Image"></p>')
   })
 })

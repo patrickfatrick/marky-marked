@@ -123,7 +123,7 @@
   <div id="html-output"></div>
 </div>
 
-<script src="./dist/marky-marked.js"></script>
+<script src="./dist/marky-marked.min.js"></script>
 <script>
 (function () {
   function CustomEvent (event, params) {
@@ -147,13 +147,12 @@ var markyupdate = new CustomEvent('markyupdate')
 document.addEventListener('DOMContentLoaded', function () {
   marky.mark()
   var editor = document.querySelector('textarea.marky-editor')
-  var output = document.querySelector('input.marky-output')
   var htmlOutput = document.getElementById('html-output')
 
   editor.addEventListener('markychange', function (e) {
-    document.getElementById('output').textContent = output.value
+    document.getElementById('output').textContent = editor._marky.html
     htmlOutput.innerHTML = ''
-    htmlOutput.insertAdjacentHTML('afterbegin', output.value)
+    htmlOutput.insertAdjacentHTML('afterbegin', editor._marky.html)
   })
 
   editor.value = '# Marky Marked\r\n\n_A `<textarea>` so sweet you\'ll be feeling good vibrations._\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax. Supported in all modern desktop browsers as well as IE11 (earlier versions are _not supported_).\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.'
