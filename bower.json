@@ -1,7 +1,7 @@
 {
 	"name": "marky-marked",
 	"main": "dist/marky-marked.js",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"authors": [
 		"patrickfatrick <patrick.fricano@icloud.com>"
 	],
