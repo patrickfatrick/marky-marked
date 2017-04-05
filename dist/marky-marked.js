@@ -328,10 +328,10 @@ Object.defineProperty(exports,'__esModule',{value:true});exports.Icon=undefined;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,'__esModule',{value:true});exports.Marky=undefined;var _mark=__webpack_require__(40);var _mark2=_interopRequireDefault(_mark);var _dispatcher=__webpack_require__(38);var dispatcher=_interopRequireWildcard(_dispatcher);var _customEvents=__webpack_require__(19);var _handlers=__webpack_require__(39);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key]}}newObj.default=obj;return newObj}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}var Marky=exports.Marky={init:function init(){var container=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var editor=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;this.mark=_mark2.default;this.state=[{markdown:'',html:'',selection:[0,0]}];this.index=0;this.editor=editor;this.container=container;this.markdown='';this.html=''},/**
+Object.defineProperty(exports,'__esModule',{value:true});exports.Marky=undefined;var _mark=__webpack_require__(40);var _mark2=_interopRequireDefault(_mark);var _dispatcher=__webpack_require__(38);var dispatcher=_interopRequireWildcard(_dispatcher);var _customEvents=__webpack_require__(19);var _handlers=__webpack_require__(39);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key]}}newObj.default=obj;return newObj}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}var Marky=exports.Marky={init:function init(){var container=arguments.length>0&&arguments[0]!==undefined?arguments[0]:null;var editor=arguments.length>1&&arguments[1]!==undefined?arguments[1]:null;this.mark=_mark2.default;this.state=[{markdown:'',html:'',selection:[0,0]}];this.index=0;this.editor=editor;this.container=container;this.markdown='';this.html='';this.listeners=[]},/**
    * Removes the container and all descendants from the DOM
    * @param  {container} container the container used to invoke `mark()`
-   */destroy:function destroy(){var container=arguments.length>0&&arguments[0]!==undefined?arguments[0]:this.container;if(container.parentNode){container.parentNode.removeChild(container)}},/**
+   */destroy:function destroy(){var container=arguments.length>0&&arguments[0]!==undefined?arguments[0]:this.container;for(var listener in this.listeners){this.editor.removeEventListener(listener,this.listeners[listener])}if(container.parentNode){container.parentNode.removeChild(container)}},/**
    * Handles updating the state on forward-progress changes
    * @requires dispatcher/update
    * @param {String} markdown the new markdown blob
@@ -803,19 +803,7 @@ var markies=[];Array.prototype.forEach.call(containers,function(container,i){if(
      * Insert elements into the DOM
      */toolbar.appendTo(container);markyEditor.appendTo(container);headingButton.appendTo(toolbar.element);separatorA.appendTo(toolbar.element);boldButton.appendTo(toolbar.element);italicButton.appendTo(toolbar.element);strikethroughButton.appendTo(toolbar.element);codeButton.appendTo(toolbar.element);blockquoteButton.appendTo(toolbar.element);separatorB.appendTo(toolbar.element);linkButton.appendTo(toolbar.element);imageButton.appendTo(toolbar.element);separatorC.appendTo(toolbar.element);unorderedListButton.appendTo(toolbar.element);orderedListButton.appendTo(toolbar.element);outdentButton.appendTo(toolbar.element);indentButton.appendTo(toolbar.element);separatorD.appendTo(toolbar.element);undoButton.appendTo(toolbar.element);redoButton.appendTo(toolbar.element);separatorE.appendTo(toolbar.element);expandButton.appendTo(toolbar.element);dialogs.appendTo(toolbar.element);linkDialog.appendTo(dialogs.element);imageDialog.appendTo(dialogs.element);headingDialog.appendTo(dialogs.element);/**
      * Listeners for the editor
-     */markyEditor.listen('markyupdate',function(e){e.currentTarget._marky.update(e.currentTarget.value,[e.currentTarget.selectionStart,e.currentTarget.selectionEnd],e.currentTarget._marky.state,e.currentTarget._marky.index)},false);markyEditor.listen('markychange',function(e){var markdown=e.currentTarget._marky.state[e.currentTarget._marky.index].markdown;var html=e.currentTarget._marky.state[e.currentTarget._marky.index].html;if(e.currentTarget._marky.index===0){undoButton.addClass('disabled')}else{undoButton.removeClass('disabled')}if(e.currentTarget._marky.index===e.currentTarget._marky.state.length-1){redoButton.addClass('disabled')}else{redoButton.removeClass('disabled')}e.currentTarget._marky.updateMarkdown(markdown);e.currentTarget._marky.updateHTML(html)},false);/**
-     * Listen for input events, set timeout to update state, clear timeout from previous input
-     */markyEditor.listen('input',function(e){window.clearTimeout(timeoutID);timeoutID=window.setTimeout(function(){e.target.dispatchEvent(_customEvents.markyupdate)},1000)},false);/**
-     * Listen for change events (requires loss of focus) and update state
-     */markyEditor.listen('change',function(e){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},false);/**
-     * Listen for pasting into the editor and update state
-     */markyEditor.listen('paste',function(e){setTimeout(function(){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},0)},false);/**
-     * Listen for cutting from the editor and update state
-     */markyEditor.listen('cut',function(e){setTimeout(function(){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},0)},false);var deleteSelection=0;/**
-     * Listen for keydown events,
-     * if key is delete key,
-     * set deleteSelection to length of selection
-     */markyEditor.listen('keydown',function(e){if(e.which===8)deleteSelection=e.currentTarget.selectionEnd-e.currentTarget.selectionStart});var keyMap=[];// Used for determining whether or not to update state on space keyup
+     */var keyMap=[];// Used for determining whether or not to update state on space keyup
 var punctuations=[46,// period
 44,// comma
 63,// question mark
@@ -827,15 +815,29 @@ var punctuations=[46,// period
 38,// ampersand
 124,// vertical pipe
 32// space
-];/**
+];var deleteSelection=0;var listeners={markyupdate:function markyupdate(e){e.currentTarget._marky.update(e.currentTarget.value,[e.currentTarget.selectionStart,e.currentTarget.selectionEnd],e.currentTarget._marky.state,e.currentTarget._marky.index)},markychange:function markychange(e){var markdown=e.currentTarget._marky.state[e.currentTarget._marky.index].markdown;var html=e.currentTarget._marky.state[e.currentTarget._marky.index].html;if(e.currentTarget._marky.index===0){undoButton.addClass('disabled')}else{undoButton.removeClass('disabled')}if(e.currentTarget._marky.index===e.currentTarget._marky.state.length-1){redoButton.addClass('disabled')}else{redoButton.removeClass('disabled')}e.currentTarget._marky.updateMarkdown(markdown);e.currentTarget._marky.updateHTML(html)},input:function input(e){window.clearTimeout(timeoutID);timeoutID=window.setTimeout(function(){e.target.dispatchEvent(_customEvents.markyupdate)},1000)},change:function change(e){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},paste:function paste(e){setTimeout(function(){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},0)},cut:function cut(e){setTimeout(function(){e.currentTarget.dispatchEvent(_customEvents.markyupdate)},0)},keydown:function keydown(e){if(e.which===8)deleteSelection=e.currentTarget.selectionEnd-e.currentTarget.selectionStart},keypress:function keypress(e){keyMap.push(e.which);if(keyMap.length>2)keyMap.shift();punctuations.forEach(function(punctuation){if(e.which===32&&keyMap[0]===punctuation){return window.clearTimeout(timeoutID)}if(e.which===punctuation){window.clearTimeout(timeoutID);return e.currentTarget.dispatchEvent(_customEvents.markyupdate)}})},keyup:function keyup(e){if(e.which===8&&deleteSelection>0){window.clearTimeout(timeoutID);deleteSelection=0;e.currentTarget.dispatchEvent(_customEvents.markyupdate)}},click:function click(){imageDialog.element.style.visibility='hidden';imageDialog.removeClass('toggled');linkDialog.element.style.visibility='hidden';linkDialog.removeClass('toggled');headingDialog.element.style.visibility='hidden';headingDialog.removeClass('toggled')},select:function select(e){e.currentTarget.dispatchEvent(_customEvents.markyselect)},blur:function blur(e){e.currentTarget.dispatchEvent(_customEvents.markyblur)},focus:function focus(e){e.currentTarget.dispatchEvent(_customEvents.markyfocus)}};markyEditor.listen('markyupdate',listeners.markyupdate);markyEditor.listen('markychange',listeners.markychange);/**
+     * Listen for input events, set timeout to update state, clear timeout from previous input
+     */markyEditor.listen('input',listeners.input);/**
+     * Listen for change events (requires loss of focus) and update state
+     */markyEditor.listen('change',listeners.change);/**
+     * Listen for pasting into the editor and update state
+     */markyEditor.listen('paste',listeners.paste);/**
+     * Listen for cutting from the editor and update state
+     */markyEditor.listen('cut',listeners.cut);/**
+     * Listen for keydown events,
+     * if key is delete key,
+     * set deleteSelection to length of selection
+     */markyEditor.listen('keydown',listeners.keydown);/**
      * Listen for keyup events,
      * if key is space or punctuation (but not a space following punctuation or another space),
      * update state and clear input timeout.
-     */markyEditor.listen('keypress',function(e){keyMap.push(e.which);if(keyMap.length>2)keyMap.shift();punctuations.forEach(function(punctuation){if(e.which===32&&keyMap[0]===punctuation){return window.clearTimeout(timeoutID)}if(e.which===punctuation){window.clearTimeout(timeoutID);return e.currentTarget.dispatchEvent(_customEvents.markyupdate)}})});/**
+     */markyEditor.listen('keypress',listeners.keypress);/**
      * Listen for keyup events,
      * if key is delete and it's a bulk selection,
      * update state and clear input timeout.
-     */markyEditor.listen('keyup',function(e){if(e.which===8&&deleteSelection>0){window.clearTimeout(timeoutID);deleteSelection=0;e.currentTarget.dispatchEvent(_customEvents.markyupdate)}});markyEditor.listen('select',function(e){e.currentTarget.dispatchEvent(_customEvents.markyselect)});markyEditor.listen('blur',function(e){e.currentTarget.dispatchEvent(_customEvents.markyblur)});markyEditor.listen('focus',function(e){e.currentTarget.dispatchEvent(_customEvents.markyfocus)});markyEditor.listen('click',function(){imageDialog.element.style.visibility='hidden';imageDialog.removeClass('toggled');linkDialog.element.style.visibility='hidden';linkDialog.removeClass('toggled');headingDialog.element.style.visibility='hidden';headingDialog.removeClass('toggled')})});return markies};var _Marky=__webpack_require__(18);var _Element=__webpack_require__(2);var _Button=__webpack_require__(34);var _Dialogs=__webpack_require__(35);var _Separator=__webpack_require__(37);var _customEvents=__webpack_require__(19);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}var timeoutID=void 0;// Used later for input events
+     */markyEditor.listen('keyup',listeners.keypress);markyEditor.listen('click',listeners.click);/**
+     * The following just emit a marky event.
+     */markyEditor.listen('select',listeners.select);markyEditor.listen('blur',listeners.blur);markyEditor.listen('focus',listeners.focus);marky.listeners=listeners});return markies};var _Marky=__webpack_require__(18);var _Element=__webpack_require__(2);var _Button=__webpack_require__(34);var _Dialogs=__webpack_require__(35);var _Separator=__webpack_require__(37);var _customEvents=__webpack_require__(19);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj}}var timeoutID=void 0;// Used later for input events
 /**
  * Register and append the DOM elements needed and set the event listeners
  * @param   {String}  tag name to be used for initialization

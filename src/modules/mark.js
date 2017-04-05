@@ -381,75 +381,8 @@ export default function (containers = document.getElementsByTagName('marky-mark'
      * Listeners for the editor
      */
 
-    markyEditor.listen('markyupdate', (e) => {
-      e.currentTarget._marky.update(e.currentTarget.value, [e.currentTarget.selectionStart, e.currentTarget.selectionEnd], e.currentTarget._marky.state, e.currentTarget._marky.index)
-    }, false)
-
-    markyEditor.listen('markychange', (e) => {
-      const markdown = e.currentTarget._marky.state[e.currentTarget._marky.index].markdown
-      const html = e.currentTarget._marky.state[e.currentTarget._marky.index].html
-      if (e.currentTarget._marky.index === 0) {
-        undoButton.addClass('disabled')
-      } else {
-        undoButton.removeClass('disabled')
-      }
-      if (e.currentTarget._marky.index === e.currentTarget._marky.state.length - 1) {
-        redoButton.addClass('disabled')
-      } else {
-        redoButton.removeClass('disabled')
-      }
-      e.currentTarget._marky.updateMarkdown(markdown)
-      e.currentTarget._marky.updateHTML(html)
-    }, false)
-
-    /**
-     * Listen for input events, set timeout to update state, clear timeout from previous input
-     */
-    markyEditor.listen('input', (e) => {
-      window.clearTimeout(timeoutID)
-      timeoutID = window.setTimeout(() => {
-        e.target.dispatchEvent(markyupdate)
-      }, 1000)
-    }, false)
-
-    /**
-     * Listen for change events (requires loss of focus) and update state
-     */
-    markyEditor.listen('change', (e) => {
-      e.currentTarget.dispatchEvent(markyupdate)
-    }, false)
-
-    /**
-     * Listen for pasting into the editor and update state
-     */
-    markyEditor.listen('paste', (e) => {
-      setTimeout(() => {
-        e.currentTarget.dispatchEvent(markyupdate)
-      }, 0)
-    }, false)
-
-    /**
-     * Listen for cutting from the editor and update state
-     */
-    markyEditor.listen('cut', (e) => {
-      setTimeout(() => {
-        e.currentTarget.dispatchEvent(markyupdate)
-      }, 0)
-    }, false)
-
-    let deleteSelection = 0
-
-    /**
-     * Listen for keydown events,
-     * if key is delete key,
-     * set deleteSelection to length of selection
-     */
-    markyEditor.listen('keydown', (e) => {
-      if (e.which === 8) deleteSelection = e.currentTarget.selectionEnd - e.currentTarget.selectionStart
-    })
-
-    let keyMap = [] // Used for determining whether or not to update state on space keyup
-    let punctuations = [
+    const keyMap = [] // Used for determining whether or not to update state on space keyup
+    const punctuations = [
       46, // period
       44, // comma
       63, // question mark
@@ -463,58 +396,160 @@ export default function (containers = document.getElementsByTagName('marky-mark'
       32 // space
     ]
 
+    let deleteSelection = 0
+
+    const listeners = {
+      markyupdate (e) {
+        e.currentTarget._marky.update(
+          e.currentTarget.value,
+          [e.currentTarget.selectionStart, e.currentTarget.selectionEnd],
+          e.currentTarget._marky.state,
+          e.currentTarget._marky.index
+        )
+      },
+
+      markychange (e) {
+        const markdown = e.currentTarget._marky.state[e.currentTarget._marky.index].markdown
+        const html = e.currentTarget._marky.state[e.currentTarget._marky.index].html
+        if (e.currentTarget._marky.index === 0) {
+          undoButton.addClass('disabled')
+        } else {
+          undoButton.removeClass('disabled')
+        }
+        if (e.currentTarget._marky.index === e.currentTarget._marky.state.length - 1) {
+          redoButton.addClass('disabled')
+        } else {
+          redoButton.removeClass('disabled')
+        }
+        e.currentTarget._marky.updateMarkdown(markdown)
+        e.currentTarget._marky.updateHTML(html)
+      },
+
+      input (e) {
+        window.clearTimeout(timeoutID)
+        timeoutID = window.setTimeout(() => {
+          e.target.dispatchEvent(markyupdate)
+        }, 1000)
+      },
+
+      change (e) {
+        e.currentTarget.dispatchEvent(markyupdate)
+      },
+
+      paste (e) {
+        setTimeout(() => {
+          e.currentTarget.dispatchEvent(markyupdate)
+        }, 0)
+      },
+
+      cut (e) {
+        setTimeout(() => {
+          e.currentTarget.dispatchEvent(markyupdate)
+        }, 0)
+      },
+
+      keydown (e) {
+        if (e.which === 8) deleteSelection = e.currentTarget.selectionEnd - e.currentTarget.selectionStart
+      },
+
+      keypress (e) {
+        keyMap.push(e.which)
+        if (keyMap.length > 2) keyMap.shift()
+        punctuations.forEach((punctuation) => {
+          if (e.which === 32 && keyMap[0] === punctuation) {
+            return window.clearTimeout(timeoutID)
+          }
+          if (e.which === punctuation) {
+            window.clearTimeout(timeoutID)
+            return e.currentTarget.dispatchEvent(markyupdate)
+          }
+        })
+      },
+
+      keyup (e) {
+        if (e.which === 8 && deleteSelection > 0) {
+          window.clearTimeout(timeoutID)
+          deleteSelection = 0
+          e.currentTarget.dispatchEvent(markyupdate)
+        }
+      },
+
+      click () {
+        imageDialog.element.style.visibility = 'hidden'
+        imageDialog.removeClass('toggled')
+        linkDialog.element.style.visibility = 'hidden'
+        linkDialog.removeClass('toggled')
+        headingDialog.element.style.visibility = 'hidden'
+        headingDialog.removeClass('toggled')
+      },
+
+      select (e) {
+        e.currentTarget.dispatchEvent(markyselect)
+      },
+
+      blur (e) {
+        e.currentTarget.dispatchEvent(markyblur)
+      },
+
+      focus (e) {
+        e.currentTarget.dispatchEvent(markyfocus)
+      }
+    }
+
+    markyEditor.listen('markyupdate', listeners.markyupdate)
+    markyEditor.listen('markychange', listeners.markychange)
+
+    /**
+     * Listen for input events, set timeout to update state, clear timeout from previous input
+     */
+    markyEditor.listen('input', listeners.input)
+
+    /**
+     * Listen for change events (requires loss of focus) and update state
+     */
+    markyEditor.listen('change', listeners.change)
+
+    /**
+     * Listen for pasting into the editor and update state
+     */
+    markyEditor.listen('paste', listeners.paste)
+
+    /**
+     * Listen for cutting from the editor and update state
+     */
+    markyEditor.listen('cut', listeners.cut)
+
+    /**
+     * Listen for keydown events,
+     * if key is delete key,
+     * set deleteSelection to length of selection
+     */
+    markyEditor.listen('keydown', listeners.keydown)
+
     /**
      * Listen for keyup events,
      * if key is space or punctuation (but not a space following punctuation or another space),
      * update state and clear input timeout.
      */
-    markyEditor.listen('keypress', (e) => {
-      keyMap.push(e.which)
-      if (keyMap.length > 2) keyMap.shift()
-      punctuations.forEach((punctuation) => {
-        if (e.which === 32 && keyMap[0] === punctuation) {
-          return window.clearTimeout(timeoutID)
-        }
-        if (e.which === punctuation) {
-          window.clearTimeout(timeoutID)
-          return e.currentTarget.dispatchEvent(markyupdate)
-        }
-      })
-    })
+    markyEditor.listen('keypress', listeners.keypress)
 
     /**
      * Listen for keyup events,
      * if key is delete and it's a bulk selection,
      * update state and clear input timeout.
      */
-    markyEditor.listen('keyup', (e) => {
-      if (e.which === 8 && deleteSelection > 0) {
-        window.clearTimeout(timeoutID)
-        deleteSelection = 0
-        e.currentTarget.dispatchEvent(markyupdate)
-      }
-    })
+    markyEditor.listen('keyup', listeners.keypress)
 
-    markyEditor.listen('select', (e) => {
-      e.currentTarget.dispatchEvent(markyselect)
-    })
+    markyEditor.listen('click', listeners.click)
 
-    markyEditor.listen('blur', (e) => {
-      e.currentTarget.dispatchEvent(markyblur)
-    })
+    /**
+     * The following just emit a marky event.
+     */
+    markyEditor.listen('select', listeners.select)
+    markyEditor.listen('blur', listeners.blur)
+    markyEditor.listen('focus', listeners.focus)
 
-    markyEditor.listen('focus', (e) => {
-      e.currentTarget.dispatchEvent(markyfocus)
-    })
-
-    markyEditor.listen('click', () => {
-      imageDialog.element.style.visibility = 'hidden'
-      imageDialog.removeClass('toggled')
-      linkDialog.element.style.visibility = 'hidden'
-      linkDialog.removeClass('toggled')
-      headingDialog.element.style.visibility = 'hidden'
-      headingDialog.removeClass('toggled')
-    })
+    marky.listeners = listeners
   })
 
   return markies

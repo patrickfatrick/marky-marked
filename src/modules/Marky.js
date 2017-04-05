@@ -2,8 +2,8 @@
 
 import mark from './mark'
 import * as dispatcher from './dispatcher'
-import {markyupdate, markychange} from './custom-events'
-import {inlineHandler, blockHandler, insertHandler, listHandler, indentHandler} from './handlers'
+import { markyupdate, markychange } from './custom-events'
+import { inlineHandler, blockHandler, insertHandler, listHandler, indentHandler } from './handlers'
 
 export var Marky = {
   init (container = null, editor = null) {
@@ -14,6 +14,7 @@ export var Marky = {
     this.container = container
     this.markdown = ''
     this.html = ''
+    this.listeners = []
   },
 
   /**
@@ -21,6 +22,10 @@ export var Marky = {
    * @param  {container} container the container used to invoke `mark()`
    */
   destroy (container = this.container) {
+    for (const listener in this.listeners) {
+      this.editor.removeEventListener(listener, this.listeners[listener])
+    }
+
     if (container.parentNode) {
       container.parentNode.removeChild(container)
     }
