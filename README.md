@@ -35,11 +35,11 @@ Marky Marked is supported in all modern desktop browsers as well as IE11. In an 
 ## Install
 
 ```bash
-$npm install marky-marked --save
-$yarn add marky-marked
-$jspm install npm:marky-marked
-$bower install marky-marked
-$git clone git:github.com/patrickfatrick/marky-marked.git
+$ npm install marky-marked --save
+$ yarn add marky-marked
+$ jspm install npm:marky-marked
+$ bower install marky-marked
+$ git clone git:github.com/patrickfatrick/marky-marked.git
 ```
 
 ## Usage
@@ -277,12 +277,18 @@ This will completely remove the container element (meaning, the custom tag that 
 markyMarked.destroy()
 ```
 
+## Example setups
+
+To see Marky Marked in use as a library in the global scope, just check out [the demo page](./index.html).
+
+To see it working inside a component (in this case Vue, but would work very similarly for React), check out this component in one of my projects, [taskmastr](https://github.com/patrickfatrick/taskmastr/blob/master/src/components/tasks/task-components/Notes.vue) 
+
 ## Building & Testing
 
 Marky Marked uses a combination of Karma, Mocha, and Chai for tests. To run the tests,
 
 ```bash
-$yarn test
+$ yarn test
 ```
 
 You may need to install the karma and its plugins globally if you don't already have them. You can also test in other browsers by adding them to karma.conf.js. Chrome, Firefox, and Safari launchers are plugged but not included in the list of browsers by default.
@@ -290,7 +296,7 @@ You may need to install the karma and its plugins globally if you don't already 
 To lint and build the distribution files:
 
 ```bash
-$yarn run build
+$ yarn run build
 ```
 
 ## What's the plan?
@@ -303,6 +309,5 @@ Marky Marked is freely distributable under the terms of the [MIT license](./LICE
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
-
 
 _Each Marky Marked release is linted with StandardJS and tested with a combination of Karma, Mocha, and Chai._

@@ -8,10 +8,16 @@ import { inlineHandler, blockHandler, insertHandler, listHandler, indentHandler 
 export var Marky = {
   init (container = null, editor = null) {
     this.mark = mark
-    this.state = [{markdown: '', html: '', selection: [0, 0]}]
-    this.index = 0
     this.editor = editor
     this.container = container
+    this.state = [
+      {
+        markdown: '',
+        html: '',
+        selection: [ 0, 0 ]
+      }
+    ]
+    this.index = 0
     this.markdown = ''
     this.html = ''
     this.listeners = []

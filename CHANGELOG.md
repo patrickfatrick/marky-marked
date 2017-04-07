@@ -17,7 +17,7 @@ This change should make it a little more flexible and a little easier to work wi
 #### v1.5
 
 - Under the hood: Switched to standardjs
-- New `destroy()` method for removing editors from the DOM if need be. See below. 
+- New `destroy()` method for removing editors from the DOM if need be.
 
 #### v1.4
 
