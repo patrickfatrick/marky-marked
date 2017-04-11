@@ -1,16 +1,12 @@
 {
-  "presets": [ "env" ],
-  "plugins": [ "transform-runtime", "transform-object-rest-spread" ],
-  "env": {
-    "test": {
-      "presets": [
-        [ "env", {
-          "targets": { "browsers": [ "last 2 versions", "> 5%" ] }
-        }]
-      ],
-      "plugins": [ "transform-runtime", "transform-object-rest-spread", "istanbul" ]
-    }
-  },
-  "compact": true,
-  "minified": true
+  "presets": [
+    [
+      "env",
+      {
+        "targets": { "browsers": [ "last 2 versions", "> 5%" ] },
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [ "transform-object-rest-spread", "external-helpers", "array-includes" ]
 }

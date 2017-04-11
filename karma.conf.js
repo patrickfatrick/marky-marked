@@ -1,22 +1,22 @@
-const webpackConfig = require('./webpack.config.test.js')
+const faucet = require('faucet')
+const rollupConfig = require('./rollup.config.test.js')
 
 module.exports = function (karma) {
   karma.set({
     basePath: '',
     files: [
-      'node_modules/babel-polyfill/browser.js',
-      'test/index.js'
+      'util/tape.js',
+      'src/**/*.js',
+      'test/**/*.spec.js'
     ],
-    frameworks: [ 'mocha', 'chai' ],
-    webpack: webpackConfig,
-    webpackMiddleware: {
-      noInfo: true
-    },
-    browsers: [ 'PhantomJS' ], // 'Chrome', 'Safari', 'Firefox', 'Opera'
+    frameworks: [ 'tap', 'sinon' ],
+    rollupPreprocessor: rollupConfig,
+    browsers: [ 'Firefox' ], // 'PhantomJS', 'Chrome', 'Safari', 'Firefox', 'Opera',
     preprocessors: {
-      'test/index.js': [ 'webpack', 'sourcemap' ]
+      'src/**/*.js': [ 'sourcemap', 'rollup' ],
+      'test/**/*.spec.js': [ 'sourcemap', 'rollup' ]
     },
-    reporters: [ 'coverage', 'spec' ],
+    reporters: [ 'tap-pretty', 'coverage' ],
     coverageReporter: {
       reporters: [
         {
@@ -28,12 +28,11 @@ module.exports = function (karma) {
         }
       ]
     },
-    port: 9876,
+    tapReporter: {
+      prettify: faucet
+    },
     logLevel: karma.LOG_INFO,
     singleRun: true,
-    autoWatch: false,
-    browserNoActivityTimeout: 30000,
-    colors: true,
-    loggers: [ { type: 'console' } ]
+    autoWatch: false
   })
 }

@@ -1,3 +1,15 @@
+#### 4.0
+
+More breaking changes! Yay! This update actually includes some big changes.
+
+The biggest change is now the library exports just a function, `markymark`. Rather than `marky.mark()` you will just use `markymark()` to initialize it. 
+
+In moving further away from the DOM for the public API, I've incorporated [contra/emitter](https://github.com/bevacqua/contra#λemitterthing-options) so that now the Marky object itself emits the public events ('markychange', 'markyupdate', etc.). No more having to register CustomEvents to be able to interface with the events.
+
+This package also now uses Rollup for the build. This resulted in significantly a smaller library, even with the addition of the emitter. About 20KB was shaved off the minified file.
+
+Tests are now written with Tape instead of Mocha/Chai, as well.
+
 #### 3.0
 
 Another breaking change was introduced. Instead of writing the html to a hidden input in the DOM it is now written to the marky object in the `html` prop. Similarly, the current state's markdown is written to the `markdown` prop.

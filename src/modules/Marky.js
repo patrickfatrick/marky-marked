@@ -1,14 +1,12 @@
 'use strict'
 
-import mark from './mark'
 import * as dispatcher from './dispatcher'
-import { markyupdate, markychange } from './custom-events'
 import { inlineHandler, blockHandler, insertHandler, listHandler, indentHandler } from './handlers'
 
-export var Marky = {
-  init (container = null, editor = null) {
-    this.mark = mark
-    this.editor = editor
+export default {
+  init (id, container, editor) {
+    this.id = id
+    this.editor = editor.element
     this.container = container
     this.state = [
       {
@@ -20,7 +18,13 @@ export var Marky = {
     this.index = 0
     this.markdown = ''
     this.html = ''
-    this.listeners = []
+    this.elements = {
+      dialogs: {},
+      buttons: {},
+      editor: editor
+    }
+
+    return this
   },
 
   /**
@@ -28,9 +32,17 @@ export var Marky = {
    * @param  {container} container the container used to invoke `mark()`
    */
   destroy (container = this.container) {
-    for (const listener in this.listeners) {
-      this.editor.removeEventListener(listener, this.listeners[listener])
+    // Remove all listeners from all elements
+    this._removeListeners(this.elements)
+
+    // Reset elements contained in this instance to remove from memory
+    this.elements = {
+      dialogs: {},
+      buttons: {},
+      editor: null
     }
+    this.editor = null
+    this.container = null
 
     if (container.parentNode) {
       container.parentNode.removeChild(container)
@@ -38,44 +50,28 @@ export var Marky = {
   },
 
   /**
-   * Handles updating the state on forward-progress changes
+   * Handles the `markyupdate` event
    * @requires dispatcher/update
    * @param {String} markdown the new markdown blob
    * @param {Array}  state    the state timeline
    * @param {Number} index    current state index
    */
-  update (markdown, selection = [0, 0], state = this.state, index = this.index, editor = this.editor) {
+  update (markdown, selection = [0, 0], state = this.state, index = this.index) {
     const action = dispatcher.update(markdown, selection, state, index)
     this.state = action.state
     this.index = action.index
-    editor.dispatchEvent(markychange)
+    this.emit('markychange')
     return this.index
   },
 
   /**
-   * Handles updating the editor's value and selection range
-   * @param  {Object} handled value = string; range = start and end of selection
-   * @param  {HTMLElement} editor  the marky marked editor
+   * Handles the `markychange` event
+   * @param  {String} markdown markdown string
+   * @param  {String} html     html string
    */
-  updateEditor (markdown, range, editor = this.editor) {
-    editor.value = markdown
-    editor.setSelectionRange(range[0], range[1])
-  },
-
-  /**
-   * Handles updating the markdown prop
-   * @param  {String} markdown   user-input markdown
-   */
-  updateMarkdown (markdown) {
-    this.markdown = markdown
-  },
-
-  /**
-   * Handles updating the hidden input's value as well as html prop
-   * @param  {String} html   an HTML string
-   */
-  updateHTML (html) {
-    this.html = html
+  change (markdown, html) {
+    this._updateMarkdown(markdown)
+    this._updateHTML(html)
   },
 
   /**
@@ -92,8 +88,8 @@ export var Marky = {
 
     const action = dispatcher.undo(num, state, index)
     this.index = action.index
-    this.updateEditor(action.state.markdown, action.state.selection, editor)
-    editor.dispatchEvent(markychange)
+    this._updateEditor(action.state.markdown, action.state.selection, editor)
+    this.emit('markychange')
     return this.index
   },
 
@@ -111,13 +107,13 @@ export var Marky = {
 
     const action = dispatcher.redo(num, state, index)
     this.index = action.index
-    this.updateEditor(action.state.markdown, action.state.selection, editor)
-    editor.dispatchEvent(markychange)
+    this._updateEditor(action.state.markdown, action.state.selection, editor)
+    this.emit('markychange')
     return this.index
   },
 
   /**
-   * Setsa the selection indices in the editor
+   * Sets the selection indices in the editor
    * @param   {Array}       arr    starting and ending indices
    * @param   {HTMLElement} editor the marky marked editor
    * @returns {Array}       the array that was passed in
@@ -191,8 +187,8 @@ export var Marky = {
   bold (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let boldify = inlineHandler(editor.value, indices, '**')
-    this.updateEditor(boldify.value, boldify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(boldify.value, boldify.range, editor)
+    this.emit('markyupdate')
     return [boldify.range[0], boldify.range[1]]
   },
 
@@ -206,8 +202,8 @@ export var Marky = {
   italic (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let italicize = inlineHandler(editor.value, indices, '_')
-    this.updateEditor(italicize.value, italicize.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(italicize.value, italicize.range, editor)
+    this.emit('markyupdate')
     return [italicize.range[0], italicize.range[1]]
   },
 
@@ -221,8 +217,8 @@ export var Marky = {
   strikethrough (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let strikitize = inlineHandler(editor.value, indices, '~~')
-    this.updateEditor(strikitize.value, strikitize.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(strikitize.value, strikitize.range, editor)
+    this.emit('markyupdate')
     return [strikitize.range[0], strikitize.range[1]]
   },
 
@@ -236,8 +232,8 @@ export var Marky = {
   code (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let codify = inlineHandler(editor.value, indices, '`')
-    this.updateEditor(codify.value, codify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(codify.value, codify.range, editor)
+    this.emit('markyupdate')
     return [codify.range[0], codify.range[1]]
   },
 
@@ -251,8 +247,8 @@ export var Marky = {
   blockquote (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let quotify = blockHandler(editor.value, indices, '> ')
-    this.updateEditor(quotify.value, quotify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(quotify.value, quotify.range, editor)
+    this.emit('markyupdate')
     return [quotify.range[0], quotify.range[1]]
   },
 
@@ -273,8 +269,8 @@ export var Marky = {
     mark = markArr.join('')
     let space = mark ? ' ' : ''
     let headingify = blockHandler(editor.value, indices, mark + space)
-    this.updateEditor(headingify.value, headingify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(headingify.value, headingify.range, editor)
+    this.emit('markyupdate')
     return [headingify.range[0], headingify.range[1]]
   },
 
@@ -289,8 +285,8 @@ export var Marky = {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     const mark = '[' + display + '](' + url + ')'
     let linkify = insertHandler(editor.value, indices, mark)
-    this.updateEditor(linkify.value, linkify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(linkify.value, linkify.range, editor)
+    this.emit('markyupdate')
     return [linkify.range[0], linkify.range[1]]
   },
 
@@ -305,8 +301,8 @@ export var Marky = {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     const mark = '![' + alt + '](' + source + ')'
     let imageify = insertHandler(editor.value, indices, mark)
-    this.updateEditor(imageify.value, imageify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(imageify.value, imageify.range, editor)
+    this.emit('markyupdate')
     return [imageify.range[0], imageify.range[1]]
   },
 
@@ -320,8 +316,8 @@ export var Marky = {
   unorderedList (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let listify = listHandler(editor.value, indices, 'ul')
-    this.updateEditor(listify.value, listify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(listify.value, listify.range, editor)
+    this.emit('markyupdate')
     return [listify.range[0], listify.range[1]]
   },
 
@@ -335,8 +331,8 @@ export var Marky = {
   orderedList (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let listify = listHandler(editor.value, indices, 'ol')
-    this.updateEditor(listify.value, listify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(listify.value, listify.range, editor)
+    this.emit('markyupdate')
     return [listify.range[0], listify.range[1]]
   },
 
@@ -350,8 +346,8 @@ export var Marky = {
   indent (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let indentify = indentHandler(editor.value, indices, 'in')
-    this.updateEditor(indentify.value, indentify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(indentify.value, indentify.range, editor)
+    this.emit('markyupdate')
     return [indentify.range[0], indentify.range[1]]
   },
 
@@ -365,8 +361,52 @@ export var Marky = {
   outdent (indices, editor = this.editor) {
     indices = indices || [editor.selectionStart, editor.selectionEnd]
     let indentify = indentHandler(editor.value, indices, 'out')
-    this.updateEditor(indentify.value, indentify.range, editor)
-    editor.dispatchEvent(markyupdate)
+    this._updateEditor(indentify.value, indentify.range, editor)
+    this.emit('markyupdate')
     return [indentify.range[0], indentify.range[1]]
+  },
+
+  /**
+   * @private
+   * Handles updating the markdown prop
+   * @param  {String} markdown   user-input markdown
+   */
+  _updateMarkdown (markdown) {
+    this.markdown = markdown
+  },
+
+  /**
+   * @private
+   * Handles updating the hidden input's value as well as html prop
+   * @param  {String} html   an HTML string
+   */
+  _updateHTML (html) {
+    this.html = html
+  },
+
+  /**
+   * @private
+   * Handles updating the editor's value and selection range
+   * @param  {Object} handled value = string; range = start and end of selection
+   * @param  {HTMLElement} editor  the marky marked editor
+   */
+  _updateEditor (markdown, range, editor = this.editor) {
+    editor.value = markdown
+    editor.setSelectionRange(range[0], range[1])
+  },
+
+  /**
+   * @private
+   * Rescursively searches an object for elements and removes their listeners
+   * @param  {Object} obj plain object (used only with the `elements` object in Marky)
+   */
+  _removeListeners (obj) {
+    for (const prop in obj) {
+      if (obj[prop].removeListeners) {
+        obj[prop].removeListeners()
+      } else {
+        this._removeListeners(obj[prop])
+      }
+    }
   }
 }

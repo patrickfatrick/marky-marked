@@ -12,11 +12,13 @@
     box-shadow: var(--boxShadowA) 0 10px 15px, var(--boxShadowB) 0 5px 10px;
     margin-top: -50px;
     opacity: 0;
+    visibility: hidden;
     transition: all 200ms ease-out;
 
     &.toggled {
       margin-top: 0.7rem;
       opacity: 1;
+      visibility: visible;
     }
 
     &.heading-dialog {

@@ -125,40 +125,20 @@
 
 <script src="./dist/marky-marked.min.js"></script>
 <script>
-(function () {
-  function CustomEvent (event, params) {
-    params = params || {
-      bubbles: false,
-      cancelable: false,
-      detail: undefined
-    }
-    var evt = document.createEvent('CustomEvent')
-    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail)
-    return evt
-  }
-
-  CustomEvent.prototype = window.Event.prototype
-
-  window.CustomEvent = CustomEvent
-})()
-
-var markyupdate = new CustomEvent('markyupdate')
-
 document.addEventListener('DOMContentLoaded', function () {
-  marky.mark()
+  var markyMarked = markymark()[0]
   var editor = document.querySelector('textarea.marky-editor')
   var htmlOutput = document.getElementById('html-output')
 
-  editor.addEventListener('markychange', function (e) {
-    document.getElementById('output').textContent = editor._marky.html
+  markyMarked.on('markychange', function () {
+    document.getElementById('output').textContent = markyMarked.html
     htmlOutput.innerHTML = ''
-    htmlOutput.insertAdjacentHTML('afterbegin', editor._marky.html)
+    htmlOutput.insertAdjacentHTML('afterbegin', markyMarked.html)
   })
 
   editor.value = '# Marky Marked\r\n\n_A `<textarea>` so sweet you\'ll be feeling good vibrations._\r\n\nMarky Marked is a _lightweight_ (less than 60KB minified, dependency included) in-browser content editor combining the point-and-click accessibility of a WYSIWYG editor with the simplicity and power of Markdown syntax. Supported in all modern desktop browsers as well as IE11 (earlier versions are _not supported_).\r\n\nIts dependencies are:\r\n\n- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.\r\n- **Optional:** [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.\r\n\nMarky Marked is designed with the concept of immutable data in mind, so instead of having a state constantly overwriting itself, Marky Marked has persistent state management allowing for things like undo/redo by simply recalling the state at any given point.\r\n\n## Installation\r\n\nYou can install Marky Marked in the following ways:\r\n\n```\r\nnpm install marky-marked --save\r\njspm install npm:marky-marked\r\nbower install marky-marked\r\ngit clone git:github.com/patrickfatrick/marky-marked.git\r\n```\r\n\nFeel free to interact with this page by typing into or changing the contents of the Marky Marked editor in the top left, or start fresh by hitting the undo button. Enjoy!\r\n\n> Marky Marked was made by Patrick Fricano and you can find the repo [here](https://github.com/patrickfatrick/marky-marked), which has more information about usage.'
-  // editor._marky.update(editor.value)
-  // editor.dispatchEvent(markychange)
-  editor.dispatchEvent(markyupdate)
+
+  markyMarked.emit('markyupdate')
 })
 </script>
 </body>

@@ -40,7 +40,7 @@
       background: linear-gradient(var(--white) * 0.7, var(--white));
     }
 
-    &:focus {
+    &:focus:not(.disabled) {
       background-color: var(--deepBlue);
       color: var(--white);
     }

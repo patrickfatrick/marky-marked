@@ -1,3 +1,9 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.markymark = factory());
+}(this, (function () { 'use strict';
+
 var atoa = function atoa (a, n) { return Array.prototype.slice.call(a, n); };
 
 var curry = function curry () {
@@ -2950,4 +2956,6 @@ function markymark$1() {
   return markies;
 }
 
-export default markymark$1;
+return markymark$1;
+
+})));

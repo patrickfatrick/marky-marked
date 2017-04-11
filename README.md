@@ -27,7 +27,9 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 Marky Marked has two dependencies:
 
-- [Marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
+- [marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
+- [contra/emitter](https://github.com/bevacqua/contra#λemitterthing-options)
+- [harsh](https://github.com/patrickfatrick/harsh)
 - Optional: [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.
 
 Marky Marked is supported in all modern desktop browsers as well as IE11. In an effort to keep it lean, and given that January 2016 effectively marks the end of pre-11 IE, there won't really be much of an effort to make it compliant with earlier versions for the time being.
@@ -44,16 +46,16 @@ $ git clone git:github.com/patrickfatrick/marky-marked.git
 
 ## Usage
 
-The easiest way to instantiate an editor is to simply add a `<marky-mark />` container tag to your markup and then call `marky.mark()`.
+The easiest way to instantiate an editor is to simply add a `<marky-mark />` container tag to your markup and then call `markymark()`.
 
 ```html
 <marky-mark />
 ```
 
 ```javascript
-import marky from 'marky-marked'
+import markymark from 'marky-marked'
 
-marky.mark();
+markymark();
 ```
 
 You can also use any elements as an array, NodeList, or HTMLCollection.
@@ -62,17 +64,17 @@ You can also use any elements as an array, NodeList, or HTMLCollection.
 <mark-wahlberg />
 
 <script>
-	marky.mark(document.getElementsByTagName('mark-wahlberg'));
+	markymark(document.getElementsByTagName('mark-wahlberg'));
 </script>
 ```
 
 From there Marky Marked should handle the rest. Note that the element you use should be empty. If it has any innerHTML Marky Marked will ignore it. This is to ensure you can't initialize the same element more than once.
 
-You can add as many editors as you'd like to any page, as long as they all use the same container tag. Marky Marked will assign each container an ID of `marky-mark-0`, `marky-mark-1`, etc., to make them easy to access. Most of the new elements in the container's subtree are assigned a matching class.
+You can add as many editors as you'd like to any page, as long as they all use the same container tag. Marky Marked will assign each container a random ID like `marky-mark-11i8zccso3`, `marky-mark-f51j91l9vr`, etc., and these ids are stored in Marky object that's returned in the `id` prop. Most of the new elements in the container's subtree are assigned a matching class.
 
 ## Returns
 
-`mark()` returns an array of marky instances that allow you to manipulate and access the state for each initialized marky mark container without having to touch the DOM again.
+`markymark()` returns an array of marky instances that allow you to manipulate and access the state for each initialized marky mark container without having to touch the DOM again.
 
 ## Styling
 
@@ -136,12 +138,12 @@ This is what I use in the demo site.
 
 #### Accessing Markdown and HTML
 
-At any given time in the state of the editor you can access both the markdown and the HTML by accessing the editor's `_marky` property, or the returned marky instance from the `mark()` function call.
+At any given time in the state of the editor you can access both the markdown and the HTML by accessing the editor's `_marky` property, or the returned marky instance from the `markymark()` function call.
 
 ```javascript
 var markyMarked = marky.mark()[0]
 // OR:
-var _marky = document.querySelector('.marky-editor.editor-0')._marky;
+var _marky = document.querySelector('.marky-editor')._marky;
 
 var markdown = markyMarked.markdown;
 var html = markyMarked.html;
@@ -157,11 +159,10 @@ var html = markyMarked.state[index].html;
 
 #### Events
 
-You can watch for a number of events from the `marky-editor` element.
+You can watch for a number of events from the marky instance.
 
 ```javascript
-var editor = document.querySelector('.marky-editor.editor-0');
-editor.addEventListener('markychange', function (e) {
+markyMarked.on('markychange', function (e) {
 	// Do stuff;
 });
 ```
@@ -310,4 +311,4 @@ Marky Marked is freely distributable under the terms of the [MIT license](./LICE
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 
-_Each Marky Marked release is linted with StandardJS and tested with a combination of Karma, Mocha, and Chai._
+_Each Marky Marked release is linted with StandardJS and Stylelint; tested with Karma and Tape._
