@@ -25,7 +25,7 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 ## Dependencies & Support
 
-Marky Marked has two dependencies:
+Marky Marked has only the following dependencies:
 
 - [marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
 - [contra/emitter](https://github.com/bevacqua/contra#λemitterthing-options)
@@ -162,7 +162,7 @@ var html = markyMarked.state[index].html;
 You can watch for a number of events from the marky instance.
 
 ```javascript
-markyMarked.on('markychange', function (e) {
+markyMarked.on('markychange', function () {
 	// Do stuff;
 });
 ```
