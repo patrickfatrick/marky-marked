@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: node -v
+      - run: npm -v
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run: 
+          name: Run unit tests
+          command: npm test
+      - run: 
+          name: Generate code coverage
+          command: cat ./coverage/**/lcov.info | ./node_modules/codecov/bin/codecov
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+      - store_test_results:
+          path: tmp/karma-results
