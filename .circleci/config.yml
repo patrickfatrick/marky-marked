@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8-node-browsers
+      - image: circleci/node:8-browsers
     steps:
       - checkout
       - run: node -v
