@@ -21,3 +21,8 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: tmp/karma-results
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
