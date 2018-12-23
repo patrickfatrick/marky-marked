@@ -5,10 +5,6 @@
   "main": "dist/marky-marked.umd.js",
   "module": "dist/marky-marked.js",
   "format": "es6",
-  "engines": {
-    "node": ">= 5.6.0",
-    "npm": ">= 3.7.2"
-  },
   "scripts": {
     "test": "concurrently npm:lint:* && karma start",
     "build": "concurrently npm:lint:* && concurrently npm:build:*",
