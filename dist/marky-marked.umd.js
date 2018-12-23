@@ -2813,7 +2813,6 @@ var HeadingDialog = function (_Dialog) {
       return new HeadingItem('Heading ' + (i + 1), i + 1);
     });
     _this.options.push(new HeadingItem('Remove Heading', '0', 'fa', 'fa-remove'));
-    console.log(_this.options);
 
     _this.options.forEach(function (option) {
       option.appendTo(_this.headingList.element);
