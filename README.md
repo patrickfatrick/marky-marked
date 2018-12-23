@@ -37,10 +37,10 @@ Marky Marked is supported in all modern desktop browsers as well as IE11. In an 
 ## Install
 
 ```bash
-$ npm install marky-marked --save
-$ yarn add marky-marked
-$ jspm install npm:marky-marked
-$ bower install marky-marked
+$ npm install marky-marked # or
+$ yarn add marky-marked # or
+$ jspm install npm:marky-marked # or
+$ bower install marky-marked # or
 $ git clone git:github.com/patrickfatrick/marky-marked.git
 ```
 
@@ -289,15 +289,13 @@ To see it working inside a component (in this case Vue, but would work very simi
 Marky Marked uses a combination of Karma, Mocha, and Chai for tests. To run the tests,
 
 ```bash
-$ yarn test
+$ npm test
 ```
-
-You may need to install the karma and its plugins globally if you don't already have them. You can also test in other browsers by adding them to karma.conf.js. Chrome, Firefox, and Safari launchers are plugged but not included in the list of browsers by default.
 
 To lint and build the distribution files:
 
 ```bash
-$ yarn run build
+$ npm run build
 ```
 
 ## What's the plan?

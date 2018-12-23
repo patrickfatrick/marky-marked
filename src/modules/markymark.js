@@ -48,17 +48,17 @@ export default function markymark (containers = document.getElementsByTagName('m
      * toolbar, editor, dialog container, hidden input
      */
 
-    const toolbar = Object.create(Element).init('div', 'Toolbar')
+    const toolbar = new Element('div', 'Toolbar')
 
     toolbar.addClass('marky-toolbar', id)
 
-    const dialogs = Object.create(Element).init('div', 'Dialogs')
+    const dialogs = new Element('div', 'Dialogs')
     dialogs.addClass('marky-dialogs', id)
 
-    const markyEditor = Object.create(Element).init('textarea', 'Marky Marked Editor')
+    const markyEditor = new Element('textarea', 'Marky Marked Editor')
     markyEditor.addClass('marky-editor', id)
 
-    const marky = emitter(Object.create(Marky)).init(id, container, markyEditor)
+    const marky = emitter(new Marky(id, container, markyEditor))
 
     markyEditor.assign('_marky', marky)
     markies.push(marky)
@@ -68,9 +68,9 @@ export default function markymark (containers = document.getElementsByTagName('m
      */
 
     marky.elements.dialogs = {
-      heading: Object.create(HeadingDialog).init('Heading Dialog', id),
-      link: Object.create(LinkDialog).init('Link Dialog', id),
-      image: Object.create(ImageDialog).init('Image Dialog', id)
+      heading: new HeadingDialog('Heading Dialog', id),
+      link: new LinkDialog('Link Dialog', id),
+      image: new ImageDialog('Image Dialog', id)
     }
 
     for (const dialogName in marky.elements.dialogs) {
@@ -116,21 +116,21 @@ export default function markymark (containers = document.getElementsByTagName('m
     }
 
     marky.elements.buttons = {
-      heading: Object.create(Button).init('Heading', id, 'fa', 'fa-header'),
-      bold: Object.create(Button).init('Bold', id, 'fa', 'fa-bold'),
-      italic: Object.create(Button).init('Italic', id, 'fa', 'fa-italic'),
-      strikethrough: Object.create(Button).init('Strikethrough', id, 'fa', 'fa-strikethrough'),
-      code: Object.create(Button).init('Code', id, 'fa', 'fa-code'),
-      blockquote: Object.create(Button).init('Blockquote', id, 'fa', 'fa-quote-right'),
-      link: Object.create(Button).init('Link', id, 'fa', 'fa-link'),
-      image: Object.create(Button).init('Image', id, 'fa', 'fa-file-image-o'),
-      unorderedList: Object.create(Button).init('Unordered List', id, 'fa', 'fa-list-ul'),
-      orderedList: Object.create(Button).init('Ordered List', id, 'fa', 'fa-list-ol'),
-      outdent: Object.create(Button).init('Outdent', id, 'fa', 'fa-outdent'),
-      indent: Object.create(Button).init('Indent', id, 'fa', 'fa-indent'),
-      undo: Object.create(Button).init('Undo', id, 'fa', 'fa-backward'),
-      redo: Object.create(Button).init('Redo', id, 'fa', 'fa-forward'),
-      expand: Object.create(Button).init('Expand', id, 'fa', 'fa-expand')
+      heading: new Button('Heading', id, 'fa', 'fa-header'),
+      bold: new Button('Bold', id, 'fa', 'fa-bold'),
+      italic: new Button('Italic', id, 'fa', 'fa-italic'),
+      strikethrough: new Button('Strikethrough', id, 'fa', 'fa-strikethrough'),
+      code: new Button('Code', id, 'fa', 'fa-code'),
+      blockquote: new Button('Blockquote', id, 'fa', 'fa-quote-right'),
+      link: new Button('Link', id, 'fa', 'fa-link'),
+      image: new Button('Image', id, 'fa', 'fa-file-image-o'),
+      unorderedList: new Button('Unordered List', id, 'fa', 'fa-list-ul'),
+      orderedList: new Button('Ordered List', id, 'fa', 'fa-list-ol'),
+      outdent: new Button('Outdent', id, 'fa', 'fa-outdent'),
+      indent: new Button('Indent', id, 'fa', 'fa-indent'),
+      undo: new Button('Undo', id, 'fa', 'fa-backward'),
+      redo: new Button('Redo', id, 'fa', 'fa-forward'),
+      expand: new Button('Expand', id, 'fa', 'fa-expand')
     }
 
     for (const buttonName in marky.elements.buttons) {
@@ -171,24 +171,24 @@ export default function markymark (containers = document.getElementsByTagName('m
     toolbar.appendTo(container)
     markyEditor.appendTo(container)
     marky.elements.buttons.heading.appendTo(toolbar.element)
-    Object.create(Separator).init().appendTo(toolbar.element)
+    new Separator().appendTo(toolbar.element)
     marky.elements.buttons.bold.appendTo(toolbar.element)
     marky.elements.buttons.italic.appendTo(toolbar.element)
     marky.elements.buttons.strikethrough.appendTo(toolbar.element)
     marky.elements.buttons.code.appendTo(toolbar.element)
     marky.elements.buttons.blockquote.appendTo(toolbar.element)
-    Object.create(Separator).init().appendTo(toolbar.element)
+    new Separator().appendTo(toolbar.element)
     marky.elements.buttons.link.appendTo(toolbar.element)
     marky.elements.buttons.image.appendTo(toolbar.element)
-    Object.create(Separator).init().appendTo(toolbar.element)
+    new Separator().appendTo(toolbar.element)
     marky.elements.buttons.unorderedList.appendTo(toolbar.element)
     marky.elements.buttons.orderedList.appendTo(toolbar.element)
     marky.elements.buttons.outdent.appendTo(toolbar.element)
     marky.elements.buttons.indent.appendTo(toolbar.element)
-    Object.create(Separator).init().appendTo(toolbar.element)
+    new Separator().appendTo(toolbar.element)
     marky.elements.buttons.undo.appendTo(toolbar.element)
     marky.elements.buttons.redo.appendTo(toolbar.element)
-    Object.create(Separator).init().appendTo(toolbar.element)
+    new Separator().appendTo(toolbar.element)
     marky.elements.buttons.expand.appendTo(toolbar.element)
     dialogs.appendTo(toolbar.element)
     marky.elements.dialogs.link.appendTo(dialogs.element)

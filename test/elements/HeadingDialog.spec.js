@@ -4,8 +4,7 @@ import test from 'tape'
 import HeadingDialog from '../../src/modules/elements/HeadingDialog'
 
 test('HeadingDialog > creates an image dialog', (t) => {
-  const headingDialog = Object.create(HeadingDialog)
-  .init('Heading Dialog', 'heading-dialog')
+  const headingDialog = new HeadingDialog('Heading Dialog', 'heading-dialog')
 
   t.true(headingDialog.element instanceof HTMLElement)
   t.equal(headingDialog.element.title, 'Heading Dialog')

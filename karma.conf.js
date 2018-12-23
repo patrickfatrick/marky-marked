@@ -9,14 +9,15 @@ module.exports = function (karma) {
       'src/**/*.js',
       'test/**/*.spec.js'
     ],
-    frameworks: [ 'tap', 'sinon' ],
+    frameworks: [ 'sinon', 'tap' ],
     rollupPreprocessor: rollupConfig,
-    browsers: [ 'Firefox' ], // 'PhantomJS', 'Chrome', 'Safari', 'Firefox', 'Opera',
+    browsers: [ 'Chrome' ],
+    client: { captureConsole: false },
     preprocessors: {
       'src/**/*.js': [ 'sourcemap', 'rollup' ],
       'test/**/*.spec.js': [ 'sourcemap', 'rollup' ]
     },
-    reporters: [ 'tap-pretty', 'coverage' ],
+    reporters: [ 'tap-pretty', 'coverage', 'junit' ],
     coverageReporter: {
       reporters: [
         {
@@ -31,8 +32,14 @@ module.exports = function (karma) {
     tapReporter: {
       prettify: faucet
     },
+    junitReporter: {
+      outputDir: 'tmp/karma-results'
+    },
     logLevel: karma.LOG_INFO,
     singleRun: true,
-    autoWatch: false
+    autoWatch: false,
+    browserNoActivityTimeout: 30000,
+    colors: true,
+    loggers: [ { type: 'console' } ]
   })
 }

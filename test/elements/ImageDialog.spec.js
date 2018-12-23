@@ -4,8 +4,7 @@ import test from 'tape'
 import ImageDialog from '../../src/modules/elements/ImageDialog'
 
 test('ImageDialog > creates an image dialog', (t) => {
-  const imageDialog = Object.create(ImageDialog)
-  .init('Image Dialog', 'image-dialog')
+  const imageDialog = new ImageDialog('Image Dialog', 'image-dialog')
 
   t.true(imageDialog.element instanceof HTMLElement)
   t.equal(imageDialog.element.title, 'Image Dialog')

@@ -2,7 +2,7 @@ const resolve = require('rollup-plugin-node-resolve')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
 
-// Have to use CommonJS for tests, 
+// Have to use CommonJS for tests,
 // and build it from scratch rather than using the base config
 module.exports = {
   plugins: [

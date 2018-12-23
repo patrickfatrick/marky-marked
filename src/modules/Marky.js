@@ -3,8 +3,8 @@
 import * as dispatcher from './dispatcher'
 import { inlineHandler, blockHandler, insertHandler, listHandler, indentHandler } from './handlers'
 
-export default {
-  init (id, container, editor) {
+export default class Marky {
+  constructor (id, container, editor) {
     this.id = id
     this.editor = editor.element
     this.container = container
@@ -25,7 +25,7 @@ export default {
     }
 
     return this
-  },
+  }
 
   /**
    * Removes the container and all descendants from the DOM
@@ -47,7 +47,7 @@ export default {
     if (container.parentNode) {
       container.parentNode.removeChild(container)
     }
-  },
+  }
 
   /**
    * Handles the `markyupdate` event
@@ -62,7 +62,7 @@ export default {
     this.index = action.index
     this.emit('markychange')
     return this.index
-  },
+  }
 
   /**
    * Handles the `markychange` event
@@ -72,7 +72,7 @@ export default {
   change (markdown, html) {
     this._updateMarkdown(markdown)
     this._updateHTML(html)
-  },
+  }
 
   /**
    * Handles moving backward in state
@@ -91,7 +91,7 @@ export default {
     this._updateEditor(action.state.markdown, action.state.selection, editor)
     this.emit('markychange')
     return this.index
-  },
+  }
 
   /**
    * Handles moving forward in state
@@ -110,7 +110,7 @@ export default {
     this._updateEditor(action.state.markdown, action.state.selection, editor)
     this.emit('markychange')
     return this.index
-  },
+  }
 
   /**
    * Sets the selection indices in the editor
@@ -121,7 +121,7 @@ export default {
   setSelection (arr = [0, 0], editor = this.editor) {
     editor.setSelectionRange(arr[0], arr[1])
     return arr
-  },
+  }
 
   /**
    * expands the selection to the right
@@ -135,7 +135,7 @@ export default {
 
     editor.setSelectionRange(start, end)
     return [start, end]
-  },
+  }
 
   /**
    * expands the selection to the left
@@ -149,7 +149,7 @@ export default {
 
     editor.setSelectionRange(start, end)
     return [start, end]
-  },
+  }
 
   /**
    * expands the cursor to the right
@@ -162,7 +162,7 @@ export default {
 
     editor.setSelectionRange(start, start)
     return start
-  },
+  }
 
   /**
    * expands the cursor to the left
@@ -175,7 +175,7 @@ export default {
 
     editor.setSelectionRange(start, start)
     return start
-  },
+  }
 
   /**
    * implements a bold on a selection
@@ -190,7 +190,7 @@ export default {
     this._updateEditor(boldify.value, boldify.range, editor)
     this.emit('markyupdate')
     return [boldify.range[0], boldify.range[1]]
-  },
+  }
 
   /**
    * implements an italic on a selection
@@ -205,7 +205,7 @@ export default {
     this._updateEditor(italicize.value, italicize.range, editor)
     this.emit('markyupdate')
     return [italicize.range[0], italicize.range[1]]
-  },
+  }
 
   /**
    * implements a strikethrough on a selection
@@ -220,7 +220,7 @@ export default {
     this._updateEditor(strikitize.value, strikitize.range, editor)
     this.emit('markyupdate')
     return [strikitize.range[0], strikitize.range[1]]
-  },
+  }
 
   /**
    * implements a code on a selection
@@ -235,7 +235,7 @@ export default {
     this._updateEditor(codify.value, codify.range, editor)
     this.emit('markyupdate')
     return [codify.range[0], codify.range[1]]
-  },
+  }
 
   /**
    * implements a blockquote on a selection
@@ -250,7 +250,7 @@ export default {
     this._updateEditor(quotify.value, quotify.range, editor)
     this.emit('markyupdate')
     return [quotify.range[0], quotify.range[1]]
-  },
+  }
 
   /**
    * implements a heading on a selection
@@ -272,7 +272,7 @@ export default {
     this._updateEditor(headingify.value, headingify.range, editor)
     this.emit('markyupdate')
     return [headingify.range[0], headingify.range[1]]
-  },
+  }
 
   /**
    * inserts a link snippet at the end of a selection
@@ -288,7 +288,7 @@ export default {
     this._updateEditor(linkify.value, linkify.range, editor)
     this.emit('markyupdate')
     return [linkify.range[0], linkify.range[1]]
-  },
+  }
 
   /**
    * inserts an image snippet at the end of a selection
@@ -304,7 +304,7 @@ export default {
     this._updateEditor(imageify.value, imageify.range, editor)
     this.emit('markyupdate')
     return [imageify.range[0], imageify.range[1]]
-  },
+  }
 
   /**
    * implements an unordered list on a selection
@@ -319,7 +319,7 @@ export default {
     this._updateEditor(listify.value, listify.range, editor)
     this.emit('markyupdate')
     return [listify.range[0], listify.range[1]]
-  },
+  }
 
   /**
    * implements an ordered list on a selection
@@ -334,7 +334,7 @@ export default {
     this._updateEditor(listify.value, listify.range, editor)
     this.emit('markyupdate')
     return [listify.range[0], listify.range[1]]
-  },
+  }
 
   /**
    * implements an indent on a selection
@@ -349,7 +349,7 @@ export default {
     this._updateEditor(indentify.value, indentify.range, editor)
     this.emit('markyupdate')
     return [indentify.range[0], indentify.range[1]]
-  },
+  }
 
   /**
    * implements an outdent on a selection
@@ -364,7 +364,7 @@ export default {
     this._updateEditor(indentify.value, indentify.range, editor)
     this.emit('markyupdate')
     return [indentify.range[0], indentify.range[1]]
-  },
+  }
 
   /**
    * @private
@@ -373,7 +373,7 @@ export default {
    */
   _updateMarkdown (markdown) {
     this.markdown = markdown
-  },
+  }
 
   /**
    * @private
@@ -382,7 +382,7 @@ export default {
    */
   _updateHTML (html) {
     this.html = html
-  },
+  }
 
   /**
    * @private
@@ -393,7 +393,7 @@ export default {
   _updateEditor (markdown, range, editor = this.editor) {
     editor.value = markdown
     editor.setSelectionRange(range[0], range[1])
-  },
+  }
 
   /**
    * @private

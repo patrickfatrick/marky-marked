@@ -1858,8 +1858,104 @@ function insertHandler(string, indices, mark) {
   return { value: value, range: [start, start + mark.length] };
 }
 
-var Marky = {
-  init: function init(id, container, editor) {
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray$1 = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
+var Marky = function () {
+  function Marky(id, container, editor) {
+    classCallCheck(this, Marky);
+
     this.id = id;
     this.editor = editor.element;
     this.container = container;
@@ -1878,490 +1974,535 @@ var Marky = {
     };
 
     return this;
-  },
-
+  }
 
   /**
    * Removes the container and all descendants from the DOM
    * @param  {container} container the container used to invoke `mark()`
    */
-  destroy: function destroy() {
-    var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
 
-    // Remove all listeners from all elements
-    this._removeListeners(this.elements);
 
-    // Reset elements contained in this instance to remove from memory
-    this.elements = {
-      dialogs: {},
-      buttons: {},
-      editor: null
-    };
-    this.editor = null;
-    this.container = null;
-
-    if (container.parentNode) {
-      container.parentNode.removeChild(container);
-    }
-  },
-
-
-  /**
-   * Handles the `markyupdate` event
-   * @requires dispatcher/update
-   * @param {String} markdown the new markdown blob
-   * @param {Array}  state    the state timeline
-   * @param {Number} index    current state index
-   */
-  update: function update$$1(markdown) {
-    var selection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0];
-    var state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.state;
-    var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.index;
-
-    var action = update(markdown, selection, state, index);
-    this.state = action.state;
-    this.index = action.index;
-    this.emit('markychange');
-    return this.index;
-  },
-
-
-  /**
-   * Handles the `markychange` event
-   * @param  {String} markdown markdown string
-   * @param  {String} html     html string
-   */
-  change: function change(markdown, html) {
-    this._updateMarkdown(markdown);
-    this._updateHTML(html);
-  },
-
-
-  /**
-   * Handles moving backward in state
-   * @requires dispatcher/undo
-   * @param   {Number}      num    number of states to move back
-   * @param   {Array}       state  the state timeline
-   * @param   {Number}      index  current state index
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Number}      the new index
-   */
-  undo: function undo$$1() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-    var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state;
-    var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.index;
-    var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
-
-    if (index === 0) return index;
-
-    var action = undo(num, state, index);
-    this.index = action.index;
-    this._updateEditor(action.state.markdown, action.state.selection, editor);
-    this.emit('markychange');
-    return this.index;
-  },
-
-
-  /**
-   * Handles moving forward in state
-   * @requires dispatcher/redo
-   * @param   {Number}      num    number of states to move back
-   * @param   {Array}       state  the state timeline
-   * @param   {Number}      index  current state index
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Number}      the new index
-   */
-  redo: function redo$$1() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-    var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state;
-    var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.index;
-    var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
-
-    if (index === state.length - 1) return index;
-
-    var action = redo(num, state, index);
-    this.index = action.index;
-    this._updateEditor(action.state.markdown, action.state.selection, editor);
-    this.emit('markychange');
-    return this.index;
-  },
-
-
-  /**
-   * Sets the selection indices in the editor
-   * @param   {Array}       arr    starting and ending indices
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the array that was passed in
-   */
-  setSelection: function setSelection() {
-    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0, 0];
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    editor.setSelectionRange(arr[0], arr[1]);
-    return arr;
-  },
-
-
-  /**
-   * expands the selection to the right
-   * @param   {Number}      num    number of characters to expand by
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new selection indices
-   */
-  expandSelectionForward: function expandSelectionForward() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    var start = editor.selectionStart;
-    var end = editor.selectionEnd + num;
-
-    editor.setSelectionRange(start, end);
-    return [start, end];
-  },
-
-
-  /**
-   * expands the selection to the left
-   * @param   {Number}      num    number of characters to expand by
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new selection indices
-   */
-  expandSelectionBackward: function expandSelectionBackward() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    var start = editor.selectionStart - num;
-    var end = editor.selectionEnd;
-
-    editor.setSelectionRange(start, end);
-    return [start, end];
-  },
-
-
-  /**
-   * expands the cursor to the right
-   * @param   {Number}      num    number of characters to move by
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new cursor position
-   */
-  moveCursorBackward: function moveCursorBackward() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    var start = editor.selectionStart - num;
-
-    editor.setSelectionRange(start, start);
-    return start;
-  },
-
-
-  /**
-   * expands the cursor to the left
-   * @param   {Number}      num    number of characters to move by
-   * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new cursor position
-   */
-  moveCursorForward: function moveCursorForward() {
-    var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    var start = editor.selectionStart + num;
-
-    editor.setSelectionRange(start, start);
-    return start;
-  },
-
-
-  /**
-   * implements a bold on a selection
-   * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the bold
-   */
-  bold: function bold(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var boldify = inlineHandler(editor.value, indices, '**');
-    this._updateEditor(boldify.value, boldify.range, editor);
-    this.emit('markyupdate');
-    return [boldify.range[0], boldify.range[1]];
-  },
-
-
-  /**
-   * implements an italic on a selection
-   * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the italic
-   */
-  italic: function italic(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var italicize = inlineHandler(editor.value, indices, '_');
-    this._updateEditor(italicize.value, italicize.range, editor);
-    this.emit('markyupdate');
-    return [italicize.range[0], italicize.range[1]];
-  },
-
-
-  /**
-   * implements a strikethrough on a selection
-   * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the strikethrough
-   */
-  strikethrough: function strikethrough(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var strikitize = inlineHandler(editor.value, indices, '~~');
-    this._updateEditor(strikitize.value, strikitize.range, editor);
-    this.emit('markyupdate');
-    return [strikitize.range[0], strikitize.range[1]];
-  },
-
-
-  /**
-   * implements a code on a selection
-   * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the code
-   */
-  code: function code(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var codify = inlineHandler(editor.value, indices, '`');
-    this._updateEditor(codify.value, codify.range, editor);
-    this.emit('markyupdate');
-    return [codify.range[0], codify.range[1]];
-  },
-
-
-  /**
-   * implements a blockquote on a selection
-   * @requires handlers/blockHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the bold
-   */
-  blockquote: function blockquote(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var quotify = blockHandler(editor.value, indices, '> ');
-    this._updateEditor(quotify.value, quotify.range, editor);
-    this.emit('markyupdate');
-    return [quotify.range[0], quotify.range[1]];
-  },
-
-
-  /**
-   * implements a heading on a selection
-   * @requires handlers/blockHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the heading
-   */
-  heading: function heading() {
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var indices = arguments[1];
-    var editor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var markArr = [];
-    var mark = void 0;
-    for (var i = 1; i <= value; i++) {
-      markArr.push('#');
-    }
-    mark = markArr.join('');
-    var space = mark ? ' ' : '';
-    var headingify = blockHandler(editor.value, indices, mark + space);
-    this._updateEditor(headingify.value, headingify.range, editor);
-    this.emit('markyupdate');
-    return [headingify.range[0], headingify.range[1]];
-  },
-
-
-  /**
-   * inserts a link snippet at the end of a selection
-   * @requires handlers/insertHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the snippet is inserted
-   */
-  link: function link(indices) {
-    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'http://url.com';
-    var display = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'http://url.com';
-    var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var mark = '[' + display + '](' + url + ')';
-    var linkify = insertHandler(editor.value, indices, mark);
-    this._updateEditor(linkify.value, linkify.range, editor);
-    this.emit('markyupdate');
-    return [linkify.range[0], linkify.range[1]];
-  },
-
-
-  /**
-   * inserts an image snippet at the end of a selection
-   * @requires handlers/insertHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the snippet is inserted
-   */
-  image: function image(indices) {
-    var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'http://imagesource.com/image.jpg';
-    var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'http://imagesource.com/image.jpg';
-    var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var mark = '![' + alt + '](' + source + ')';
-    var imageify = insertHandler(editor.value, indices, mark);
-    this._updateEditor(imageify.value, imageify.range, editor);
-    this.emit('markyupdate');
-    return [imageify.range[0], imageify.range[1]];
-  },
-
-
-  /**
-   * implements an unordered list on a selection
-   * @requires handlers/listHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the list is implemented
-   */
-  unorderedList: function unorderedList(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var listify = listHandler(editor.value, indices, 'ul');
-    this._updateEditor(listify.value, listify.range, editor);
-    this.emit('markyupdate');
-    return [listify.range[0], listify.range[1]];
-  },
-
-
-  /**
-   * implements an ordered list on a selection
-   * @requires handlers/listHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the list is implemented
-   */
-  orderedList: function orderedList(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var listify = listHandler(editor.value, indices, 'ol');
-    this._updateEditor(listify.value, listify.range, editor);
-    this.emit('markyupdate');
-    return [listify.range[0], listify.range[1]];
-  },
-
-
-  /**
-   * implements an indent on a selection
-   * @requires handlers/indentHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the indent is implemented
-   */
-  indent: function indent(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var indentify = indentHandler(editor.value, indices, 'in');
-    this._updateEditor(indentify.value, indentify.range, editor);
-    this.emit('markyupdate');
-    return [indentify.range[0], indentify.range[1]];
-  },
-
-
-  /**
-   * implements an outdent on a selection
-   * @requires handlers/indentHandler
-   * @param   {Array}       indices starting and ending positions for the selection
-   * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the outdent is implemented
-   */
-  outdent: function outdent(indices) {
-    var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
-
-    indices = indices || [editor.selectionStart, editor.selectionEnd];
-    var indentify = indentHandler(editor.value, indices, 'out');
-    this._updateEditor(indentify.value, indentify.range, editor);
-    this.emit('markyupdate');
-    return [indentify.range[0], indentify.range[1]];
-  },
-
-
-  /**
-   * @private
-   * Handles updating the markdown prop
-   * @param  {String} markdown   user-input markdown
-   */
-  _updateMarkdown: function _updateMarkdown(markdown) {
-    this.markdown = markdown;
-  },
-
-
-  /**
-   * @private
-   * Handles updating the hidden input's value as well as html prop
-   * @param  {String} html   an HTML string
-   */
-  _updateHTML: function _updateHTML(html) {
-    this.html = html;
-  },
-
-
-  /**
-   * @private
-   * Handles updating the editor's value and selection range
-   * @param  {Object} handled value = string; range = start and end of selection
-   * @param  {HTMLElement} editor  the marky marked editor
-   */
-  _updateEditor: function _updateEditor(markdown, range) {
-    var editor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.editor;
-
-    editor.value = markdown;
-    editor.setSelectionRange(range[0], range[1]);
-  },
-
-
-  /**
-   * @private
-   * Rescursively searches an object for elements and removes their listeners
-   * @param  {Object} obj plain object (used only with the `elements` object in Marky)
-   */
-  _removeListeners: function _removeListeners(obj) {
-    for (var prop in obj) {
-      if (obj[prop].removeListeners) {
-        obj[prop].removeListeners();
-      } else {
-        this._removeListeners(obj[prop]);
+  createClass(Marky, [{
+    key: 'destroy',
+    value: function destroy() {
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.container;
+
+      // Remove all listeners from all elements
+      this._removeListeners(this.elements);
+
+      // Reset elements contained in this instance to remove from memory
+      this.elements = {
+        dialogs: {},
+        buttons: {},
+        editor: null
+      };
+      this.editor = null;
+      this.container = null;
+
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
       }
     }
-  }
-};
 
-var toConsumableArray$1 = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+    /**
+     * Handles the `markyupdate` event
+     * @requires dispatcher/update
+     * @param {String} markdown the new markdown blob
+     * @param {Array}  state    the state timeline
+     * @param {Number} index    current state index
+     */
 
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
+  }, {
+    key: 'update',
+    value: function update$$1(markdown) {
+      var selection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 0];
+      var state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.state;
+      var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.index;
+
+      var action = update(markdown, selection, state, index);
+      this.state = action.state;
+      this.index = action.index;
+      this.emit('markychange');
+      return this.index;
+    }
+
+    /**
+     * Handles the `markychange` event
+     * @param  {String} markdown markdown string
+     * @param  {String} html     html string
+     */
+
+  }, {
+    key: 'change',
+    value: function change(markdown, html) {
+      this._updateMarkdown(markdown);
+      this._updateHTML(html);
+    }
+
+    /**
+     * Handles moving backward in state
+     * @requires dispatcher/undo
+     * @param   {Number}      num    number of states to move back
+     * @param   {Array}       state  the state timeline
+     * @param   {Number}      index  current state index
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Number}      the new index
+     */
+
+  }, {
+    key: 'undo',
+    value: function undo$$1() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state;
+      var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.index;
+      var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
+
+      if (index === 0) return index;
+
+      var action = undo(num, state, index);
+      this.index = action.index;
+      this._updateEditor(action.state.markdown, action.state.selection, editor);
+      this.emit('markychange');
+      return this.index;
+    }
+
+    /**
+     * Handles moving forward in state
+     * @requires dispatcher/redo
+     * @param   {Number}      num    number of states to move back
+     * @param   {Array}       state  the state timeline
+     * @param   {Number}      index  current state index
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Number}      the new index
+     */
+
+  }, {
+    key: 'redo',
+    value: function redo$$1() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var state = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state;
+      var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.index;
+      var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
+
+      if (index === state.length - 1) return index;
+
+      var action = redo(num, state, index);
+      this.index = action.index;
+      this._updateEditor(action.state.markdown, action.state.selection, editor);
+      this.emit('markychange');
+      return this.index;
+    }
+
+    /**
+     * Sets the selection indices in the editor
+     * @param   {Array}       arr    starting and ending indices
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Array}       the array that was passed in
+     */
+
+  }, {
+    key: 'setSelection',
+    value: function setSelection() {
+      var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0, 0];
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      editor.setSelectionRange(arr[0], arr[1]);
+      return arr;
+    }
+
+    /**
+     * expands the selection to the right
+     * @param   {Number}      num    number of characters to expand by
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Array}       the new selection indices
+     */
+
+  }, {
+    key: 'expandSelectionForward',
+    value: function expandSelectionForward() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      var start = editor.selectionStart;
+      var end = editor.selectionEnd + num;
+
+      editor.setSelectionRange(start, end);
+      return [start, end];
+    }
+
+    /**
+     * expands the selection to the left
+     * @param   {Number}      num    number of characters to expand by
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Array}       the new selection indices
+     */
+
+  }, {
+    key: 'expandSelectionBackward',
+    value: function expandSelectionBackward() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      var start = editor.selectionStart - num;
+      var end = editor.selectionEnd;
+
+      editor.setSelectionRange(start, end);
+      return [start, end];
+    }
+
+    /**
+     * expands the cursor to the right
+     * @param   {Number}      num    number of characters to move by
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Array}       the new cursor position
+     */
+
+  }, {
+    key: 'moveCursorBackward',
+    value: function moveCursorBackward() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      var start = editor.selectionStart - num;
+
+      editor.setSelectionRange(start, start);
+      return start;
+    }
+
+    /**
+     * expands the cursor to the left
+     * @param   {Number}      num    number of characters to move by
+     * @param   {HTMLElement} editor the marky marked editor
+     * @returns {Array}       the new cursor position
+     */
+
+  }, {
+    key: 'moveCursorForward',
+    value: function moveCursorForward() {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      var start = editor.selectionStart + num;
+
+      editor.setSelectionRange(start, start);
+      return start;
+    }
+
+    /**
+     * implements a bold on a selection
+     * @requires handlers/inlineHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the bold
+     */
+
+  }, {
+    key: 'bold',
+    value: function bold(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var boldify = inlineHandler(editor.value, indices, '**');
+      this._updateEditor(boldify.value, boldify.range, editor);
+      this.emit('markyupdate');
+      return [boldify.range[0], boldify.range[1]];
+    }
+
+    /**
+     * implements an italic on a selection
+     * @requires handlers/inlineHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the italic
+     */
+
+  }, {
+    key: 'italic',
+    value: function italic(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var italicize = inlineHandler(editor.value, indices, '_');
+      this._updateEditor(italicize.value, italicize.range, editor);
+      this.emit('markyupdate');
+      return [italicize.range[0], italicize.range[1]];
+    }
+
+    /**
+     * implements a strikethrough on a selection
+     * @requires handlers/inlineHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the strikethrough
+     */
+
+  }, {
+    key: 'strikethrough',
+    value: function strikethrough(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var strikitize = inlineHandler(editor.value, indices, '~~');
+      this._updateEditor(strikitize.value, strikitize.range, editor);
+      this.emit('markyupdate');
+      return [strikitize.range[0], strikitize.range[1]];
+    }
+
+    /**
+     * implements a code on a selection
+     * @requires handlers/inlineHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the code
+     */
+
+  }, {
+    key: 'code',
+    value: function code(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var codify = inlineHandler(editor.value, indices, '`');
+      this._updateEditor(codify.value, codify.range, editor);
+      this.emit('markyupdate');
+      return [codify.range[0], codify.range[1]];
+    }
+
+    /**
+     * implements a blockquote on a selection
+     * @requires handlers/blockHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the bold
+     */
+
+  }, {
+    key: 'blockquote',
+    value: function blockquote(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var quotify = blockHandler(editor.value, indices, '> ');
+      this._updateEditor(quotify.value, quotify.range, editor);
+      this.emit('markyupdate');
+      return [quotify.range[0], quotify.range[1]];
+    }
+
+    /**
+     * implements a heading on a selection
+     * @requires handlers/blockHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the heading
+     */
+
+  }, {
+    key: 'heading',
+    value: function heading() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var indices = arguments[1];
+      var editor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var markArr = [];
+      var mark = void 0;
+      for (var i = 1; i <= value; i++) {
+        markArr.push('#');
+      }
+      mark = markArr.join('');
+      var space = mark ? ' ' : '';
+      var headingify = blockHandler(editor.value, indices, mark + space);
+      this._updateEditor(headingify.value, headingify.range, editor);
+      this.emit('markyupdate');
+      return [headingify.range[0], headingify.range[1]];
+    }
+
+    /**
+     * inserts a link snippet at the end of a selection
+     * @requires handlers/insertHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the snippet is inserted
+     */
+
+  }, {
+    key: 'link',
+    value: function link(indices) {
+      var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'http://url.com';
+      var display = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'http://url.com';
+      var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var mark = '[' + display + '](' + url + ')';
+      var linkify = insertHandler(editor.value, indices, mark);
+      this._updateEditor(linkify.value, linkify.range, editor);
+      this.emit('markyupdate');
+      return [linkify.range[0], linkify.range[1]];
+    }
+
+    /**
+     * inserts an image snippet at the end of a selection
+     * @requires handlers/insertHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the snippet is inserted
+     */
+
+  }, {
+    key: 'image',
+    value: function image(indices) {
+      var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'http://imagesource.com/image.jpg';
+      var alt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'http://imagesource.com/image.jpg';
+      var editor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var mark = '![' + alt + '](' + source + ')';
+      var imageify = insertHandler(editor.value, indices, mark);
+      this._updateEditor(imageify.value, imageify.range, editor);
+      this.emit('markyupdate');
+      return [imageify.range[0], imageify.range[1]];
+    }
+
+    /**
+     * implements an unordered list on a selection
+     * @requires handlers/listHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the list is implemented
+     */
+
+  }, {
+    key: 'unorderedList',
+    value: function unorderedList(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var listify = listHandler(editor.value, indices, 'ul');
+      this._updateEditor(listify.value, listify.range, editor);
+      this.emit('markyupdate');
+      return [listify.range[0], listify.range[1]];
+    }
+
+    /**
+     * implements an ordered list on a selection
+     * @requires handlers/listHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the list is implemented
+     */
+
+  }, {
+    key: 'orderedList',
+    value: function orderedList(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var listify = listHandler(editor.value, indices, 'ol');
+      this._updateEditor(listify.value, listify.range, editor);
+      this.emit('markyupdate');
+      return [listify.range[0], listify.range[1]];
+    }
+
+    /**
+     * implements an indent on a selection
+     * @requires handlers/indentHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the indent is implemented
+     */
+
+  }, {
+    key: 'indent',
+    value: function indent(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var indentify = indentHandler(editor.value, indices, 'in');
+      this._updateEditor(indentify.value, indentify.range, editor);
+      this.emit('markyupdate');
+      return [indentify.range[0], indentify.range[1]];
+    }
+
+    /**
+     * implements an outdent on a selection
+     * @requires handlers/indentHandler
+     * @param   {Array}       indices starting and ending positions for the selection
+     * @param   {HTMLElement} editor  the marky marked editor
+     * @returns {Array}       the new selection after the outdent is implemented
+     */
+
+  }, {
+    key: 'outdent',
+    value: function outdent(indices) {
+      var editor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.editor;
+
+      indices = indices || [editor.selectionStart, editor.selectionEnd];
+      var indentify = indentHandler(editor.value, indices, 'out');
+      this._updateEditor(indentify.value, indentify.range, editor);
+      this.emit('markyupdate');
+      return [indentify.range[0], indentify.range[1]];
+    }
+
+    /**
+     * @private
+     * Handles updating the markdown prop
+     * @param  {String} markdown   user-input markdown
+     */
+
+  }, {
+    key: '_updateMarkdown',
+    value: function _updateMarkdown(markdown) {
+      this.markdown = markdown;
+    }
+
+    /**
+     * @private
+     * Handles updating the hidden input's value as well as html prop
+     * @param  {String} html   an HTML string
+     */
+
+  }, {
+    key: '_updateHTML',
+    value: function _updateHTML(html) {
+      this.html = html;
+    }
+
+    /**
+     * @private
+     * Handles updating the editor's value and selection range
+     * @param  {Object} handled value = string; range = start and end of selection
+     * @param  {HTMLElement} editor  the marky marked editor
+     */
+
+  }, {
+    key: '_updateEditor',
+    value: function _updateEditor(markdown, range) {
+      var editor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.editor;
+
+      editor.value = markdown;
+      editor.setSelectionRange(range[0], range[1]);
+    }
+
+    /**
+     * @private
+     * Rescursively searches an object for elements and removes their listeners
+     * @param  {Object} obj plain object (used only with the `elements` object in Marky)
+     */
+
+  }, {
+    key: '_removeListeners',
+    value: function _removeListeners(obj) {
+      for (var prop in obj) {
+        if (obj[prop].removeListeners) {
+          obj[prop].removeListeners();
+        } else {
+          this._removeListeners(obj[prop]);
+        }
+      }
+    }
+  }]);
+  return Marky;
+}();
 
 /**
  * Creates an HTML element with some built-in shortcut methods
@@ -2369,106 +2510,132 @@ var toConsumableArray$1 = function (arr) {
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
  */
-
-var Element = {
-  init: function init(type) {
+var Element = function () {
+  function Element(type) {
     var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var id = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    classCallCheck(this, Element);
 
     this.type = type;
     this.title = title;
     this.id = id;
-    this.element = this._register();
+    this.element = this.create();
     this.listeners = {};
     if (this.title) this.element.title = this.title;
-
-    return this;
-  },
-  _register: function _register() {
-    return document.createElement(this.type);
-  },
-  assign: function assign(prop, value) {
-    this.element[prop] = value;
-
-    return this;
-  },
-  appendTo: function appendTo(container) {
-    container.appendChild(this.element);
-
-    return this;
-  },
-  addClass: function addClass() {
-    var _element$classList;
-
-    for (var _len = arguments.length, classNames = Array(_len), _key = 0; _key < _len; _key++) {
-      classNames[_key] = arguments[_key];
-    }
-
-    (_element$classList = this.element.classList).add.apply(_element$classList, toConsumableArray$1(classNames.map(function (name) {
-      return name.replace(/[ ]/g, '-').toLowerCase();
-    })));
-
-    return this;
-  },
-  removeClass: function removeClass() {
-    var _element$classList2;
-
-    for (var _len2 = arguments.length, classNames = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      classNames[_key2] = arguments[_key2];
-    }
-
-    (_element$classList2 = this.element.classList).remove.apply(_element$classList2, toConsumableArray$1(classNames.map(function (name) {
-      return name.replace(/[ ]/g, '-').toLowerCase();
-    })));
-
-    return this;
-  },
-  toggleClass: function toggleClass() {
-    var _element$classList3;
-
-    for (var _len3 = arguments.length, classNames = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      classNames[_key3] = arguments[_key3];
-    }
-
-    (_element$classList3 = this.element.classList).toggle.apply(_element$classList3, toConsumableArray$1(classNames.map(function (name) {
-      return name.replace(/[ ]/g, '-').toLowerCase();
-    })));
-
-    return this;
-  },
-  listen: function listen(evt, cb) {
-    this.listeners[evt] = cb;
-    this.element.addEventListener(evt, cb);
-
-    return this;
-  },
-  removeListener: function removeListener(evt, cb) {
-    this.element.removeEventListener(evt, cb);
-
-    return this;
-  },
-  removeListeners: function removeListeners() {
-    for (var listener in this.listeners) {
-      this.removeListener(listener, this.listeners[listener]);
-    }
-
-    return this;
   }
-};
+
+  createClass(Element, [{
+    key: 'create',
+    value: function create() {
+      return document.createElement(this.type);
+    }
+  }, {
+    key: 'assign',
+    value: function assign(prop, value) {
+      this.element[prop] = value;
+
+      return this;
+    }
+  }, {
+    key: 'appendTo',
+    value: function appendTo(container) {
+      container.appendChild(this.element);
+
+      return this;
+    }
+  }, {
+    key: 'addClass',
+    value: function addClass() {
+      var _element$classList;
+
+      for (var _len = arguments.length, classNames = Array(_len), _key = 0; _key < _len; _key++) {
+        classNames[_key] = arguments[_key];
+      }
+
+      (_element$classList = this.element.classList).add.apply(_element$classList, toConsumableArray$1(classNames.map(function (name) {
+        return name.replace(/[ ]/g, '-').toLowerCase();
+      })));
+
+      return this;
+    }
+  }, {
+    key: 'removeClass',
+    value: function removeClass() {
+      var _element$classList2;
+
+      for (var _len2 = arguments.length, classNames = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        classNames[_key2] = arguments[_key2];
+      }
+
+      (_element$classList2 = this.element.classList).remove.apply(_element$classList2, toConsumableArray$1(classNames.map(function (name) {
+        return name.replace(/[ ]/g, '-').toLowerCase();
+      })));
+
+      return this;
+    }
+  }, {
+    key: 'toggleClass',
+    value: function toggleClass() {
+      var _element$classList3;
+
+      for (var _len3 = arguments.length, classNames = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        classNames[_key3] = arguments[_key3];
+      }
+
+      (_element$classList3 = this.element.classList).toggle.apply(_element$classList3, toConsumableArray$1(classNames.map(function (name) {
+        return name.replace(/[ ]/g, '-').toLowerCase();
+      })));
+
+      return this;
+    }
+  }, {
+    key: 'listen',
+    value: function listen(evt, cb) {
+      this.listeners[evt] = cb;
+      this.element.addEventListener(evt, cb);
+
+      return this;
+    }
+  }, {
+    key: 'removeListener',
+    value: function removeListener(evt, cb) {
+      this.element.removeEventListener(evt, cb);
+
+      return this;
+    }
+  }, {
+    key: 'removeListeners',
+    value: function removeListeners() {
+      for (var listener in this.listeners) {
+        this.removeListener(listener, this.listeners[listener]);
+      }
+
+      return this;
+    }
+  }]);
+  return Element;
+}();
 
 /**
  * Creates HTML i elements
  * @type {Element}
  * @param {Array} classNames classes to use with element
  */
-var Icon = Object.create(Element);
-Icon.init = function () {
-  var _Element$init$call;
 
-  (_Element$init$call = Element.init.call(this, 'i')).addClass.apply(_Element$init$call, arguments);
+var Icon = function (_Element) {
+  inherits(Icon, _Element);
 
-  return this;
-};
+  function Icon() {
+    classCallCheck(this, Icon);
+
+    var _this = possibleConstructorReturn(this, (Icon.__proto__ || Object.getPrototypeOf(Icon)).call(this, 'i'));
+
+    _this.addClass.apply(_this, arguments);
+    return _this;
+  }
+
+  return Icon;
+}(Element);
 
 /**
  * Creates HTML button elements
@@ -2478,20 +2645,27 @@ Icon.init = function () {
  * @param {String}      id      editor ID to associate with the element
  * @param {Array}      iconClasses      classes to use for <i> elements
  */
-var Button = Object.create(Element);
-Button.init = function (title, id) {
-  var _Object$create;
 
-  Element.init.call(this, 'button', title, id).addClass(this.title, this.id).assign('value', this.title).assign('type', 'button');
+var Button = function (_Element) {
+  inherits(Button, _Element);
 
-  for (var _len = arguments.length, iconClasses = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    iconClasses[_key - 2] = arguments[_key];
+  function Button(title, id) {
+    classCallCheck(this, Button);
+
+    var _this = possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this, 'button', title, id));
+
+    _this.addClass(_this.title, _this.id).assign('value', _this.title).assign('type', 'button');
+
+    for (var _len = arguments.length, iconClasses = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      iconClasses[_key - 2] = arguments[_key];
+    }
+
+    _this.icon = new (Function.prototype.bind.apply(Icon, [null].concat(iconClasses)))().appendTo(_this.element);
+    return _this;
   }
 
-  this.icon = (_Object$create = Object.create(Icon)).init.apply(_Object$create, iconClasses).appendTo(this.element);
-
-  return this;
-};
+  return Button;
+}(Element);
 
 /**
  * Creates dialog elements
@@ -2499,12 +2673,21 @@ Button.init = function (title, id) {
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
  */
-var Dialog = Object.create(Element);
-Dialog.init = function (title, id) {
-  Element.init.call(this, 'div', title, id).addClass(this.title, id, 'dialog');
 
-  return this;
-};
+var Dialog = function (_Element) {
+  inherits(Dialog, _Element);
+
+  function Dialog(title, id) {
+    classCallCheck(this, Dialog);
+
+    var _this = possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).call(this, 'div', title, id));
+
+    _this.addClass(_this.title, id, 'dialog');
+    return _this;
+  }
+
+  return Dialog;
+}(Element);
 
 /**
  * Creates dialog (modal) elements
@@ -2512,20 +2695,29 @@ Dialog.init = function (title, id) {
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
  */
-var LinkDialog = Object.create(Dialog);
-LinkDialog.init = function (title, id) {
-  Dialog.init.call(this, title, id).addClass(this.title, id, 'dialog');
 
-  LinkDialog.form = Object.create(Element).init('form', 'Link Form').assign('id', this.id + '-link-form').appendTo(this.element);
+var LinkDialog = function (_Dialog) {
+  inherits(LinkDialog, _Dialog);
 
-  this.urlInput = Object.create(Element).init('input', 'Link Url').addClass('link-url-input').assign('type', 'text').assign('name', this.id + '-link-url-input').assign('placeholder', 'http://url.com').appendTo(this.form.element);
+  function LinkDialog(title, id) {
+    classCallCheck(this, LinkDialog);
 
-  this.nameInput = Object.create(Element).init('input', 'Link Display').addClass('link-display-input').assign('type', 'text').assign('name', this.id + '-link-display-input').assign('placeholder', 'Display text').appendTo(this.form.element);
+    var _this = possibleConstructorReturn(this, (LinkDialog.__proto__ || Object.getPrototypeOf(LinkDialog)).call(this, title, id));
 
-  this.insertButton = Object.create(Element).init('button', 'Insert Link').addClass('insert-link').assign('type', 'submit').assign('textContent', 'Insert').appendTo(this.form.element);
+    _this.addClass(_this.title, id, 'dialog');
 
-  return this;
-};
+    _this.form = new Element('form', 'Link Form').assign('id', _this.id + '-link-form').appendTo(_this.element);
+
+    _this.urlInput = new Element('input', 'Link Url').addClass('link-url-input').assign('type', 'text').assign('name', _this.id + '-link-url-input').assign('placeholder', 'http://url.com').appendTo(_this.form.element);
+
+    _this.nameInput = new Element('input', 'Link Display').addClass('link-display-input').assign('type', 'text').assign('name', _this.id + '-link-display-input').assign('placeholder', 'Display text').appendTo(_this.form.element);
+
+    _this.insertButton = new Element('button', 'Insert Link').addClass('insert-link').assign('type', 'submit').assign('textContent', 'Insert').appendTo(_this.form.element);
+    return _this;
+  }
+
+  return LinkDialog;
+}(Dialog);
 
 /**
  * Creates image dialog modal
@@ -2533,20 +2725,29 @@ LinkDialog.init = function (title, id) {
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
  */
-var ImageDialog = Object.create(Dialog);
-ImageDialog.init = function (title, id) {
-  Dialog.init.call(this, title, id).addClass(this.title, id, 'dialog');
 
-  ImageDialog.form = Object.create(Element).init('form', 'Image Form').assign('id', this.id + '-image-form').appendTo(this.element);
+var ImageDialog = function (_Dialog) {
+  inherits(ImageDialog, _Dialog);
 
-  this.urlInput = Object.create(Element).init('input', 'Image Source').addClass('image-source-input').assign('type', 'text').assign('name', this.id + '-image-source-input').assign('placeholder', 'http://url.com/image.jpg').appendTo(this.form.element);
+  function ImageDialog(title, id) {
+    classCallCheck(this, ImageDialog);
 
-  this.nameInput = Object.create(Element).init('input', 'Image Alt').addClass('image-alt-input').assign('type', 'text').assign('name', this.id + '-image-alt-input').assign('placeholder', 'Alt text').appendTo(this.form.element);
+    var _this = possibleConstructorReturn(this, (ImageDialog.__proto__ || Object.getPrototypeOf(ImageDialog)).call(this, title, id));
 
-  this.insertButton = Object.create(Element).init('button', 'Insert Image').addClass('insert-image').assign('type', 'submit').assign('textContent', 'Insert').appendTo(this.form.element);
+    _this.addClass(_this.title, id, 'dialog');
 
-  return this;
-};
+    _this.form = new Element('form', 'Image Form').assign('id', _this.id + '-image-form').appendTo(_this.element);
+
+    _this.urlInput = new Element('input', 'Image Source').addClass('image-source-input').assign('type', 'text').assign('name', _this.id + '-image-source-input').assign('placeholder', 'http://url.com/image.jpg').appendTo(_this.form.element);
+
+    _this.nameInput = new Element('input', 'Image Alt').addClass('image-alt-input').assign('type', 'text').assign('name', _this.id + '-image-alt-input').assign('placeholder', 'Alt text').appendTo(_this.form.element);
+
+    _this.insertButton = new Element('button', 'Insert Image').addClass('insert-image').assign('type', 'submit').assign('textContent', 'Insert').appendTo(_this.form.element);
+    return _this;
+  }
+
+  return ImageDialog;
+}(Dialog);
 
 /**
  * Creates HTML option elements
@@ -2556,26 +2757,33 @@ ImageDialog.init = function (title, id) {
  * @param {String}  value   a value to assign the element
  * @param {Array}  iconClasses    classes to use for <i> elements
  */
-var HeadingItem = Object.create(Element);
-HeadingItem.init = function (title, value) {
-  Element.init.call(this, 'li', title).addClass(this.title.replace(' ', '-')).assign('value', value);
 
-  this.button = Object.create(Element).init('button', title).assign('type', 'button').assign('value', value).addClass('heading-button').appendTo(this.element);
+var HeadingItem = function (_Element) {
+  inherits(HeadingItem, _Element);
 
-  for (var _len = arguments.length, iconClasses = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    iconClasses[_key - 2] = arguments[_key];
+  function HeadingItem(title, value) {
+    classCallCheck(this, HeadingItem);
+
+    var _this = possibleConstructorReturn(this, (HeadingItem.__proto__ || Object.getPrototypeOf(HeadingItem)).call(this, 'li', title));
+
+    _this.addClass(_this.title.replace(' ', '-')).assign('value', value);
+
+    _this.button = new Element('button', title).assign('type', 'button').assign('value', value).addClass('heading-button').appendTo(_this.element);
+
+    for (var _len = arguments.length, iconClasses = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      iconClasses[_key - 2] = arguments[_key];
+    }
+
+    if (iconClasses.length) {
+      _this.icon = new (Function.prototype.bind.apply(Icon, [null].concat(iconClasses)))().appendTo(_this.button.element);
+    } else {
+      _this.button.assign('textContent', value);
+    }
+    return _this;
   }
 
-  if (iconClasses.length) {
-    var _Object$create;
-
-    this.icon = (_Object$create = Object.create(Icon)).init.apply(_Object$create, iconClasses).appendTo(this.button.element);
-  } else {
-    this.button.assign('textContent', value);
-  }
-
-  return this;
-};
+  return HeadingItem;
+}(Element);
 
 /**
  * Creates heading dialog element
@@ -2583,42 +2791,52 @@ HeadingItem.init = function (title, value) {
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
  */
-var HeadingDialog = Object.create(Dialog);
-HeadingDialog.init = function (title, id) {
-  var _this = this;
 
-  Dialog.init.call(this, title, id).addClass(this.title, id, 'dialog');
+var HeadingDialog = function (_Dialog) {
+  inherits(HeadingDialog, _Dialog);
 
-  this.headingList = Object.create(Element).init('ul', 'Heading List').assign('id', id + '-heading-list').appendTo(this.element);
+  function HeadingDialog(title, id) {
+    classCallCheck(this, HeadingDialog);
 
-  this.options = [];
+    var _this = possibleConstructorReturn(this, (HeadingDialog.__proto__ || Object.getPrototypeOf(HeadingDialog)).call(this, title, id));
 
-  for (var i = 0; i < 6; i++) {
-    var option = Object.create(HeadingItem).init('Heading ' + (i + 1), i + 1);
-    this.options.push(option);
+    _this.addClass(_this.title, id, 'dialog');
+    _this.headingList = new Element('ul', 'Heading List').assign('id', id + '-heading-list').appendTo(_this.element);
+
+    _this.options = [].concat(toConsumableArray$1(Array(6))).map(function (_, i) {
+      return new HeadingItem('Heading ' + (i + 1), i + 1);
+    });
+    _this.options.push(new HeadingItem('Remove Heading', '0', 'fa', 'fa-remove'));
+    console.log(_this.options);
+
+    _this.options.forEach(function (option) {
+      option.appendTo(_this.headingList.element);
+    });
+    return _this;
   }
 
-  var remove = Object.create(HeadingItem).init('Remove Heading', '0', 'fa', 'fa-remove');
-  this.options.push(remove);
-
-  this.options.forEach(function (option) {
-    option.appendTo(_this.headingList.element);
-  });
-
-  return this;
-};
+  return HeadingDialog;
+}(Dialog);
 
 /**
  * Create separator spans for the toolbar
  * @type {Element}
  */
-var Separator = Object.create(Element);
-Separator.init = function () {
-  Element.init.call(this, 'span');
-  this.addClass('separator');
 
-  return this;
-};
+var Separator = function (_Element) {
+  inherits(Separator, _Element);
+
+  function Separator() {
+    classCallCheck(this, Separator);
+
+    var _this = possibleConstructorReturn(this, (Separator.__proto__ || Object.getPrototypeOf(Separator)).call(this, 'span'));
+
+    _this.addClass('separator');
+    return _this;
+  }
+
+  return Separator;
+}(Element);
 
 /* global HTMLCollection HTMLElement NodeList */
 
@@ -2656,17 +2874,17 @@ function markymark$1() {
      * toolbar, editor, dialog container, hidden input
      */
 
-    var toolbar = Object.create(Element).init('div', 'Toolbar');
+    var toolbar = new Element('div', 'Toolbar');
 
     toolbar.addClass('marky-toolbar', id);
 
-    var dialogs = Object.create(Element).init('div', 'Dialogs');
+    var dialogs = new Element('div', 'Dialogs');
     dialogs.addClass('marky-dialogs', id);
 
-    var markyEditor = Object.create(Element).init('textarea', 'Marky Marked Editor');
+    var markyEditor = new Element('textarea', 'Marky Marked Editor');
     markyEditor.addClass('marky-editor', id);
 
-    var marky = contra_1(Object.create(Marky)).init(id, container, markyEditor);
+    var marky = contra_1(new Marky(id, container, markyEditor));
 
     markyEditor.assign('_marky', marky);
     markies.push(marky);
@@ -2676,9 +2894,9 @@ function markymark$1() {
      */
 
     marky.elements.dialogs = {
-      heading: Object.create(HeadingDialog).init('Heading Dialog', id),
-      link: Object.create(LinkDialog).init('Link Dialog', id),
-      image: Object.create(ImageDialog).init('Image Dialog', id)
+      heading: new HeadingDialog('Heading Dialog', id),
+      link: new LinkDialog('Link Dialog', id),
+      image: new ImageDialog('Image Dialog', id)
     };
 
     var _loop = function _loop(dialogName) {
@@ -2728,21 +2946,21 @@ function markymark$1() {
     }
 
     marky.elements.buttons = {
-      heading: Object.create(Button).init('Heading', id, 'fa', 'fa-header'),
-      bold: Object.create(Button).init('Bold', id, 'fa', 'fa-bold'),
-      italic: Object.create(Button).init('Italic', id, 'fa', 'fa-italic'),
-      strikethrough: Object.create(Button).init('Strikethrough', id, 'fa', 'fa-strikethrough'),
-      code: Object.create(Button).init('Code', id, 'fa', 'fa-code'),
-      blockquote: Object.create(Button).init('Blockquote', id, 'fa', 'fa-quote-right'),
-      link: Object.create(Button).init('Link', id, 'fa', 'fa-link'),
-      image: Object.create(Button).init('Image', id, 'fa', 'fa-file-image-o'),
-      unorderedList: Object.create(Button).init('Unordered List', id, 'fa', 'fa-list-ul'),
-      orderedList: Object.create(Button).init('Ordered List', id, 'fa', 'fa-list-ol'),
-      outdent: Object.create(Button).init('Outdent', id, 'fa', 'fa-outdent'),
-      indent: Object.create(Button).init('Indent', id, 'fa', 'fa-indent'),
-      undo: Object.create(Button).init('Undo', id, 'fa', 'fa-backward'),
-      redo: Object.create(Button).init('Redo', id, 'fa', 'fa-forward'),
-      expand: Object.create(Button).init('Expand', id, 'fa', 'fa-expand')
+      heading: new Button('Heading', id, 'fa', 'fa-header'),
+      bold: new Button('Bold', id, 'fa', 'fa-bold'),
+      italic: new Button('Italic', id, 'fa', 'fa-italic'),
+      strikethrough: new Button('Strikethrough', id, 'fa', 'fa-strikethrough'),
+      code: new Button('Code', id, 'fa', 'fa-code'),
+      blockquote: new Button('Blockquote', id, 'fa', 'fa-quote-right'),
+      link: new Button('Link', id, 'fa', 'fa-link'),
+      image: new Button('Image', id, 'fa', 'fa-file-image-o'),
+      unorderedList: new Button('Unordered List', id, 'fa', 'fa-list-ul'),
+      orderedList: new Button('Ordered List', id, 'fa', 'fa-list-ol'),
+      outdent: new Button('Outdent', id, 'fa', 'fa-outdent'),
+      indent: new Button('Indent', id, 'fa', 'fa-indent'),
+      undo: new Button('Undo', id, 'fa', 'fa-backward'),
+      redo: new Button('Redo', id, 'fa', 'fa-forward'),
+      expand: new Button('Expand', id, 'fa', 'fa-expand')
     };
 
     var _loop2 = function _loop2(buttonName) {
@@ -2784,24 +3002,24 @@ function markymark$1() {
     toolbar.appendTo(container);
     markyEditor.appendTo(container);
     marky.elements.buttons.heading.appendTo(toolbar.element);
-    Object.create(Separator).init().appendTo(toolbar.element);
+    new Separator().appendTo(toolbar.element);
     marky.elements.buttons.bold.appendTo(toolbar.element);
     marky.elements.buttons.italic.appendTo(toolbar.element);
     marky.elements.buttons.strikethrough.appendTo(toolbar.element);
     marky.elements.buttons.code.appendTo(toolbar.element);
     marky.elements.buttons.blockquote.appendTo(toolbar.element);
-    Object.create(Separator).init().appendTo(toolbar.element);
+    new Separator().appendTo(toolbar.element);
     marky.elements.buttons.link.appendTo(toolbar.element);
     marky.elements.buttons.image.appendTo(toolbar.element);
-    Object.create(Separator).init().appendTo(toolbar.element);
+    new Separator().appendTo(toolbar.element);
     marky.elements.buttons.unorderedList.appendTo(toolbar.element);
     marky.elements.buttons.orderedList.appendTo(toolbar.element);
     marky.elements.buttons.outdent.appendTo(toolbar.element);
     marky.elements.buttons.indent.appendTo(toolbar.element);
-    Object.create(Separator).init().appendTo(toolbar.element);
+    new Separator().appendTo(toolbar.element);
     marky.elements.buttons.undo.appendTo(toolbar.element);
     marky.elements.buttons.redo.appendTo(toolbar.element);
-    Object.create(Separator).init().appendTo(toolbar.element);
+    new Separator().appendTo(toolbar.element);
     marky.elements.buttons.expand.appendTo(toolbar.element);
     dialogs.appendTo(toolbar.element);
     marky.elements.dialogs.link.appendTo(dialogs.element);

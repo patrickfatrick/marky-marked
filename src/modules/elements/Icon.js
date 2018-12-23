@@ -5,12 +5,9 @@ import Element from './Element'
  * @type {Element}
  * @param {Array} classNames classes to use with element
  */
-const Icon = Object.create(Element)
-Icon.init = function (...classNames) {
-  Element.init.call(this, 'i')
-  .addClass(...classNames)
-
-  return this
+export default class Icon extends Element {
+  constructor (...classNames) {
+    super('i')
+    this.addClass(...classNames)
+  }
 }
-
-export default Icon
