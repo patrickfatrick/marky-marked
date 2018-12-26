@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import HeadingDialog from '../../src/modules/elements/HeadingDialog';
+import HeadingDialog from '../../src/elements/HeadingDialog';
 
 test('HeadingDialog > creates an image dialog', (t) => {
   const headingDialog = new HeadingDialog('Heading Dialog', 'heading-dialog');

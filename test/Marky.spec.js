@@ -1,6 +1,6 @@
 import test from 'tape';
 import sinon from 'sinon';
-import initializer from '../src/modules/initializer';
+import initializer from '../src/initializer';
 
 const container = document.createElement('marky-mark');
 document.body.appendChild(container);

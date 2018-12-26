@@ -1,7 +1,5 @@
-// /* global HTMLElement */
-
 // import test from 'tape'
-// import LinkDialog from '../../src/modules/elements/LinkDialog'
+// import LinkDialog from '../../src/elements/LinkDialog'
 
 // test('LinkDialog > creates a link dialog', (t) => {
 //   const linkDialog = Object.create(LinkDialog)

@@ -7,7 +7,7 @@ import {
   splitLines,
   startOfLine,
   endOfLine,
-} from '../src/modules/parsers';
+} from '../../src/utils/parsers';
 
 test('parsers > creates a string prototype for getting indexOf a regex pattern', (t) => {
   const string = 'abc def hij klm nop';

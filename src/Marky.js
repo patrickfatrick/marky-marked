@@ -1,9 +1,9 @@
 
 
-import * as dispatcher from './dispatcher';
+import * as dispatcher from './utils/dispatcher';
 import {
   inlineHandler, blockHandler, insertHandler, listHandler, indentHandler,
-} from './handlers';
+} from './utils/handlers';
 
 export default class Marky {
   constructor(id, container, editor) {
@@ -54,9 +54,10 @@ export default class Marky {
   /**
    * Handles the `markyupdate` event
    * @requires dispatcher/update
-   * @param {String} markdown the new markdown blob
-   * @param {Array}  state    the state timeline
-   * @param {Number} index    current state index
+   * @param {String} markdown   the new markdown blob
+   * @param {Array}  selection  selectionStart and selectionEnd indices
+   * @param {Array}  state      the state timeline
+   * @param {Number} index      current state index
    */
   update(markdown, selection = [0, 0], state = this.state, index = this.index) {
     const action = dispatcher.update(markdown, selection, state, index);

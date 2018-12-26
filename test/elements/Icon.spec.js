@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import Icon from '../../src/modules/elements/Icon';
+import Icon from '../../src/elements/Icon';
 
 test('Icon > creates an icon', (t) => {
   const icon = new Icon('fa', 'fa-cog');

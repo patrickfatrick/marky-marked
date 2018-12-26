@@ -1,5 +1,5 @@
 import test from 'tape';
-import initializer from '../src/modules/initializer';
+import initializer from '../src/initializer';
 
 test('initializer > assigns a Marky instance to the container', (t) => {
   const container = document.createElement('marky-mark');

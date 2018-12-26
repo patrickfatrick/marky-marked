@@ -1,4 +1,4 @@
-import initializer from './modules/initializer';
+import initializer from './initializer';
 
 /**
  * Register and append the DOM elements needed and set the event listeners

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { update } from '../src/modules/dispatcher';
+import { update } from '../../src/utils/dispatcher';
 
 test('update > handles updating state', (t) => {
   const initialState = [{ markdown: '', html: '', selection: [0, 0] }];

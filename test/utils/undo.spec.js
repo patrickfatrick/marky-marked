@@ -1,5 +1,5 @@
 import test from 'tape';
-import { undo } from '../src/modules/dispatcher';
+import { undo } from '../../src/utils/dispatcher';
 
 const stateMock = [
   {

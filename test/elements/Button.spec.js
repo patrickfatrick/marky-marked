@@ -1,7 +1,7 @@
 /* global HTMLElement */
 
 import test from 'tape';
-import Button from '../../src/modules/elements/Button';
+import Button from '../../src/elements/Button';
 
 test('Button > creates a button', (t) => {
   const button = new Button('Bold', 'bold', 'fa', 'fa-bold');

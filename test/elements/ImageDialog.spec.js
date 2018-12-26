@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import ImageDialog from '../../src/modules/elements/ImageDialog';
+import ImageDialog from '../../src/elements/ImageDialog';
 
 test('ImageDialog > creates an image dialog', (t) => {
   const imageDialog = new ImageDialog('Image Dialog', 'image-dialog');

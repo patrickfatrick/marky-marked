@@ -1,5 +1,5 @@
 import test from 'tape';
-import Dialog from '../../src/modules/elements/Dialog';
+import Dialog from '../../src/elements/Dialog';
 
 test('Dialog > creates a dialog', (t) => {
   const dialog = new Dialog('Dialog', 'dialog');

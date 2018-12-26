@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import Separator from '../../src/modules/elements/Separator';
+import Separator from '../../src/elements/Separator';
 
 test('Separator > creates a separator', (t) => {
   const separator = new Separator();

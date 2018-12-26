@@ -13,31 +13,32 @@ export function inlineHandler(string, indices, mark) {
   let newString = string;
   const newIndices = indices;
   const useMark = [mark, mark];
-  if (newString.indexOf(mark) !== -1) {
-    newIndices.forEach((n, i) => {
-      if (newString.lastIndexOf(mark, n) === n - mark.length) {
-        newString = newString.substring(0, n - mark.length)
-          + newString.substring(n, newString.length);
-        if (i === 0) {
+  if (newString.includes(mark)) {
+    // Determine if the mark symbol needs to be added or removed from either end of the string
+    newIndices.forEach((index, j) => {
+      if (newString.lastIndexOf(mark, index) === index - mark.length) {
+        newString = newString.substring(0, index - mark.length)
+          + newString.substring(index, newString.length);
+        if (j === 0) {
           newIndices[0] -= mark.length;
           newIndices[1] -= mark.length;
         } else {
           newIndices[1] -= mark.length;
         }
-        if (i === 1 && useMark[0]) newIndices[1] += mark.length;
-        useMark[i] = '';
+        if (j === 1 && useMark[0]) newIndices[1] += mark.length;
+        useMark[j] = '';
       }
-      if (newString.indexOf(mark, n) === n) {
-        newString = newString.substring(0, n)
-          + newString.substring(n + mark.length, newString.length);
-        if (i === 0 && (newIndices[0] !== newIndices[1])) {
+      if (newString.indexOf(mark, index) === index) {
+        newString = newString.substring(0, index)
+          + newString.substring(index + mark.length, newString.length);
+        if (j === 0 && (newIndices[0] !== newIndices[1])) {
           newIndices[1] -= mark.length;
         }
-        if (i === 0 && (newIndices[0] === newIndices[1])) {
+        if (j === 0 && (newIndices[0] === newIndices[1])) {
           newIndices[0] -= mark.length;
         }
-        if (i === 1 && useMark[0]) newIndices[1] += mark.length;
-        useMark[i] = '';
+        if (j === 1 && useMark[0]) newIndices[1] += mark.length;
+        useMark[j] = '';
       }
     });
   }

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { inlineHandler } from '../src/modules/handlers';
+import { inlineHandler } from '../../src/utils/handlers';
 
 test('indent-handler > adds a formatting string around a selection', (t) => {
   const string = 'Some text';

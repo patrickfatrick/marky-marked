@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import HeadingItem from '../../src/modules/elements/HeadingItem';
+import HeadingItem from '../../src/elements/HeadingItem';
 
 test('HeadingItem > creates a heading item', (t) => {
   const headingItem = new HeadingItem('Heading 1', '1');

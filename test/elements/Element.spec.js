@@ -1,7 +1,5 @@
-/* global HTMLElement */
-
 import test from 'tape';
-import Element from '../../src/modules/elements/Element';
+import Element from '../../src/elements/Element';
 
 test('Element > creates an element', (t) => {
   const element = new Element('div', 'element', 'element');
