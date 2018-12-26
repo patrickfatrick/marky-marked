@@ -126,7 +126,7 @@
 <script src="./dist/marky-marked.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  var markyMarked = markymark()[0]
+  var markyMarked = markymark(document.querySelector('marky-mark'))
   var editor = document.querySelector('textarea.marky-editor')
   var htmlOutput = document.getElementById('html-output')
 

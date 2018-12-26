@@ -1,9 +1,9 @@
 import test from 'tape';
-import markymark from '../src/modules/markymark';
+import initializer from '../src/modules/initializer';
 
 const container = document.createElement('marky-mark');
 document.body.appendChild(container);
-const marky = markymark()[0];
+const marky = initializer(container);
 const { editor } = marky;
 
 test('dialogs > calls the image method', (t) => {
@@ -15,7 +15,7 @@ test('dialogs > calls the image method', (t) => {
   alt.value = 'Chuck Chardonnay';
   container.querySelector('.insert-image').click();
 
-  t.equal(editor.marky.html, '<p><img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n');
+  t.equal(container.marky.html, '<p><img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n');
   t.end();
 });
 
@@ -28,6 +28,6 @@ test('dialogs > calls the link method', (t) => {
   alt.value = 'Google';
   container.querySelector('.insert-link').click();
 
-  t.equal(editor.marky.html, '<p><a href="http://google.com">Google</a></p>\n');
+  t.equal(container.marky.html, '<p><a href="http://google.com">Google</a></p>\n');
   t.end();
 });

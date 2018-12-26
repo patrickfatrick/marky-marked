@@ -12,7 +12,7 @@ module.exports = (karma) => {
     ],
     frameworks: ['tap'],
     rollupPreprocessor: rollupConfig,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     client: { captureConsole: false },
     preprocessors: {
       'src/**/*.js': ['sourcemap', 'rollup'],

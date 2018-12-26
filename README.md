@@ -53,7 +53,17 @@ import markymark from 'marky-marked'
 markymark();
 ```
 
-You can also use any elements as an array, NodeList, or HTMLCollection.
+You can pass in an element directly.
+
+```html
+<funky-bunch />
+```
+
+```js
+markymark(document.querySelector('funky-bunch'))
+```
+
+You can also use any elements provided as an array, NodeList, or HTMLCollection.
 
 ```html
 <mark-wahlberg />
@@ -69,7 +79,7 @@ You can add as many editors as you'd like to any page, as long as they all use t
 
 ## Returns
 
-`markymark()` returns an array of marky instances that allow you to manipulate and access the state for each initialized marky mark container without having to touch the DOM again.
+`markymark()` returns an array of marky instances that allow you to manipulate and access the state for each initialized marky mark container without having to touch the DOM again. If a single element is passed in to the function, then a single instance is returned.
 
 ## Styling
 
@@ -133,12 +143,12 @@ This is what I use in the demo site.
 
 #### Accessing Markdown and HTML
 
-At any given time in the state of the editor you can access both the markdown and the HTML by accessing the editor's `_marky` property, or the returned marky instance from the `markymark()` function call.
+At any given time in the state of the editor you can access both the markdown and the HTML by accessing the editor's `marky` property, or the returned marky instance from the `markymark()` function call.
 
 ```javascript
-var markyMarked = marky.mark()[0]
+var markyMarked = markymark(element)
 // OR:
-var _marky = document.querySelector('.marky-editor')._marky;
+var marky = element.marky;
 
 var markdown = markyMarked.markdown;
 var html = markyMarked.html;

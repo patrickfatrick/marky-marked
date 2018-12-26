@@ -9,7 +9,7 @@
     "node": "^8.0.0"
   },
   "scripts": {
-    "test": "karma start",
+    "test": "npm run lint:js:test && karma start",
     "build": "concurrently npm:lint:* && concurrently npm:build:*",
     "lint:js:test": "eslint ./test/**/*.spec.js",
     "lint:js:src": "eslint ./src/**/*.js",
@@ -55,7 +55,7 @@
     "faucet": "^0.0.1",
     "font-awesome": "^4.5.0",
     "karma": "^1.7.1",
-    "karma-chrome-launcher": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-junit-reporter": "^1.2.0",
     "karma-rollup-plugin": "^0.2.4",

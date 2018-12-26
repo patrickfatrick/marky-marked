@@ -1,10 +1,10 @@
 import test from 'tape';
 import sinon from 'sinon';
-import markymark from '../src/modules/markymark';
+import initializer from '../src/modules/initializer';
 
 const container = document.createElement('marky-mark');
 document.body.appendChild(container);
-const marky = markymark()[0];
+const marky = initializer(container);
 const { editor } = marky;
 
 test('Marky > has n id', (t) => {
@@ -25,7 +25,7 @@ test('Marky > has an index', (t) => {
 test('Marky > destroy', (t) => {
   const newContainer = document.createElement('marky-mark');
   document.body.appendChild(newContainer);
-  const newMarky = markymark([newContainer])[0];
+  const newMarky = initializer(newContainer);
 
   t.ok(document.getElementById(newContainer.id));
   newMarky.destroy();

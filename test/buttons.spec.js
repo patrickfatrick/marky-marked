@@ -1,9 +1,9 @@
 import test from 'tape';
-import markymark from '../src/modules/markymark';
+import initializer from '../src/modules/initializer';
 
 const container = document.createElement('marky-mark');
 document.body.appendChild(container);
-const marky = markymark()[0];
+const marky = initializer(container);
 const { editor } = marky;
 
 const stateMock = [
@@ -60,7 +60,7 @@ test('buttons > calls the bold method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.bold').click();
-  t.equal(editor.marky.html, '<p><strong>Some text</strong></p>\n');
+  t.equal(container.marky.html, '<p><strong>Some text</strong></p>\n');
   t.end();
 });
 
@@ -68,7 +68,7 @@ test('buttons > calls the italic method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.italic').click();
-  t.equal(editor.marky.html, '<p><em>Some text</em></p>\n');
+  t.equal(container.marky.html, '<p><em>Some text</em></p>\n');
   t.end();
 });
 
@@ -76,7 +76,7 @@ test('buttons > calls the strikethrough method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.strikethrough').click();
-  t.equal(editor.marky.html, '<p><del>Some text</del></p>\n');
+  t.equal(container.marky.html, '<p><del>Some text</del></p>\n');
   t.end();
 });
 
@@ -84,7 +84,7 @@ test('buttons > calls the code method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.code').click();
-  t.equal(editor.marky.html, '<p><code>Some text</code></p>\n');
+  t.equal(container.marky.html, '<p><code>Some text</code></p>\n');
   t.end();
 });
 
@@ -92,7 +92,7 @@ test('buttons > calls the blockquote method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.blockquote').click();
-  t.equal(editor.marky.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n');
+  t.equal(container.marky.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n');
   t.end();
 });
 
@@ -167,48 +167,48 @@ test('buttons > calls the outdent method', (t) => {
 });
 
 test('buttons > calls the undo method', (t) => {
-  editor.marky.state = stateMock;
-  editor.marky.index = 5;
+  container.marky.state = stateMock;
+  container.marky.index = 5;
 
   container.querySelector('.undo').click();
 
   t.equal(editor.value, 'Some really funny awesome text');
-  t.equal(editor.marky.html, '<p>Some really funny awesome text</p>');
+  t.equal(container.marky.html, '<p>Some really funny awesome text</p>');
   t.end();
 });
 
 test('buttons > does not call the undo method if disabled', (t) => {
   editor.value = 'Some really super funny awesome crazy text';
-  editor.marky.html = '<p>Some really super funny awesome crazy text</p>';
-  editor.marky.state = stateMock;
-  editor.marky.index = 6;
+  container.marky.html = '<p>Some really super funny awesome crazy text</p>';
+  container.marky.state = stateMock;
+  container.marky.index = 6;
   container.querySelector('.undo').classList.add('disabled');
   container.querySelector('.undo').click();
   t.equal(editor.value, 'Some really super funny awesome crazy text');
-  t.equal(editor.marky.html, '<p>Some really super funny awesome crazy text</p>');
+  t.equal(container.marky.html, '<p>Some really super funny awesome crazy text</p>');
   t.end();
 });
 
 test('buttons > calls the redo method', (t) => {
   editor.value = '';
-  editor.marky.html = '';
-  editor.marky.state = stateMock;
-  editor.marky.index = 0;
+  container.marky.html = '';
+  container.marky.state = stateMock;
+  container.marky.index = 0;
   container.querySelector('.redo').click();
   t.equal(editor.value, 'Some text');
-  t.equal(editor.marky.html, '<p>Some text</p>');
+  t.equal(container.marky.html, '<p>Some text</p>');
   t.end();
 });
 
 test('buttons > does not call the redo method if disabled', (t) => {
   editor.value = '';
-  editor.marky.html = '';
-  editor.marky.state = stateMock;
-  editor.marky.index = 0;
+  container.marky.html = '';
+  container.marky.state = stateMock;
+  container.marky.index = 0;
   container.querySelector('.redo').classList.add('disabled');
   container.querySelector('.redo').click();
   t.equal(editor.value, '');
-  t.equal(editor.marky.html, '');
+  t.equal(container.marky.html, '');
   t.end();
 });
 
