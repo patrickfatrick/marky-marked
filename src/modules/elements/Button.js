@@ -1,5 +1,5 @@
-import Element from './Element'
-import Icon from './Icon'
+import Element from './Element';
+import Icon from './Icon';
 
 /**
  * Creates HTML button elements
@@ -10,13 +10,13 @@ import Icon from './Icon'
  * @param {Array}      iconClasses      classes to use for <i> elements
  */
 export default class Button extends Element {
-  constructor (title, id, ...iconClasses) {
-    super('button', title, id)
+  constructor(title, id, ...iconClasses) {
+    super('button', title, id);
     this.addClass(this.title, this.id)
       .assign('value', this.title)
-      .assign('type', 'button')
+      .assign('type', 'button');
 
     this.icon = new Icon(...iconClasses)
-      .appendTo(this.element)
+      .appendTo(this.element);
   }
 }

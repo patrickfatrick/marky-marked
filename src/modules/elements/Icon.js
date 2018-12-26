@@ -1,4 +1,4 @@
-import Element from './Element'
+import Element from './Element';
 
 /**
  * Creates HTML i elements
@@ -6,8 +6,8 @@ import Element from './Element'
  * @param {Array} classNames classes to use with element
  */
 export default class Icon extends Element {
-  constructor (...classNames) {
-    super('i')
-    this.addClass(...classNames)
+  constructor(...classNames) {
+    super('i');
+    this.addClass(...classNames);
   }
 }

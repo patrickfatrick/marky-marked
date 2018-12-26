@@ -5,11 +5,6 @@ _A `<textarea>` so sweet you'll be feeling good vibrations._
 
 [![Circle CI](https://circleci.com/gh/patrickfatrick/marky-marked.svg?style=shield)](https://circleci.com/gh/patrickfatrick/marky-marked)
 [![codecov.io](https://codecov.io/github/patrickfatrick/marky-marked/coverage.svg?branch=master)](https://codecov.io/github/patrickfatrick/marky-marked?branch=master)
-[![bitHound Score](https://www.bithound.io/github/patrickfatrick/marky-marked/badges/score.svg)](https://www.bithound.io/github/patrickfatrick/marky-marked)
-[![bitHound Dependencies](https://www.bithound.io/github/patrickfatrick/marky-marked/badges/dependencies.svg)](https://www.bithound.io/github/patrickfatrick/marky-marked/master/dependencies/npm)
-[![MIT License][license-image]][license-url]
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ![Marky Marked](./images/marky-marked.png)
 
@@ -305,8 +300,5 @@ $ npm run build
 ## License
 
 Marky Marked is freely distributable under the terms of the [MIT license](./LICENSE).
-
-[license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
-[license-url]: LICENSE
 
 _Each Marky Marked release is linted with StandardJS and Stylelint; tested with Karma and Tape._

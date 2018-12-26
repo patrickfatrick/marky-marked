@@ -1,7 +1,5 @@
-'use strict'
-
-import marked from 'marked'
-import pushState from './push-state'
+import marked from 'marked';
+import pushState from './push-state';
 
 /**
  * updates the state
@@ -12,15 +10,13 @@ import pushState from './push-state'
  * @param   {Number} stateIndex the current state index
  * @returns {Object} the newly active state
  */
-export function update (markdown, selection, state, stateIndex) {
-  let markedOptions = {
-    sanitize: true
-  }
-  let html = marked(markdown, markedOptions).toString() || ''
-  let newState = pushState(state, stateIndex, () => {
-    return {markdown: markdown, html: html, selection: selection}
-  })
-  return newState
+export function update(markdown, selection, state, stateIndex) {
+  const markedOptions = {
+    sanitize: true,
+  };
+  const html = marked(markdown, markedOptions).toString() || '';
+  const newState = pushState(state, stateIndex, () => ({ markdown, html, selection }));
+  return newState;
 }
 
 /**
@@ -30,9 +26,11 @@ export function update (markdown, selection, state, stateIndex) {
  * @param   {Number} stateIndex the current state index
  * @returns {Object} the newly active state
  */
-export function undo (num, state, stateIndex) {
-  stateIndex = (stateIndex > (num - 1)) ? stateIndex - num : 0
-  return {state: state[stateIndex], index: stateIndex}
+export function undo(num, state, stateIndex) {
+  const newStateIndex = (stateIndex > (num - 1))
+    ? stateIndex - num
+    : 0;
+  return { state: state[newStateIndex], index: newStateIndex };
 }
 
 /**
@@ -42,7 +40,9 @@ export function undo (num, state, stateIndex) {
  * @param   {Number} stateIndex the current state index
  * @returns {Object} the newly active state
  */
-export function redo (num, state, stateIndex) {
-  stateIndex = (stateIndex < state.length - (num + 1)) ? stateIndex + num : state.length - 1
-  return {state: state[stateIndex], index: stateIndex}
+export function redo(num, state, stateIndex) {
+  const newStateIndex = (stateIndex < state.length - (num + 1))
+    ? stateIndex + num
+    : state.length - 1;
+  return { state: state[newStateIndex], index: newStateIndex };
 }
