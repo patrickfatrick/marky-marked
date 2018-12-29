@@ -27,6 +27,11 @@
     color: var(--lightGray);
     transition: box-shadow 200ms ease-out;
 
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+
     &:hover {
       box-shadow: var(--boxShadowA) 0 1px 1px, var(--boxShadowB) 0 1px 5px;
       transition: unset;
@@ -40,31 +45,26 @@
       background: linear-gradient(var(--white) * 0.7, var(--white));
     }
 
+    & .separator + button {
+      border-left: 1px solid var(--gray);
+      border-radius: 4px 0 0 4px;
+    }
+
+    & button:nth-child(7),
+    & button:nth-child(10),
+    & button:nth-child(15),
+    & button:nth-child(18) {
+      border-radius: 0 4px 4px 0;
+    }
+
     &:focus:not(.disabled) {
       background-color: var(--deepBlue);
       color: var(--white);
     }
 
-    &::-moz-focus-inner {
-      border: 0;
-      padding: 0;
-    }
-
     @media (width >= 768px) {
       font-size: 1rem;
     }
-  }
-
-  & .separator + button {
-    border-left: 1px solid var(--gray);
-    border-radius: 4px 0 0 4px;
-  }
-
-  & button:nth-child(7),
-  & button:nth-child(10),
-  & button:nth-child(15),
-  & button:nth-child(18) {
-    border-radius: 0 4px 4px 0;
   }
 
   & button.expand {

@@ -3,18 +3,16 @@ import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 
 export default {
-  entry: 'src/index.js',
-  dest: 'dist/marky-marked.js',
+  input: 'src/index.js',
   plugins: [
-    commonjs({
-      namedExports: {
-        'node_modules/contra/contra.js': ['emitter'],
-      },
-    }),
+    commonjs(),
     resolve(),
     babel({
       exclude: 'node_modules/**/*',
     }),
   ],
-  format: 'es',
+  output: {
+    format: 'es',
+    file: 'dist/marky-marked.js',
+  },
 };
