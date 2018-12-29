@@ -1,7 +1,7 @@
 import test from 'tape';
-import { inlineHandler } from '../../src/utils/handlers';
+import { inlineHandler } from '../../src/utils/markdownHandlers';
 
-test('indent-handler > adds a formatting string around a selection', (t) => {
+test('inline-handler > adds a formatting string around a selection', (t) => {
   const string = 'Some text';
   const indices = [0, 9];
 
@@ -12,7 +12,7 @@ test('indent-handler > adds a formatting string around a selection', (t) => {
   t.end();
 });
 
-test('indent-handler > removes a formatting string around a selection if it already has it', (t) => {
+test('inline-handler > removes a formatting string around a selection if it already has it', (t) => {
   const string = '**Some text**';
   const indices = [2, 11];
 
@@ -23,7 +23,7 @@ test('indent-handler > removes a formatting string around a selection if it alre
   t.end();
 });
 
-test('indent-handler > removes a formatting string inside a selection if it already has it', (t) => {
+test('inline-handler > removes a formatting string inside a selection if it already has it', (t) => {
   const string = '~~Some text~~';
   const indices = [0, 13];
 
@@ -34,7 +34,7 @@ test('indent-handler > removes a formatting string inside a selection if it alre
   t.end();
 });
 
-test('indent-handler > ignores other formatting strings', (t) => {
+test('inline-handler > ignores other formatting strings', (t) => {
   const string = '~~Some text~~';
   const indices = [2, 11];
 
@@ -45,7 +45,7 @@ test('indent-handler > ignores other formatting strings', (t) => {
   t.end();
 });
 
-test('indent-handler > ignores other formatting strings with removal', (t) => {
+test('inline-handler > ignores other formatting strings with removal', (t) => {
   const string = '~~**Some text**~~';
   const indices = [4, 13];
 
@@ -56,7 +56,7 @@ test('indent-handler > ignores other formatting strings with removal', (t) => {
   t.end();
 });
 
-test('indent-handler > can be used in the middle of ranges already marked', (t) => {
+test('inline-handler > can be used in the middle of ranges already marked', (t) => {
   const string = '**Some text**';
   const indices = [6, 13];
 
@@ -67,7 +67,7 @@ test('indent-handler > can be used in the middle of ranges already marked', (t) 
   t.end();
 });
 
-test('indent-handler > sets selection range intuitively', (t) => {
+test('inline-handler > sets selection range intuitively', (t) => {
   const string = '**Some text**';
   const indices = [6, 11];
 
@@ -78,7 +78,7 @@ test('indent-handler > sets selection range intuitively', (t) => {
   t.end();
 });
 
-test('indent-handler > removes marks around blank strings', (t) => {
+test('inline-handler > removes marks around blank strings', (t) => {
   const string = 'So****me text';
   const indices = [4, 4];
 

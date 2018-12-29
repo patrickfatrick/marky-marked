@@ -1,5 +1,5 @@
 import test from 'tape';
-import { indentHandler } from '../../src/utils/handlers';
+import { indentHandler } from '../../src/utils/markdownHandlers';
 
 test('indent-handler > adds four spaces to the beginning of a line', (t) => {
   const string = 'Some text';

@@ -3,7 +3,7 @@
 import * as dispatcher from './utils/dispatcher';
 import {
   inlineHandler, blockHandler, insertHandler, listHandler, indentHandler,
-} from './utils/handlers';
+} from './utils/markdownHandlers';
 
 export default class Marky {
   constructor(id, container, editor) {

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { blockHandler } from '../../src/utils/handlers';
+import { blockHandler } from '../../src/utils/markdownHandlers';
 
 test('block-handler > adds a formatting string to the beginning of a line', (t) => {
   const string = 'Some text';

@@ -1,5 +1,5 @@
 import test from 'tape';
-import { listHandler } from '../../src/utils/handlers';
+import { listHandler } from '../../src/utils/markdownHandlers';
 
 test('list-handler > adds a formatting string to the beginning of a line', (t) => {
   const string = 'Some text';

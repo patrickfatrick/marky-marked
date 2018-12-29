@@ -1,5 +1,5 @@
 import test from 'tape';
-import { insertHandler } from '../../src/utils/handlers';
+import { insertHandler } from '../../src/utils/markdownHandlers';
 
 test('insert-handler > inserts and selects the inserted markdown', (t) => {
   const string = 'Some text ';
