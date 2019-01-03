@@ -6,7 +6,7 @@ document.body.appendChild(container);
 const marky = initializer(container);
 const { editor } = marky;
 
-const stateMock = [
+const timelineMock = [
   {
     markdown: '',
     html: '',
@@ -60,7 +60,7 @@ test('buttons > calls the bold method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.bold').click();
-  t.equal(container.marky.html, '<p><strong>Some text</strong></p>\n');
+  t.equal(editor.value, '**Some text**');
   t.end();
 });
 
@@ -68,7 +68,7 @@ test('buttons > calls the italic method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.italic').click();
-  t.equal(container.marky.html, '<p><em>Some text</em></p>\n');
+  t.equal(editor.value, '_Some text_');
   t.end();
 });
 
@@ -76,7 +76,7 @@ test('buttons > calls the strikethrough method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.strikethrough').click();
-  t.equal(container.marky.html, '<p><del>Some text</del></p>\n');
+  t.equal(editor.value, '~~Some text~~');
   t.end();
 });
 
@@ -84,7 +84,7 @@ test('buttons > calls the code method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.code').click();
-  t.equal(container.marky.html, '<p><code>Some text</code></p>\n');
+  t.equal(editor.value, '`Some text`');
   t.end();
 });
 
@@ -92,7 +92,7 @@ test('buttons > calls the blockquote method', (t) => {
   editor.value = 'Some text';
   editor.setSelectionRange(0, 9);
   container.querySelector('.blockquote').click();
-  t.equal(container.marky.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n');
+  t.equal(editor.value, '> Some text');
   t.end();
 });
 
@@ -167,48 +167,48 @@ test('buttons > calls the outdent method', (t) => {
 });
 
 test('buttons > calls the undo method', (t) => {
-  container.marky.state = stateMock;
-  container.marky.index = 5;
+  marky.store.timeline = timelineMock;
+  marky.store.index = 5;
+  editor.value = timelineMock[5].markdown;
 
   container.querySelector('.undo').click();
 
-  t.equal(editor.value, 'Some really funny awesome text');
-  t.equal(container.marky.html, '<p>Some really funny awesome text</p>');
+  t.equal(editor.value, timelineMock[4].markdown);
   t.end();
 });
 
 test('buttons > does not call the undo method if disabled', (t) => {
-  editor.value = 'Some really super funny awesome crazy text';
-  container.marky.html = '<p>Some really super funny awesome crazy text</p>';
-  container.marky.state = stateMock;
-  container.marky.index = 6;
+  marky.store.timeline = timelineMock;
+  marky.store.index = 6;
+  editor.value = timelineMock[6].markdown;
+
   container.querySelector('.undo').classList.add('disabled');
   container.querySelector('.undo').click();
-  t.equal(editor.value, 'Some really super funny awesome crazy text');
-  t.equal(container.marky.html, '<p>Some really super funny awesome crazy text</p>');
+
+  t.equal(editor.value, timelineMock[6].markdown);
   t.end();
 });
 
 test('buttons > calls the redo method', (t) => {
-  editor.value = '';
-  container.marky.html = '';
-  container.marky.state = stateMock;
-  container.marky.index = 0;
+  marky.store.timeline = timelineMock;
+  marky.store.index = 0;
+  editor.value = timelineMock[0].markdown;
+
   container.querySelector('.redo').click();
-  t.equal(editor.value, 'Some text');
-  t.equal(container.marky.html, '<p>Some text</p>');
+
+  t.equal(editor.value, timelineMock[1].markdown);
   t.end();
 });
 
 test('buttons > does not call the redo method if disabled', (t) => {
-  editor.value = '';
-  container.marky.html = '';
-  container.marky.state = stateMock;
-  container.marky.index = 0;
+  marky.store.timeline = timelineMock;
+  marky.store.index = 0;
+  editor.value = timelineMock[0].markdown;
+
   container.querySelector('.redo').classList.add('disabled');
   container.querySelector('.redo').click();
-  t.equal(editor.value, '');
-  t.equal(container.marky.html, '');
+
+  t.equal(editor.value, timelineMock[0].markdown);
   t.end();
 });
 

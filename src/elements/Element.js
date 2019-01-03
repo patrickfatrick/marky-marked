@@ -1,17 +1,17 @@
 /**
  * Creates an HTML element with some built-in shortcut methods
- * @param {String}      type    tag name for the element
- * @param {String}      title   title for the element
- * @param {String}      id      editor ID to associate with the element
+ * @param {String} type   tag name for the element
+ * @param {String} id     editor ID to associate with the element
+ * @param {Object} props  props to assign to the element
  */
 export default class Element {
-  constructor(type, title = null, id = null) {
+  constructor(type, props = {}) {
     this.type = type;
-    this.title = title;
-    this.id = id;
     this.element = this.create();
     this.listeners = {};
-    if (this.title) this.element.title = this.title;
+    Object.entries(props).forEach(([prop, value]) => {
+      this.assign(prop, value);
+    });
   }
 
   create() {
@@ -26,6 +26,24 @@ export default class Element {
 
   appendTo(container) {
     container.appendChild(this.element);
+
+    return this;
+  }
+
+  /**
+   * @param {Element} element an instance of Element
+   */
+  appendToElement(element) {
+    element.element.appendChild(this.element);
+
+    return this;
+  }
+
+  /**
+   * @param {Element[]} elements an array of elements
+   */
+  appendElements(elements) {
+    elements.forEach(element => this.element.appendChild(element.element));
 
     return this;
   }

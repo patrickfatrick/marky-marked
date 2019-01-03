@@ -32,9 +32,10 @@ export default (container) => {
      * toolbar, editor, dialog container, hidden input
      */
 
-  const toolbar = new Element('div', 'Toolbar').addClass('marky-toolbar', id);
-  const dialogs = new Element('div', 'Dialogs').addClass('marky-dialogs', id);
-  const markyEditor = new Element('textarea', 'Marky Marked Editor').addClass('marky-editor', id);
+  const toolbar = new Element('div', { title: 'Toolbar' }).addClass('marky-toolbar', id);
+  const dialogs = new Element('div', { title: 'Dialogs' }).addClass('marky-dialogs', id);
+  const markyEditor = new Element('textarea', { title: 'Marky Marked Editor' })
+    .addClass('marky-editor', id);
 
   const marky = emitter(new Marky(id, container, markyEditor));
   container.marky = marky; // eslint-disable-line no-param-reassign
@@ -44,9 +45,9 @@ export default (container) => {
      */
 
   marky.elements.dialogs = {
-    heading: new HeadingDialog('Heading Dialog', id),
-    link: new LinkDialog('Link Dialog', id),
-    image: new ImageDialog('Image Dialog', id),
+    heading: new HeadingDialog(id),
+    link: new LinkDialog(id),
+    image: new ImageDialog(id),
   };
 
   Object.entries(marky.elements.dialogs).forEach(([dialogName, dialog]) => {
@@ -90,7 +91,7 @@ export default (container) => {
 
   function buttonClick(button, name) {
     if (button.classList.contains('disabled')) return;
-    if (name === 'undo' || name || 'redo') {
+    if (['undo', 'redo'].includes(name)) {
       marky[name]();
     } else {
       marky[name]([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
@@ -98,21 +99,23 @@ export default (container) => {
   }
 
   marky.elements.buttons = {
-    heading: new Button('Heading', id, 'fa', 'fa-header'),
-    bold: new Button('Bold', id, 'fa', 'fa-bold'),
-    italic: new Button('Italic', id, 'fa', 'fa-italic'),
-    strikethrough: new Button('Strikethrough', id, 'fa', 'fa-strikethrough'),
-    code: new Button('Code', id, 'fa', 'fa-code'),
-    blockquote: new Button('Blockquote', id, 'fa', 'fa-quote-right'),
-    link: new Button('Link', id, 'fa', 'fa-link'),
-    image: new Button('Image', id, 'fa', 'fa-file-image-o'),
-    unorderedList: new Button('Unordered List', id, 'fa', 'fa-list-ul'),
-    orderedList: new Button('Ordered List', id, 'fa', 'fa-list-ol'),
-    outdent: new Button('Outdent', id, 'fa', 'fa-outdent'),
-    indent: new Button('Indent', id, 'fa', 'fa-indent'),
-    undo: new Button('Undo', id, 'fa', 'fa-backward'),
-    redo: new Button('Redo', id, 'fa', 'fa-forward'),
-    expand: new Button('Expand', id, 'fa', 'fa-expand'),
+    heading: new Button(id, 'Heading', 'fa', 'fa-header')
+      .addClass('marky-border-left', 'marky-border-right'),
+    bold: new Button(id, 'Bold', 'fa', 'fa-bold').addClass('marky-border-left'),
+    italic: new Button(id, 'Italic', 'fa', 'fa-italic'),
+    strikethrough: new Button(id, 'Strikethrough', 'fa', 'fa-strikethrough'),
+    code: new Button(id, 'Code', 'fa', 'fa-code'),
+    blockquote: new Button(id, 'Blockquote', 'fa', 'fa-quote-right').addClass('marky-border-right'),
+    link: new Button(id, 'Link', 'fa', 'fa-link').addClass('marky-border-left'),
+    image: new Button(id, 'Image', 'fa', 'fa-file-image-o').addClass('marky-border-right'),
+    unorderedList: new Button(id, 'Unordered List', 'fa', 'fa-list-ul')
+      .addClass('marky-border-left'),
+    orderedList: new Button(id, 'Ordered List', 'fa', 'fa-list-ol'),
+    outdent: new Button(id, 'Outdent', 'fa', 'fa-outdent'),
+    indent: new Button(id, 'Indent', 'fa', 'fa-indent').addClass('marky-border-right'),
+    undo: new Button(id, 'Undo', 'fa', 'fa-backward').addClass('marky-border-left'),
+    redo: new Button(id, 'Redo', 'fa', 'fa-forward').addClass('marky-border-right'),
+    expand: new Button(id, 'Expand', 'fa', 'fa-expand').addClass('marky-border-left', 'marky-border-right'),
   };
 
   Object.entries(marky.elements.buttons).forEach(([buttonName, button]) => {
@@ -157,30 +160,34 @@ export default (container) => {
 
   toolbar.appendTo(container);
   markyEditor.appendTo(container);
-  marky.elements.buttons.heading.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.bold.appendTo(toolbar.element);
-  marky.elements.buttons.italic.appendTo(toolbar.element);
-  marky.elements.buttons.strikethrough.appendTo(toolbar.element);
-  marky.elements.buttons.code.appendTo(toolbar.element);
-  marky.elements.buttons.blockquote.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.link.appendTo(toolbar.element);
-  marky.elements.buttons.image.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.unorderedList.appendTo(toolbar.element);
-  marky.elements.buttons.orderedList.appendTo(toolbar.element);
-  marky.elements.buttons.outdent.appendTo(toolbar.element);
-  marky.elements.buttons.indent.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.undo.appendTo(toolbar.element);
-  marky.elements.buttons.redo.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.expand.appendTo(toolbar.element);
-  dialogs.appendTo(toolbar.element);
-  marky.elements.dialogs.link.appendTo(dialogs.element);
-  marky.elements.dialogs.image.appendTo(dialogs.element);
-  marky.elements.dialogs.heading.appendTo(dialogs.element);
+  toolbar.appendElements([
+    marky.elements.buttons.heading,
+    new Separator(),
+    marky.elements.buttons.bold,
+    marky.elements.buttons.italic,
+    marky.elements.buttons.strikethrough,
+    marky.elements.buttons.code,
+    marky.elements.buttons.blockquote,
+    new Separator(),
+    marky.elements.buttons.link,
+    marky.elements.buttons.image,
+    new Separator(),
+    marky.elements.buttons.unorderedList,
+    marky.elements.buttons.orderedList,
+    marky.elements.buttons.outdent,
+    marky.elements.buttons.indent,
+    new Separator(),
+    marky.elements.buttons.undo,
+    marky.elements.buttons.redo,
+    new Separator(),
+    marky.elements.buttons.expand,
+    dialogs,
+  ]);
+  dialogs.appendElements([
+    marky.elements.dialogs.link,
+    marky.elements.dialogs.image,
+    marky.elements.dialogs.heading,
+  ]);
 
   /**
      * Listeners for the editor
@@ -295,31 +302,27 @@ export default (container) => {
   markyEditor.listen('focus', () => marky.emit('markyfocus'));
 
   /**
-     * Listeners for the marky instance
-     */
+   * Listeners for the marky instance
+   */
 
   marky.on('markyupdate', () => {
     marky.update(
       markyEditor.element.value,
       [markyEditor.element.selectionStart, markyEditor.element.selectionEnd],
-      marky.state,
-      marky.index,
     );
   });
 
   marky.on('markychange', () => {
-    if (marky.index === 0) {
+    if (marky.store.index === 0) {
       marky.elements.buttons.undo.addClass('disabled');
     } else {
       marky.elements.buttons.undo.removeClass('disabled');
     }
-    if (marky.index === marky.state.length - 1) {
+    if (marky.store.index === marky.store.timeline.length - 1) {
       marky.elements.buttons.redo.addClass('disabled');
     } else {
       marky.elements.buttons.redo.removeClass('disabled');
     }
-
-    marky.change(marky.state[marky.index].markdown, marky.state[marky.index].html);
   });
 
   return marky;

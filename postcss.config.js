@@ -1,11 +1,15 @@
+const postcssImport = require('postcss-import');
+const postcssPresetEnv = require('postcss-preset-env');
+const cssnano = require('cssnano');
+
 module.exports = {
   plugins: [
-    require('postcss-import'),
-    require('postcss-cssnext')({
-      browsers: [ 'last 2 versions', '> 5%' ]
+    postcssImport,
+    postcssPresetEnv({
+      stage: 0,
     }),
-    require('cssnano')({
-      autoprefixer: false
-    })
-  ]
-}
+    cssnano({
+      autoprefixer: false,
+    }),
+  ],
+};

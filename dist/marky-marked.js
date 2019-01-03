@@ -1897,66 +1897,69 @@ marked.parse = marked;
 })(commonjsGlobal || (typeof window !== 'undefined' ? window : commonjsGlobal));
 });
 
-/**
- * Handles adding and removing state
- * @param   {Array}    state      the state timeline
- * @param   {Number}   stateIndex the current state index
- * @param   {Object}   newState   the new state to push
- * @returns {Object}   the new timeline
- */
-function pushState (state, stateIndex, newState) {
-  state = state.slice(0, stateIndex + 1); // eslint-disable-line no-param-reassign
-  state.push(newState);
-  stateIndex += 1; // eslint-disable-line no-param-reassign
-  if (stateIndex > 999) {
-    state.shift();
-    stateIndex -= 1; // eslint-disable-line no-param-reassign
+class Store {
+  constructor(timeline = []) {
+    this.timeline = timeline;
+    this.index = 0;
   }
 
-  return { state, index: stateIndex };
-}
+  get state() {
+    return this.timeline[this.index];
+  }
 
-/**
- * updates the state
- * @external marked
- * @requires pushState
- * @param   {String} markdown   markdown blob
- * @param   {Array}  selection  selectionStart and selectionEnd indices
- * @param   {Array}  state      the state timeline
- * @param   {Number} stateIndex the current state index
- * @returns {Object} the newly active state
- */
-function update(markdown, selection, state, stateIndex) {
-  const markedOptions = {
-    sanitize: true
-  };
-  const html = marked(markdown, markedOptions).toString() || '';
-  const newState = pushState(state, stateIndex, { markdown, html, selection });
-  return newState;
-}
+  get html() {
+    return this.state.html;
+  }
 
-/**
- * moves backward in state
- * @param   {Number} num        the number of states to move back by
- * @param   {Array}  state      the state timeline
- * @param   {Number} stateIndex the current state index
- * @returns {Object} the newly active state
- */
-function undo(num, state, stateIndex) {
-  const newStateIndex = stateIndex > num - 1 ? stateIndex - num : 0;
-  return { state: state[newStateIndex], index: newStateIndex };
-}
+  get markdown() {
+    return this.state.markdown;
+  }
 
-/**
- * moves forwardin state
- * @param   {Number} num        the number of states to move back by
- * @param   {Array}  state      the state timeline
- * @param   {Number} stateIndex the current state index
- * @returns {Object} the newly active state
- */
-function redo(num, state, stateIndex) {
-  const newStateIndex = stateIndex < state.length - (num + 1) ? stateIndex + num : state.length - 1;
-  return { state: state[newStateIndex], index: newStateIndex };
+  get selection() {
+    return this.state.selection;
+  }
+
+  /**
+   * Handles adding and removing state
+   * @param   {Object}   newState   the new state to push
+   */
+  push(newState) {
+    this.timeline = this.timeline.slice(0, this.index + 1);
+    this.timeline.push(newState);
+    this.index += 1;
+    if (this.index > 999) {
+      this.timeline.shift();
+      this.index -= 1;
+    }
+  }
+
+  /**
+   * updates the state
+   * @external marked
+   * @param   {String}    markdown   markdown blob
+   * @param   {Number[]}  selection  selectionStart and selectionEnd indices
+   */
+  update(markdown, selection) {
+    const html = marked(markdown, { sanitize: true }).toString() || '';
+
+    this.push({ markdown, html, selection });
+  }
+
+  /**
+   * moves backward in state
+   * @param   {Number} num  the number of states to move back by
+   */
+  undo(num) {
+    this.index = this.index > num - 1 ? this.index - num : 0;
+  }
+
+  /**
+   * moves forwardin state
+   * @param   {Number} num  the number of states to move forward by
+   */
+  redo(num) {
+    this.index = this.index < this.timeline.length - (num + 1) ? this.index + num : this.timeline.length - 1;
+  }
 }
 
 /**
@@ -1986,7 +1989,7 @@ function lastIndexOfMatch(string, regex, index) {
 /**
  * Creates an array of lines split by line breaks
  * @param   {Number} index optional starting index
- * @returns {Array}  an array of strings
+ * @returns {String[]}  an array of strings
  */
 function splitLines(string, index) {
   const str = index ? string.substring(index) : string;
@@ -2014,48 +2017,54 @@ function endOfLine(string, index = 0) {
 /**
  * Handles wrapping format strings around a selection
  * @param   {String} string         the entire string
- * @param   {Array}  selectionRange the starting and ending positions of the selection
+ * @param   {Number[]}  selectionRange the starting and ending positions of the selection
  * @param   {String} symbol         the format string to use
  * @returns {Object} the new string, the updated selectionRange
  */
 function inlineHandler(string, selectionRange, symbol) {
   let newString = string;
-  const newSelectionRange = selectionRange;
-  // useSymbol determines whether to add the symbol to either end of the selected text
-  const useSymbol = [symbol, symbol];
+  const newSelectionRange = [...selectionRange];
+  // insertSymbols determines whether to add the symbol to either end of the selected text
+  // Stat with assuming we will insert them (we will remove as necessary)
+  const insertSymbols = [symbol, symbol];
   const symbolLength = symbol.length;
+  const relevantPart = string.substring(selectionRange[0] - symbolLength, selectionRange[1] + symbolLength).trim();
 
   // First check that the symbol is in the string at all
-  if (newString.includes(symbol)) {
+  if (relevantPart.includes(symbol)) {
     // If it is, for each index in the selection range...
     newSelectionRange.forEach((selectionIndex, j) => {
+      const isStartingIndex = j === 0;
+      const isEndingIndex = j === 1;
       // If the symbol immediately precedes the selection index...
       if (newString.lastIndexOf(symbol, selectionIndex) === selectionIndex - symbolLength) {
         // First trim it
-        newString = newString.substring(0, selectionIndex - symbolLength) + newString.substring(selectionIndex, newString.length);
+        newString = newString.substring(0, selectionIndex - symbolLength) + newString.substring(selectionIndex);
 
         // Then adjust the selection range,
         // If this is the starting index in the range, we will have to adjust both
         // starting and ending indices
-        if (j === 0) {
+        if (isStartingIndex) {
           newSelectionRange[0] -= symbolLength;
-          newSelectionRange[1] -= symbolLength;
-        } else if (!useSymbol[0]) {
           newSelectionRange[1] -= symbolLength;
         }
 
+        if (isEndingIndex && !insertSymbols[0]) {
+          newSelectionRange[1] -= symbol.length;
+        }
+
         // Finally, disallow the symbol at this end of the selection
-        useSymbol[j] = '';
+        insertSymbols[j] = '';
       }
 
       // If the symbol immediately follows the selection index...
       if (newString.indexOf(symbol, selectionIndex) === selectionIndex) {
         // Trim it
-        newString = newString.substring(0, selectionIndex) + newString.substring(selectionIndex + symbolLength, newString.length);
+        newString = newString.substring(0, selectionIndex) + newString.substring(selectionIndex + symbolLength);
 
         // Then adjust the selection range,
         // If this is the starting index in the range...
-        if (j === 0) {
+        if (isStartingIndex) {
           // If the starting and ending indices are NOT the same (selection length > 0)
           // Adjust the ending selection down
           if (newSelectionRange[0] !== newSelectionRange[1]) {
@@ -2066,32 +2075,34 @@ function inlineHandler(string, selectionRange, symbol) {
           if (newSelectionRange[0] === newSelectionRange[1]) {
             newSelectionRange[0] -= symbolLength;
           }
-          // If this is the ending index and the range
-          // AND we're inserting the symbol at the starting index,
-          // Adjust the ending selection up
-        } else if (useSymbol[0]) {
+        }
+
+        // If this is the ending index and the range
+        // AND we're inserting the symbol at the starting index,
+        // Adjust the ending selection up
+        if (isEndingIndex && insertSymbols[0]) {
           newSelectionRange[1] += symbolLength;
         }
 
         // Finally, disallow the symbol at this end of the selection
-        useSymbol[j] = '';
+        insertSymbols[j] = '';
       }
     });
   }
 
   // Put it all together
-  const value = newString.substring(0, newSelectionRange[0]) + useSymbol[0] + newString.substring(newSelectionRange[0], newSelectionRange[1]) + useSymbol[1] + newString.substring(newSelectionRange[1], newString.length);
+  const value = newString.substring(0, newSelectionRange[0]) + insertSymbols[0] + newString.substring(newSelectionRange[0], newSelectionRange[1]) + insertSymbols[1] + newString.substring(newSelectionRange[1]);
 
   return {
     value,
-    range: [newSelectionRange[0] + useSymbol[0].length, newSelectionRange[1] + useSymbol[1].length]
+    range: [newSelectionRange[0] + insertSymbols[0].length, newSelectionRange[1] + insertSymbols[1].length]
   };
 }
 
 /**
  * Handles adding/removing a format string to a line
  * @param   {String} string         the entire string
- * @param   {Array}  selectionRange the starting and ending positions of the selection
+ * @param   {Number[]}  selectionRange the starting and ending positions of the selection
  * @param   {String} symbol         the format string to use
  * @returns {Object} the new string, the updated indices
  */
@@ -2136,7 +2147,7 @@ function blockHandler(string, selectionRange, symbol) {
 /**
  * Handles adding/removing format strings to groups of lines
  * @param   {String} string  the entire string to use
- * @param   {Array}  selectionRange the starting and ending positions of the selection
+ * @param   {Number[]}  selectionRange the starting and ending positions of the selection
  * @param   {String} type    ul or ol
  * @returns {Object} the new string, the updated selectionRange
  */
@@ -2175,7 +2186,7 @@ function listHandler(string, selectionRange, type) {
 /**
  * Handles adding/removing indentation to groups of lines
  * @param   {String} string         the entire string to use
- * @param   {Array}  selectionRange the starting and ending positions to wrap
+ * @param   {Number[]}  selectionRange the starting and ending positions to wrap
  * @param   {String} type           in or out
  * @returns {Object} the new string, the updated selectionRange
  */
@@ -2204,7 +2215,7 @@ function indentHandler(string, selectionRange, type) {
 /**
  * Handles inserting a snippet at the end of a selection
  * @param   {String} string         the entire string to use
- * @param   {Array}  selectionRange the starting and ending positions of the selection
+ * @param   {Number[]}  selectionRange the starting and ending positions of the selection
  * @param   {String} snippet        the snippet to insert
  * @returns {Object} the new string, the updated selectionRange
  */
@@ -2221,14 +2232,11 @@ class Marky {
     this.id = id;
     this.editor = editor.element;
     this.container = container;
-    this.state = [{
+    this.store = new Store([{
       markdown: '',
       html: '',
       selection: [0, 0]
-    }];
-    this.index = 0;
-    this.markdown = '';
-    this.html = '';
+    }]);
     this.elements = {
       dialogs: {},
       buttons: {},
@@ -2236,6 +2244,22 @@ class Marky {
     };
 
     return this;
+  }
+
+  get state() {
+    return this.store.state;
+  }
+
+  get html() {
+    return this.state.html;
+  }
+
+  get markdown() {
+    return this.state.markdown;
+  }
+
+  get selection() {
+    return this.state.selection;
   }
 
   /**
@@ -2262,73 +2286,46 @@ class Marky {
 
   /**
    * Handles the `markyupdate` event
-   * @requires dispatcher/update
-   * @param {String} markdown   the new markdown blob
-   * @param {Array}  selection  selectionStart and selectionEnd indices
-   * @param {Array}  state      the state timeline
-   * @param {Number} index      current state index
+   * @param {String}    markdown  the new markdown blob
+   * @param {Number[]}  selection selectionStart and selectionEnd indices
    */
-  update(markdown, selection = [0, 0], state = this.state, index = this.index) {
-    const action = update(markdown, selection, state, index);
-    this.state = action.state;
-    this.index = action.index;
+  update(markdown, selection = [0, 0]) {
+    this.store.update(markdown, selection);
     this.emit('markychange');
-    return this.index;
-  }
-
-  /**
-   * Handles the `markychange` event
-   * @param  {String} markdown markdown string
-   * @param  {String} html     html string
-   */
-  change(markdown, html) {
-    this.updateMarkdown(markdown);
-    this.updateHTML(html);
+    return this.store.index;
   }
 
   /**
    * Handles moving backward in state
-   * @requires dispatcher/undo
    * @param   {Number}      num    number of states to move back
-   * @param   {Array}       state  the state timeline
-   * @param   {Number}      index  current state index
    * @param   {HTMLElement} editor the marky marked editor
    * @returns {Number}      the new index
    */
-  undo(num = 1, state = this.state, index = this.index, editor = this.editor) {
-    if (index === 0) return index;
-
-    const action = undo(num, state, index);
-    this.index = action.index;
-    this.updateEditor(action.state.markdown, action.state.selection, editor);
+  undo(num = 1, editor = this.editor) {
+    this.store.undo(num);
+    this.updateEditor(this.store.state.markdown, this.store.state.selection, editor);
     this.emit('markychange');
-    return this.index;
+    return this.store.index;
   }
 
   /**
    * Handles moving forward in state
-   * @requires dispatcher/redo
-   * @param   {Number}      num    number of states to move back
-   * @param   {Array}       state  the state timeline
-   * @param   {Number}      index  current state index
+   * @param   {Number}      num    number of states to move forward
    * @param   {HTMLElement} editor the marky marked editor
    * @returns {Number}      the new index
    */
-  redo(num = 1, state = this.state, index = this.index, editor = this.editor) {
-    if (index === state.length - 1) return index;
-
-    const action = redo(num, state, index);
-    this.index = action.index;
-    this.updateEditor(action.state.markdown, action.state.selection, editor);
+  redo(num = 1, editor = this.editor) {
+    this.store.redo(num);
+    this.updateEditor(this.store.state.markdown, this.store.state.selection, editor);
     this.emit('markychange');
-    return this.index;
+    return this.store.index;
   }
 
   /**
    * Sets the selection indices in the editor
-   * @param   {Array}       arr    starting and ending indices
+   * @param   {Number[]}    arr    starting and ending indices
    * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the array that was passed in
+   * @returns {Number[]}    the array that was passed in
    */
   setSelection(arr = [0, 0], editor = this.editor) {
     editor.setSelectionRange(arr[0], arr[1]);
@@ -2339,7 +2336,7 @@ class Marky {
    * expands the selection to the right
    * @param   {Number}      num    number of characters to expand by
    * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new selection indices
+   * @returns {Number[]}    the new selection indices
    */
   expandSelectionForward(num = 0, editor = this.editor) {
     const start = editor.selectionStart;
@@ -2353,7 +2350,7 @@ class Marky {
    * expands the selection to the left
    * @param   {Number}      num    number of characters to expand by
    * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new selection indices
+   * @returns {Number[]}    the new selection indices
    */
   expandSelectionBackward(num = 0, editor = this.editor) {
     const start = editor.selectionStart - num;
@@ -2367,7 +2364,7 @@ class Marky {
    * expands the cursor to the right
    * @param   {Number}      num    number of characters to move by
    * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new cursor position
+   * @returns {Number}      the new cursor position
    */
   moveCursorBackward(num = 0, editor = this.editor) {
     const start = editor.selectionStart - num;
@@ -2380,7 +2377,7 @@ class Marky {
    * expands the cursor to the left
    * @param   {Number}      num    number of characters to move by
    * @param   {HTMLElement} editor the marky marked editor
-   * @returns {Array}       the new cursor position
+   * @returns {Number}      the new cursor position
    */
   moveCursorForward(num = 0, editor = this.editor) {
     const start = editor.selectionStart + num;
@@ -2392,9 +2389,9 @@ class Marky {
   /**
    * implements a bold on a selection
    * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the bold
+   * @returns {Number[]}    the new selection after the bold
    */
   bold(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const boldify = inlineHandler(editor.value, indices, '**');
@@ -2406,9 +2403,9 @@ class Marky {
   /**
    * implements an italic on a selection
    * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the italic
+   * @returns {Number[]}    the new selection after the italic
    */
   italic(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const italicize = inlineHandler(editor.value, indices, '_');
@@ -2420,9 +2417,9 @@ class Marky {
   /**
    * implements a strikethrough on a selection
    * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the strikethrough
+   * @returns {Number[]}    the new selection after the strikethrough
    */
   strikethrough(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const strikitize = inlineHandler(editor.value, indices, '~~');
@@ -2434,9 +2431,9 @@ class Marky {
   /**
    * implements a code on a selection
    * @requires handlers/inlineHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the code
+   * @returns {Number[]}    the new selection after the code
    */
   code(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const codify = inlineHandler(editor.value, indices, '`');
@@ -2448,9 +2445,9 @@ class Marky {
   /**
    * implements a blockquote on a selection
    * @requires handlers/blockHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the bold
+   * @returns {Number[]}    the new selection after the bold
    */
   blockquote(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const quotify = blockHandler(editor.value, indices, '> ');
@@ -2462,9 +2459,9 @@ class Marky {
   /**
    * implements a heading on a selection
    * @requires handlers/blockHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the heading
+   * @returns {Number[]}    the new selection after the heading
    */
   heading(value = 0, indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const markArr = [];
@@ -2483,9 +2480,9 @@ class Marky {
   /**
    * inserts a link snippet at the end of a selection
    * @requires handlers/insertHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the snippet is inserted
+   * @returns {Number[]}    the new selection after the snippet is inserted
    */
   link(indices = [this.editor.selectionStart, this.editor.selectionEnd], url = 'http://url.com', display = 'http://url.com', editor = this.editor) {
     const mark = `[${display}](${url})`;
@@ -2498,9 +2495,9 @@ class Marky {
   /**
    * inserts an image snippet at the end of a selection
    * @requires handlers/insertHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the snippet is inserted
+   * @returns {Number[]}    the new selection after the snippet is inserted
    */
   image(indices = [this.editor.selectionStart, this.editor.selectionEnd], source = 'http://imagesource.com/image.jpg', alt = 'http://imagesource.com/image.jpg', editor = this.editor) {
     const mark = `![${alt}](${source})`;
@@ -2513,9 +2510,9 @@ class Marky {
   /**
    * implements an unordered list on a selection
    * @requires handlers/listHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the list is implemented
+   * @returns {Number[]}    the new selection after the list is implemented
    */
   unorderedList(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const listify = listHandler(editor.value, indices, 'ul');
@@ -2527,9 +2524,9 @@ class Marky {
   /**
    * implements an ordered list on a selection
    * @requires handlers/listHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the list is implemented
+   * @returns {Number[]}    the new selection after the list is implemented
    */
   orderedList(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const listify = listHandler(editor.value, indices, 'ol');
@@ -2541,9 +2538,9 @@ class Marky {
   /**
    * implements an indent on a selection
    * @requires handlers/indentHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the indent is implemented
+   * @returns {Number[]}    the new selection after the indent is implemented
    */
   indent(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const indentify = indentHandler(editor.value, indices, 'in');
@@ -2555,33 +2552,15 @@ class Marky {
   /**
    * implements an outdent on a selection
    * @requires handlers/indentHandler
-   * @param   {Array}       indices starting and ending positions for the selection
+   * @param   {Number[]}    indices starting and ending positions for the selection
    * @param   {HTMLElement} editor  the marky marked editor
-   * @returns {Array}       the new selection after the outdent is implemented
+   * @returns {Number[]}    the new selection after the outdent is implemented
    */
   outdent(indices = [this.editor.selectionStart, this.editor.selectionEnd], editor = this.editor) {
     const indentify = indentHandler(editor.value, indices, 'out');
     this.updateEditor(indentify.value, indentify.range, editor);
     this.emit('markyupdate');
     return [indentify.range[0], indentify.range[1]];
-  }
-
-  /**
-   * @private
-   * Handles updating the markdown prop
-   * @param  {String} markdown   user-input markdown
-   */
-  updateMarkdown(markdown) {
-    this.markdown = markdown;
-  }
-
-  /**
-   * @private
-   * Handles updating the hidden input's value as well as html prop
-   * @param  {String} html   an HTML string
-   */
-  updateHTML(html) {
-    this.html = html;
   }
 
   /**
@@ -2613,18 +2592,18 @@ class Marky {
 
 /**
  * Creates an HTML element with some built-in shortcut methods
- * @param {String}      type    tag name for the element
- * @param {String}      title   title for the element
- * @param {String}      id      editor ID to associate with the element
+ * @param {String} type   tag name for the element
+ * @param {String} id     editor ID to associate with the element
+ * @param {Object} props  props to assign to the element
  */
 class Element {
-  constructor(type, title = null, id = null) {
+  constructor(type, props = {}) {
     this.type = type;
-    this.title = title;
-    this.id = id;
     this.element = this.create();
     this.listeners = {};
-    if (this.title) this.element.title = this.title;
+    Object.entries(props).forEach(([prop, value]) => {
+      this.assign(prop, value);
+    });
   }
 
   create() {
@@ -2639,6 +2618,24 @@ class Element {
 
   appendTo(container) {
     container.appendChild(this.element);
+
+    return this;
+  }
+
+  /**
+   * @param {Element} element an instance of Element
+   */
+  appendToElement(element) {
+    element.element.appendChild(this.element);
+
+    return this;
+  }
+
+  /**
+   * @param {Element[]} elements an array of elements
+   */
+  appendElements(elements) {
+    elements.forEach(element => this.element.appendChild(element.element));
 
     return this;
   }
@@ -2686,7 +2683,7 @@ class Element {
 /**
  * Creates HTML i elements
  * @type {Element}
- * @param {Array} classNames classes to use with element
+ * @param {String[]} classNames classes to use with element
  */
 class Icon extends Element {
   constructor(...classNames) {
@@ -2701,14 +2698,14 @@ class Icon extends Element {
  * @requires Icon
  * @param {String}      title   title for the element
  * @param {String}      id      editor ID to associate with the element
- * @param {Array}      iconClasses      classes to use for <i> elements
+ * @param {String[]}      iconClasses      classes to use for <i> elements
  */
 class Button extends Element {
-  constructor(title, id, ...iconClasses) {
-    super('button', title, id);
-    this.addClass(this.title, this.id).assign('value', this.title).assign('type', 'button');
+  constructor(id, title, ...iconClasses) {
+    super('button', { title, value: title, type: 'button' });
+    this.addClass(title, id);
 
-    this.icon = new Icon(...iconClasses).appendTo(this.element);
+    this.icon = new Icon(...iconClasses).appendToElement(this);
   }
 }
 
@@ -2719,9 +2716,9 @@ class Button extends Element {
  * @param {String}      id      editor ID to associate with the element
  */
 class Dialog extends Element {
-  constructor(title, id) {
-    super('div', title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id, title) {
+    super('div', { title });
+    this.addClass(id, title, 'dialog');
   }
 }
 
@@ -2732,17 +2729,35 @@ class Dialog extends Element {
  * @param {String}      id      editor ID to associate with the element
  */
 class LinkDialog extends Dialog {
-  constructor(title, id) {
-    super(title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id) {
+    super(id, 'Link Dialog');
 
-    this.form = new Element('form', 'Link Form').assign('id', `${this.id}-link-form`).appendTo(this.element);
+    this.form = new Element('form', {
+      id: `${id}-link-form`,
+      title: 'Link Form'
+    }).appendToElement(this);
 
-    this.urlInput = new Element('input', 'Link Url').addClass('link-url-input').assign('type', 'text').assign('name', `${this.id}-link-url-input`).assign('placeholder', 'http://url.com').appendTo(this.form.element);
+    this.urlInput = new Element('input', {
+      type: 'text',
+      name: `${id}-link-url-input`,
+      placeholder: 'http://url.com',
+      title: 'Link Url'
+    }).addClass('link-url-input');
 
-    this.nameInput = new Element('input', 'Link Display').addClass('link-display-input').assign('type', 'text').assign('name', `${this.id}-link-display-input`).assign('placeholder', 'Display text').appendTo(this.form.element);
+    this.nameInput = new Element('input', {
+      type: 'text',
+      name: `${id}-link-display-input`,
+      placeholder: 'Display text',
+      title: 'Link Display'
+    }).addClass('link-display-input');
 
-    this.insertButton = new Element('button', 'Insert Link').addClass('insert-link').assign('type', 'submit').assign('textContent', 'Insert').appendTo(this.form.element);
+    this.insertButton = new Element('button', {
+      type: 'submit',
+      textContent: 'Insert',
+      title: 'Insert Link'
+    }).addClass('insert-link');
+
+    this.form.appendElements([this.urlInput, this.nameInput, this.insertButton]);
   }
 }
 
@@ -2753,17 +2768,32 @@ class LinkDialog extends Dialog {
  * @param {String}      id      editor ID to associate with the element
  */
 class ImageDialog extends Dialog {
-  constructor(title, id) {
-    super(title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id) {
+    super(id, 'Image Dialog');
 
-    this.form = new Element('form', 'Image Form').assign('id', `${this.id}-image-form`).appendTo(this.element);
+    this.form = new Element('form', { id: `${id}-image-form`, title: 'Image Form' }).appendToElement(this);
 
-    this.urlInput = new Element('input', 'Image Source').addClass('image-source-input').assign('type', 'text').assign('name', `${this.id}-image-source-input`).assign('placeholder', 'http://url.com/image.jpg').appendTo(this.form.element);
+    this.urlInput = new Element('input', {
+      type: 'text',
+      name: `${id}-image-source-input`,
+      placeholder: 'http://url.com/image.jpg',
+      title: 'Image Source'
+    }).addClass('image-source-input');
 
-    this.nameInput = new Element('input', 'Image Alt').addClass('image-alt-input').assign('type', 'text').assign('name', `${this.id}-image-alt-input`).assign('placeholder', 'Alt text').appendTo(this.form.element);
+    this.nameInput = new Element('input', {
+      type: 'text',
+      name: `${id}-image-alt-input`,
+      placeholder: 'Alt text',
+      title: 'Image Alt'
+    }).addClass('image-alt-input');
 
-    this.insertButton = new Element('button', 'Insert Image').addClass('insert-image').assign('type', 'submit').assign('textContent', 'Insert').appendTo(this.form.element);
+    this.insertButton = new Element('button', {
+      type: 'submit',
+      textContent: 'Insert',
+      title: 'Insert Image'
+    }).addClass('insert-image');
+
+    this.form.appendElements([this.urlInput, this.nameInput, this.insertButton]);
   }
 }
 
@@ -2777,13 +2807,13 @@ class ImageDialog extends Dialog {
  */
 class HeadingItem extends Element {
   constructor(title, value, ...iconClasses) {
-    super('li', title);
-    this.addClass(this.title.replace(' ', '-')).assign('value', value);
+    super('li', { title, value });
+    this.addClass(title);
 
-    this.button = new Element('button', title).assign('type', 'button').assign('value', value).addClass('heading-button').appendTo(this.element);
+    this.button = new Element('button', { type: 'button', value }).addClass('heading-button', title).appendToElement(this);
 
     if (iconClasses.length) {
-      this.icon = new Icon(...iconClasses).appendTo(this.button.element);
+      this.icon = new Icon(...iconClasses).appendToElement(this.button);
     } else {
       this.button.assign('textContent', value);
     }
@@ -2792,21 +2822,21 @@ class HeadingItem extends Element {
 
 /**
  * Creates heading dialog element
- * @type {Element}
- * @param {String}      title   title for the element
+ * @type {Dialog}
  * @param {String}      id      editor ID to associate with the element
+ * @param {String}      title   title for the element
  */
 class HeadingDialog extends Dialog {
-  constructor(title, id) {
-    super(title, id);
-    this.addClass(this.title, id, 'dialog');
-    this.headingList = new Element('ul', 'Heading List').assign('id', `${id}-heading-list`).appendTo(this.element);
+  constructor(id) {
+    super(id, 'Heading Dialog');
+
+    this.headingList = new Element('ul', { title: 'Heading List' }).addClass(`${id}-heading-list`).appendToElement(this);
 
     this.options = [...Array(6)].map((_, i) => new HeadingItem(`Heading ${i + 1}`, i + 1));
-    this.options.push(new HeadingItem('Remove Heading', '0', 'fa', 'fa-remove'));
+    this.options.push(new HeadingItem('Remove Heading', 0, 'fa', 'fa-remove'));
 
     this.options.forEach(option => {
-      option.appendTo(this.headingList.element);
+      option.appendToElement(this.headingList);
     });
   }
 }
@@ -2846,9 +2876,9 @@ var initializer = (container => {
      * toolbar, editor, dialog container, hidden input
      */
 
-  const toolbar = new Element('div', 'Toolbar').addClass('marky-toolbar', id);
-  const dialogs = new Element('div', 'Dialogs').addClass('marky-dialogs', id);
-  const markyEditor = new Element('textarea', 'Marky Marked Editor').addClass('marky-editor', id);
+  const toolbar = new Element('div', { title: 'Toolbar' }).addClass('marky-toolbar', id);
+  const dialogs = new Element('div', { title: 'Dialogs' }).addClass('marky-dialogs', id);
+  const markyEditor = new Element('textarea', { title: 'Marky Marked Editor' }).addClass('marky-editor', id);
 
   const marky = contra_9(new Marky(id, container, markyEditor));
   container.marky = marky; // eslint-disable-line no-param-reassign
@@ -2858,9 +2888,9 @@ var initializer = (container => {
      */
 
   marky.elements.dialogs = {
-    heading: new HeadingDialog('Heading Dialog', id),
-    link: new LinkDialog('Link Dialog', id),
-    image: new ImageDialog('Image Dialog', id)
+    heading: new HeadingDialog(id),
+    link: new LinkDialog(id),
+    image: new ImageDialog(id)
   };
 
   Object.entries(marky.elements.dialogs).forEach(([dialogName, dialog]) => {
@@ -2896,8 +2926,9 @@ var initializer = (container => {
   }
 
   function buttonClick(button, name) {
+    console.log(markyEditor.element.selectionStart, markyEditor.element.selectionEnd);
     if (button.classList.contains('disabled')) return;
-    if (name === 'undo' || name || 'redo') {
+    if (['undo', 'redo'].includes(name)) {
       marky[name]();
     } else {
       marky[name]([markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
@@ -2905,21 +2936,21 @@ var initializer = (container => {
   }
 
   marky.elements.buttons = {
-    heading: new Button('Heading', id, 'fa', 'fa-header'),
-    bold: new Button('Bold', id, 'fa', 'fa-bold'),
-    italic: new Button('Italic', id, 'fa', 'fa-italic'),
-    strikethrough: new Button('Strikethrough', id, 'fa', 'fa-strikethrough'),
-    code: new Button('Code', id, 'fa', 'fa-code'),
-    blockquote: new Button('Blockquote', id, 'fa', 'fa-quote-right'),
-    link: new Button('Link', id, 'fa', 'fa-link'),
-    image: new Button('Image', id, 'fa', 'fa-file-image-o'),
-    unorderedList: new Button('Unordered List', id, 'fa', 'fa-list-ul'),
-    orderedList: new Button('Ordered List', id, 'fa', 'fa-list-ol'),
-    outdent: new Button('Outdent', id, 'fa', 'fa-outdent'),
-    indent: new Button('Indent', id, 'fa', 'fa-indent'),
-    undo: new Button('Undo', id, 'fa', 'fa-backward'),
-    redo: new Button('Redo', id, 'fa', 'fa-forward'),
-    expand: new Button('Expand', id, 'fa', 'fa-expand')
+    heading: new Button(id, 'Heading', 'fa', 'fa-header').addClass('marky-border-left', 'marky-border-right'),
+    bold: new Button(id, 'Bold', 'fa', 'fa-bold').addClass('marky-border-left'),
+    italic: new Button(id, 'Italic', 'fa', 'fa-italic'),
+    strikethrough: new Button(id, 'Strikethrough', 'fa', 'fa-strikethrough'),
+    code: new Button(id, 'Code', 'fa', 'fa-code'),
+    blockquote: new Button(id, 'Blockquote', 'fa', 'fa-quote-right').addClass('marky-border-right'),
+    link: new Button(id, 'Link', 'fa', 'fa-link').addClass('marky-border-left'),
+    image: new Button(id, 'Image', 'fa', 'fa-file-image-o').addClass('marky-border-right'),
+    unorderedList: new Button(id, 'Unordered List', 'fa', 'fa-list-ul').addClass('marky-border-left'),
+    orderedList: new Button(id, 'Ordered List', 'fa', 'fa-list-ol'),
+    outdent: new Button(id, 'Outdent', 'fa', 'fa-outdent'),
+    indent: new Button(id, 'Indent', 'fa', 'fa-indent').addClass('marky-border-right'),
+    undo: new Button(id, 'Undo', 'fa', 'fa-backward').addClass('marky-border-left'),
+    redo: new Button(id, 'Redo', 'fa', 'fa-forward').addClass('marky-border-right'),
+    expand: new Button(id, 'Expand', 'fa', 'fa-expand').addClass('marky-border-left', 'marky-border-right')
   };
 
   Object.entries(marky.elements.buttons).forEach(([buttonName, button]) => {
@@ -2956,30 +2987,8 @@ var initializer = (container => {
 
   toolbar.appendTo(container);
   markyEditor.appendTo(container);
-  marky.elements.buttons.heading.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.bold.appendTo(toolbar.element);
-  marky.elements.buttons.italic.appendTo(toolbar.element);
-  marky.elements.buttons.strikethrough.appendTo(toolbar.element);
-  marky.elements.buttons.code.appendTo(toolbar.element);
-  marky.elements.buttons.blockquote.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.link.appendTo(toolbar.element);
-  marky.elements.buttons.image.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.unorderedList.appendTo(toolbar.element);
-  marky.elements.buttons.orderedList.appendTo(toolbar.element);
-  marky.elements.buttons.outdent.appendTo(toolbar.element);
-  marky.elements.buttons.indent.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.undo.appendTo(toolbar.element);
-  marky.elements.buttons.redo.appendTo(toolbar.element);
-  new Separator().appendTo(toolbar.element);
-  marky.elements.buttons.expand.appendTo(toolbar.element);
-  dialogs.appendTo(toolbar.element);
-  marky.elements.dialogs.link.appendTo(dialogs.element);
-  marky.elements.dialogs.image.appendTo(dialogs.element);
-  marky.elements.dialogs.heading.appendTo(dialogs.element);
+  toolbar.appendElements([marky.elements.buttons.heading, new Separator(), marky.elements.buttons.bold, marky.elements.buttons.italic, marky.elements.buttons.strikethrough, marky.elements.buttons.code, marky.elements.buttons.blockquote, new Separator(), marky.elements.buttons.link, marky.elements.buttons.image, new Separator(), marky.elements.buttons.unorderedList, marky.elements.buttons.orderedList, marky.elements.buttons.outdent, marky.elements.buttons.indent, new Separator(), marky.elements.buttons.undo, marky.elements.buttons.redo, new Separator(), marky.elements.buttons.expand, dialogs]);
+  dialogs.appendElements([marky.elements.dialogs.link, marky.elements.dialogs.image, marky.elements.dialogs.heading]);
 
   /**
      * Listeners for the editor
@@ -3093,26 +3102,24 @@ var initializer = (container => {
   markyEditor.listen('focus', () => marky.emit('markyfocus'));
 
   /**
-     * Listeners for the marky instance
-     */
+   * Listeners for the marky instance
+   */
 
   marky.on('markyupdate', () => {
-    marky.update(markyEditor.element.value, [markyEditor.element.selectionStart, markyEditor.element.selectionEnd], marky.state, marky.index);
+    marky.update(markyEditor.element.value, [markyEditor.element.selectionStart, markyEditor.element.selectionEnd]);
   });
 
   marky.on('markychange', () => {
-    if (marky.index === 0) {
+    if (marky.store.index === 0) {
       marky.elements.buttons.undo.addClass('disabled');
     } else {
       marky.elements.buttons.undo.removeClass('disabled');
     }
-    if (marky.index === marky.state.length - 1) {
+    if (marky.store.index === marky.store.timeline.length - 1) {
       marky.elements.buttons.redo.addClass('disabled');
     } else {
       marky.elements.buttons.redo.removeClass('disabled');
     }
-
-    marky.change(marky.state[marky.index].markdown, marky.state[marky.index].html);
   });
 
   return marky;

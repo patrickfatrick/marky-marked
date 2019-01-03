@@ -1,24 +1,26 @@
 import test from 'tape';
 import sinon from 'sinon';
 import initializer from '../src/initializer';
+import Store from '../src/Store';
 
 const container = document.createElement('marky-mark');
 document.body.appendChild(container);
 const marky = initializer(container);
 const { editor } = marky;
 
-test('Marky > has n id', (t) => {
+test('Marky > has an id', (t) => {
   t.true(marky.id.length > 0);
   t.end();
 });
 
 test('Marky > has a state', (t) => {
-  t.true(marky.state instanceof Array);
+  t.true(marky.store instanceof Store);
+  t.true(typeof marky.store.state === 'object');
   t.end();
 });
 
 test('Marky > has an index', (t) => {
-  t.true(typeof marky.index === 'number');
+  t.true(typeof marky.store.index === 'number');
   t.end();
 });
 
@@ -36,10 +38,10 @@ test('Marky > destroy', (t) => {
 test('Marky > update', (t) => {
   sinon.spy(marky, 'emit');
   editor.value = 'Some text';
-  const { length } = marky.state;
+  const { length } = marky.store.timeline;
   marky.update(editor.value);
 
-  t.equal(marky.state.length, length + 1);
+  t.equal(marky.store.timeline.length, length + 1);
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -56,10 +58,10 @@ test('Marky > update is triggered by a markyupdate event', (t) => {
 
 test('Marky > undo', (t) => {
   sinon.spy(marky, 'emit');
-  marky.index = 1;
+  marky.store.index = 1;
   marky.undo(1);
 
-  t.equal(marky.index, 0);
+  t.equal(marky.store.index, 0);
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -67,10 +69,10 @@ test('Marky > undo', (t) => {
 
 test('Marky > redo', (t) => {
   sinon.spy(marky, 'emit');
-  marky.index = 0;
+  marky.store.index = 0;
   marky.redo(1);
 
-  t.equal(marky.index, 1);
+  t.equal(marky.store.index, 1);
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -132,7 +134,7 @@ test('Marky > bold', (t) => {
   editor.setSelectionRange(0, 9);
   marky.bold();
 
-  t.equal(marky.html, '<p><strong>Some text</strong></p>\n');
+  t.equal(marky.state.html, '<p><strong>Some text</strong></p>\n');
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -144,7 +146,7 @@ test('Marky > italic', (t) => {
   editor.setSelectionRange(0, 9);
   marky.italic();
 
-  t.equal(marky.html, '<p><em>Some text</em></p>\n');
+  t.equal(marky.state.html, '<p><em>Some text</em></p>\n');
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -156,7 +158,7 @@ test('Marky > strikethrough', (t) => {
   editor.setSelectionRange(0, 9);
   marky.strikethrough();
 
-  t.equal(marky.html, '<p><del>Some text</del></p>\n');
+  t.equal(marky.state.html, '<p><del>Some text</del></p>\n');
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -168,7 +170,7 @@ test('Marky > code', (t) => {
   editor.setSelectionRange(0, 9);
   marky.code();
 
-  t.equal(marky.html, '<p><code>Some text</code></p>\n');
+  t.equal(marky.state.html, '<p><code>Some text</code></p>\n');
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -180,7 +182,7 @@ test('Marky > blockquote', (t) => {
   editor.setSelectionRange(0, 9);
   marky.blockquote();
 
-  t.equal(marky.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n');
+  t.equal(marky.state.html, '<blockquote>\n<p>Some text</p>\n</blockquote>\n');
   t.true(marky.emit.calledWith('markychange'));
   marky.emit.restore();
   t.end();
@@ -192,7 +194,7 @@ test('Marky > heading', (t) => {
   editor.setSelectionRange(0, 9);
   marky.heading(1);
 
-  t.equal(marky.html, '<h1 id="some-text">Some text</h1>\n');
+  t.equal(marky.state.html, '<h1 id="some-text">Some text</h1>\n');
   t.true(marky.emit.calledWith('markyupdate'));
   marky.emit.restore();
   t.end();
@@ -204,7 +206,7 @@ test('Marky > heading with a default of 0', (t) => {
   editor.setSelectionRange(2, 9);
   marky.heading();
 
-  t.equal(marky.html, '<p>Some text</p>\n');
+  t.equal(marky.state.html, '<p>Some text</p>\n');
   t.true(marky.emit.calledWith('markyupdate'));
 
   marky.emit.restore();
@@ -311,7 +313,7 @@ test('Marky > outdent', (t) => {
 });
 
 test('Marky > undoes state', (t) => {
-  const state = [
+  const timeline = [
     {
       markdown: '',
       html: '',
@@ -324,13 +326,15 @@ test('Marky > undoes state', (t) => {
     },
   ];
   const index = 1;
+  marky.store.timeline = timeline;
+  marky.store.index = index;
 
-  t.equal(marky.undo(1, state, index), 0);
+  t.equal(marky.undo(1), 0);
   t.end();
 });
 
 test('Marky > does not undo state if state is at 0 index', (t) => {
-  const state = [
+  const timeline = [
     {
       markdown: '',
       html: '',
@@ -343,13 +347,15 @@ test('Marky > does not undo state if state is at 0 index', (t) => {
     },
   ];
   const index = 0;
+  marky.store.timeline = timeline;
+  marky.store.index = index;
 
-  t.equal(marky.undo(1, state, index), 0);
+  t.equal(marky.undo(1), 0);
   t.end();
 });
 
 test('Marky > redoes state', (t) => {
-  const state = [
+  const timeline = [
     {
       markdown: '',
       html: '',
@@ -362,13 +368,15 @@ test('Marky > redoes state', (t) => {
     },
   ];
   const index = 0;
+  marky.store.timeline = timeline;
+  marky.store.index = index;
 
-  t.equal(marky.redo(1, state, index), 1);
+  t.equal(marky.redo(1), 1);
   t.end();
 });
 
 test('Marky > does not redo state if state is at last index', (t) => {
-  const state = [
+  const timeline = [
     {
       markdown: '',
       html: '',
@@ -381,7 +389,9 @@ test('Marky > does not redo state if state is at last index', (t) => {
     },
   ];
   const index = 1;
+  marky.store.timeline = timeline;
+  marky.store.index = index;
 
-  t.equal(marky.redo(1, state, index), 1);
+  t.equal(marky.redo(1), 1);
   t.end();
 });

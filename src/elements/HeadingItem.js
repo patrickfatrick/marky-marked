@@ -11,19 +11,16 @@ import Icon from './Icon';
  */
 export default class HeadingItem extends Element {
   constructor(title, value, ...iconClasses) {
-    super('li', title);
-    this.addClass(this.title.replace(' ', '-'))
-      .assign('value', value);
+    super('li', { title, value });
+    this.addClass(title);
 
-    this.button = new Element('button', title)
-      .assign('type', 'button')
-      .assign('value', value)
-      .addClass('heading-button')
-      .appendTo(this.element);
+    this.button = new Element('button', { type: 'button', value })
+      .addClass('heading-button', title)
+      .appendToElement(this);
 
     if (iconClasses.length) {
       this.icon = new Icon(...iconClasses)
-        .appendTo(this.button.element);
+        .appendToElement(this.button);
     } else {
       this.button.assign('textContent', value);
     }

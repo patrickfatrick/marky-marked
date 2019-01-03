@@ -2,7 +2,7 @@ import test from 'tape';
 import HeadingItem from '../../src/elements/HeadingItem';
 
 test('HeadingItem > creates a heading item', (t) => {
-  const headingItem = new HeadingItem('Heading 1', '1');
+  const headingItem = new HeadingItem('Heading 1', 1);
 
   t.true(headingItem.element instanceof HTMLElement);
   t.equal(headingItem.element.title, 'Heading 1');
@@ -13,7 +13,7 @@ test('HeadingItem > creates a heading item', (t) => {
 });
 
 test('HeadingItem > creates a heading item with icon', (t) => {
-  const headingItem = new HeadingItem('Heading 1', '0', 'fa', 'fa-times');
+  const headingItem = new HeadingItem('Heading 1', 0, 'fa', 'fa-times');
 
   t.true(headingItem.element instanceof HTMLElement);
   t.ok(headingItem.element.querySelector('i'));

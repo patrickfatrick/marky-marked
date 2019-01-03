@@ -1,4 +1,4 @@
-const faucet = require('faucet');
+const summary = require('tap-summary');
 const rollupConfig = require('./rollup.config.test.js');
 
 module.exports = (karma) => {
@@ -15,8 +15,8 @@ module.exports = (karma) => {
     browsers: ['ChromeHeadless'],
     client: { captureConsole: false },
     preprocessors: {
-      'src/**/*.js': ['sourcemap', 'rollup'],
-      'test/**/*.spec.js': ['sourcemap', 'rollup'],
+      'src/**/*.js': ['rollup'],
+      'test/**/*.spec.js': ['rollup'],
     },
     reporters: ['tap-pretty', 'coverage', 'junit'],
     coverageReporter: {
@@ -25,13 +25,10 @@ module.exports = (karma) => {
           type: 'lcov',
           dir: 'coverage',
         },
-        {
-          type: 'text',
-        },
       ],
     },
     tapReporter: {
-      prettify: faucet,
+      prettify: summary,
     },
     junitReporter: {
       outputDir: 'tmp/karma-results',

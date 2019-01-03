@@ -3,7 +3,6 @@ module.exports = {
     [
       "env",
       {
-        "targets": { "browsers": [ "last 2 versions", "> 5%" ] },
         "modules": false
       }
     ]

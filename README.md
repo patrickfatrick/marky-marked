@@ -10,7 +10,7 @@ _A `<textarea>` so sweet you'll be feeling good vibrations._
 
 ## What is it?
 
-Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. Marky Marked's minified file is less than 60KB including dependency.
+Marky Marked is a lightweight in-browser content editor combining Markdown with the typical WYSIWYG toolbar. The end result is an editor that rewards good Markdown usage but also allows a point and click editor for folks who either are new to Markdown, forget a specific formatting guideline, or just prefer using their mouse. Marky Marked's minified is less than 15KB minified and gzipped.
 
 Because it's all Markdown the markup that comes out of it is well-formatted and easy to parse. One philosophical concern is that no style attributes are ever applied. All Marky Marked outputs is markup. Marky Marked also sanitizes the markup so you don't need to worry about HTML in the input.
 
@@ -22,7 +22,7 @@ Click the links here to learn more about [Markdown syntax](https://help.github.c
 
 Marky Marked has only the following dependencies:
 
-- [marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing. This is already included in the minified file.
+- [marked](https://github.com/chjj/marked), which handles the heavylifting for the Markdown parsing.
 - [contra/emitter](https://github.com/bevacqua/contra#λemitterthing-options)
 - [harsh](https://github.com/patrickfatrick/harsh)
 - Optional: [Font Awesome](http://fontawesome.io/), unless you want to roll your own icons.

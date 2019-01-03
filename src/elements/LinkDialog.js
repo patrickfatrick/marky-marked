@@ -8,32 +8,42 @@ import Dialog from './Dialog';
  * @param {String}      id      editor ID to associate with the element
  */
 export default class LinkDialog extends Dialog {
-  constructor(title, id) {
-    super(title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id) {
+    super(id, 'Link Dialog');
 
-    this.form = new Element('form', 'Link Form')
-      .assign('id', `${this.id}-link-form`)
-      .appendTo(this.element);
+    this.form = new Element('form', {
+      id: `${id}-link-form`,
+      title: 'Link Form',
+    })
+      .appendToElement(this);
 
-    this.urlInput = new Element('input', 'Link Url')
-      .addClass('link-url-input')
-      .assign('type', 'text')
-      .assign('name', `${this.id}-link-url-input`)
-      .assign('placeholder', 'http://url.com')
-      .appendTo(this.form.element);
+    this.urlInput = new Element('input', {
+      type: 'text',
+      name: `${id}-link-url-input`,
+      placeholder: 'http://url.com',
+      title: 'Link Url',
+    })
+      .addClass('link-url-input');
 
-    this.nameInput = new Element('input', 'Link Display')
-      .addClass('link-display-input')
-      .assign('type', 'text')
-      .assign('name', `${this.id}-link-display-input`)
-      .assign('placeholder', 'Display text')
-      .appendTo(this.form.element);
+    this.nameInput = new Element('input', {
+      type: 'text',
+      name: `${id}-link-display-input`,
+      placeholder: 'Display text',
+      title: 'Link Display',
+    })
+      .addClass('link-display-input');
 
-    this.insertButton = new Element('button', 'Insert Link')
-      .addClass('insert-link')
-      .assign('type', 'submit')
-      .assign('textContent', 'Insert')
-      .appendTo(this.form.element);
+    this.insertButton = new Element('button', {
+      type: 'submit',
+      textContent: 'Insert',
+      title: 'Insert Link',
+    })
+      .addClass('insert-link');
+
+    this.form.appendElements([
+      this.urlInput,
+      this.nameInput,
+      this.insertButton,
+    ]);
   }
 }

@@ -15,7 +15,7 @@ test('dialogs > calls the image method', (t) => {
   alt.value = 'Chuck Chardonnay';
   container.querySelector('.insert-image').click();
 
-  t.equal(container.marky.html, '<p><img src="http://i.imgur.com/VlVsP.gif" alt="Chuck Chardonnay"></p>\n');
+  t.equal(editor.value, '![Chuck Chardonnay](http://i.imgur.com/VlVsP.gif)');
   t.end();
 });
 
@@ -28,6 +28,6 @@ test('dialogs > calls the link method', (t) => {
   alt.value = 'Google';
   container.querySelector('.insert-link').click();
 
-  t.equal(container.marky.html, '<p><a href="http://google.com">Google</a></p>\n');
+  t.equal(editor.value, '[Google](http://google.com)');
   t.end();
 });

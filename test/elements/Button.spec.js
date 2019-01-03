@@ -4,7 +4,7 @@ import test from 'tape';
 import Button from '../../src/elements/Button';
 
 test('Button > creates a button', (t) => {
-  const button = new Button('Bold', 'bold', 'fa', 'fa-bold');
+  const button = new Button('bold', 'Bold', 'fa', 'fa-bold');
 
   t.true(button.element instanceof HTMLElement);
   t.equal(button.element.title, 'Bold');

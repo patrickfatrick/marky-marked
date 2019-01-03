@@ -44,7 +44,7 @@ export function lastIndexOfMatch(string, regex, index) {
 /**
  * Creates an array of lines separated by line breaks
  * @param   {Number} index optional ending index
- * @returns {Array}  an array of strings
+ * @returns {String[]}  an array of strings
  */
 export function splitLinesBackward(string, index) {
   const str = index ? string.substring(0, index) : string;
@@ -54,7 +54,7 @@ export function splitLinesBackward(string, index) {
 /**
  * Creates an array of lines split by line breaks
  * @param   {Number} index optional starting index
- * @returns {Array}  an array of strings
+ * @returns {String[]}  an array of strings
  */
 export function splitLines(string, index) {
   const str = index ? string.substring(index) : string;

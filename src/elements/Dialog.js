@@ -7,8 +7,8 @@ import Element from './Element';
  * @param {String}      id      editor ID to associate with the element
  */
 export default class Dialog extends Element {
-  constructor(title, id) {
-    super('div', title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id, title) {
+    super('div', { title });
+    this.addClass(id, title, 'dialog');
   }
 }

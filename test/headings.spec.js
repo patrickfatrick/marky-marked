@@ -12,7 +12,7 @@ test('headings > calls the heading-1 method', (t) => {
   const heading1 = container.querySelector('.heading-1').children[0];
   heading1.click();
 
-  t.equal(container.marky.html, '<h1 id="some-text">Some text</h1>\n');
+  t.equal(editor.value, '# Some text');
   t.end();
 });
 
@@ -22,7 +22,7 @@ test('headings > calls the heading-2 method', (t) => {
   const heading2 = container.querySelector('.heading-2').children[0];
   heading2.click();
 
-  t.equal(container.marky.html, '<h2 id="some-text">Some text</h2>\n');
+  t.equal(editor.value, '## Some text');
   t.end();
 });
 
@@ -32,7 +32,7 @@ test('headings > calls the heading-6 method', (t) => {
   const heading6 = container.querySelector('.heading-6').children[0];
   heading6.click();
 
-  t.equal(container.marky.html, '<h6 id="some-text">Some text</h6>\n');
+  t.equal(editor.value, '###### Some text');
   t.end();
 });
 
@@ -42,6 +42,6 @@ test('headings > removes any existing heading', (t) => {
   const removeHeading = container.querySelector('.remove-heading').children[0];
   removeHeading.click();
 
-  t.equal(container.marky.html, '<p>Some text</p>\n');
+  t.equal(editor.value, 'Some text');
   t.end();
 });

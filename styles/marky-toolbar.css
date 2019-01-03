@@ -1,30 +1,29 @@
 @import "variables";
 
 .marky-toolbar {
-  min-width: 100%;
-  text-align: left;
   margin-bottom: 0.3rem;
   margin-left: 0.3rem;
+  min-width: 100%;
+  text-align: left;
 
   & button {
-    @apply --no-outline;
-
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0.3rem;
-    font-size: 0.8rem;
-    max-width: 2rem;
-    line-height: 0.8rem;
-    cursor: pointer;
+    background-color: var(--white);
     border: 1px solid var(--gray);
     border-left: none;
-    padding: 6px;
     border-radius: 0;
-    min-width: 1.5rem;
-    min-height: 1.5rem;
-    text-align: center;
-    background-color: var(--white);
     color: var(--lightGray);
+    cursor: pointer;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    margin-bottom: 0.3rem;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 2rem;
+    min-height: 1.5rem;
+    min-width: 1.5rem;
+    outline: none;
+    padding: 6px;
+    text-align: center;
     transition: box-shadow 200ms ease-out;
 
     &::-moz-focus-inner {
@@ -40,21 +39,20 @@
     &.active,
     &.disabled,
     &:active {
+      background: linear-gradient(var(--white) * 0.7, var(--white));
       box-shadow: none;
       color: var(--gray) !important;
-      background: linear-gradient(var(--white) * 0.7, var(--white));
     }
 
-    & .separator + button {
+    &.marky-border-right {
+      border-bottom-right-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    &.marky-border-left {
+      border-bottom-left-radius: 4px;
       border-left: 1px solid var(--gray);
-      border-radius: 4px 0 0 4px;
-    }
-
-    & button:nth-child(7),
-    & button:nth-child(10),
-    & button:nth-child(15),
-    & button:nth-child(18) {
-      border-radius: 0 4px 4px 0;
+      border-top-left-radius: 4px;
     }
 
     &:focus:not(.disabled) {
@@ -68,8 +66,6 @@
   }
 
   & button.expand {
-    border-radius: 4px;
-
     &.marky-expanded {
       background-color: var(--orchid);
       color: var(--white);
@@ -81,19 +77,17 @@
 
       & .active,
       &:active {
-        color: var(--white) !important;
         background: linear-gradient(var(--orchid) * 0.7, var(--orchid));
+        color: var(--white) !important;
       }
     }
   }
 
   & button.heading {
-    border-left: 1px solid var(--gray);
+    max-width: 3rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    max-width: 3rem;
     width: 3rem;
-    border-radius: 4px;
   }
 
   & button.undo {
@@ -105,16 +99,16 @@
   }
 
   & .separator {
+    color: var(--gray);
     padding-left: 6px;
     padding-right: 6px;
-    color: var(--gray);
-  }
 
-  & .separator:nth-child(11) {
-    display: block;
+    &:nth-child(11) {
+      display: block;
 
-    @media (width >= 600px) {
-      display: inline;
+      @media (width >= 600px) {
+        display: inline;
+      }
     }
   }
 }

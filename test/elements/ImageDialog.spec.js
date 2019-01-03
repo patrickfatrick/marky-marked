@@ -2,7 +2,7 @@ import test from 'tape';
 import ImageDialog from '../../src/elements/ImageDialog';
 
 test('ImageDialog > creates an image dialog', (t) => {
-  const imageDialog = new ImageDialog('Image Dialog', 'image-dialog');
+  const imageDialog = new ImageDialog('image-dialog', 'Image Dialog');
 
   t.true(imageDialog.element instanceof HTMLElement);
   t.equal(imageDialog.element.title, 'Image Dialog');

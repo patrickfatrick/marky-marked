@@ -8,32 +8,39 @@ import Dialog from './Dialog';
  * @param {String}      id      editor ID to associate with the element
  */
 export default class ImageDialog extends Dialog {
-  constructor(title, id) {
-    super(title, id);
-    this.addClass(this.title, id, 'dialog');
+  constructor(id) {
+    super(id, 'Image Dialog');
 
-    this.form = new Element('form', 'Image Form')
-      .assign('id', `${this.id}-image-form`)
-      .appendTo(this.element);
+    this.form = new Element('form', { id: `${id}-image-form`, title: 'Image Form' })
+      .appendToElement(this);
 
-    this.urlInput = new Element('input', 'Image Source')
-      .addClass('image-source-input')
-      .assign('type', 'text')
-      .assign('name', `${this.id}-image-source-input`)
-      .assign('placeholder', 'http://url.com/image.jpg')
-      .appendTo(this.form.element);
+    this.urlInput = new Element('input', {
+      type: 'text',
+      name: `${id}-image-source-input`,
+      placeholder: 'http://url.com/image.jpg',
+      title: 'Image Source',
+    })
+      .addClass('image-source-input');
 
-    this.nameInput = new Element('input', 'Image Alt')
-      .addClass('image-alt-input')
-      .assign('type', 'text')
-      .assign('name', `${this.id}-image-alt-input`)
-      .assign('placeholder', 'Alt text')
-      .appendTo(this.form.element);
+    this.nameInput = new Element('input', {
+      type: 'text',
+      name: `${id}-image-alt-input`,
+      placeholder: 'Alt text',
+      title: 'Image Alt',
+    })
+      .addClass('image-alt-input');
 
-    this.insertButton = new Element('button', 'Insert Image')
-      .addClass('insert-image')
-      .assign('type', 'submit')
-      .assign('textContent', 'Insert')
-      .appendTo(this.form.element);
+    this.insertButton = new Element('button', {
+      type: 'submit',
+      textContent: 'Insert',
+      title: 'Insert Image',
+    })
+      .addClass('insert-image');
+
+    this.form.appendElements([
+      this.urlInput,
+      this.nameInput,
+      this.insertButton,
+    ]);
   }
 }

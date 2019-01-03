@@ -4,13 +4,13 @@
 @import "marky-dialogs";
 
 [id^="marky-mark-"].marky-expanded {
-  width: 100%;
+  background: var(--white);
+  box-sizing: border-box;
   height: 100%;
-  position: fixed;
-  top: 0;
   left: 0;
   padding: 1rem;
-  box-sizing: border-box;
-  background: var(--white);
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 1000;
 }
