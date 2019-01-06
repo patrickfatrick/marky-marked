@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Commit build and push back to github
           command: |
-            git add public/*
+            git add dist/*
             git commit --allow-empty -m "[ci] build"
             git push origin master --force
   deploy:
