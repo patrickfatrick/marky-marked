@@ -21,31 +21,6 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: tmp/karma-results
-  build:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run:
-          name: Set git configs
-          command: |
-            git config credential.helper 'cache --timeout=120'
-            git config user.email "patrick.fricano@icloud.com"
-            git config user.name "CircleCi"
-      - run: node -v
-      - run: npm -v
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Build production build
-          command: npm run build
-      - run:
-          name: Commit build and push back to github
-          command: |
-            git add dist/*
-            git commit --allow-empty -m "[ci] build"
-            git push origin master --force
   deploy:
     docker:
       - image: circleci/node:8
@@ -71,15 +46,9 @@ workflows:
   build_and_deploy:
     jobs:
       - test
-      - build:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
       - deploy:
           requires:
-            - build
+            - test
           filters:
             branches:
               only: master
