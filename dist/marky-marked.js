@@ -2926,7 +2926,6 @@ var initializer = (container => {
   }
 
   function buttonClick(button, name) {
-    console.log(markyEditor.element.selectionStart, markyEditor.element.selectionEnd);
     if (button.classList.contains('disabled')) return;
     if (['undo', 'redo'].includes(name)) {
       marky[name]();
